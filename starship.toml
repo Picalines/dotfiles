@@ -31,10 +31,11 @@ blue = '#1e1bbf'
 red = '#eb2a41'
 dark-red = '#9c0b1c'
 yellow = '#ffce3e'
+white = 'bright-white'
 
 [directory]
-style = 'bg:pink fg:bright-white'
-format = '[ ﱮ $path ]($style)'
+style = 'bg:pink fg:white'
+format = '[ﱮ $path]($style)'
 use_os_path_sep = false
 truncation_length = 3
 truncation_symbol = '﬌/'
@@ -57,48 +58,48 @@ truncation_symbol = '﬌/'
 [git_branch]
 symbol = ''
 style = 'bg:git-orange fg:white'
-format = '[ $symbol $branch(:$remote_branch) ]($style)'
+format = '[ $symbol $branch(:$remote_branch)]($style)'
 
 [git_commit]
 tag_symbol = ""
-style = 'bg:git-orange fg:white'
-format = '[  \($hash$tag\) ]($style)'
+style = 'bg:git-orange fg:white bold'
+format = '[  \($hash$tag\)]($style)'
 
 [git_status]
-style = 'bg:git-orange fg:white'
-format = '[(\[$all_status$ahead_behind\] )]($style)'
+style = 'bg:git-orange fg:white bold'
+format = '[( \[$all_status$ahead_behind\])]($style)'
 
 [git_state]
-style = 'bg:git-orange fg:white'
+style = 'bg:git-orange fg:white bold'
 
 [java]
 symbol = ''
 style = 'bg:purple'
-format = '[ $symbol ($version )]($style)'
+format = '[ $symbol ($version)]($style)'
 
 [nodejs]
 symbol = ''
 style = 'bg:purple'
-format = '[ $symbol ($version )]($style)'
+format = '[ $symbol ($version)]($style)'
 
 [dotnet]
 symbol = ''
 style = 'bg:purple'
 version_format = 'v${major}.${minor}'
-format = '[ $symbol ($version )]($style)'
+format = '[ $symbol ($version)]($style)'
 detect_extensions = ["csproj", "sln"]
 
 [python]
 symbol = ''
 style = 'bg:purple'
-format = '[ $symbol ($version )]($style)'
+format = '[ $symbol ($version)]($style)'
 
 [status]
 style = 'bg:red fg:white'
 symbol = ''
-format = '[ $symbol ($maybe_int )]($style)'
+format = '[ $symbol ($maybe_int)]($style)'
 disabled = false
 
 [cmd_duration]
 style = 'bg:yellow fg:black'
-format = '[  $duration ]($style)'
+format = '[  $duration]($style)'
