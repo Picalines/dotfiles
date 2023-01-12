@@ -1,0 +1,104 @@
+format = """
+[](dark-pink)\
+[](bg:dark-pink fg:pink)\
+$directory\
+[](fg:pink bg:purple)\
+$dotnet\
+$python\
+$java\
+$nodejs\
+[](fg:purple bg:git-orange)\
+$git_branch\
+$git_commit\
+$git_status\
+$git_state\
+[](fg:git-orange bg:yellow)\
+$cmd_duration\
+[](fg:yellow bg:red)\
+$status\
+[](fg:red bg:dark-red)\
+[ ](fg:dark-red)\
+"""
+
+palette = 'custom'
+
+[palettes.custom]
+git-orange = '#e74b27'
+dark-pink = '#a30048'
+pink = '#d7005f'
+purple = '#4f1dc2'
+blue = '#1e1bbf'
+red = '#eb2a41'
+dark-red = '#9c0b1c'
+yellow = '#ffce3e'
+
+[directory]
+style = 'bg:pink fg:bright-white'
+format = '[ ﱮ $path ]($style)'
+use_os_path_sep = false
+truncation_length = 3
+truncation_symbol = '﬌/'
+
+[directory.substitutions]
+"Projects" = ''
+"Documents" = ''
+"Downloads" = ''
+"Music" = ''
+"Python" = ''
+"Java" = ''
+"JS" = ''
+"CSharp" = ''
+"Cpp" = ''
+"Unity" = ''
+"node_modules" = ''
+".github" = ''
+".git" = ''
+
+[git_branch]
+symbol = ''
+style = 'bg:git-orange fg:white'
+format = '[ $symbol $branch(:$remote_branch) ]($style)'
+
+[git_commit]
+tag_symbol = ""
+style = 'bg:git-orange fg:white'
+format = '[  \($hash$tag\) ]($style)'
+
+[git_status]
+style = 'bg:git-orange fg:white'
+format = '[(\[$all_status$ahead_behind\] )]($style)'
+
+[git_state]
+style = 'bg:git-orange fg:white'
+
+[java]
+symbol = ''
+style = 'bg:purple'
+format = '[ $symbol ($version )]($style)'
+
+[nodejs]
+symbol = ''
+style = 'bg:purple'
+format = '[ $symbol ($version )]($style)'
+
+[dotnet]
+symbol = ''
+style = 'bg:purple'
+version_format = 'v${major}.${minor}'
+format = '[ $symbol ($version )]($style)'
+detect_extensions = ["csproj", "sln"]
+
+[python]
+symbol = ''
+style = 'bg:purple'
+format = '[ $symbol ($version )]($style)'
+
+[status]
+style = 'bg:red fg:white'
+symbol = ''
+format = '[ $symbol ($maybe_int )]($style)'
+disabled = false
+
+[cmd_duration]
+style = 'bg:yellow fg:black'
+format = '[  $duration ]($style)'
