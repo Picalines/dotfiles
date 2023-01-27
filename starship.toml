@@ -92,7 +92,7 @@ detect_extensions = ["csproj", "sln"]
 [python]
 symbol = ''
 style = 'bg:purple'
-format = '[ $symbol ($version)]($style)'
+format = '[ $symbol ($version)( \($virtualenv\))]($style)'
 
 [status]
 style = 'bg:red fg:white'
