@@ -1,40 +1,57 @@
 format = """
-[](dark-pink)\
-[](bg:dark-pink fg:pink)\
+[](before-dir)\
+[](bg:before-dir fg:dir)\
 $directory\
-[](fg:pink bg:purple)\
+[](fg:dir bg:tech-env)\
 $dotnet\
 $python\
 $java\
 $nodejs\
-[](fg:purple bg:git-orange)\
+[](fg:tech-env bg:git)\
 $git_branch\
 $git_commit\
 $git_status\
 $git_state\
-[](fg:git-orange bg:yellow)\
+[](fg:git bg:duration)\
 $cmd_duration\
-[](fg:yellow bg:red)\
+[](fg:duration bg:status)\
 $status\
-[](fg:red bg:dark-red)\
-[ ](fg:dark-red)\
+[](fg:status bg:after-status)\
+[ ](fg:after-status)\
 """
 
-palette = 'custom'
+palette = 'catppuccin'
 
 [palettes.custom]
-git-orange = '#e74b27'
-dark-pink = '#a30048'
-pink = '#d7005f'
-purple = '#4f1dc2'
-blue = '#1e1bbf'
-red = '#eb2a41'
-dark-red = '#9c0b1c'
-yellow = '#ffce3e'
-white = 'bright-white'
+before-dir = '#a30048'
+dir = '#d7005f'
+dir-text = 'bright-white'
+tech-env = '#4f1dc2'
+tech-env-text = 'bright-white'
+git = '#e74b27'
+git-text = 'bright-white'
+duration = '#ffce3e'
+duration-text = 'black'
+status = '#eb2a41'
+status-text = 'bright-white'
+after-status = '#9c0b1c'
+
+[palettes.catppuccin]
+before-dir = '#992e37'
+dir = '#e64553'
+dir-text = 'bright-white'
+tech-env = '#7287fd'
+tech-env-text = 'bright-white'
+git = '#fe640b'
+git-text = 'bright-white'
+duration = '#ebddaa'
+duration-text = '#5c5f77'
+status = '#a6da95'
+status-text = '#4c4f69'
+after-status = '#6b8d60'
 
 [directory]
-style = 'bg:pink fg:white'
+style = 'bg:dir fg:dir-text'
 format = '[ﱮ $path]($style)'
 use_os_path_sep = false
 truncation_length = 3
@@ -57,49 +74,49 @@ truncation_symbol = '﬌/'
 
 [git_branch]
 symbol = ''
-style = 'bg:git-orange fg:white'
+style = 'bg:git fg:git-text'
 format = '[ $symbol $branch(:$remote_branch)]($style)'
 
 [git_commit]
 tag_symbol = ""
-style = 'bg:git-orange fg:white bold'
+style = 'bg:git fg:git-text bold'
 format = '[  \($hash$tag\)]($style)'
 
 [git_status]
-style = 'bg:git-orange fg:white bold'
+style = 'bg:git fg:git-text bold'
 format = '[( \[$all_status$ahead_behind\])]($style)'
 
 [git_state]
-style = 'bg:git-orange fg:white bold'
+style = 'bg:git fg:git-text bold'
 
 [java]
 symbol = ''
-style = 'bg:purple'
+style = 'bg:tech-env fg:tech-env-text'
 format = '[ $symbol ($version)]($style)'
 
 [nodejs]
 symbol = ''
-style = 'bg:purple'
+style = 'bg:tech-env fg:tech-env-text'
 format = '[ $symbol ($version)]($style)'
 
 [dotnet]
 symbol = ''
-style = 'bg:purple'
+style = 'bg:tech-env fg:tech-env-text'
 version_format = 'v${major}.${minor}'
 format = '[ $symbol ($version)]($style)'
 detect_extensions = ["csproj", "sln"]
 
 [python]
 symbol = ''
-style = 'bg:purple'
+style = 'bg:tech-env fg:tech-env-text'
 format = '[ $symbol ($version)( \($virtualenv\))]($style)'
 
 [status]
-style = 'bg:red fg:white'
+style = 'bg:status fg:status-text'
 symbol = ''
 format = '[ $symbol ($maybe_int)]($style)'
 disabled = false
 
 [cmd_duration]
-style = 'bg:yellow fg:black'
+style = 'bg:duration fg:duration-text'
 format = '[  $duration]($style)'
