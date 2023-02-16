@@ -86,8 +86,8 @@ format = '[  $hash$tag]($style)'
 [git_status]
 style = 'bg:git fg:git-text bold'
 format = '[( \[$all_status$ahead_behind\])]($style)'
-ahead = '{count}'
-behind = '{count}'
+ahead = '${count}'
+behind = '${count}'
 diverged = '${ahead_count}${behind_count}'
 
 [git_state]
