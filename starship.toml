@@ -1,6 +1,8 @@
 format = """
-[](before-dir)\
-[](bg:before-dir fg:dir)\
+[](intro)\
+[](bg:intro fg:username)\
+$username\
+[](bg:dir fg:username)\
 $directory\
 [](fg:dir bg:tech-env)\
 $dotnet\
@@ -16,14 +18,17 @@ $git_state\
 $cmd_duration\
 [](fg:duration bg:status)\
 $status\
-[](fg:status bg:after-status)\
-[ ](fg:after-status)\
+[](fg:status bg:outro)\
+[ ](fg:outro)\
 """
 
 palette = 'catppuccin'
 
 [palettes.custom]
-before-dir = '#a30048'
+intro = '#a30048'
+username = '#c6a0f6'
+username-text-user = 'bright-white'
+username-text-root = 'bright-white'
 dir = '#d7005f'
 dir-text = 'bright-white'
 tech-env = '#4f1dc2'
@@ -34,10 +39,13 @@ duration = '#ffce3e'
 duration-text = 'black'
 status = '#eb2a41'
 status-text = 'bright-white'
-after-status = '#9c0b1c'
+outro = '#9c0b1c'
 
 [palettes.catppuccin]
-before-dir = '#992e37'
+intro = '#9c7ec3'
+username = '#c6a0f6'
+username-text-user = 'bright-white'
+username-text-root = 'bright-white'
 dir = '#e64553'
 dir-text = 'bright-white'
 tech-env = '#7287fd'
@@ -48,11 +56,16 @@ duration = '#ebddaa'
 duration-text = '#5c5f77'
 status = '#a6da95'
 status-text = '#4c4f69'
-after-status = '#6b8d60'
+outro = '#6b8d60'
+
+[username]
+style_user = 'bg:username fg:username-text-user'
+style_root = 'bg:username fg:username-text-root'
+format = '[ $user]($style)'
 
 [directory]
 style = 'bg:dir fg:dir-text'
-format = '[ﱮ $path]($style)'
+format = '[ ﱮ $path]($style)'
 use_os_path_sep = false
 truncation_length = 3
 truncation_symbol = '﬌/'
@@ -116,12 +129,12 @@ symbol = ''
 style = 'bg:tech-env fg:tech-env-text'
 format = '[ $symbol ($version)( \($virtualenv\))]($style)'
 
+[cmd_duration]
+style = 'bg:duration fg:duration-text'
+format = '[  $duration]($style)'
+
 [status]
 style = 'bg:status fg:status-text'
 symbol = ''
 format = '[ $symbol ($maybe_int)]($style)'
 disabled = false
-
-[cmd_duration]
-style = 'bg:duration fg:duration-text'
-format = '[  $duration]($style)'
