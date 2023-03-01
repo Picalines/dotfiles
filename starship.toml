@@ -1,6 +1,7 @@
 format = """
 [](intro)\
 [](bg:intro fg:username)\
+[](bg:username fg:prompt)\
 $username\
 [](bg:dir fg:username)\
 $directory\
@@ -26,6 +27,7 @@ palette = 'catppuccin'
 
 [palettes.custom]
 intro = '#a30048'
+prompt = 'yellow'
 username = '#c6a0f6'
 username-text-user = 'bright-white'
 username-text-root = 'bright-white'
@@ -43,6 +45,7 @@ outro = '#9c0b1c'
 
 [palettes.catppuccin]
 intro = '#9c7ec3'
+prompt = 'bright-yellow'
 username = '#c6a0f6'
 username-text-user = 'bright-white'
 username-text-root = 'bright-white'
@@ -61,7 +64,7 @@ outro = '#6b8d60'
 [username]
 style_user = 'bg:username fg:username-text-user'
 style_root = 'bg:username fg:username-text-root'
-format = '[ $user]($style)'
+format = '[ $user]($style)'
 
 [directory]
 style = 'bg:dir fg:dir-text'
