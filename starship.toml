@@ -73,6 +73,7 @@ disabled = false
 [os.symbols]
 Windows = ''
 Ubuntu = ''
+Raspbian = ''
 
 [username]
 style_user = 'bg:username fg:username-text-user'
