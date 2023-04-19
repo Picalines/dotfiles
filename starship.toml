@@ -1,7 +1,7 @@
 format = """
 [](intro)\
 [](bg:intro fg:username)\
-[](bg:username fg:prompt)\
+$os\
 $username\
 [](bg:dir fg:username)\
 $directory\
@@ -28,6 +28,8 @@ palette = 'catppuccin'
 [palettes.custom]
 intro = '#a30048'
 prompt = 'yellow'
+os = '#c6a0f6'
+os-text = 'bright-yellow'
 username = '#c6a0f6'
 username-text-user = 'bright-white'
 username-text-root = 'bright-white'
@@ -46,6 +48,8 @@ outro = '#9c0b1c'
 [palettes.catppuccin]
 intro = '#9c7ec3'
 prompt = 'bright-yellow'
+os = '#c6a0f6'
+os-text = 'bright-yellow'
 username = '#c6a0f6'
 username-text-user = 'bright-white'
 username-text-root = 'bright-white'
@@ -60,6 +64,15 @@ duration-text = '#5c5f77'
 status = '#a6da95'
 status-text = '#4c4f69'
 outro = '#6b8d60'
+
+[os]
+style = 'bg:os fg:os-text bold'
+format = '[$symbol]($style)'
+disabled = false
+
+[os.symbols]
+Windows = ''
+Ubuntu = ''
 
 [username]
 style_user = 'bg:username fg:username-text-user'
@@ -88,6 +101,7 @@ truncation_symbol = '﬌/'
 "node_modules" = ''
 ".github" = ''
 ".git" = ''
+"/mnt" = ''
 
 [git_branch]
 symbol = ''
