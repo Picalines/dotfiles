@@ -126,10 +126,27 @@ require('lazy').setup({
   {
     -- Indentation guides
     'lukas-reineke/indent-blankline.nvim',
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
+    main = 'ibl',
+    opts = {},
+    config = function()
+      local hooks = require('ibl.hooks')
+      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+        vim.api.nvim_set_hl(0, 'Whitespace', { fg = '#454545' })
+      end)
+
+      require('ibl').setup({
+        indent = {
+          char = '┊',
+          highlight = { 'Whitespace' },
+        },
+        scope = {
+          enabled = false,
+        },
+        whitespace = {
+          remove_blankline_trail = true,
+        },
+      })
+    end,
   },
 
   -- "gc" to comment visual regions/lines
