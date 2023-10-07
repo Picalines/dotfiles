@@ -58,7 +58,7 @@ require('lazy').setup({
   },
 
   {
-    -- Useful plugin to show you pending keybinds.
+    -- Pending keybinds
     'folke/which-key.nvim',
     opts = {},
   },
