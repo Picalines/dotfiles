@@ -174,6 +174,21 @@ require('lazy').setup({
   },
 
   {
+    -- File explorer
+    'nvim-tree/nvim-tree.lua',
+    opts = {},
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function()
+      vim.g.loaded_netrw = 1
+      vim.g.loaded_netrwPlugin = 1
+      require('nvim-tree').setup()
+      vim.keymap.set('n', '<c-n>', ':NvimTreeFindFileToggle<CR>')
+    end,
+  },
+
+  {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
