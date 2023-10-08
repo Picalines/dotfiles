@@ -12,16 +12,26 @@ return {
 
 		vim.cmd.colorscheme("dark_modern")
 
+		local function set_hl_bg(hl, bg)
+			vim.api.nvim_set_hl(0, hl, { bg = bg })
+		end
+
+		local function set_hl_fg(hl, fg)
+			vim.api.nvim_set_hl(0, hl, { fg = fg })
+		end
+
 		local transparentHls = {
 			"Normal",
 			"NormalFloat",
 			"NvimTreeNormal",
 			"LineNr",
+			"NvimTreeWinSeparator",
 		}
 
 		for _, hl in pairs(transparentHls) do
-			vim.api.nvim_set_hl(0, hl, { bg = "none" })
+			set_hl_bg(hl, "none")
 		end
+
+		set_hl_fg("NvimTreeWinSeparator", "white")
 	end,
 }
-
