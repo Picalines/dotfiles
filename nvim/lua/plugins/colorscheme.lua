@@ -32,6 +32,13 @@ return {
 			set_hl_bg(hl, "none")
 		end
 
-		set_hl_fg("NvimTreeWinSeparator", "white")
+		local borderHls = {
+			"VertSplit",
+			"NvimTreeWinSeparator",
+		}
+
+		for _, hl in pairs(borderHls) do
+			set_hl_fg(hl, "#b9b9b9")
+		end
 	end,
 }
