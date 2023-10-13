@@ -1,21 +1,11 @@
 format = """
 [](intro)\
-[](bg:intro fg:username)\
+[](bg:intro fg:env)\
 $os\
 $username\
-[](bg:dir fg:username)\
+[](fg:env bg:dir)\
 $directory\
-[](fg:dir bg:tech-env)\
-$dotnet\
-$python\
-$java\
-$nodejs\
-[](fg:tech-env bg:git)\
-$git_branch\
-$git_commit\
-$git_status\
-$git_state\
-[](fg:git bg:duration)\
+[](fg:dir bg:duration)\
 $cmd_duration\
 [](fg:duration bg:status)\
 $status\
@@ -23,66 +13,36 @@ $status\
 [ ](fg:outro)\
 """
 
-palette = 'catppuccin'
+palette = 'custom'
 
 [palettes.custom]
-intro = '#a30048'
-prompt = 'yellow'
-os = '#c6a0f6'
-os-text = 'bright-yellow'
-username = '#c6a0f6'
-username-text-user = 'bright-white'
-username-text-root = 'bright-white'
-dir = '#d7005f'
-dir-text = 'bright-white'
-tech-env = '#4f1dc2'
-tech-env-text = 'bright-white'
-git = '#e74b27'
-git-text = 'bright-white'
-duration = '#ffce3e'
-duration-text = 'black'
-status = '#eb2a41'
-status-text = 'bright-white'
-outro = '#9c0b1c'
-
-[palettes.catppuccin]
-intro = '#8c92a7'
-prompt = 'bright-yellow'
-os = '#cdd6f4'
-os-text = 'black'
-username = '#cdd6f4'
-username-text-user = 'black'
-username-text-root = 'black'
+intro = '#b34b37'
+env = '#e66147'
+env-text = 'bright-white'
 dir = '#e64553'
 dir-text = 'bright-white'
-tech-env = '#7287fd'
-tech-env-text = 'bright-white'
-git = '#fe640b'
-git-text = 'bright-white'
-duration = '#ebddaa'
-duration-text = '#5c5f77'
-status = '#a6da95'
-status-text = '#4c4f69'
-outro = '#6b8d60'
+duration = '#b1355e'
+duration-text = 'bright-white'
+status = '#7e2559'
+status-text = 'bright-white'
+outro = '#4b1634'
 
 [os]
-style = 'bg:os fg:os-text bold'
-format = '[$symbol]($style)'
+format = '[$symbol](bg:env fg:env-text bold)'
 disabled = false
 
 [os.symbols]
 Windows = ''
 Ubuntu = ''
 Raspbian = ''
+Macos = ''
 
 [username]
-style_user = 'bg:username fg:username-text-user'
-style_root = 'bg:username fg:username-text-root'
-format = '[ $user]($style)'
+format = '[ $user](bg:env fg:env-text)'
 
 [directory]
 style = 'bg:dir fg:dir-text'
-format = '[ ﱮ $path]($style)'
+format = '[ $path]($style)'
 use_os_path_sep = false
 truncation_length = 3
 truncation_symbol = '﬌/'
@@ -104,55 +64,11 @@ truncation_symbol = '﬌/'
 ".git" = ''
 "/mnt" = ''
 
-[git_branch]
-symbol = ''
-style = 'bg:git fg:git-text'
-format = '[ $symbol $branch(:$remote_branch)]($style)'
-
-[git_commit]
-tag_symbol = ""
-style = 'bg:git fg:git-text bold'
-format = '[  $hash$tag]($style)'
-
-[git_status]
-style = 'bg:git fg:git-text bold'
-format = '[( \[$all_status$ahead_behind\])]($style)'
-ahead = '${count}'
-behind = '${count}'
-diverged = '${ahead_count}${behind_count}'
-
-[git_state]
-style = 'bg:git fg:git-text bold'
-format = '[ $state( $progress_current/$progress_total)]($style)'
-
-[java]
-symbol = ''
-style = 'bg:tech-env fg:tech-env-text'
-format = '[ $symbol ($version)]($style)'
-
-[nodejs]
-symbol = ''
-style = 'bg:tech-env fg:tech-env-text'
-format = '[ $symbol ($version)]($style)'
-
-[dotnet]
-symbol = ''
-style = 'bg:tech-env fg:tech-env-text'
-version_format = 'v${major}.${minor}'
-format = '[ $symbol ($version)]($style)'
-detect_extensions = ["csproj", "sln"]
-
-[python]
-symbol = ''
-style = 'bg:tech-env fg:tech-env-text'
-format = '[ $symbol ($version)( \($virtualenv\))]($style)'
-
 [cmd_duration]
 style = 'bg:duration fg:duration-text'
-format = '[  $duration]($style)'
+format = '[ $duration]($style)'
 
 [status]
 style = 'bg:status fg:status-text'
-symbol = ''
-format = '[ $symbol ($maybe_int)]($style)'
+format = '[ $int]($style)'
 disabled = false
