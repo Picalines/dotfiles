@@ -16,24 +16,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup({
-  { import = 'plugins' },
-
-  -- Git commands
-  'tpope/vim-fugitive',
-
-  -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-sleuth',
-
-  {
-    -- Pending keybinds
-    'folke/which-key.nvim',
-    opts = {},
-  },
-
-  -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
-}, {})
+require('lazy').setup({{ import = 'plugins' }}, {})
 
 require('settings')
 
