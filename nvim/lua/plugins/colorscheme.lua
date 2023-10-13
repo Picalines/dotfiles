@@ -23,8 +23,8 @@ return {
 		local transparentHls = {
 			"Normal",
 			"NormalFloat",
-			"NvimTreeNormal",
 			"LineNr",
+			"NvimTreeNormal",
 			"NvimTreeWinSeparator",
 		}
 
