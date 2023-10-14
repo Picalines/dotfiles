@@ -3,7 +3,7 @@ return {
 
   config = function()
     local on_attach = function(_, bufnr)
-      local map_key = function(key, func, desc)
+      local function map_key(key, func, desc)
         return vim.keymap.set('n', key, func, {
           buffer = bufnr,
           desc = desc and 'LSP: ' .. desc
@@ -24,8 +24,18 @@ return {
       map_key('K', vim.lsp.buf.hover, 'Hover Documentation')
       map_key('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
+      local custom_formatters = {
+        python = function()
+          vim.cmd(':normal ma')
+          vim.cmd(':silent :%!black --preview - -q 2>/dev/null')
+          vim.cmd(':normal `a')
+        end
+      }
+
       local function format_buffer()
-        vim.lsp.buf.format()
+        local formatter = custom_formatters[vim.bo.filetype]
+        formatter = formatter or vim.lsp.buf.format
+        formatter()
       end
 
       map_key('<leader>cf', format_buffer, 'Format current buffer')
