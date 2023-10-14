@@ -1,18 +1,16 @@
 return {
 	-- File explorer
 	'nvim-tree/nvim-tree.lua',
-	opts = {},
 	dependencies = {
 		'nvim-tree/nvim-web-devicons',
 	},
 	config = function()
 		local nvim_tree = require('nvim-tree')
+		local api = require('nvim-tree.api')
 
 		vim.keymap.set('n', '<leader>e', ':NvimTreeFindFileToggle<CR>')
 
 		local function on_attach(bufnr)
-			local api = require('nvim-tree.api')
-
 			local function map_key(key, fn, opts)
 				return vim.keymap.set('n', key, fn, opts)
 			end
@@ -46,6 +44,10 @@ return {
 				enable = true,
 				ignore = true,
 				timeout = 500,
+			},
+
+			modified = {
+				enable = true,
 			},
 
 			renderer = {
