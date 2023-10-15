@@ -34,6 +34,7 @@ return {
 
 		local borderHls = {
 			"VertSplit",
+			"WinSeparator",
 			"NvimTreeWinSeparator",
 		}
 
