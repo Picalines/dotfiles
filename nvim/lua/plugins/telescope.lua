@@ -39,16 +39,16 @@ return {
 		local builtin = require('telescope.builtin')
 
 		-- See `:help telescope.builtin`
-		map_key('<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
-		map_key('<leader><space>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+		map_key('<leader>?', builtin.oldfiles, '[?] Find recently opened files')
+		map_key('<leader><space>', builtin.buffers, '[ ] Find existing buffers')
 
-		map_key('<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-		map_key('<leader>sg', builtin.git_files, { desc = 'Search [G]it [F]iles' })
-		map_key('<leader>sw', builtin.live_grep, { desc = 'Search [W]orkspace' })
-		map_key('<leader>sc', builtin.commands, { desc = 'Search [C]ommands' })
-		map_key('<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-		map_key('<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-		map_key('<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+		map_key('<leader>sf', builtin.find_files, '[S]earch [F]iles')
+		map_key('<leader>sg', builtin.git_files, 'Search [G]it [F]iles')
+		map_key('<leader>sw', builtin.live_grep, 'Search [W]orkspace')
+		map_key('<leader>sc', builtin.commands, 'Search [C]ommands')
+		map_key('<leader>sh', builtin.help_tags, '[S]earch [H]elp')
+		map_key('<leader>sd', builtin.diagnostics, '[S]earch [D]iagnostics')
+		map_key('<leader>sr', builtin.resume, '[S]earch [R]esume')
 
 		map_key('<leader>/', function()
 			local themes = require('telescope.themes')
@@ -56,6 +56,6 @@ return {
 				winblend = 10,
 				previewer = false,
 			}))
-		end, { desc = '[/] Fuzzily search in current buffer' })
+		end, '[/] Fuzzily search in current buffer')
 	end
 }
