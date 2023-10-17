@@ -38,3 +38,4 @@ vim.o.wrap = false
 
 vim.opt.scrolloff = 8
 
+vim.o.fillchars = 'eob: '
