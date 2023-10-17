@@ -41,8 +41,17 @@ return {
 			hijack_netrw = true,
 			hijack_cursor = true,
 
+			update_focused_file = {
+				enable = true,
+			},
+
 			diagnostics = {
 				enable = true,
+				show_on_dirs = true,
+
+				severity = {
+					min = vim.diagnostic.severity.WARN,
+				},
 			},
 
 			git = {
@@ -56,6 +65,18 @@ return {
 			},
 
 			renderer = {
+				group_empty = true,
+
+				highlight_opened_files = 'icon',
+
+				root_folder_label = function(path)
+					return vim.fn.fnamemodify(path, ':t') .. '/'
+				end,
+
+				indent_markers = {
+					enable = true,
+				},
+
 				icons = {
 					glyphs = {
 						git = {
