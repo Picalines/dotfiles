@@ -16,6 +16,9 @@ return {
 					highlight link NvimTreeFolderName Fg
 					highlight link NvimTreeEmptyFolderName Fg
 					highlight link NvimTreeOpenedFolderName Fg
+
+					highlight NormalFloat guibg=none
+					highlight FloatBorder guibg=none
 				endif
 			]]
 		})
