@@ -42,21 +42,7 @@ return {
 			map_key('K', vim.lsp.buf.hover, 'Hover Documentation')
 			map_key('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
-			local custom_formatters = {
-				python = function()
-					vim.cmd(':normal ma')
-					vim.cmd(':silent :%!black --preview - -q 2>/dev/null')
-					vim.cmd(':normal `a')
-				end,
-			}
-
-			local function format_buffer()
-				local formatter = custom_formatters[vim.bo.filetype]
-				formatter = formatter or vim.lsp.buf.format
-				formatter()
-			end
-
-			map_key('<leader>cf', format_buffer, 'Format current buffer')
+			map_key('<leader>cf', vim.cmd.Format, 'Format current buffer')
 		end
 
 		local lspconfig = require('lspconfig')
