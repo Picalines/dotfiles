@@ -24,6 +24,7 @@ require('lazy').setup({
 require('settings')
 
 require('keymaps.default')
+require('keymaps.save_and_quit')
 require('keymaps.diagnostic')
 
 require('behaviour.yank-highlight')
