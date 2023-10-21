@@ -10,7 +10,7 @@ return {
 		local colorscheme = colorscheme_persist.get_colorscheme()
 		vim.cmd("colorscheme " .. colorscheme)
 
-		vim.keymap.set("n", "<leader>ft", colorscheme_persist.picker,
+		vim.keymap.set("n", "<leader>fT", colorscheme_persist.picker,
 			{ noremap = true, silent = true, desc = "Select color [T]heme" })
 	end,
 }
