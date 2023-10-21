@@ -48,19 +48,6 @@ return {
 		local lspconfig = require('lspconfig')
 		local mason_lspconfig = require('mason-lspconfig')
 
-		local servers = {
-			'lua_ls',
-			'tsserver',
-			'html',
-			'jsonls',
-			'pyright',
-			'jdtls',
-		}
-
-		mason_lspconfig.setup({
-			ensure_installed = servers,
-		})
-
 		local default_capabilities = vim.lsp.protocol.make_client_capabilities()
 		default_capabilities = require('cmp_nvim_lsp').default_capabilities(default_capabilities)
 
