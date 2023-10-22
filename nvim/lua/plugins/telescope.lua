@@ -54,12 +54,13 @@ return {
 		map_key('<leader><space>', builtin.buffers, '[ ] Find existing buffers')
 
 		map_key('<leader>ff', builtin.find_files, '[S]earch [F]iles')
+		map_key('<leader>fr', builtin.oldfiles, '[S]earch [R]ecent files')
 		map_key('<leader>fg', builtin.git_files, 'Search [G]it [F]iles')
 		map_key('<leader>fw', builtin.live_grep, 'Search [W]orkspace')
 		map_key('<leader>fc', builtin.commands, 'Search [C]ommands')
 		map_key('<leader>fh', builtin.help_tags, '[S]earch [H]elp')
 		map_key('<leader>fd', builtin.diagnostics, '[S]earch [D]iagnostics')
-		map_key('<leader>fr', builtin.resume, '[S]earch [R]esume')
+		map_key('<leader>fR', builtin.resume, '[S]earch [R]esume')
 
 		map_key('<leader>/', function()
 			local themes = require 'telescope.themes'
