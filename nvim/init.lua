@@ -5,29 +5,29 @@ vim.g.maplocalleader = ' '
 -- Install package manager
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system {
-    'git',
-    'clone',
-    '--filter=blob:none',
-    'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable', -- latest stable release
-    lazypath,
-  }
+	vim.fn.system {
+		'git',
+		'clone',
+		'--filter=blob:none',
+		'https://github.com/folke/lazy.nvim.git',
+		'--branch=stable', -- latest stable release
+		lazypath,
+	}
 end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  { import = 'plugins' },
-  { import = 'plugins.colorschemes' },
+	{ import = 'plugins' },
+	{ import = 'plugins.colorschemes' },
 }, {})
 
-require('settings')
+require 'settings'
 
-require('keymaps.default')
-require('keymaps.save_and_quit')
-require('keymaps.diagnostic')
+require 'keymaps.default'
+require 'keymaps.quit'
+require 'keymaps.diagnostic'
 
-require('behaviour.yank-highlight')
+require 'behaviour.yank-highlight'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

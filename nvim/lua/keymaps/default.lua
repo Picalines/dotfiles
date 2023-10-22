@@ -6,4 +6,3 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 
 -- Exit terminal mode
 -- vim.keymap.set({ 't', 'n', 'o' }, '<Esc>', '<C-\\><C-n>')
-

@@ -1,9 +1,8 @@
 return {
 	'akinsho/toggleterm.nvim',
 
-
 	config = function()
-		require('toggleterm').setup({
+		require('toggleterm').setup {
 			open_mapping = '<C-\\>',
 
 			hide_numbers = true,
@@ -17,7 +16,7 @@ return {
 			float_opts = {
 				border = 'rounded',
 			},
-		})
+		}
 
 		local function on_open()
 			local function map_key(mode, key, cmd)

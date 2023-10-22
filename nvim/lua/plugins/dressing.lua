@@ -5,14 +5,14 @@ return {
 		input = {
 			enabled = true,
 
-			default_prompt = "input:",
-			title_pos = "left",
+			default_prompt = 'input:',
+			title_pos = 'left',
 
 			insert_only = true,
 			start_in_insert = true,
 
-			border = "rounded",
-			relative = "cursor",
+			border = 'rounded',
+			relative = 'cursor',
 
 			prefer_width = 40,
 			width = nil,
@@ -21,14 +21,14 @@ return {
 
 			mappings = {
 				n = {
-					["<Esc>"] = "Close",
-					["<CR>"] = "Confirm",
+					['<Esc>'] = 'Close',
+					['<CR>'] = 'Confirm',
 				},
 				i = {
-					["<C-c>"] = "Close",
-					["<CR>"] = "Confirm",
-					["<Up>"] = "HistoryPrev",
-					["<Down>"] = "HistoryNext",
+					['<C-c>'] = 'Close',
+					['<CR>'] = 'Confirm',
+					['<Up>'] = 'HistoryPrev',
+					['<Down>'] = 'HistoryNext',
 				},
 			},
 		},

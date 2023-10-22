@@ -21,33 +21,33 @@ return {
 	},
 
 	config = function()
-		local telescope = require('telescope')
-		local actions = require('telescope.actions')
+		local telescope = require 'telescope'
+		local actions = require 'telescope.actions'
 
-		telescope.setup({
+		telescope.setup {
 			defaults = {
-				path_display = { "truncate " },
+				path_display = { 'truncate ' },
 				file_ignore_patterns = {
-					"node_modules",
+					'node_modules',
 				},
 				mappings = {
 					i = {
-						["<C-k>"] = actions.move_selection_previous,
-						["<C-j>"] = actions.move_selection_next,
-						["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+						['<C-k>'] = actions.move_selection_previous,
+						['<C-j>'] = actions.move_selection_next,
+						['<C-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
 					},
 				},
 			},
-		})
+		}
 
 		pcall(telescope.load_extension, 'fzf')
-		telescope.load_extension('ui-select')
+		telescope.load_extension 'ui-select'
 
 		local function map_key(key, func, desc)
 			return vim.keymap.set('n', key, func, { desc = desc })
 		end
 
-		local builtin = require('telescope.builtin')
+		local builtin = require 'telescope.builtin'
 
 		-- See `:help telescope.builtin`
 		map_key('<leader>?', builtin.oldfiles, '[?] Find recently opened files')
@@ -62,11 +62,11 @@ return {
 		map_key('<leader>fr', builtin.resume, '[S]earch [R]esume')
 
 		map_key('<leader>/', function()
-			local themes = require('telescope.themes')
-			builtin.current_buffer_fuzzy_find(themes.get_dropdown({
+			local themes = require 'telescope.themes'
+			builtin.current_buffer_fuzzy_find(themes.get_dropdown {
 				winblend = 10,
 				previewer = false,
-			}))
+			})
 		end, '[/] Fuzzily search in current buffer')
-	end
+	end,
 }

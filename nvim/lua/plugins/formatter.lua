@@ -3,12 +3,12 @@ return {
 
 	config = function()
 		local function lsp_formatter()
-			vim.lsp.buf.format({ async = true })
+			vim.lsp.buf.format()
 		end
 
 		-- Manual list of formatters for filetypes
 		local manual_filetype_formatters = {
-			lua = { lsp_formatter },
+			lua = { require('formatter.filetypes.lua').stylua },
 		}
 
 		local prettier_filetypes = {
@@ -25,10 +25,10 @@ return {
 			manual_filetype_formatters[filetype] = module.prettierd or module.prettier
 		end
 
-		require('formatter').setup({
+		require('formatter').setup {
 			filetype = vim.tbl_extend('error', manual_filetype_formatters, {
 				['*'] = {
-					require("formatter.filetypes.any").remove_trailing_whitespace,
+					require('formatter.filetypes.any').remove_trailing_whitespace,
 
 					function()
 						local filetype = vim.bo.filetype
@@ -36,17 +36,19 @@ return {
 							return
 						end
 
-						local plugin_formatter_ok, plugin_formatter = pcall(require, 'formatter.filetype.' .. filetype)
+						local plugin_formatter_ok, builtin_module = pcall(require, 'formatter.filetypes.' .. filetype)
 						if plugin_formatter_ok then
+							local _, builtin_formatter = next(builtin_module)
+
 							-- fallback to formatter.nvim's formatter
-							plugin_formatter()
+							builtin_formatter()
 						else
 							-- fallback to LSP's formatter
 							lsp_formatter()
 						end
-					end
+					end,
 				},
 			}),
-		})
-	end
+		}
+	end,
 }

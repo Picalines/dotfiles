@@ -5,8 +5,8 @@ return {
 		'nvim-tree/nvim-web-devicons',
 	},
 	config = function()
-		local nvim_tree = require('nvim-tree')
-		local api = require('nvim-tree.api')
+		local nvim_tree = require 'nvim-tree'
+		local api = require 'nvim-tree.api'
 
 		vim.keymap.set('n', '<leader>e', ':NvimTreeFindFileToggle<CR>', {
 			silent = true,
@@ -16,7 +16,7 @@ return {
 		local function on_attach(bufnr)
 			local function map_key(key, fn, desc)
 				return vim.keymap.set('n', key, fn, {
-					desc = "nvim-tree: " .. desc,
+					desc = 'nvim-tree: ' .. desc,
 					buffer = bufnr,
 					noremap = true,
 					silent = true,
@@ -34,7 +34,7 @@ return {
 			map_key('H', api.tree.collapse_all, 'Collapse All')
 		end
 
-		nvim_tree.setup({
+		nvim_tree.setup {
 			on_attach = on_attach,
 
 			disable_netrw = true,
@@ -87,10 +87,10 @@ return {
 							untracked = 'U',
 							deleted = 'D',
 							ignored = '-',
-						}
-					}
+						},
+					},
 				},
 			},
-		})
+		}
 	end,
 }

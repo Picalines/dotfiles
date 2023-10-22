@@ -9,8 +9,8 @@ return {
 			let g:sonokai_diagnostic_virtual_text = 'colored'
 		]]
 
-		vim.api.nvim_create_autocmd({ "ColorScheme" }, {
-			pattern = "*",
+		vim.api.nvim_create_autocmd({ 'ColorScheme' }, {
+			pattern = '*',
 			command = [[
 				if g:colors_name ==# "sonokai"
 					highlight link NvimTreeFolderName Fg
@@ -20,7 +20,7 @@ return {
 					highlight NormalFloat guibg=none
 					highlight FloatBorder guibg=none
 				endif
-			]]
+			]],
 		})
-	end
+	end,
 }

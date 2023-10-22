@@ -8,7 +8,7 @@ return {
 
 		'j-hui/fidget.nvim',
 
-		{ 'folke/neodev.nvim',       config = true },
+		{ 'folke/neodev.nvim', config = true },
 		'numToStr/Comment.nvim',
 
 		{
@@ -24,14 +24,14 @@ return {
 			local function map_key(key, func, desc)
 				return vim.keymap.set('n', key, func, {
 					buffer = bufnr,
-					desc = desc and 'LSP: ' .. desc
+					desc = desc and 'LSP: ' .. desc,
 				})
 			end
 
 			map_key('<leader>cr', vim.lsp.buf.rename, '[R]ename')
 			map_key('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-			local ts_builtin = require('telescope.builtin')
+			local ts_builtin = require 'telescope.builtin'
 
 			map_key('gd', ts_builtin.lsp_definitions, '[G]oto [D]efinition')
 			map_key('gr', ts_builtin.lsp_references, '[G]oto [R]eferences')
@@ -45,15 +45,17 @@ return {
 			map_key('<leader>cf', vim.cmd.Format, 'Format current buffer')
 		end
 
-		local lspconfig = require('lspconfig')
-		local mason_lspconfig = require('mason-lspconfig')
+		local lspconfig = require 'lspconfig'
+		local mason_lspconfig = require 'mason-lspconfig'
+
+		mason_lspconfig.setup {}
 
 		local default_capabilities = vim.lsp.protocol.make_client_capabilities()
 		default_capabilities = require('cmp_nvim_lsp').default_capabilities(default_capabilities)
 
 		local default_handlers = {}
 
-		mason_lspconfig.setup_handlers({
+		mason_lspconfig.setup_handlers {
 			function(server_name)
 				local server_config_ok, server_config = pcall(require, 'lsp.servers.' .. server_name)
 
@@ -66,15 +68,15 @@ return {
 					pcall(server_config.on_attach, client, bufnr)
 				end
 
-				lspconfig[server_name].setup({
+				lspconfig[server_name].setup {
 					capabilities = server_config.capabilities or default_capabilities,
 					settings = server_config.settings,
 					init_options = server_config.init_options,
 					filetypes = server_config.filetypes,
 					handlers = vim.tbl_extend('force', default_handlers, server_config.handlers or {}),
 					on_attach = on_server_attach,
-				})
-			end
-		})
+				}
+			end,
+		}
 	end,
 }
