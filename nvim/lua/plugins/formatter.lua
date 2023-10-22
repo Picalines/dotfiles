@@ -9,6 +9,7 @@ return {
 		-- Manual list of formatters for filetypes
 		local manual_filetype_formatters = {
 			lua = { require('formatter.filetypes.lua').stylua },
+			python = { require('formatter.filetypes.python').black },
 		}
 
 		local prettier_filetypes = {
