@@ -13,6 +13,8 @@ $status\
 [ ](fg:outro)\
 """
 
+add_newline = false
+
 palette = 'custom'
 
 [palettes.custom]

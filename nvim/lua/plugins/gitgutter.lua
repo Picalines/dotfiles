@@ -1,8 +1,7 @@
 return {
-	-- Adds git related signs to the gutter, as well as utilities for managing changes
 	'lewis6991/gitsigns.nvim',
+
 	opts = {
-		-- See `:help gitsigns.txt`
 		signs = {
 			add = { text = '+' },
 			change = { text = '~' },
@@ -10,23 +9,35 @@ return {
 			topdelete = { text = '‾' },
 			changedelete = { text = '~' },
 		},
+
 		on_attach = function(bufnr)
-			vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk,
-				{ buffer = bufnr, desc = 'Preview git hunk' })
+			local function map_key(mode, key, func, desc)
+				return vim.keymap.set(mode, key, func, { buffer = bufnr, desc = desc })
+			end
+
+			map_key('n', '<leader>hp', require('gitsigns').preview_hunk, 'Preview git hunk')
 
 			-- don't override the built-in and fugitive keymaps
 			local gs = package.loaded.gitsigns
-			vim.keymap.set({ 'n', 'v' }, ']c', function()
-				if vim.wo.diff then return ']c' end
-				vim.schedule(function() gs.next_hunk() end)
+
+			local function goto_next_hunk()
+				if vim.wo.diff then
+					return ']c'
+				end
+				vim.schedule(gs.next_hunk)
 				return '<Ignore>'
-			end, { expr = true, buffer = bufnr, desc = "Jump to next hunk" })
-			vim.keymap.set({ 'n', 'v' }, '[c', function()
-				if vim.wo.diff then return '[c' end
-				vim.schedule(function() gs.prev_hunk() end)
+			end
+
+			local function goto_prev_hunk()
+				if vim.wo.diff then
+					return '[c'
+				end
+				vim.schedule(gs.prev_hunk)
 				return '<Ignore>'
-			end, { expr = true, buffer = bufnr, desc = "Jump to previous hunk" })
+			end
+
+			map_key({ 'n', 'v' }, ']c', goto_next_hunk, 'Jump to next hunk')
+			map_key({ 'n', 'v' }, '[c', goto_prev_hunk, 'Jump to previous hunk')
 		end,
 	},
 }
-

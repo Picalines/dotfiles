@@ -1,5 +1,5 @@
 local function nmap(key, func, desc)
-    return vim.keymap.set('n', key, func, { desc = desc })
+	return vim.keymap.set('n', key, func, { desc = desc })
 end
 
 nmap('[d', vim.diagnostic.goto_prev, 'Go to previous diagnostic message')
