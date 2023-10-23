@@ -45,7 +45,7 @@ style = 'bg:dir fg:dir-text'
 format = '[ $path]($style)'
 use_os_path_sep = false
 truncation_length = 3
-truncation_symbol = '﬌/'
+truncation_symbol = '󱞩/'
 
 [directory.substitutions]
 "Projects" = ''
