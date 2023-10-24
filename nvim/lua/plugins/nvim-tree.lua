@@ -8,9 +8,14 @@ return {
 		local nvim_tree = require 'nvim-tree'
 		local api = require 'nvim-tree.api'
 
-		vim.keymap.set('n', '<leader>e', ':NvimTreeFindFileToggle<CR>', {
+		vim.keymap.set('n', '<leader>e', ':NvimTreeFocus<CR>', {
 			silent = true,
-			desc = 'Open File [E]xplorer',
+			desc = 'Focus on File [E]xplorer',
+		})
+
+		vim.keymap.set('n', '<leader>E', ':NvimTreeFindFileToggle<CR>', {
+			silent = true,
+			desc = 'Toggle File [E]xplorer',
 		})
 
 		local function on_attach(bufnr)
@@ -32,6 +37,8 @@ return {
 			map_key('h', api.tree.close, 'Close')
 			map_key('l', api.node.open.edit, 'Edit Or Open')
 			map_key('H', api.tree.collapse_all, 'Collapse All')
+
+			map_key('<leader>e', '<C-W><C-P><CR>', 'Jump back')
 		end
 
 		nvim_tree.setup {
