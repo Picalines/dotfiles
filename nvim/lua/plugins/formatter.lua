@@ -2,33 +2,24 @@ return {
 	'mhartington/formatter.nvim',
 
 	config = function()
-		local function lsp_formatter()
-			vim.lsp.buf.format()
-		end
+		local lsp_formatter = vim.lsp.buf.format
 
 		-- Manual list of formatters for filetypes
-		local manual_filetype_formatters = {
+		local manual_formatters = {
 			lua = { require('formatter.filetypes.lua').stylua },
 			python = { require('formatter.filetypes.python').black },
-		}
 
-		local prettier_filetypes = {
-			'javascript',
-			'javascriptreact',
-			'typescript',
-			'typescriptreact',
-			'json',
-			'css',
+			javascript = { require('formatter.filetypes.javascript').prettierd },
+			javascriptreact = { require('formatter.filetypes.javascriptreact').prettierd },
+			typescript = { require('formatter.filetypes.typescript').prettierd },
+			typescriptreact = { require('formatter.filetypes.typescriptreact').prettierd },
+			json = { require('formatter.filetypes.json').prettierd },
+			css = { require('formatter.filetypes.css').prettierd },
 		}
-
-		for _, filetype in ipairs(prettier_filetypes) do
-			local module = require('formatter.filetypes.' .. filetype)
-			manual_filetype_formatters[filetype] = module.prettierd
-		end
 
 		local function builtin_or_lsp_formatter()
 			local filetype = vim.bo.filetype
-			if manual_filetype_formatters[filetype] == nil then
+			if manual_formatters[filetype] == nil then
 				return
 			end
 
@@ -41,13 +32,14 @@ return {
 			end
 		end
 
-		local formatters = vim.tbl_extend('error', manual_filetype_formatters, {
+		local formatters = vim.tbl_extend('error', manual_formatters, {
 			['*'] = {
 				require('formatter.filetypes.any').remove_trailing_whitespace,
 
 				builtin_or_lsp_formatter,
 
 				function()
+					-- save file if it was saved before formatting
 					if not vim.bo.modified then
 						vim.cmd.w()
 					end
