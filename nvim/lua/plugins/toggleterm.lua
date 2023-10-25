@@ -3,7 +3,7 @@ return {
 
 	config = function()
 		require('toggleterm').setup {
-			open_mapping = '<C-\\>',
+			open_mapping = '<leader>t',
 
 			hide_numbers = true,
 
