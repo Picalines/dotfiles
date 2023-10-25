@@ -23,6 +23,7 @@ return {
 	config = function()
 		local telescope = require 'telescope'
 		local actions = require 'telescope.actions'
+		local builtin = require 'telescope.builtin'
 
 		telescope.setup {
 			defaults = {
@@ -34,7 +35,6 @@ return {
 					i = {
 						['<C-k>'] = actions.move_selection_previous,
 						['<C-j>'] = actions.move_selection_next,
-						['<C-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
 					},
 				},
 			},
@@ -47,27 +47,16 @@ return {
 			return vim.keymap.set('n', key, func, { desc = desc })
 		end
 
-		local builtin = require 'telescope.builtin'
+		map_key('<leader>ff', builtin.find_files, '[F]ind [F]iles')
+		map_key('<leader>fr', builtin.oldfiles, '[F]ind [R]ecent files')
+		map_key('<leader>fb', builtin.buffers, '[F]ind [B]uffer')
+		map_key('<leader>fg', builtin.git_files, '[F]ind [G]it [F]iles')
+		map_key('<leader>fw', builtin.live_grep, '[F]ind [W]orkspace')
+		map_key('<leader>fc', builtin.commands, '[F]ind [C]ommands')
+		map_key('<leader>fh', builtin.help_tags, '[F]ind [H]elp')
+		map_key('<leader>fd', builtin.diagnostics, '[F]ind [D]iagnostics')
+		map_key('<leader>fR', builtin.resume, '[F]ind [R]esume')
 
-		-- See `:help telescope.builtin`
-		map_key('<leader>?', builtin.oldfiles, '[?] Find recently opened files')
-		map_key('<leader><space>', builtin.buffers, '[ ] Find existing buffers')
-
-		map_key('<leader>ff', builtin.find_files, '[S]earch [F]iles')
-		map_key('<leader>fr', builtin.oldfiles, '[S]earch [R]ecent files')
-		map_key('<leader>fg', builtin.git_files, 'Search [G]it [F]iles')
-		map_key('<leader>fw', builtin.live_grep, 'Search [W]orkspace')
-		map_key('<leader>fc', builtin.commands, 'Search [C]ommands')
-		map_key('<leader>fh', builtin.help_tags, '[S]earch [H]elp')
-		map_key('<leader>fd', builtin.diagnostics, '[S]earch [D]iagnostics')
-		map_key('<leader>fR', builtin.resume, '[S]earch [R]esume')
-
-		map_key('<leader>/', function()
-			local themes = require 'telescope.themes'
-			builtin.current_buffer_fuzzy_find(themes.get_dropdown {
-				winblend = 10,
-				previewer = false,
-			})
-		end, '[/] Fuzzily search in current buffer')
+		map_key('<leader>/', builtin.current_buffer_fuzzy_find, 'Find in current buffer')
 	end,
 }
