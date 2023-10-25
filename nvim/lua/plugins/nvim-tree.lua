@@ -125,12 +125,22 @@ return {
 				enable = true,
 			},
 
+			hijack_directories = {
+				auto_open = false,
+			},
+
 			diagnostics = {
 				enable = true,
 				show_on_dirs = true,
 
 				severity = {
 					min = vim.diagnostic.severity.WARN,
+				},
+			},
+
+			filters = {
+				custom = {
+					"^\\.git",
 				},
 			},
 
