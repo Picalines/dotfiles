@@ -15,6 +15,16 @@ return {
 			typescriptreact = { require('formatter.filetypes.typescriptreact').prettierd },
 			json = { require('formatter.filetypes.json').prettierd },
 			css = { require('formatter.filetypes.css').prettierd },
+			svelte = { require('formatter.filetypes.svelte').prettier },
+			vue = { require('formatter.filetypes.vue').prettier },
+
+			go = { require('formatter.filetypes.go').gofmt },
+			c = { require('formatter.filetypes.c').clangformat },
+			h = { require('formatter.filetypes.c').clangformat },
+			cpp = { require('formatter.filetypes.cpp').clangformat },
+			cs = { require('formatter.filetypes.cs').dotnetformat },
+
+			java = { require('formatter.filetypes.java').clangformat },
 		}
 
 		local function builtin_or_lsp_formatter()
