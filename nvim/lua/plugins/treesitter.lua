@@ -18,13 +18,21 @@ return {
 				'typescript',
 				'tsx',
 				'html',
+				'svelte',
+				'vue',
+				'json',
+				'toml',
+				'yaml',
 				'java',
 				'c_sharp',
+				'dockerfile',
+				'gitignore',
+				'bash',
+				'markdown',
 				'vimdoc',
 				'vim',
 			},
 
-			-- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
 			auto_install = false,
 
 			highlight = { enable = true },
