@@ -16,19 +16,19 @@ return {
 			sticky = true,
 
 			toggler = {
-				line = '<leader>cl',
-				block = '<leader>cb',
+				line = 'ycl',
+				block = 'ycb',
 			},
 
 			opleader = {
-				line = '<leader>cl',
-				block = '<leader>cb',
+				line = 'ycl',
+				block = 'ycb',
 			},
 
 			extra = {
-				above = '<leader>cO',
-				below = '<leader>co',
-				eol = '<leader>cA',
+				above = 'ycO',
+				below = 'yco',
+				eol = 'ycA',
 			},
 
 			mappings = {
