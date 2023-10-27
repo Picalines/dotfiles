@@ -15,6 +15,7 @@ return {
 			groups = {
 				all = {
 					VertSplit = { link = 'WinBar' },
+					FloatBorder = { guifg = '#e6edf3' },
 				},
 			},
 		}
