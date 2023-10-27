@@ -1,6 +1,6 @@
 return {
-	-- LSP
 	'neovim/nvim-lspconfig',
+
 	dependencies = {
 		'williamboman/mason.nvim',
 		'williamboman/mason-lspconfig.nvim',
@@ -9,13 +9,6 @@ return {
 
 		{ 'folke/neodev.nvim', config = true },
 		'numToStr/Comment.nvim',
-
-		{
-			'MunifTanjim/prettier.nvim',
-			opts = {
-				bin = 'prettierd',
-			},
-		},
 	},
 
 	config = function()
@@ -27,8 +20,8 @@ return {
 				})
 			end
 
-			map_key('<leader>cr', vim.lsp.buf.rename, '[R]ename')
-			map_key('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+			map_key('cn', vim.lsp.buf.rename, '[R]ename')
+			map_key('<leader>a', vim.lsp.buf.code_action, 'Code [A]ction')
 
 			local ts_builtin = require 'telescope.builtin'
 
@@ -41,7 +34,7 @@ return {
 			map_key('K', vim.lsp.buf.hover, 'Hover Documentation')
 			map_key('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
-			map_key('<leader>cf', vim.cmd.Format, 'Format current buffer')
+			map_key('<leader>F', vim.cmd.Format, 'Format current buffer')
 		end
 
 		local lspconfig = require 'lspconfig'
