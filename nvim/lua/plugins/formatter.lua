@@ -1,6 +1,8 @@
 return {
 	'mhartington/formatter.nvim',
 
+	event = { 'BufReadPre', 'BufNewFile' },
+
 	config = function()
 		local lsp_formatter = vim.lsp.buf.format
 
