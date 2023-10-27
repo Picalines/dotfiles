@@ -1,6 +1,6 @@
 local modules = {
 	'default',
-	'quit',
+	'editor',
 	'diagnostic',
 }
 
