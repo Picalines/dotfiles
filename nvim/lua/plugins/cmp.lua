@@ -1,31 +1,3 @@
-local kind_icons = {
-	Text = '',
-	Method = '󰆧',
-	Function = '󰊕',
-	Constructor = '',
-	Field = '',
-	Variable = '',
-	Class = '󰠱',
-	Interface = '',
-	Module = '',
-	Property = '',
-	Unit = '',
-	Value = '󰎠',
-	Enum = '',
-	Keyword = '󰌋',
-	Snippet = '',
-	Color = '󰏘',
-	File = '󰈙',
-	Reference = '',
-	Folder = '󰉋',
-	EnumMember = '',
-	Constant = '',
-	Struct = '',
-	Event = '',
-	Operator = '󰆕',
-	TypeParameter = '',
-}
-
 return {
 	-- Autocompletion
 	'hrsh7th/nvim-cmp',
@@ -39,45 +11,55 @@ return {
 
 		-- Adds a number of user-friendly snippets
 		'rafamadriz/friendly-snippets',
+
+		-- Icons
+		'onsails/lspkind.nvim',
+
+		-- Additional completion sources
+		'hrsh7th/cmp-calc',
+		'hrsh7th/cmp-nvim-lsp-signature-help',
 	},
 
 	config = function()
 		local cmp = require 'cmp'
 		local luasnip = require 'luasnip'
+		local lspkind = require 'lspkind'
 
 		require('luasnip.loaders.from_vscode').lazy_load()
 
 		luasnip.config.setup {}
 
 		cmp.setup {
-			window = {
-				completion = cmp.config.window.bordered(),
-				documentation = cmp.config.window.bordered(),
-			},
-
 			mapping = cmp.mapping.preset.insert {
-				['<C-a>'] = cmp.mapping.complete {},
-				['<C-j>'] = cmp.mapping.select_next_item(),
-				['<C-k>'] = cmp.mapping.select_prev_item(),
-				['<C-d>'] = cmp.mapping.scroll_docs(-4),
-				['<C-f>'] = cmp.mapping.scroll_docs(4),
+				['<S-Space>'] = cmp.mapping.complete(),
+
+				['<Tab>'] = cmp.mapping.select_next_item(),
+				['<S-Tab>'] = cmp.mapping.select_prev_item(),
+
+				['<C-k>'] = cmp.mapping.scroll_docs(-4),
+				['<C-j>'] = cmp.mapping.scroll_docs(4),
 
 				['<CR>'] = cmp.mapping.confirm {
 					behavior = cmp.ConfirmBehavior.Replace,
 					select = true,
 				},
+
+				['<Esc>'] = cmp.mapping.abort(),
 			},
 
 			formatting = {
-				format = function(_, item)
-					item.kind = kind_icons[item.kind] .. ' ' .. item.kind:lower()
-					return item
-				end,
+				format = lspkind.cmp_format {
+					mode = 'symbol',
+					maxwdith = 50,
+					elipsis_char = '...',
+				},
 			},
 
 			sources = {
 				{ name = 'nvim_lsp' },
 				{ name = 'luasnip' },
+				{ name = 'nvim_lsp_signature_help' },
+				{ name = 'calc' },
 			},
 
 			snippet = {
