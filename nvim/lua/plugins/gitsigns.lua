@@ -57,10 +57,10 @@ return {
 				return '<Ignore>'
 			end
 
-			map_key({ 'n', 'v' }, ']C', goto_next_hunk, 'Jump to next [C]hange')
-			map_key({ 'n', 'v' }, '[C', goto_prev_hunk, 'Jump to previous [C]hange')
+			map_key({ 'n', 'v' }, ']~', goto_next_hunk, 'Jump to next [C]hange')
+			map_key({ 'n', 'v' }, '[~', goto_prev_hunk, 'Jump to previous [C]hange')
 
-			map_key('n', '<leader>C', gitsigns.preview_hunk, 'Preview git [C]hange')
+			map_key('n', '<leader>~', gitsigns.preview_hunk, 'Preview git [C]hange')
 		end,
 	},
 }
