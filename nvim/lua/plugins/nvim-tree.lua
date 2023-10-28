@@ -23,8 +23,8 @@ return {
 				return vim.keymap.set('n', key, fn, {
 					desc = 'nvim-tree: ' .. desc,
 					buffer = bufnr,
-					noremap = true,
-					silent = true,
+					-- noremap = true,
+					-- silent = true,
 					-- nowait = true,
 				})
 			end
@@ -74,17 +74,17 @@ return {
 			map_key(']m', api.marks.navigate.next, 'Next Mark')
 			map_key('[m', api.marks.navigate.prev, 'Prev Mark')
 
-			map_key('-', api.tree.change_root_to_parent, 'Up')
-			map_key('_', api.tree.change_root_to_node, 'CD')
+			map_key('{', api.tree.change_root_to_parent, 'Up')
+			map_key('}', api.tree.change_root_to_node, 'CD')
 
 			map_key('o', api.node.open.edit, 'Open')
 			map_key('<CR>', api.node.open.edit, 'Open')
 			map_key('<2-LeftMouse>', api.node.open.edit, 'Open')
-			map_key('<C-s>', api.node.run.system, 'Open: System')
+			map_key('<C-o>', api.node.run.system, 'Open: System')
 			map_key('<S-t>', api.node.open.tab, 'Open: New Tab')
 			map_key('<S-v>', api.node.open.vertical, 'Open: Vertical Split')
 			map_key('<S-h>', api.node.open.horizontal, 'Open: Horizontal Split')
-			map_key('<Tab>', api.node.open.preview, 'Open Preview')
+			map_key('<Tab>', api.node.open.preview, 'Open: Preview')
 
 			map_key('a', api.fs.create, 'Create')
 			map_key('r', api.fs.rename, 'Rename')
@@ -154,10 +154,15 @@ return {
 				enable = true,
 			},
 
+			view = {
+				width = 40,
+			},
+
 			renderer = {
 				group_empty = true,
 
 				highlight_opened_files = 'icon',
+				highlight_git = true,
 
 				root_folder_label = function(path)
 					return vim.fn.fnamemodify(path, ':t') .. '/'
@@ -168,15 +173,22 @@ return {
 				},
 
 				icons = {
+					show = {
+						folder = false,
+						folder_arrow = true,
+					},
+
+					git_placement = "after",
+
 					glyphs = {
 						git = {
-							unstaged = 'M',
-							staged = 'S',
-							unmerged = 'C',
-							renamed = 'R',
-							untracked = 'U',
-							deleted = 'D',
-							ignored = '-',
+							unstaged = '󰏫',
+							staged = '✓',
+							unmerged = '',
+							renamed = '➜',
+							untracked = '+',
+							deleted = '-',
+							ignored = '◌',
 						},
 					},
 				},
