@@ -13,28 +13,29 @@ return {
 
 	config = function()
 		local function on_attach_default(_, bufnr)
+			local ts_builtin = require 'telescope.builtin'
+
 			local function map_key(key, func, desc)
 				return vim.keymap.set('n', key, func, {
 					buffer = bufnr,
-					desc = desc and 'LSP: ' .. desc,
+					desc = 'LSP: ' .. desc,
 				})
 			end
 
-			map_key('cn', vim.lsp.buf.rename, '[R]ename')
-			map_key('<leader>a', vim.lsp.buf.code_action, 'Code [A]ction')
+			map_key('<leader>R', vim.lsp.buf.rename, '[R]ename')
+			map_key('<leader>A', vim.lsp.buf.code_action, 'Code [A]ction')
+			map_key('<leader>F', vim.cmd.Format, '[F]ormat current buffer')
 
-			local ts_builtin = require 'telescope.builtin'
-
-			map_key('gd', ts_builtin.lsp_definitions, '[G]oto [D]efinition')
-			map_key('gr', ts_builtin.lsp_references, '[G]oto [R]eferences')
-			map_key('gI', ts_builtin.lsp_implementations, '[G]oto [I]mplementation')
-			map_key('<leader>ds', ts_builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
-			map_key('<leader>ws', ts_builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+			map_key('<leader>fD', ts_builtin.lsp_definitions, '[F]ind [D]efinitions')
+			map_key('<leader>fC', vim.lsp.buf.declaration, '[F]ind to De[c]larations')
+			map_key('<leader>fR', ts_builtin.lsp_references, '[F]ind [R]eferences')
+			map_key('<leader>fI', ts_builtin.lsp_implementations, '[F]ind [I]mplementation')
+			map_key('<leader>fT', ts_builtin.lsp_type_definitions, '[F]ind [T]ype definitions')
+			map_key('<leader>fSd', ts_builtin.lsp_document_symbols, '[F]ind [D]ocument [S]ymbols')
+			map_key('<leader>fSw', ts_builtin.lsp_dynamic_workspace_symbols, '[F]ind [W]orkspace [S]ymbols')
 
 			map_key('K', vim.lsp.buf.hover, 'Hover Documentation')
 			map_key('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-			map_key('<leader>F', vim.cmd.Format, 'Format current buffer')
 		end
 
 		local lspconfig = require 'lspconfig'
