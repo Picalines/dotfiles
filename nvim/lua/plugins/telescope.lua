@@ -1,6 +1,8 @@
 return {
 	'nvim-telescope/telescope.nvim',
+
 	branch = '0.1.x',
+
 	dependencies = {
 		'nvim-lua/plenary.nvim',
 
@@ -23,11 +25,12 @@ return {
 	config = function()
 		local telescope = require 'telescope'
 		local actions = require 'telescope.actions'
+		local themes = require 'telescope.themes'
 		local builtin = require 'telescope.builtin'
 
 		telescope.setup {
 			defaults = {
-				path_display = { 'truncate ' },
+				path_display = { 'truncate' },
 				file_ignore_patterns = {
 					'node_modules',
 				},
@@ -36,6 +39,11 @@ return {
 						['<C-k>'] = actions.move_selection_previous,
 						['<C-j>'] = actions.move_selection_next,
 					},
+				},
+			},
+			extensions = {
+				['ui-select'] = {
+					themes.get_dropdown {},
 				},
 			},
 		}
