@@ -43,8 +43,6 @@ return {
 					behavior = cmp.ConfirmBehavior.Replace,
 					select = true,
 				},
-
-				['<Esc>'] = cmp.mapping.abort(),
 			},
 
 			formatting = {
