@@ -1,6 +1,7 @@
 return {
 	-- Autocompletion
 	'hrsh7th/nvim-cmp',
+
 	dependencies = {
 		-- Snippet Engine & its associated nvim-cmp source
 		'L3MON4D3/LuaSnip',
@@ -19,6 +20,8 @@ return {
 		'hrsh7th/cmp-calc',
 		'hrsh7th/cmp-nvim-lsp-signature-help',
 	},
+
+	event = { 'InsertEnter', 'CmdlineEnter' },
 
 	config = function()
 		local cmp = require 'cmp'
@@ -60,6 +63,7 @@ return {
 		cmp.setup {
 			mapping = cmp.mapping.preset.insert {
 				['<S-Space>'] = cmp.mapping.complete(),
+				['<C-Space>'] = cmp.mapping.complete(),
 
 				['<Tab>'] = cmp.mapping(select_next, { 'i', 's' }),
 				['<S-Tab>'] = cmp.mapping(select_prev, { 'i', 's' }),
