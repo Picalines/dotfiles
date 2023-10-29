@@ -1,6 +1,9 @@
 local modules = {
 	'default',
-	'editor',
+	'environment',
+	'motion',
+	'selection',
+	'editing',
 	'diagnostic',
 }
 

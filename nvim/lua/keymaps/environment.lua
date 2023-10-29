@@ -13,5 +13,5 @@ end
 
 map_key('<leader>s', cmd_f ':w', '[S]ave file')
 
-map_key('<leader>qs', cmd_f(':wa!', ':qa!'), '[Q]uit and [S]ave')
-map_key('<leader>qdd', cmd_f ':qa!', '[Q]uit and [D]elete')
+map_key('<leader>q', cmd_f(':wa!', ':qa!'), '[Q]uit and save')
+map_key('<leader>Q', cmd_f ':qa!', '[Q]uit and delete')

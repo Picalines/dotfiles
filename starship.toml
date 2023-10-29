@@ -1,36 +1,18 @@
-format = """
-[](intro)\
-[](bg:intro fg:env)\
-$os\
-$username\
-[](fg:env bg:dir)\
-$directory\
-[](fg:dir bg:duration)\
-$cmd_duration\
-[](fg:duration bg:status)\
-$status\
-[](fg:status bg:outro)\
-[ ](fg:outro)\
-"""
+format = "$os$username$directory$cmd_duration$status > "
 
 add_newline = false
 
 palette = 'custom'
 
 [palettes.custom]
-intro = '#b34b37'
-env = '#e66147'
-env-text = 'bright-white'
-dir = '#e64553'
-dir-text = 'bright-white'
-duration = '#b1355e'
-duration-text = 'bright-white'
-status = '#7e2559'
-status-text = 'bright-white'
-outro = '#4b1634'
+os = '#bright-white'
+username = '#47c158'
+dir = '#bright-white'
+duration = '#cbcb41'
+status = '#b487f4'
 
 [os]
-format = '[$symbol](bg:env fg:env-text bold)'
+format = '[ $symbol](fg:os bold)'
 disabled = false
 
 [os.symbols]
@@ -40,14 +22,23 @@ Raspbian = ''
 Macos = ''
 
 [username]
-format = '[ $user](bg:env fg:env-text)'
+format = '[ $user](fg:username)'
 
 [directory]
-style = 'bg:dir fg:dir-text'
+style = 'fg:dir'
 format = '[ $path]($style)'
 use_os_path_sep = false
 truncation_length = 3
 truncation_symbol = '󱞩/'
+
+[cmd_duration]
+style = 'fg:duration'
+format = '[ $duration]($style)'
+
+[status]
+style = 'fg:status'
+format = '[ $int]($style)'
+disabled = false
 
 [directory.substitutions]
 "Projects" = ''
@@ -65,12 +56,3 @@ truncation_symbol = '󱞩/'
 ".github" = ''
 ".git" = ''
 "/mnt" = ''
-
-[cmd_duration]
-style = 'bg:duration fg:duration-text'
-format = '[ $duration]($style)'
-
-[status]
-style = 'bg:status fg:status-text'
-format = '[ $int]($style)'
-disabled = false
