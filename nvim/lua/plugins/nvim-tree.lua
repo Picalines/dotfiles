@@ -1,9 +1,10 @@
 return {
-	-- File explorer
 	'nvim-tree/nvim-tree.lua',
+
 	dependencies = {
 		'nvim-tree/nvim-web-devicons',
 	},
+
 	config = function()
 		local nvim_tree = require 'nvim-tree'
 		local api = require 'nvim-tree.api'
@@ -58,13 +59,12 @@ return {
 			map_key('<C-P>', api.tree.change_root_to_parent, 'Up')
 			map_key('?', api.tree.toggle_help, 'Help')
 
-			map_key('h', api.tree.close, 'Close')
+			map_key('h', api.node.navigate.parent, 'Parent Directory')
 			map_key('l', api.node.open.edit, 'Edit Or Open')
 			map_key('H', api.tree.collapse_all, 'Collapse All')
 			map_key('L', api.tree.expand_all, 'Expand All')
 			map_key('K', api.node.navigate.sibling.first, 'First Sibling')
 			map_key('J', api.node.navigate.sibling.last, 'Last Sibling')
-			map_key('P', api.node.navigate.parent, 'Parent Directory')
 			map_key('<BS>', api.node.navigate.parent_close, 'Close Directory')
 
 			map_key(']d', api.node.navigate.diagnostics.next, 'Next Diagnostic')
