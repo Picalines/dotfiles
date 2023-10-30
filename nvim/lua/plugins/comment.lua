@@ -15,20 +15,22 @@ return {
 			padding = true,
 			sticky = true,
 
+			-- normal mode
 			toggler = {
-				line = 'ycl',
-				block = 'ycb',
+				line = 'gcl',
+				block = 'gcb',
 			},
 
+			-- visual mode
 			opleader = {
-				line = 'ycl',
-				block = 'ycb',
+				line = 'gcl',
+				block = 'gcb',
 			},
 
 			extra = {
-				above = 'ycO',
-				below = 'yco',
-				eol = 'ycA',
+				above = 'gcO',
+				below = 'gco',
+				eol = 'gcA',
 			},
 
 			mappings = {
