@@ -140,7 +140,7 @@ return {
 
 			filters = {
 				custom = {
-					'^\\.git',
+					'^\\.git$',
 				},
 			},
 
