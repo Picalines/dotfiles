@@ -1,13 +1,15 @@
 return {
 	'nvim-treesitter/nvim-treesitter',
+
 	dependencies = {
 		'nvim-treesitter/nvim-treesitter-textobjects',
 		'windwp/nvim-ts-autotag',
 	},
+
 	build = ':TSUpdate',
+
 	config = function()
 		require('nvim-treesitter.configs').setup {
-			-- Add languages to be installed here that you want installed for treesitter
 			ensure_installed = {
 				'c',
 				'cpp',
@@ -50,11 +52,10 @@ return {
 				},
 			},
 
-			-- enable nvim-ts-context-commentstring plugin for commenting tsx and jsx
-			-- context_commentstring = {
-			-- 	enable = true,
-			-- 	enable_autocmd = false,
-			-- },
+			context_commentstring = {
+				enable = true,
+				enable_autocmd = false,
+			},
 		}
 	end,
 }
