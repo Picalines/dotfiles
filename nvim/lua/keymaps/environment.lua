@@ -14,4 +14,8 @@ end
 map_key('<leader>s', cmd_f ':w', '[S]ave file')
 
 map_key('<leader>q', cmd_f(':wa!', ':qa!'), '[Q]uit and save')
-map_key('<leader>Q', cmd_f ':qa!', '[Q]uit and delete')
+
+map_key('<C-j>', '<C-W>j', 'Move to bottom split')
+map_key('<C-k>', '<C-W>k', 'Move to upper split')
+map_key('<C-h>', '<C-W>h', 'Move to left split')
+map_key('<C-l>', '<C-W>l', 'Move to right split')
