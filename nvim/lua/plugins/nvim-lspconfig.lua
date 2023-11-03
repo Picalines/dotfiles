@@ -35,7 +35,6 @@ return {
 			map_key('<leader>fSw', ts_builtin.lsp_dynamic_workspace_symbols, '[F]ind [W]orkspace [S]ymbols')
 
 			map_key('K', vim.lsp.buf.hover, 'Hover Documentation')
-			map_key('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 		end
 
 		local lspconfig = require 'lspconfig'
