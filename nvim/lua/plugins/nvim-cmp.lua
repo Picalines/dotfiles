@@ -62,7 +62,6 @@ return {
 
 		cmp.setup {
 			mapping = cmp.mapping.preset.insert {
-				['<S-Space>'] = cmp.mapping.complete(),
 				['<C-Space>'] = cmp.mapping.complete(),
 
 				['<Tab>'] = cmp.mapping(select_next, { 'i', 's' }),
