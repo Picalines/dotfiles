@@ -14,8 +14,8 @@ return {
 
 						['a='] = '@assignment.outer',
 						['i='] = '@assignment.inner',
-						['l='] = '@assignment.lhs',
-						['r='] = '@assignment.rhs',
+						['L='] = '@assignment.lhs',
+						['R='] = '@assignment.rhs',
 
 						['ar'] = '@return.outer',
 						['ir'] = '@return.inner',
@@ -47,18 +47,18 @@ return {
 				swap = {
 					enable = true,
 					swap_next = {
-						['<leander>ns'] = '@statement.outer',
-						['<leader>na'] = '@parameter.inner',
-						['<leader>np'] = '@property.outer',
-						['<leader>nm'] = '@function.outer',
-						['<leader>nc'] = '@class.outer',
+						['>s'] = '@statement.outer',
+						['>a'] = '@parameter.inner',
+						['>p'] = '@property.outer',
+						['>m'] = '@function.outer',
+						['>c'] = '@class.outer',
 					},
 					swap_previous = {
-						['<leader>ps'] = '@statement.outer',
-						['<leader>pa'] = '@parameter.inner',
-						['<leader>pp'] = '@property.outer',
-						['<leader>pm'] = '@function.outer',
-						['<leader>pc'] = '@class.outer',
+						['<s'] = '@statement.outer',
+						['<a'] = '@parameter.inner',
+						['<p'] = '@property.outer',
+						['<m'] = '@function.outer',
+						['<c'] = '@class.outer',
 					},
 				},
 				move = {
