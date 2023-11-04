@@ -39,6 +39,7 @@ return {
 			typescript = { require('formatter.filetypes.typescript').prettierd },
 			typescriptreact = { require('formatter.filetypes.typescriptreact').prettierd },
 			json = { require('formatter.filetypes.json').prettierd },
+			html = { require('formatter.filetypes.html').prettierd },
 			css = { require('formatter.filetypes.css').prettierd },
 			svelte = { require('formatter.filetypes.svelte').prettier },
 			vue = { require('formatter.filetypes.vue').prettier },
