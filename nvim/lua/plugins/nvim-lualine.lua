@@ -8,7 +8,7 @@ return {
 			component_separators = '|',
 			section_separators = '',
 
-			ignore_focus = { 'NvimTree' },
+			ignore_focus = { 'neo-tree' },
 
 			globalstatus = true,
 		},
