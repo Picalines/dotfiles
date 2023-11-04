@@ -21,6 +21,7 @@ return {
 				'typescript',
 				'tsx',
 				'html',
+				'css',
 				'svelte',
 				'vue',
 				'json',
