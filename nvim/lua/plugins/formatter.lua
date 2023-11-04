@@ -4,6 +4,29 @@ return {
 	event = { 'BufReadPre', 'BufNewFile' },
 
 	config = function()
+		local util = require 'formatter.util'
+
+		local function map_formatter(formatter, config_mapper)
+			local config = formatter()
+			if config == nil then
+				return nil
+			end
+
+			return config_mapper(config)
+		end
+
+		local function format_mapper(config_mapper)
+			return function(formatter)
+				return map_formatter(formatter, config_mapper)
+			end
+		end
+
+		local with_current_file_cwd = format_mapper(function(config)
+			return vim.tbl_extend('force', config, {
+				cwd = util.get_current_buffer_file_dir(),
+			})
+		end)
+
 		local lsp_formatter = vim.lsp.buf.format
 
 		-- Manual list of formatters for filetypes
@@ -21,10 +44,10 @@ return {
 			vue = { require('formatter.filetypes.vue').prettier },
 
 			go = { require('formatter.filetypes.go').gofmt },
-			c = { require('formatter.filetypes.c').clangformat },
-			h = { require('formatter.filetypes.c').clangformat },
-			cpp = { require('formatter.filetypes.cpp').clangformat },
-			cs = { require('formatter.filetypes.cs').dotnetformat },
+			c = { with_current_file_cwd(require('formatter.filetypes.c').clangformat) },
+			h = { with_current_file_cwd(require('formatter.filetypes.c').clangformat) },
+			cpp = { with_current_file_cwd(require('formatter.filetypes.cpp').clangformat) },
+			cs = { with_current_file_cwd(require('formatter.filetypes.cs').clangformat) },
 
 			java = { require('formatter.filetypes.java').clangformat },
 		}
