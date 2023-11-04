@@ -3,7 +3,6 @@ local modules = {
 	'environment',
 	'motion',
 	'selection',
-	'editing',
 	'diagnostic',
 }
 
