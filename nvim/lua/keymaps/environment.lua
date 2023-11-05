@@ -33,6 +33,6 @@ map_key('>t', cmd_f ':tabmove +', 'Move [t]ab right')
 map_key('<t', cmd_f ':tabmove -', 'Move [t]ab left')
 
 map_key('<leader>b', cmd_f ':enew', 'New [b]uffer')
-map_key('<leader>db', cmd_f ':bd', 'Close [b]uffer')
+map_key('<leader>db', cmd_f(':bp', ':bd #'), 'Close [b]uffer')
 map_key(']b', cmd_f ':bn', 'Next [b]uffer')
 map_key('[b', cmd_f ':bp', 'Prev [b]uffer')
