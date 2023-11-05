@@ -37,30 +37,39 @@ return {
 		on_attach = function(bufnr)
 			local gitsigns = package.loaded.gitsigns
 
-			local function map_key(mode, key, func, desc)
-				return vim.keymap.set(mode, key, func, { buffer = bufnr, desc = desc })
-			end
+			require('keymaps.util').declare_keymaps {
+				opts = {
+					buffer = bufnr,
+				},
 
-			local function goto_next_hunk()
-				if vim.wo.diff then
-					return ']C'
-				end
-				vim.schedule(gitsigns.next_hunk)
-				return '<Ignore>'
-			end
+				n = {
+					['<leader>C'] = { gitsigns.preview_hunk, 'Preview git change' },
+				},
 
-			local function goto_prev_hunk()
-				if vim.wo.diff then
-					return '[C'
-				end
-				vim.schedule(gitsigns.prev_hunk)
-				return '<Ignore>'
-			end
+				[{ 'n', 'v' }] = {
+					[']C'] = {
+						desc = 'Jump to next [C]hange',
+						function()
+							if vim.wo.diff then
+								return ']C'
+							end
+							vim.schedule(gitsigns.next_hunk)
+							return '<Ignore>'
+						end,
+					},
 
-			map_key({ 'n', 'v' }, ']~', goto_next_hunk, 'Jump to next [C]hange')
-			map_key({ 'n', 'v' }, '[~', goto_prev_hunk, 'Jump to previous [C]hange')
-
-			map_key('n', '<leader>~', gitsigns.preview_hunk, 'Preview git [C]hange')
+					['[C'] = {
+						desc = 'Jump to previous [C]hange',
+						function()
+							if vim.wo.diff then
+								return '[C'
+							end
+							vim.schedule(gitsigns.prev_hunk)
+							return '<Ignore>'
+						end,
+					},
+				},
+			}
 		end,
 	},
 }

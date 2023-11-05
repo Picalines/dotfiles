@@ -1,5 +1,11 @@
-vim.keymap.set('n', '<C-u>', '<C-u>zz')
-vim.keymap.set('n', '<C-d>', '<C-d>zz')
+local util = require 'keymaps.util'
 
-vim.keymap.set('n', 'n', 'nzzzv')
-vim.keymap.set('n', 'N', 'Nzzzv')
+util.declare_keymaps {
+	n = {
+		['<C-u>'] = '<C-u>zz',
+		['<C-d>'] = '<C-d>zz',
+
+		['n'] = 'nzzzv',
+		['N'] = 'Nzzzv',
+	},
+}

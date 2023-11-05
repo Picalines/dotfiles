@@ -71,20 +71,18 @@ return {
 			return builtin.live_grep(opts)
 		end
 
-		local function map_key(key, func, desc)
-			return vim.keymap.set('n', key, func, { desc = desc })
-		end
-
-		map_key('<leader>ff', find_files, '[F]ind [F]iles')
-		map_key('<leader>fo', builtin.oldfiles, '[F]ind [O]ld files')
-		map_key('<leader>fb', builtin.buffers, '[F]ind [B]uffer')
-		map_key('<leader>fg', builtin.git_files, '[F]ind [G]it [F]iles')
-		map_key('<leader>fw', live_grep, '[F]ind [W]orkspace')
-		map_key('<leader>fc', builtin.commands, '[F]ind [C]ommands')
-		map_key('<leader>fh', builtin.help_tags, '[F]ind [H]elp')
-		map_key('<leader>fd', builtin.diagnostics, '[F]ind [D]iagnostics')
-		map_key('<leader>fr', builtin.resume, '[F]ind [R]esume')
-
-		map_key('<leader>/', builtin.current_buffer_fuzzy_find, 'Find in current buffer')
+		require('keymaps.util').declare_keymaps {
+			n = {
+				['<leader>ff'] = { find_files, '[F]ind [F]iles' },
+				['<leader>fo'] = { builtin.oldfiles, '[F]ind [O]ld files' },
+				['<leader>fb'] = { builtin.buffers, '[F]ind [B]uffer' },
+				['<leader>fg'] = { live_grep, '[F]ind [W]orkspace' },
+				['<leader>fc'] = { builtin.commands, '[F]ind [C]ommands' },
+				['<leader>fh'] = { builtin.help_tags, '[F]ind [H]elp' },
+				['<leader>fd'] = { builtin.diagnostics, '[F]ind [D]iagnostics' },
+				['<leader>fr'] = { builtin.resume, '[F]ind [R]esume' },
+				['<leader>f/'] = { builtin.current_buffer_fuzzy_find, 'Find in current buffer' },
+			},
+		}
 	end,
 }

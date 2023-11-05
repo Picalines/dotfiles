@@ -12,6 +12,10 @@ return {
 			use_default_keymaps = false,
 		}
 
-		vim.keymap.set('n', '<leader>m', treesj.toggle, { desc = 'Split/Join node' })
+		require('keymaps.util').declare_keymaps {
+			n = {
+				['<leader>m'] = { treesj.toggle, 'Split/Join node' },
+			},
+		}
 	end,
 }

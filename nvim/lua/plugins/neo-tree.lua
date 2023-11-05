@@ -26,14 +26,7 @@ return {
 	},
 
 	config = function()
-		local function cmd_f(...)
-			local cmds = { ... }
-			return function()
-				for _, cmd in ipairs(cmds) do
-					vim.cmd(cmd)
-				end
-			end
-		end
+		local cmds = require('keymaps.util').cmds
 
 		require('neo-tree').setup {
 			close_if_last_window = false,
@@ -151,7 +144,7 @@ return {
 					nowait = true,
 				},
 				mappings = {
-					['<leader>e'] = cmd_f ':wincmd p',
+					['<leader>e'] = cmds ':wincmd p',
 
 					['<esc>'] = 'cancel', -- close preview or floating neo-tree window
 

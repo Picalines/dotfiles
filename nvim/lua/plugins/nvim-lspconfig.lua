@@ -15,26 +15,26 @@ return {
 		local function on_attach_default(_, bufnr)
 			local ts_builtin = require 'telescope.builtin'
 
-			local function map_key(key, func, desc)
-				return vim.keymap.set('n', key, func, {
+			require('keymaps.util').declare_keymaps {
+				opts = {
 					buffer = bufnr,
-					desc = 'LSP: ' .. desc,
-				})
-			end
+				},
+				n = {
+					['<leader>R'] = { vim.lsp.buf.rename, '[R]ename' },
+					['<leader>A'] = { vim.lsp.buf.code_action, 'Code [A]ction' },
+					['<leader>F'] = { vim.cmd.Format, '[F]ormat current buffer' },
 
-			map_key('<leader>R', vim.lsp.buf.rename, '[R]ename')
-			map_key('<leader>A', vim.lsp.buf.code_action, 'Code [A]ction')
-			map_key('<leader>F', vim.cmd.Format, '[F]ormat current buffer')
+					['<leader>fD'] = { ts_builtin.lsp_definitions, '[F]ind [D]efinitions' },
+					['<leader>fC'] = { vim.lsp.buf.declaration, '[F]ind to De[c]larations' },
+					['<leader>fR'] = { ts_builtin.lsp_references, '[F]ind [R]eferences' },
+					['<leader>fI'] = { ts_builtin.lsp_implementations, '[F]ind [I]mplementation' },
+					['<leader>fT'] = { ts_builtin.lsp_type_definitions, '[F]ind [T]ype definitions' },
+					['<leader>fSd'] = { ts_builtin.lsp_document_symbols, '[F]ind [D]ocument [S]ymbols' },
+					['<leader>fSw'] = { ts_builtin.lsp_dynamic_workspace_symbols, '[F]ind [W]orkspace [S]ymbols' },
 
-			map_key('<leader>fD', ts_builtin.lsp_definitions, '[F]ind [D]efinitions')
-			map_key('<leader>fC', vim.lsp.buf.declaration, '[F]ind to De[c]larations')
-			map_key('<leader>fR', ts_builtin.lsp_references, '[F]ind [R]eferences')
-			map_key('<leader>fI', ts_builtin.lsp_implementations, '[F]ind [I]mplementation')
-			map_key('<leader>fT', ts_builtin.lsp_type_definitions, '[F]ind [T]ype definitions')
-			map_key('<leader>fSd', ts_builtin.lsp_document_symbols, '[F]ind [D]ocument [S]ymbols')
-			map_key('<leader>fSw', ts_builtin.lsp_dynamic_workspace_symbols, '[F]ind [W]orkspace [S]ymbols')
-
-			map_key('K', vim.lsp.buf.hover, 'Hover Documentation')
+					['K'] = { vim.lsp.buf.hover, 'Hover Documentation' },
+				},
+			}
 		end
 
 		local lspconfig = require 'lspconfig'

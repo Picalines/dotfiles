@@ -19,17 +19,11 @@ return {
 			},
 		}
 
-		local function on_open()
-			local function map_key(mode, key, cmd)
-				return vim.keymap.set(mode, key, cmd, { buffer = 0 })
-			end
-
-			map_key('t', '<Esc>', [[<C-\><C-n>]])
-		end
-
 		vim.api.nvim_create_autocmd('TermOpen', {
 			pattern = { 'term://*' },
-			callback = on_open,
+			callback = function()
+				vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { buffer = 0 })
+			end,
 		})
 
 		vim.keymap.set('n', '<leader>ft', vim.cmd.TermSelect, { desc = '[S]earch [T]erminals' })
