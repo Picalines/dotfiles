@@ -42,6 +42,7 @@ disabled = false
 
 [directory.substitutions]
 "Projects" = ''
+"Repos" = ''
 "Documents" = ''
 "Downloads" = ''
 "Music" = ''
