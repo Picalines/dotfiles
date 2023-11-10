@@ -27,6 +27,7 @@ return {
 				'json',
 				'toml',
 				'yaml',
+				'http',
 				'java',
 				'c_sharp',
 				'dockerfile',
