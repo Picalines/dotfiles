@@ -35,7 +35,8 @@ vim.o.fillchars = 'eob: '
 
 vim.o.autoread = true
 
-vim.fn.sign_define('DiagnosticSignError', { text = ' ', texthl = 'DiagnosticSignError' })
-vim.fn.sign_define('DiagnosticSignWarn', { text = ' ', texthl = 'DiagnosticSignWarn' })
-vim.fn.sign_define('DiagnosticSignInfo', { text = ' ', texthl = 'DiagnosticSignInfo' })
-vim.fn.sign_define('DiagnosticSignHint', { text = '󰌵', texthl = 'DiagnosticSignHint' })
+local define_sign = vim.fn.sign_define
+define_sign('DiagnosticSignError', { text = ' ', texthl = 'DiagnosticSignError' })
+define_sign('DiagnosticSignWarn', { text = ' ', texthl = 'DiagnosticSignWarn' })
+define_sign('DiagnosticSignInfo', { text = ' ', texthl = 'DiagnosticSignInfo' })
+define_sign('DiagnosticSignHint', { text = '󰌵', texthl = 'DiagnosticSignHint' })
