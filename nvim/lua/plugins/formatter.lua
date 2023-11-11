@@ -4,7 +4,8 @@ return {
 	event = { 'BufReadPre', 'BufNewFile' },
 
 	config = function()
-		local util = require 'formatter.util'
+		local f_util = require 'formatter.util'
+		local c_util = require 'util'
 
 		local function map_formatter(formatter, config_mapper)
 			local config = formatter()
@@ -22,8 +23,8 @@ return {
 		end
 
 		local with_current_file_cwd = format_mapper(function(config)
-			return vim.tbl_extend('force', config, {
-				cwd = util.get_current_buffer_file_dir(),
+			return c_util.override(config, {
+				cwd = f_util.get_current_buffer_file_dir(),
 			})
 		end)
 

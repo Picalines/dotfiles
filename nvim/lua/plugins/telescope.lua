@@ -15,6 +15,7 @@ return {
 	},
 
 	config = function()
+		local util = require 'util'
 		local telescope = require 'telescope'
 		local actions = require 'telescope.actions'
 		local themes = require 'telescope.themes'
@@ -46,30 +47,21 @@ return {
 
 		telescope.load_extension 'fzf'
 		telescope.load_extension 'ui-select'
-
-		local function flat_map(tbl, func)
-			return vim.tbl_flatten(vim.tbl_map(func, tbl))
-		end
-
-		local function rg_picker_args(ignore_files)
-			return flat_map(ignore_files, function(file)
-				return vim.fn.filereadable(file) and { '--ignore-file', file } or {}
-			end)
-		end
+		telescope.load_extension 'noice'
 
 		local ignore_files = { '.gitignore', '.arcignore' }
 
-		local function find_files(opts)
-			opts = opts or {}
-			opts.find_command = { 'rg', '--files', unpack(rg_picker_args(ignore_files)) }
-			return builtin.find_files(opts)
-		end
+		local rg_picker_args = util.flat_map(ignore_files, function(file)
+			return vim.fn.filereadable(file) and { '--ignore-file', file } or {}
+		end)
 
-		local function live_grep(opts)
-			opts = opts or {}
-			opts.additional_args = rg_picker_args(ignore_files)
-			return builtin.live_grep(opts)
-		end
+		local find_files = util.curry(builtin.find_files, {
+			find_command = { 'rg', '--files', unpack(rg_picker_args) },
+		})
+
+		local live_grep = util.curry(builtin.live_grep, {
+			additional_args = rg_picker_args,
+		})
 
 		require('keymaps.util').declare_keymaps {
 			n = {
