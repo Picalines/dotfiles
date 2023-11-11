@@ -1,5 +1,25 @@
 local util = require 'keymaps.util'
 
+local get_current_win = vim.api.nvim_get_current_win
+local get_current_buf = vim.api.nvim_get_current_buf
+
+local function bufremove()
+	local win = get_current_win()
+	local buf = get_current_buf()
+
+	if vim.api.nvim_buf_get_option(0, 'modified') then
+		vim.cmd ':w'
+	end
+
+	vim.cmd ':bp'
+
+	if win == get_current_win() and buf == get_current_buf() then
+		vim.cmd ':enew'
+	end
+
+	vim.cmd ':silent! bd #'
+end
+
 util.declare_keymaps {
 	n = {
 		['<leader>s'] = { util.cmds ':w', '[S]ave file' },
@@ -24,7 +44,7 @@ util.declare_keymaps {
 		['<t'] = { util.cmds ':tabmove -', 'Move [t]ab left' },
 
 		['<leader>b'] = { util.cmds ':enew', 'New [b]uffer' },
-		['<leader>db'] = { util.cmds(':bp', ':bd #'), 'Close [b]uffer' },
+		['<leader>db'] = { bufremove, 'Close [b]uffer' },
 		[']b'] = { util.cmds ':bn', 'Next [b]uffer' },
 		['[b'] = { util.cmds ':bp', 'Prev [b]uffer' },
 	},
