@@ -1,25 +1,52 @@
 return {
 	'nvim-lualine/lualine.nvim',
 
-	opts = {
-		options = {
-			icons_enabled = true,
-			theme = 'onedark',
-			component_separators = '|',
-			section_separators = '',
+	config = function()
+		local noice_statusline = require('noice').api.statusline
 
-			ignore_focus = { 'neo-tree' },
+		require('lualine').setup {
+			options = {
+				icons_enabled = true,
+				theme = 'onedark',
+				component_separators = '|',
+				section_separators = '',
 
-			globalstatus = true,
-		},
+				ignore_focus = { 'neo-tree' },
 
-		sections = {
-			lualine_a = { 'mode' },
-			lualine_b = { 'filename' },
-			lualine_c = { 'branch', 'diff', 'diagnostics' },
-			lualine_x = { 'location', 'encoding' },
-			lualine_y = { 'filetype' },
-			lualine_z = {},
-		},
-	},
+				globalstatus = true,
+			},
+
+			sections = {
+				lualine_a = { 'mode' },
+
+				lualine_b = {
+					{
+						'filetype',
+						icon_only = true,
+						separator = '',
+						padding = { left = 1, right = 0 },
+					},
+					{
+						'filename',
+					},
+				},
+
+				lualine_c = {
+					'branch',
+					'diff',
+					'diagnostics',
+
+					{
+						noice_statusline.mode.get,
+						cond = noice_statusline.mode.has,
+						color = { fg = '#ff9e64' },
+					},
+				},
+
+				lualine_x = { 'location', 'encoding' },
+
+				lualine_z = {},
+			},
+		}
+	end,
 }
