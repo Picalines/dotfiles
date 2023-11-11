@@ -17,7 +17,7 @@ return {
 			},
 
 			sections = {
-				lualine_a = { 'mode' },
+				lualine_a = {},
 
 				lualine_b = {
 					{
@@ -44,6 +44,8 @@ return {
 				},
 
 				lualine_x = { 'location', 'encoding' },
+
+				lualine_y = {},
 
 				lualine_z = {},
 			},
