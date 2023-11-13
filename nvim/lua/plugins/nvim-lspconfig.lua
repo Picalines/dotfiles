@@ -20,19 +20,19 @@ return {
 					buffer = bufnr,
 				},
 				n = {
-					['<leader>R'] = { vim.lsp.buf.rename, '[R]ename' },
-					['<leader>A'] = { vim.lsp.buf.code_action, 'Code [A]ction' },
-					['<leader>F'] = { vim.cmd.Format, '[F]ormat current buffer' },
+					['<leader>R'] = { vim.lsp.buf.rename, 'LSP: [R]ename' },
+					['<leader>A'] = { vim.lsp.buf.code_action, 'LSP: Code [A]ction' },
+					['<leader>F'] = { vim.cmd.Format, 'LSP: [F]ormat current buffer' },
 
-					['<leader>fD'] = { ts_builtin.lsp_definitions, '[F]ind [D]efinitions' },
-					['<leader>fC'] = { vim.lsp.buf.declaration, '[F]ind to De[c]larations' },
-					['<leader>fR'] = { ts_builtin.lsp_references, '[F]ind [R]eferences' },
-					['<leader>fI'] = { ts_builtin.lsp_implementations, '[F]ind [I]mplementation' },
-					['<leader>fT'] = { ts_builtin.lsp_type_definitions, '[F]ind [T]ype definitions' },
-					['<leader>fSd'] = { ts_builtin.lsp_document_symbols, '[F]ind [D]ocument [S]ymbols' },
-					['<leader>fSw'] = { ts_builtin.lsp_dynamic_workspace_symbols, '[F]ind [W]orkspace [S]ymbols' },
+					['gD'] = { ts_builtin.lsp_definitions, 'LSP: [G]o to [D]efinition' },
+					['gC'] = { vim.lsp.buf.declaration, 'LSP: [G]o to to De[c]laration' },
+					['gR'] = { ts_builtin.lsp_references, 'LSP: [G]o to [R]eferences' },
+					['gI'] = { ts_builtin.lsp_implementations, 'LSP: [G]o to [I]mplementation' },
+					['gT'] = { ts_builtin.lsp_type_definitions, 'LSP: [G]o to [T]ype definition' },
+					-- ['<leader>fSd'] = { ts_builtin.lsp_document_symbols, '[F]ind [D]ocument [S]ymbols' },
+					-- ['<leader>fSw'] = { ts_builtin.lsp_dynamic_workspace_symbols, '[F]ind [W]orkspace [S]ymbols' },
 
-					['K'] = { vim.lsp.buf.hover, 'Hover Documentation' },
+					['K'] = { vim.lsp.buf.hover, 'LSP: Hover' },
 				},
 			}
 		end
