@@ -48,6 +48,22 @@ function M.flat_map(tbl, func)
 	return mapped_tbl
 end
 
+---@param tbl table
+---@return table
+function M.flatten(tbl)
+	local flattened_tbl = {}
+	for k, v in pairs(tbl) do
+		if type(k) == 'number' and type(v) == 'table' then
+			for kk, vv in pairs(v) do
+				flattened_tbl[kk] = vv
+			end
+		else
+			flattened_tbl[k] = v
+		end
+	end
+	return flattened_tbl
+end
+
 ---@generic K, T
 ---@param tbl table<K, T>
 ---@param keep_predicate fun(value: T, key: K): boolean
