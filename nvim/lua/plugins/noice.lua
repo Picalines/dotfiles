@@ -31,7 +31,7 @@ return {
 
 		views = {
 			cmdline_popup = {
-				relatice = 'editor',
+				relative = 'editor',
 				position = {
 					row = 5,
 					col = '50%',
