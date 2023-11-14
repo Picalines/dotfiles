@@ -1,5 +1,4 @@
 local modules = {
-	'default',
 	'environment',
 	'motion',
 	'selection',
