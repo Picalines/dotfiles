@@ -7,10 +7,18 @@ util.declare_keymaps {
 	},
 
 	[{ 'n', 'v' }] = {
-		['<Space>'] = '<Nop>',
-
 		['k'] = "v:count == 0 ? 'gk' : 'k'",
 		['j'] = "v:count == 0 ? 'gj' : 'j'",
+	},
+}
+
+util.declare_keymaps {
+	opts = {
+		silent = true,
+	},
+
+	[{ 'n', 'v' }] = {
+		['<Space>'] = '<Nop>',
 
 		['<C-u>'] = '<C-u>zz',
 		['<C-d>'] = '<C-d>zz',
