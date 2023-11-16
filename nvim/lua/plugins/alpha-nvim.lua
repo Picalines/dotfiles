@@ -9,7 +9,6 @@ return {
 		dashboard.section.buttons.val = {
 			dashboard.button('f', '󰈞  Find file', ':Telescope find_files<CR>'),
 			dashboard.button('o', '󰮗  Old files', ':Telescope oldfiles<CR>'),
-			dashboard.button('l', '󰌱  Last file', ':e #<1<CR>'),
 			dashboard.button('b', '󰯁  New file', ':ene <BAR> startinsert<CR>'),
 			dashboard.button('e', '  File Tree', ':Neotree filesystem<CR>'),
 			dashboard.button('q', '  Quit', ':qa<CR>'),
