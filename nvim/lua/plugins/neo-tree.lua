@@ -5,8 +5,11 @@ return {
 
 	dependencies = {
 		'nvim-lua/plenary.nvim',
+
 		'nvim-tree/nvim-web-devicons',
+
 		'MunifTanjim/nui.nvim',
+
 		{
 			's1n7ax/nvim-window-picker',
 			version = '2.*',
@@ -23,12 +26,20 @@ return {
 				}
 			end,
 		},
+
+		'mrbjarksen/neo-tree-diagnostics.nvim',
 	},
 
 	config = function()
 		local cmds = require('keymaps.util').cmds
 
 		require('neo-tree').setup {
+			sources = {
+				'filesystem',
+				'git_status',
+				'diagnostics',
+			},
+
 			close_if_last_window = false,
 			popup_border_style = 'rounded',
 
@@ -52,7 +63,6 @@ return {
 
 				sources = {
 					{ source = 'filesystem' },
-					{ source = 'buffers' },
 					{ source = 'git_status' },
 				},
 
@@ -260,6 +270,31 @@ return {
 				},
 			},
 
+			diagnostics = {
+				auto_preview = {
+					enabled = false,
+					preview_config = {},
+					event = 'neo_tree_buffer_enter',
+				},
+				bind_to_cwd = true,
+				diag_sort_function = 'severity',
+				follow_current_file = {
+					enabled = true,
+					always_focus_file = false,
+					expand_followed = true,
+					leave_dirs_open = false,
+					leave_files_open = false,
+				},
+				group_dirs_and_files = true,
+				group_empty_dirs = true,
+				show_unloaded = true,
+				refresh = {
+					delay = 100,
+					event = 'vim_diagnostic_changed',
+					max_items = 10000,
+				},
+			},
+
 			git_status = {
 				window = {
 					position = 'float',
@@ -284,7 +319,15 @@ return {
 			},
 		}
 
-		vim.keymap.set('n', '<leader>e', ':Neotree reveal=true source=last<CR>', { desc = 'Jump to File [E]xplorer', silent = true })
-		vim.keymap.set('n', '<leader>E', ':Neotree toggle=true source=last<CR>', { desc = 'Toggle File [E]xplorer', silent = true })
+		require('keymaps.util').declare_keymaps {
+			opts = {
+				silent = true,
+			},
+			n = {
+				['<leader>e'] = { ':Neotree reveal filesystem<CR>', 'Jump to File [E]xplorer' },
+				['<leader>E'] = { ':Neotree toggle filesystem<CR>', 'Toggle File [E]xplorer' },
+				['<leader>D'] = { ':Neotree diagnostics toggle bottom selector=false<CR>', 'Open [d]iagnostic message' },
+			},
+		}
 	end,
 }

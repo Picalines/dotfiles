@@ -37,4 +37,9 @@ util.declare_keymaps {
 		['<C-l>'] = '<Right>',
 		['<C-h>'] = '<Left>',
 	},
+
+	n = {
+		['[d'] = { vim.diagnostic.goto_prev, 'Go to previous [d]iagnostic' },
+		[']d'] = { vim.diagnostic.goto_next, 'Go to next [d]iagnostic' },
+	},
 }
