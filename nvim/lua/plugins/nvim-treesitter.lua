@@ -53,11 +53,6 @@ return {
 			-- 		node_decremental = '<M-s>',
 			-- 	},
 			-- },
-
-			context_commentstring = {
-				enable = true,
-				enable_autocmd = false,
-			},
 		}
 	end,
 }
