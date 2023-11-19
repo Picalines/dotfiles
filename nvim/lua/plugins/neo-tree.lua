@@ -226,13 +226,19 @@ return {
 				window = {
 					mappings = {
 						['<bs>'] = 'navigate_up',
-						['.'] = 'set_root',
+						['/'] = 'set_root',
 
 						['H'] = 'toggle_hidden',
-						['/'] = 'fuzzy_finder',
+						['f'] = 'fuzzy_finder',
 
 						['[c'] = 'prev_git_modified',
 						[']c'] = 'next_git_modified',
+
+						['.'] = function(state)
+							local node = state.tree:get_node()
+							local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
+							vim.api.nvim_input(': ' .. path .. '<Home>')
+						end,
 
 						-- ['o'] = { 'show_help', nowait = false, config = { title = 'Order by', prefix_key = 'o' } },
 						-- ['oc'] = { 'order_by_created', nowait = false },
@@ -249,9 +255,8 @@ return {
 						['<up>'] = 'move_cursor_up',
 						['<C-p>'] = 'move_cursor_up',
 					},
+					commands = {},
 				},
-
-				commands = {},
 			},
 
 			buffers = {
