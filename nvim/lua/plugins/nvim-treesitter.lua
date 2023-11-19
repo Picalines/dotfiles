@@ -44,15 +44,15 @@ return {
 			indent = { enable = true },
 			autotag = { enable = true },
 
-			-- incremental_selection = {
-			-- 	enable = true,
-			-- 	keymaps = {
-			-- 		init_selection = '<C-s>',
-			-- 		node_incremental = '<C-s>',
-			-- 		scope_incremental = '<C-s>',
-			-- 		node_decremental = '<M-s>',
-			-- 	},
-			-- },
+			incremental_selection = {
+				enable = true,
+				keymaps = {
+					init_selection = 'vn',
+					node_incremental = 'n',
+					scope_incremental = false,
+					node_decremental = 'N',
+				},
+			},
 		}
 	end,
 }
