@@ -1,59 +1,80 @@
 return {
 	'nvim-telescope/telescope.nvim',
+
 	branch = '0.1.x',
+
 	dependencies = {
 		'nvim-lua/plenary.nvim',
-		-- Fuzzy Finder Algorithm which requires local dependencies to be built.
-		-- Only load if `make` is available. Make sure you have the system
-		-- requirements installed.
+
 		{
 			'nvim-telescope/telescope-fzf-native.nvim',
-			-- NOTE: If you are having trouble with this installation,
-			--       refer to the README for telescope-fzf-native for more instructions.
 			build = 'make',
-			cond = function()
-				return vim.fn.executable 'make' == 1
-			end,
 		},
+
+		'nvim-telescope/telescope-ui-select.nvim',
 	},
 
 	config = function()
-		require('telescope').setup {
+		local util = require 'util'
+		local telescope = require 'telescope'
+		local actions = require 'telescope.actions'
+		local themes = require 'telescope.themes'
+		local builtin = require 'telescope.builtin'
+
+		telescope.setup {
 			defaults = {
+				file_ignore_patterns = {
+					'node_modules',
+				},
 				mappings = {
 					i = {
-						['<C-u>'] = false,
-						['<C-d>'] = false,
+						['<C-k>'] = actions.move_selection_previous,
+						['<C-j>'] = actions.move_selection_next,
 					},
+				},
+			},
+			extensions = {
+				['ui-select'] = {
+					themes.get_dropdown {},
+				},
+			},
+			pickers = {
+				find_files = {
+					previewer = false,
 				},
 			},
 		}
 
-		-- Enable telescope fzf native, if installed
-		pcall(require('telescope').load_extension, 'fzf')
+		telescope.load_extension 'fzf'
+		telescope.load_extension 'ui-select'
+		telescope.load_extension 'noice'
 
-		-- See `:help telescope.builtin`
-		vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles,
-			{ desc = '[?] Find recently opened files' })
-		vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers,
-			{ desc = '[ ] Find existing buffers' })
-		vim.keymap.set('n', '<leader>/', function()
-			-- You can pass additional configuration to telescope to change theme, layout, etc.
-			require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-				winblend = 10,
-				previewer = false,
-			})
-		end, { desc = '[/] Fuzzily search in current buffer' })
+		local ignore_files = { '.gitignore', '.arcignore' }
 
-		vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files,
-			{ desc = 'Search [G]it [F]iles' })
-		vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-		vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-		vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string,
-			{ desc = '[S]earch current [W]ord' })
-		vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-		vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics,
-			{ desc = '[S]earch [D]iagnostics' })
-		vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
-	end
+		local rg_picker_args = util.flat_map(ignore_files, function(file)
+			return vim.fn.filereadable(file) and { '--ignore-file', file } or {}
+		end)
+
+		local find_files = util.curry(builtin.find_files, {
+			find_command = { 'rg', '--files', unpack(rg_picker_args) },
+		})
+
+		local live_grep = util.curry(builtin.live_grep, {
+			additional_args = rg_picker_args,
+		})
+
+		require('keymaps.util').declare_keymaps {
+			n = {
+				['<leader>ff'] = { find_files, '[F]ind [F]iles' },
+				['<leader>fo'] = { builtin.oldfiles, '[F]ind [O]ld files' },
+				['<leader>fb'] = { builtin.buffers, '[F]ind [B]uffer' },
+				['<leader>fg'] = { live_grep, '[F]ind [W]orkspace' },
+				['<leader>fc'] = { builtin.commands, '[F]ind [C]ommands' },
+				['<leader>fh'] = { builtin.help_tags, '[F]ind [H]elp' },
+				['<leader>fd'] = { builtin.diagnostics, '[F]ind [D]iagnostics' },
+				['<leader>fr'] = { builtin.resume, '[F]ind [R]esume' },
+				['<leader>f/'] = { builtin.current_buffer_fuzzy_find, 'Find in current buffer' },
+			},
+		}
+	end,
 }
