@@ -64,7 +64,15 @@ return {
 				},
 			},
 
-			hooks = {},
+			hooks = {
+				before_open = function(results, open, jump)
+					if #results == 1 then
+						jump(results[1])
+					else
+						open(results)
+					end
+				end,
+			},
 
 			folds = {
 				fold_closed = '',
