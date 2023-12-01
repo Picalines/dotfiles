@@ -18,17 +18,18 @@ return {
 			require('keymaps.util').declare_keymaps {
 				opts = {
 					buffer = bufnr,
+					silent = true,
 				},
 				n = {
 					['<leader>R'] = { vim.lsp.buf.rename, 'LSP: [R]ename' },
 					['<leader>A'] = { vim.lsp.buf.code_action, 'LSP: Code [A]ction' },
 					['<leader>F'] = { vim.cmd.Format, 'LSP: [F]ormat current buffer' },
 
-					['gD'] = { ts_builtin.lsp_definitions, 'LSP: [G]o to [D]efinition' },
-					['gC'] = { vim.lsp.buf.declaration, 'LSP: [G]o to to De[c]laration' },
-					['gR'] = { ts_builtin.lsp_references, 'LSP: [G]o to [R]eferences' },
-					['gI'] = { ts_builtin.lsp_implementations, 'LSP: [G]o to [I]mplementation' },
-					['gT'] = { ts_builtin.lsp_type_definitions, 'LSP: [G]o to [T]ype definition' },
+					['gD'] = { ':Glance definitions<CR>', 'LSP: [G]o to [D]efinition' },
+					['gR'] = { ':Glance references<CR>', 'LSP: [G]o to [R]eferences' },
+					['gI'] = { ':Glance implementations<CR>', 'LSP: [G]o to [I]mplementation' },
+					['gT'] = { ':Glance type_definitions<CR>', 'LSP: [G]o to [T]ype definition' },
+					-- ['gC'] = { vim.lsp.buf.declaration, 'LSP: [G]o to to De[c]laration' },
 					-- ['<leader>fSd'] = { ts_builtin.lsp_document_symbols, '[F]ind [D]ocument [S]ymbols' },
 					-- ['<leader>fSw'] = { ts_builtin.lsp_dynamic_workspace_symbols, '[F]ind [W]orkspace [S]ymbols' },
 
