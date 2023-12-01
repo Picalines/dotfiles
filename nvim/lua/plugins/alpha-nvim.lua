@@ -14,32 +14,19 @@ return {
 			dashboard.button('q', '  Quit', ':qa<CR>'),
 		}
 
-		local function setup_dashboard()
-			local small_height = 35
-			local win_height = vim.fn.winheight(0)
-			local zoom_factor = util.clamp(win_height, 0, small_height) / small_height
-			local headerPadding = math.max(2, math.floor(win_height * zoom_factor * 0.2))
+		local small_height = 35
+		local win_height = vim.fn.winheight(0)
+		local zoom_factor = util.clamp(win_height, 0, small_height) / small_height
+		local headerPadding = math.max(2, math.floor(win_height * zoom_factor * 0.2))
 
-			dashboard.config.layout = {
-				{ type = 'padding', val = headerPadding },
-				dashboard.section.header,
-				{ type = 'padding', val = 2 },
-				dashboard.section.buttons,
-				dashboard.section.footer,
-			}
+		dashboard.config.layout = {
+			{ type = 'padding', val = headerPadding },
+			dashboard.section.header,
+			{ type = 'padding', val = 2 },
+			dashboard.section.buttons,
+			dashboard.section.footer,
+		}
 
-			alpha.setup(dashboard.opts)
-		end
-
-		setup_dashboard()
-
-		vim.api.nvim_create_autocmd('User AlphaReady', {
-			callback = function(event)
-				vim.api.nvim_create_autocmd('VimResized', {
-					buffer = event.buffer,
-					callback = setup_dashboard,
-				})
-			end,
-		})
+		alpha.setup(dashboard.opts)
 	end,
 }
