@@ -14,6 +14,7 @@ return {
 
 			groups = {
 				all = {
+					NormalFloat = { link = 'Normal' },
 					VertSplit = { link = 'WinBar' },
 					FloatBorder = { guifg = '#e6edf3' },
 				},
