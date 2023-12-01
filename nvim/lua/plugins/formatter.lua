@@ -50,7 +50,10 @@ return {
 			h = { with_current_file_cwd(require('formatter.filetypes.c').clangformat) },
 			cpp = { with_current_file_cwd(require('formatter.filetypes.cpp').clangformat) },
 			cs = {
-				function() return { exe = 'dotnet', stdin = true, args = { 'csharpier', '--fast', '--skip-write', '--write-stdout', '--' } } end,
+				function()
+					return { exe = 'dotnet', stdin = true, args = { 'csharpier', '--fast', '--skip-write', '--write-stdout', '--' } }
+				end,
+				require('formatter.filetypes.cs').dotnetformat,
 			},
 
 			java = { require('formatter.filetypes.java').clangformat },
