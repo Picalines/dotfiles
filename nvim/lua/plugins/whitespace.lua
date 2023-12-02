@@ -4,6 +4,13 @@ return {
 		highlight = 'DiffDelete',
 
 		ignore_terminal = true,
-		ignored_filetypes = { 'help', 'noice', 'TelescopePrompt', 'neo-tree', 'toggleterm' },
+		ignored_filetypes = {
+			'TelescopePrompt',
+			'help',
+			'mason',
+			'neo-tree',
+			'noice',
+			'toggleterm',
+		},
 	},
 }
