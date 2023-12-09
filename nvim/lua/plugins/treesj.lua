@@ -12,7 +12,7 @@ return {
 			use_default_keymaps = false,
 		}
 
-		require('keymaps.util').declare_keymaps {
+		require('util').declare_keymaps {
 			n = {
 				['<leader>m'] = { treesj.toggle, 'Split/Join node' },
 			},

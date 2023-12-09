@@ -1,4 +1,4 @@
-local util = require 'keymaps.util'
+local util = require 'util'
 
 util.declare_keymaps {
 	opts = {

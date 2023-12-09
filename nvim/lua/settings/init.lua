@@ -2,6 +2,7 @@ local modules = {
 	'behaviour',
 	'editing',
 	'environment',
+	'keymaps',
 	'ui',
 }
 

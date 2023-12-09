@@ -1,4 +1,4 @@
-require('keymaps.util').declare_keymaps {
+require('util').declare_keymaps {
 	opts = {
 		silent = true,
 	},

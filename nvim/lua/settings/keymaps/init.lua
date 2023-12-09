@@ -1,5 +1,5 @@
 if vim.g.vscode then
-	require 'keymaps.vscode'
+	require 'settings.keymaps.vscode'
 	return
 end
 
@@ -10,5 +10,5 @@ local modules = {
 }
 
 for _, module in pairs(modules) do
-	require('keymaps.' .. module)
+	require('settings.keymaps.' .. module)
 end

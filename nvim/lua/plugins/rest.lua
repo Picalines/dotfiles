@@ -45,7 +45,7 @@ return {
 		vim.api.nvim_create_autocmd({ 'BufAdd' }, {
 			pattern = { '*.http', '*.https' },
 			callback = function(event)
-				require('keymaps.util').declare_keymaps {
+				require('util').declare_keymaps {
 					opts = {
 						buffer = event.buf,
 					},

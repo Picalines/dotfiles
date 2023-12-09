@@ -37,7 +37,7 @@ return {
 		on_attach = function(bufnr)
 			local gitsigns = package.loaded.gitsigns
 
-			require('keymaps.util').declare_keymaps {
+			require('util').declare_keymaps {
 				opts = {
 					buffer = bufnr,
 				},

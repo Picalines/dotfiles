@@ -1,4 +1,4 @@
-local util = require 'keymaps.util'
+local util = require 'util'
 
 local function is_buffer_modified(buffer)
 	return vim.api.nvim_buf_get_option(buffer, 'modified')
@@ -74,7 +74,7 @@ util.declare_keymaps {
 		['>t'] = { ':tabmove +<CR>', 'Move [t]ab right' },
 		['<t'] = { ':tabmove -<CR>', 'Move [t]ab left' },
 
-		['<leader>b'] = { util.cmds ':enew', 'New [b]uffer' },
+		['<leader>b'] = { ':enew<CR>', 'New [b]uffer' },
 		['<leader>db'] = { remove_buffer, 'Close [b]uffer' },
 		[']b'] = { ':bn<CR>', 'Next [b]uffer' },
 		['[b'] = { ':bp<CR>', 'Prev [b]uffer' },

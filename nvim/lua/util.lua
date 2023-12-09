@@ -1,5 +1,40 @@
 local M = {}
 
+function M.cmds(...)
+	local cmds = { ... }
+	return function()
+		for _, cmd in pairs(cmds) do
+			vim.cmd(cmd)
+		end
+	end
+end
+
+function M.declare_keymaps(declaration)
+	local base_opts = declaration.opts or {}
+	declaration.opts = nil
+
+	for mode, keymaps in pairs(declaration) do
+		for lhs, keymap in pairs(keymaps) do
+			local rhs, opts
+
+			if type(keymap) == 'table' then
+				rhs = keymap[1]
+				opts = keymap
+				opts.desc = opts[2] or opts.desc
+				opts[1] = nil
+				opts[2] = nil
+			else
+				rhs = keymap
+				opts = {}
+			end
+
+			opts = vim.tbl_extend('force', base_opts, opts)
+
+			vim.keymap.set(mode, lhs, rhs, opts)
+		end
+	end
+end
+
 ---@param value number
 ---@param min number
 ---@param max number

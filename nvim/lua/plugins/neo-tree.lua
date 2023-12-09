@@ -31,7 +31,7 @@ return {
 	},
 
 	config = function()
-		local cmds = require('keymaps.util').cmds
+		local cmds = require('util').cmds
 
 		require('neo-tree').setup {
 			sources = {
@@ -324,7 +324,7 @@ return {
 			},
 		}
 
-		require('keymaps.util').declare_keymaps {
+		require('util').declare_keymaps {
 			opts = {
 				silent = true,
 			},

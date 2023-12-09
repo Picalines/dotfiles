@@ -63,7 +63,7 @@ return {
 			additional_args = rg_picker_args,
 		})
 
-		require('keymaps.util').declare_keymaps {
+		require('util').declare_keymaps {
 			n = {
 				['<leader>ff'] = { find_files, '[F]ind [F]iles' },
 				['<leader>fo'] = { builtin.oldfiles, '[F]ind [O]ld files' },

@@ -15,7 +15,7 @@ return {
 		local function on_attach_default(_, bufnr)
 			local ts_builtin = require 'telescope.builtin'
 
-			require('keymaps.util').declare_keymaps {
+			require('util').declare_keymaps {
 				opts = {
 					buffer = bufnr,
 					silent = true,

@@ -2,7 +2,7 @@ local function vscode_call(action)
 	return ':lua require("vscode-neovim").call("' .. action .. '")<CR>'
 end
 
-require('keymaps.util').declare_keymaps {
+require('util').declare_keymaps {
 	opts = {
 		silent = true,
 	},

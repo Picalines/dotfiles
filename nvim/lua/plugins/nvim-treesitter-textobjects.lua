@@ -86,7 +86,7 @@ return {
 
 		local ts_repeat_move = require 'nvim-treesitter.textobjects.repeatable_move'
 
-		require('keymaps.util').declare_keymaps {
+		require('util').declare_keymaps {
 			[{ 'n', 'x', 'o' }] = {
 				-- vim way: ; goes to the direction you were moving.
 				[';'] = ts_repeat_move.repeat_last_move,
