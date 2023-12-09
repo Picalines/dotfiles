@@ -23,6 +23,17 @@ function is_windows
 
 ### STARTUP
 
+## dotnet wsl
+
+if [ -d ~/.dotnet ]; then
+    export PATH="$PATH:$(realpath ~/.dotnet)"
+fi
+
+if command -v dotnet &> /dev/null
+then
+    export DOTNET_ROOT="$(dotnet --info | grep -E 'Base Path:' | sed -E "s/[^\/]+(.+)\/sdk.+/\1/")"
+fi
+
 ## prompt
 
 # old custom
