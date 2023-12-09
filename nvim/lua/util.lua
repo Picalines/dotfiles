@@ -85,6 +85,13 @@ function M.override(...)
 	return vim.tbl_extend('force', ...)
 end
 
+---@generic K, T
+---@param ... table<K, T>
+---@return table<K, T>
+function M.override_deep(...)
+	return vim.tbl_deep_extend('force', ...)
+end
+
 ---@generic T
 ---@param tbl table<any, T>
 ---@param value T
