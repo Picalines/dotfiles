@@ -1,3 +1,8 @@
+if vim.g.vscode then
+	require 'keymaps.vscode'
+	return
+end
+
 local modules = {
 	'environment',
 	'motion',

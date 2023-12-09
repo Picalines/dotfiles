@@ -16,14 +16,21 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup({
-	{ import = 'plugins' },
-	{ import = 'plugins.colorschemes' },
-}, {})
+local lazy = require 'lazy'
+
+if vim.g.vscode then
+	lazy.setup {
+		{ import = 'plugins.vscode' },
+	}
+else
+	lazy.setup {
+		{ import = 'plugins' },
+		{ import = 'plugins.colorschemes' },
+	}
+end
 
 require 'settings'
 require 'keymaps'
-require 'behaviour'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

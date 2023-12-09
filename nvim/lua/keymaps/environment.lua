@@ -49,6 +49,9 @@ local function quit_and_save()
 end
 
 util.declare_keymaps {
+	opts = {
+		silent = true,
+	},
 	n = {
 		['<leader>s'] = { save_buffer, '[S]ave file' },
 
@@ -64,16 +67,16 @@ util.declare_keymaps {
 		['<S-Left>'] = { '<C-W><', 'Decrease window width' },
 		['<S-Right>'] = { '<C-W>>', 'Increase window width' },
 
-		['<leader>t'] = { util.cmds ':tabnew', 'New [t]ab' },
-		['<leader>dt'] = { util.cmds ':tabclose', 'Close [t]ab' },
-		[']t'] = { util.cmds ':tabnext', 'Next [t]ab' },
-		['[t'] = { util.cmds ':tabprev', 'Prev [t]ab' },
-		['>t'] = { util.cmds ':tabmove +', 'Move [t]ab right' },
-		['<t'] = { util.cmds ':tabmove -', 'Move [t]ab left' },
+		['<leader>t'] = { ':tabnew<CR>', 'New [t]ab' },
+		['<leader>dt'] = { ':tabclose<CR>', 'Close [t]ab' },
+		[']t'] = { ':tabnext<CR>', 'Next [t]ab' },
+		['[t'] = { ':tabprev<CR>', 'Prev [t]ab' },
+		['>t'] = { ':tabmove +<CR>', 'Move [t]ab right' },
+		['<t'] = { ':tabmove -<CR>', 'Move [t]ab left' },
 
 		['<leader>b'] = { util.cmds ':enew', 'New [b]uffer' },
 		['<leader>db'] = { remove_buffer, 'Close [b]uffer' },
-		[']b'] = { util.cmds ':bn', 'Next [b]uffer' },
-		['[b'] = { util.cmds ':bp', 'Prev [b]uffer' },
+		[']b'] = { ':bn<CR>', 'Next [b]uffer' },
+		['[b'] = { ':bp<CR>', 'Prev [b]uffer' },
 	},
 }
