@@ -6,14 +6,18 @@ return {
 		local alpha = require 'alpha'
 		local dashboard = require 'alpha.themes.dashboard'
 
-		local button = dashboard.button
+		local function button(...)
+			local args = { ... }
+			args[3] = ':silent! ' .. args[3]
+			return dashboard.button(unpack(args))
+		end
 
 		dashboard.section.buttons.val = {
-			button('f', '󰈞  Find file', ':Telescope find_files<CR>'),
-			button('o', '󰮗  Old files', ':Telescope oldfiles<CR>'),
-			button('b', '󰯁  New file', ':ene <BAR> startinsert<CR>'),
-			button('e', '  File Tree', ':Neotree filesystem<CR>'),
-			button('q', '  Quit', ':qa<CR>'),
+			button('f', '󰈞  Find file', 'Telescope find_files<CR>'),
+			button('o', '󰮗  Old files', 'Telescope oldfiles<CR>'),
+			button('b', '󰯁  New file', 'ene <BAR> startinsert<CR>'),
+			button('e', '  File Tree', 'Neotree filesystem<CR>'),
+			button('q', '  Quit', 'qa<CR>'),
 		}
 
 		local small_height = 35
