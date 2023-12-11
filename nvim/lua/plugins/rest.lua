@@ -6,8 +6,6 @@ return {
 	config = function()
 		local rest = require 'rest-nvim'
 
-		local auto_format = vim.cmd.Format
-
 		rest.setup {
 			result_split_horizontal = false,
 			result_split_in_place = true,
@@ -25,9 +23,9 @@ return {
 				show_headers = true,
 
 				formatters = {
-					json = auto_format,
-					xml = auto_format,
-					html = auto_format,
+					json = "jq",
+					xml = "tidy",
+					html = "tidy",
 				},
 			},
 
