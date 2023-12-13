@@ -49,7 +49,7 @@ return {
 			c = { with_current_file_cwd(require('formatter.filetypes.c').clangformat) },
 			h = { with_current_file_cwd(require('formatter.filetypes.c').clangformat) },
 			cpp = { with_current_file_cwd(require('formatter.filetypes.cpp').clangformat) },
-			cs = { lsp_formatter },
+			cs = { require('formatter.filetypes.cs').csharpier },
 
 			java = { require('formatter.filetypes.java').clangformat },
 		}
