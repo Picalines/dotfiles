@@ -9,6 +9,9 @@ return {
 		{
 			'nvim-telescope/telescope-fzf-native.nvim',
 			build = 'make',
+			cond = function()
+				return not vim.fn.has('win32')
+			end
 		},
 
 		'nvim-telescope/telescope-ui-select.nvim',
@@ -45,9 +48,13 @@ return {
 			},
 		}
 
-		telescope.load_extension 'fzf'
-		telescope.load_extension 'ui-select'
-		telescope.load_extension 'noice'
+		local function safe_load_extension(name)
+			pcall(telescope.load_extension, name)
+		end
+
+		safe_load_extension 'fzf'
+		safe_load_extension 'ui-select'
+		safe_load_extension 'noice'
 
 		local ignore_files = { '.gitignore', '.arcignore' }
 
