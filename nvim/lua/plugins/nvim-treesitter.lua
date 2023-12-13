@@ -22,8 +22,6 @@ return {
 				'tsx',
 				'html',
 				'css',
-				'svelte',
-				'vue',
 				'json',
 				'toml',
 				'yaml',
