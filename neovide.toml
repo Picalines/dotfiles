@@ -1,2 +1,2 @@
-wsl = true
+wsl = false
 multigrid = true
