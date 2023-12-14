@@ -18,6 +18,14 @@ return {
 		float_opts = {
 			border = 'rounded',
 		},
+
+		shell = function()
+			if vim.fn.has 'win32' then
+				return 'powershell'
+			end
+
+			return vim.o.shell
+		end,
 	},
 
 	config = function(_, opts)
