@@ -36,6 +36,9 @@ util.declare_keymaps {
 		['<C-k>'] = '<Up>',
 		['<C-l>'] = '<Right>',
 		['<C-h>'] = '<Left>',
+
+		['<A-h>'] = '<C-o>b',
+		['<A-l>'] = '<C-o>e<Right>',
 	},
 
 	n = {
