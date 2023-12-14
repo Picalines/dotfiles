@@ -1,23 +1,27 @@
 return {
 	'akinsho/toggleterm.nvim',
 
-	config = function()
-		require('toggleterm').setup {
-			open_mapping = '<C-t>',
-			insert_mappings = false,
+	keys = '<C-t>',
 
-			hide_numbers = true,
+	opts = {
+		open_mapping = '<C-t>',
+		insert_mappings = false,
 
-			persist_mode = false,
-			close_on_exit = true,
+		hide_numbers = true,
 
-			direction = 'float',
-			auto_scroll = true,
+		persist_mode = false,
+		close_on_exit = true,
 
-			float_opts = {
-				border = 'rounded',
-			},
-		}
+		direction = 'float',
+		auto_scroll = true,
+
+		float_opts = {
+			border = 'rounded',
+		},
+	},
+
+	config = function(_, opts)
+		require('toggleterm').setup(opts)
 
 		vim.api.nvim_create_autocmd('TermOpen', {
 			pattern = { 'term://*' },
@@ -26,6 +30,6 @@ return {
 			end,
 		})
 
-		vim.keymap.set('n', '<leader>ft', vim.cmd.TermSelect, { desc = '[S]earch [T]erminals' })
+		-- vim.keymap.set('n', '<leader>ft', vim.cmd.TermSelect, { desc = '[S]earch [T]erminals' })
 	end,
 }

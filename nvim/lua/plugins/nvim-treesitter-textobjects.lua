@@ -1,6 +1,8 @@
 return {
 	'nvim-treesitter/nvim-treesitter-textobjects',
-	lazy = true,
+
+	event = 'VeryLazy',
+
 	config = function()
 		local util = require 'util'
 		local flatten = util.flatten

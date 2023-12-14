@@ -1,6 +1,8 @@
 return {
 	'booperlv/nvim-gomove',
 
+	event = 'VeryLazy',
+
 	opts = {
 		-- <A-hjkl> move
 		-- <A-HJKL> duplicate

@@ -1,7 +1,10 @@
 return {
 	'propet/colorscheme-persist.nvim',
+
 	lazy = false,
+
 	priority = 900,
+
 	config = function()
 		local colorscheme_persist = require 'colorscheme-persist'
 

@@ -1,6 +1,8 @@
 return {
 	'neovim/nvim-lspconfig',
 
+	event = 'VeryLazy',
+
 	dependencies = {
 		'williamboman/mason.nvim',
 		'williamboman/mason-lspconfig.nvim',
@@ -13,8 +15,6 @@ return {
 
 	config = function()
 		local function on_attach_default(_, bufnr)
-			local ts_builtin = require 'telescope.builtin'
-
 			require('util').declare_keymaps {
 				opts = {
 					buffer = bufnr,

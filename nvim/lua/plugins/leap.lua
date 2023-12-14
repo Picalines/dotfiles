@@ -1,6 +1,8 @@
 return {
 	'ggandor/leap.nvim',
 
+	event = 'VeryLazy',
+
 	dependencies = {
 		{
 			'ggandor/flit.nvim',
@@ -12,7 +14,5 @@ return {
 		local leap = require 'leap'
 
 		leap.add_default_mappings()
-
-		vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
 	end,
 }
