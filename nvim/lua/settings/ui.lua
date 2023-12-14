@@ -13,8 +13,11 @@ vim.o.fillchars = 'eob: '
 
 vim.opt.scrolloff = 8
 
-local define_sign = vim.fn.sign_define
-define_sign('DiagnosticSignError', { text = ' ', texthl = 'DiagnosticSignError' })
-define_sign('DiagnosticSignWarn', { text = ' ', texthl = 'DiagnosticSignWarn' })
-define_sign('DiagnosticSignInfo', { text = ' ', texthl = 'DiagnosticSignInfo' })
-define_sign('DiagnosticSignHint', { text = '󰌵', texthl = 'DiagnosticSignHint' })
+local function define_sign(sign, text)
+	return vim.fn.sign_define(sign, { text = text, texthl = sign })
+end
+
+define_sign('DiagnosticSignError', '')
+define_sign('DiagnosticSignWarn', '')
+define_sign('DiagnosticSignInfo', '')
+define_sign('DiagnosticSignHint', '󰌵')
