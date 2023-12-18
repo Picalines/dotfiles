@@ -22,6 +22,10 @@ if vim.g.vscode then
 	lazy.setup {
 		{ import = 'plugins.vscode' },
 	}
+elseif vim.fn.has 'ide' == 1 then
+	lazy.setup {
+		{ import = 'plugins.ide' },
+	}
 else
 	lazy.setup {
 		{ import = 'plugins' },

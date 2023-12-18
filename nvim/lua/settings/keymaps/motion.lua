@@ -40,9 +40,4 @@ util.declare_keymaps {
 		['<A-h>'] = '<C-o>b',
 		['<A-l>'] = '<C-o>e<Right>',
 	},
-
-	n = {
-		['[d'] = { vim.diagnostic.goto_prev, 'Go to previous [d]iagnostic' },
-		[']d'] = { vim.diagnostic.goto_next, 'Go to next [d]iagnostic' },
-	},
 }

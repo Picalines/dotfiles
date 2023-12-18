@@ -57,11 +57,6 @@ util.declare_keymaps {
 
 		['<leader>q'] = { quit_and_save, '[Q]uit and save' },
 
-		['<C-j>'] = { '<C-W>j', 'Move to bottom split' },
-		['<C-k>'] = { '<C-W>k', 'Move to upper split' },
-		['<C-h>'] = { '<C-W>h', 'Move to left split' },
-		['<C-l>'] = { '<C-W>l', 'Move to right split' },
-
 		['<S-Down>'] = { '<C-W>-', 'Decrease window height' },
 		['<S-Up>'] = { '<C-W>+', 'Increase window height' },
 		['<S-Left>'] = { '<C-W><', 'Decrease window width' },

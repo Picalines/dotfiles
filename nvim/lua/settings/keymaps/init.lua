@@ -1,13 +1,15 @@
-if vim.g.vscode then
-	require 'settings.keymaps.vscode'
-	return
-end
-
 local modules = {
 	'environment',
 	'motion',
 	'selection',
+	'window',
 }
+
+if vim.g.vscode then
+	table.insert(modules, 'vscode')
+else
+	table.insert(modules, 'nvim')
+end
 
 if vim.g.neovide then
 	table.insert(modules, 'neovide')

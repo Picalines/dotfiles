@@ -7,30 +7,7 @@ require('util').declare_keymaps {
 		silent = true,
 	},
 
-	[{ 'n', 'v' }] = {
-		['<Space>'] = '<Nop>',
-
-		['<C-u>'] = '<C-u>zz',
-		['<C-d>'] = '<C-d>zz',
-
-		['n'] = 'nzzzv',
-		['N'] = 'Nzzzv',
-
-		['gh'] = '^',
-		['gH'] = '0',
-		['gl'] = '$',
-	},
-
-	i = {
-		['<C-j>'] = '<Down>',
-		['<C-k>'] = '<Up>',
-		['<C-l>'] = '<Right>',
-		['<C-h>'] = '<Left>',
-	},
-
 	v = {
-		['p'] = '"_dP',
-
 		['<S-j>'] = ":m '>+1<CR>gv=gv",
 		['<S-k>'] = ":m '<-2<CR>gv=gv",
 	},
