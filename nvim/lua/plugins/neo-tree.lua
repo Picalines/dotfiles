@@ -30,6 +30,7 @@ return {
 
 	config = function()
 		local cmds = require('util').cmds
+		local fs_actions = require 'neo-tree.sources.filesystem.commands'
 
 		require('neo-tree').setup {
 			sources = {
@@ -55,7 +56,7 @@ return {
 			nesting_rules = {},
 
 			source_selector = {
-				winbar = true,
+				winbar = false,
 				statusline = false,
 				show_scrolled_off_parent_node = false,
 
@@ -194,6 +195,7 @@ return {
 				group_empty_dirs = false,
 				hijack_netrw_behavior = 'open_default',
 				use_libuv_file_watcher = true,
+				bind_to_cwd = true,
 				filtered_items = {
 					visible = false, -- when true, they will just be displayed differently than normal items
 					hide_dotfiles = false,
@@ -223,8 +225,27 @@ return {
 				},
 				window = {
 					mappings = {
-						['<bs>'] = 'navigate_up',
-						['/'] = 'set_root',
+						['<bs>'] = function(state)
+							fs_actions.navigate_up(state)
+
+							local cwd = vim.fn.getcwd()
+							local cwd_parent = vim.fn.fnamemodify(cwd, ':h')
+							vim.api.nvim_set_current_dir(cwd_parent)
+						end,
+
+						['/'] = function(state)
+							fs_actions.set_root(state)
+
+							local tree = state.tree
+							local node = tree:get_node()
+							local root = node.path
+
+							if node.type == 'file' then
+								root = vim.fn.fnamemodify(root, ':h')
+							end
+
+							vim.api.nvim_set_current_dir(root)
+						end,
 
 						['H'] = 'toggle_hidden',
 						['f'] = 'fuzzy_finder',
@@ -238,14 +259,14 @@ return {
 							vim.api.nvim_input(': ' .. path .. '<Home>')
 						end,
 
-						-- ['o'] = { 'show_help', nowait = false, config = { title = 'Order by', prefix_key = 'o' } },
-						-- ['oc'] = { 'order_by_created', nowait = false },
-						-- ['od'] = { 'order_by_diagnostics', nowait = false },
-						-- ['og'] = { 'order_by_git_status', nowait = false },
-						-- ['om'] = { 'order_by_modified', nowait = false },
-						-- ['on'] = { 'order_by_name', nowait = false },
-						-- ['os'] = { 'order_by_size', nowait = false },
-						-- ['ot'] = { 'order_by_type', nowait = false },
+						['o'] = { 'show_help', nowait = false, config = { title = 'Order by', prefix_key = 'o' } },
+						['oc'] = { 'order_by_created', nowait = false },
+						['od'] = { 'order_by_diagnostics', nowait = false },
+						['og'] = { 'order_by_git_status', nowait = false },
+						['om'] = { 'order_by_modified', nowait = false },
+						['on'] = { 'order_by_name', nowait = false },
+						['os'] = { 'order_by_size', nowait = false },
+						['ot'] = { 'order_by_type', nowait = false },
 					},
 					fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
 						['<down>'] = 'move_cursor_down',
@@ -310,13 +331,13 @@ return {
 						['gp'] = 'git_push',
 						['gg'] = 'git_commit_and_push',
 
-						-- ['o'] = { 'show_help', nowait = false, config = { title = 'Order by', prefix_key = 'o' } },
-						-- ['oc'] = { 'order_by_created', nowait = false },
-						-- ['od'] = { 'order_by_diagnostics', nowait = false },
-						-- ['om'] = { 'order_by_modified', nowait = false },
-						-- ['on'] = { 'order_by_name', nowait = false },
-						-- ['os'] = { 'order_by_size', nowait = false },
-						-- ['ot'] = { 'order_by_type', nowait = false },
+						['o'] = { 'show_help', nowait = false, config = { title = 'Order by', prefix_key = 'o' } },
+						['oc'] = { 'order_by_created', nowait = false },
+						['od'] = { 'order_by_diagnostics', nowait = false },
+						['om'] = { 'order_by_modified', nowait = false },
+						['on'] = { 'order_by_name', nowait = false },
+						['os'] = { 'order_by_size', nowait = false },
+						['ot'] = { 'order_by_type', nowait = false },
 					},
 				},
 			},
@@ -327,9 +348,10 @@ return {
 				silent = true,
 			},
 			n = {
-				['<leader>e'] = { ':Neotree reveal filesystem<CR>', 'Jump to File [E]xplorer' },
-				['<leader>E'] = { ':Neotree toggle filesystem<CR>', 'Toggle File [E]xplorer' },
-				['<leader>D'] = { ':Neotree diagnostics toggle bottom selector=false<CR>', 'Open [d]iagnostic message' },
+				['<leader>e'] = { ':Neotree focus filesystem<CR>', 'Jump to File [E]xplorer' },
+				['<leader>E'] = { ':Neotree toggle filesystem<CR>', 'Toggle File [E]xplorer window' },
+				['<leader>G'] = { ':Neotree toggle git_status<CR>', 'Open [G]it tree' },
+				['<leader>D'] = { ':Neotree diagnostics toggle bottom<CR>', 'Open [d]iagnostics list' },
 			},
 		}
 	end,

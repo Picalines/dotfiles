@@ -13,9 +13,10 @@ return {
 		end
 
 		dashboard.section.buttons.val = {
+			button('n', '󰯁  New file', 'ene <BAR> startinsert<CR>'),
 			button('f', '󰈞  Find file', 'Telescope find_files<CR>'),
+			button('d', '  Folder Tree', 'Neotree filesystem current / reveal_force_cwd<CR>'),
 			button('o', '󰮗  Old files', 'Telescope oldfiles<CR>'),
-			button('b', '󰯁  New file', 'ene <BAR> startinsert<CR>'),
 			button('e', '  File Tree', 'Neotree filesystem<CR>'),
 			button('q', '  Quit', 'qa<CR>'),
 		}
