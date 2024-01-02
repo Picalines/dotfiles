@@ -1,7 +1,7 @@
 return {
 	'mhartington/formatter.nvim',
 
-	enabled = false,
+	enabled = false, -- replaced by conform
 
 	event = { 'BufReadPre', 'BufNewFile' },
 
