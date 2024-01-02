@@ -203,6 +203,7 @@ return {
 					hide_hidden = false, -- windows
 					hide_by_name = {
 						-- "node_modules"
+						'.git',
 					},
 					hide_by_pattern = {
 						-- "*.meta",
@@ -214,6 +215,8 @@ return {
 					never_show = {
 						'.DS_Store',
 						'thumbs.db',
+						'$RECYCLE.BIN',
+						'System Volume Information',
 					},
 					never_show_by_pattern = {
 						-- ".null-ls_*",
