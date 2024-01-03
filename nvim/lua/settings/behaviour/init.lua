@@ -12,8 +12,9 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 local modules = {
-	'yank-highlight',
 	'filetype',
+	'lsp',
+	'yank-highlight',
 }
 
 for _, module in pairs(modules) do
