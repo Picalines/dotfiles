@@ -14,8 +14,10 @@ return {
 	},
 
 	config = function()
+		local util = require 'util'
+
 		local function on_attach_default(_, bufnr)
-			require('util').declare_keymaps {
+			util.declare_keymaps {
 				opts = {
 					buffer = bufnr,
 					silent = true,
@@ -46,10 +48,16 @@ return {
 		local default_capabilities = vim.lsp.protocol.make_client_capabilities()
 		default_capabilities = require('cmp_nvim_lsp').default_capabilities(default_capabilities)
 
+		local ignored_servers = {}
+
 		local default_handlers = {}
 
 		mason_lspconfig.setup_handlers {
 			function(server_name)
+				if util.contains_value(ignored_servers, server_name) then
+					return
+				end
+
 				local server_config_ok, server_config = pcall(require, 'lsp.servers.' .. server_name)
 
 				if not server_config_ok then
@@ -61,14 +69,16 @@ return {
 					pcall(server_config.on_attach, client, bufnr)
 				end
 
-				lspconfig[server_name].setup {
+				server_config = util.override_deep(server_config, {
 					capabilities = server_config.capabilities or default_capabilities,
 					settings = server_config.settings,
 					init_options = server_config.init_options,
 					filetypes = server_config.filetypes,
 					handlers = vim.tbl_extend('force', default_handlers, server_config.handlers or {}),
 					on_attach = on_server_attach,
-				}
+				})
+
+				lspconfig[server_name].setup(server_config)
 			end,
 		}
 	end,
