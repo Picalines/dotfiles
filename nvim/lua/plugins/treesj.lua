@@ -3,7 +3,7 @@ return {
 
 	dependencies = { 'nvim-treesitter/nvim-treesitter' },
 
-	keys = { '<leader>m' },
+	keys = { 'cm' },
 
 	config = function()
 		local treesj = require 'treesj'
@@ -14,7 +14,7 @@ return {
 
 		require('util').declare_keymaps {
 			n = {
-				['<leader>m'] = { treesj.toggle, 'Split/Join node' },
+				['cm'] = { treesj.toggle, 'Split/Join node' },
 			},
 		}
 	end,
