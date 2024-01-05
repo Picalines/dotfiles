@@ -7,29 +7,30 @@ return {
 		{ 'tiagovla/scope.nvim', opts = {} },
 	},
 
-	config = function()
-		require('bufferline').setup {
-			options = {
-				mode = 'buffers',
+	opts = {
+		options = {
+			mode = 'buffers',
 
-				diagnostics = 'nvim_lsp',
+			show_buffer_close_icons = false,
+			show_close_icon = false,
 
-				hover = {
-					enabled = false,
-				},
+			diagnostics = 'nvim_lsp',
 
-				offsets = {
-					{
-						filetype = 'neo-tree',
-						highlight = 'NeoTreeTabActive',
-						text_align = 'center',
-						separator = true,
-						text = function()
-							return vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
-						end,
-					},
+			hover = {
+				enabled = false,
+			},
+
+			offsets = {
+				{
+					filetype = 'neo-tree',
+					highlight = 'NeoTreeTabActive',
+					text_align = 'center',
+					separator = true,
+					text = function()
+						return vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+					end,
 				},
 			},
-		}
-	end,
+		},
+	},
 }
