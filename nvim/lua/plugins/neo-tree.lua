@@ -324,7 +324,6 @@ return {
 
 			git_status = {
 				window = {
-					position = 'float',
 					mappings = {
 						['ga'] = 'git_add_file',
 						['gA'] = 'git_add_all',
@@ -353,7 +352,7 @@ return {
 			n = {
 				['<leader>e'] = { ':Neotree focus filesystem<CR>', 'Jump to File [E]xplorer' },
 				['<leader>E'] = { ':Neotree toggle filesystem<CR>', 'Toggle File [E]xplorer window' },
-				['<leader>G'] = { ':Neotree toggle git_status<CR>', 'Open [G]it tree' },
+				['<leader>G'] = { ':Neotree focus git_status float<CR>', 'Open [G]it tree' },
 				['<leader>D'] = { ':Neotree diagnostics toggle bottom<CR>', 'Open [d]iagnostics list' },
 			},
 		}
