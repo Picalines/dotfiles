@@ -16,7 +16,7 @@ return {
 	config = function()
 		local util = require 'util'
 
-		local function on_attach_default(_, bufnr)
+		local function declare_lsp_keymaps(_, bufnr)
 			util.declare_keymaps {
 				opts = {
 					buffer = bufnr,
@@ -52,34 +52,34 @@ return {
 
 		local default_handlers = {}
 
-		mason_lspconfig.setup_handlers {
-			function(server_name)
-				if util.contains_value(ignored_servers, server_name) then
-					return
-				end
+		local function setup_server(server_name)
+			if util.contains_value(ignored_servers, server_name) then
+				return
+			end
 
-				local server_config_ok, server_config = pcall(require, 'lsp.servers.' .. server_name)
+			local server_config_ok, server_config = pcall(require, 'lsp.servers.' .. server_name)
 
-				if not server_config_ok then
-					server_config = {}
-				end
+			if not server_config_ok then
+				server_config = {}
+			end
 
-				local function on_server_attach(client, bufnr)
-					on_attach_default(client, bufnr)
-					pcall(server_config.on_attach, client, bufnr)
-				end
+			local function on_server_attach(client, bufnr)
+				declare_lsp_keymaps(client, bufnr)
+				pcall(server_config.on_attach, client, bufnr)
+			end
 
-				server_config = util.override_deep(server_config, {
-					capabilities = server_config.capabilities or default_capabilities,
-					settings = server_config.settings,
-					init_options = server_config.init_options,
-					filetypes = server_config.filetypes,
-					handlers = vim.tbl_extend('force', default_handlers, server_config.handlers or {}),
-					on_attach = on_server_attach,
-				})
+			server_config = util.override_deep(server_config, {
+				capabilities = server_config.capabilities or default_capabilities,
+				settings = server_config.settings,
+				init_options = server_config.init_options,
+				filetypes = server_config.filetypes,
+				handlers = vim.tbl_extend('force', default_handlers, server_config.handlers or {}),
+				on_attach = on_server_attach,
+			})
 
-				lspconfig[server_name].setup(server_config)
-			end,
-		}
+			lspconfig[server_name].setup(server_config)
+		end
+
+		mason_lspconfig.setup_handlers { setup_server }
 	end,
 }
