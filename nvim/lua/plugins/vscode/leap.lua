@@ -1,1 +1,1 @@
-return require 'plugins.leap'
+return require 'plugins.nvim.leap'

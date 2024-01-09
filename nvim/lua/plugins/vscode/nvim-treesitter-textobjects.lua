@@ -1,1 +1,1 @@
-return require 'plugins.nvim-treesitter-textobjects'
+return require 'plugins.nvim.nvim-treesitter-textobjects'

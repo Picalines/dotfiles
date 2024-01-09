@@ -1,8 +1,6 @@
--- Set <space> as the leader key
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Install package manager
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system {
@@ -16,20 +14,5 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local lazy = require 'lazy'
-
-if vim.g.vscode then
-	lazy.setup {
-		{ import = 'plugins.vscode' },
-	}
-else
-	lazy.setup {
-		{ import = 'plugins' },
-		{ import = 'plugins.colorschemes' },
-	}
-end
-
+require 'plugins'
 require 'settings'
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et

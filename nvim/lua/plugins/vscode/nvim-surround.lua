@@ -1,1 +1,1 @@
-return require 'plugins.nvim-surround'
+return require 'plugins.nvim.nvim-surround'
