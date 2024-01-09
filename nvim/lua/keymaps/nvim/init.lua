@@ -1,0 +1,6 @@
+require 'keymaps.nvim.buffer'
+require 'keymaps.nvim.motion'
+require 'keymaps.nvim.quit'
+require 'keymaps.nvim.selection'
+require 'keymaps.nvim.tab'
+require 'keymaps.nvim.window'

@@ -2,14 +2,14 @@ local util = require 'util'
 
 util.switch_app {
 	nvim = function()
-		require 'settings.keymaps.nvim'
+		require 'keymaps.nvim'
 	end,
 
 	neovide = function()
-		require 'settings.keymaps.neovide'
+		require 'keymaps.neovide'
 	end,
 
 	vscode = function()
-		require 'settings.keymaps.vscode'
+		require 'keymaps.vscode'
 	end,
 }

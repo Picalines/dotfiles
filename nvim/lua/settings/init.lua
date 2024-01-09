@@ -1,15 +1,11 @@
-local modules = {
-	'behaviour',
-	'editing',
-	'environment',
-	'keymaps',
-	'ui',
+local util = require 'util'
+
+util.switch_app {
+	nvim = function()
+		require 'settings.nvim'
+	end,
+
+	neovide = function()
+		require 'settings.neovide'
+	end,
 }
-
-if vim.g.neovide then
-	table.insert(modules, 'neovide')
-end
-
-for _, module in pairs(modules) do
-	require('settings.' .. module)
-end
