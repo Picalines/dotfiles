@@ -1,22 +1,15 @@
-local modules = {
-	'buffer',
-	'motion',
-	'selection',
-	'tab',
-	'window',
+local util = require 'util'
+
+util.switch_app {
+	nvim = function()
+		require 'settings.keymaps.nvim'
+	end,
+
+	neovide = function()
+		require 'settings.keymaps.neovide'
+	end,
+
+	vscode = function()
+		require 'settings.keymaps.vscode'
+	end,
 }
-
-if vim.g.vscode then
-	require 'settings.keymaps.vscode'
-	return
-else
-	table.insert(modules, 'nvim')
-
-	if vim.g.neovide then
-		table.insert(modules, 'neovide')
-	end
-end
-
-for _, module in pairs(modules) do
-	require('settings.keymaps.' .. module)
-end

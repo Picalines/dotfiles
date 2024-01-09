@@ -1,12 +1,7 @@
 local M = {}
 
-function M.cmds(...)
-	local cmds = { ... }
-	return function()
-		for _, cmd in pairs(cmds) do
-			vim.cmd(cmd)
-		end
-	end
+function M.noop(...)
+	return ...
 end
 
 function M.declare_keymaps(declaration)
@@ -31,6 +26,39 @@ function M.declare_keymaps(declaration)
 			opts = vim.tbl_extend('force', base_opts, opts)
 
 			vim.keymap.set(mode, lhs, rhs, opts)
+		end
+	end
+end
+
+function M.switch_app(funcs)
+	for app, f in pairs(funcs) do
+		if type(app) == 'table' then
+			for _, iapp in ipairs(app) do
+				funcs[iapp] = f
+			end
+		end
+	end
+
+	funcs.nvim = funcs.nvim or M.noop
+	funcs.neovide = funcs.neovide or M.noop
+	funcs.vscode = funcs.vscode or M.noop
+
+	if vim.g.vscode then
+		funcs.vscode()
+	else
+		funcs.nvim()
+
+		if vim.g.neovide then
+			funcs.neovide()
+		end
+	end
+end
+
+function M.cmds(...)
+	local cmds = { ... }
+	return function()
+		for _, cmd in pairs(cmds) do
+			vim.cmd(cmd)
 		end
 	end
 end
