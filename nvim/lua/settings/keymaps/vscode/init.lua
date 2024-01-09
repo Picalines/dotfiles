@@ -30,9 +30,6 @@ require('util').declare_keymaps {
 
 	v = {
 		['p'] = '"_dP',
-
-		['<S-j>'] = ":m '>+1<CR>gv=gv",
-		['<S-k>'] = ":m '<-2<CR>gv=gv",
 	},
 
 	n = {
@@ -60,13 +57,13 @@ require('util').declare_keymaps {
 
 		['<leader>s'] = vscode_call 'workbench.action.files.save',
 
-		['<leader>t'] = vscode_call 'workbench.action.files.newUntitledFile',
+		['<C-t>e'] = vscode_call 'workbench.action.files.newUntitledFile',
+		['<C-t>c'] = vscode_call 'workbench.action.closeActiveEditor',
 		[']t'] = vscode_call 'workbench.action.nextEditor',
 		['[t'] = vscode_call 'workbench.action.previousEditor',
-		['<leader>dt'] = vscode_call 'workbench.action.closeActiveEditor',
 
 		['<leader>e'] = vscode_call 'workbench.files.action.showActiveFileInExplorer',
 		['<leader>E'] = vscode_call 'workbench.action.toggleSidebarVisibility',
-		['<C-t>'] = vscode_call 'workbench.action.terminal.toggleTerminal',
+		['<leader>t'] = vscode_call 'workbench.action.terminal.toggleTerminal',
 	},
 }

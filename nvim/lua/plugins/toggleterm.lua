@@ -1,11 +1,12 @@
 return {
 	'akinsho/toggleterm.nvim',
 
-	keys = '<C-t>',
+	keys = '<leader>t',
 
 	opts = {
-		open_mapping = '<C-t>',
+		open_mapping = '<leader>t',
 		insert_mappings = false,
+		terminal_mappings = false,
 
 		hide_numbers = true,
 

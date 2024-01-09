@@ -1,16 +1,20 @@
+local modules = {
+	'buffer',
+	'motion',
+	'selection',
+	'tab',
+	'window',
+}
+
 if vim.g.vscode then
 	require 'settings.keymaps.vscode'
 	return
-end
+else
+	table.insert(modules, 'nvim')
 
-local modules = {
-	'environment',
-	'motion',
-	'selection',
-}
-
-if vim.g.neovide then
-	table.insert(modules, 'neovide')
+	if vim.g.neovide then
+		table.insert(modules, 'neovide')
+	end
 end
 
 for _, module in pairs(modules) do
