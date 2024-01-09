@@ -32,5 +32,14 @@ return {
 				},
 			},
 		},
+
+		highlights = {
+			offset_separator = {
+				bg = {
+					attribute = 'bg',
+					highlight = 'NeoTreeTabActive',
+				},
+			},
+		},
 	},
 }
