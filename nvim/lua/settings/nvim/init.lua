@@ -12,7 +12,6 @@ vim.o.smartcase = true
 
 require 'settings.nvim.editing'
 require 'settings.nvim.environment'
-require 'settings.nvim.filetype'
 require 'settings.nvim.lsp'
 require 'settings.nvim.ui'
 require 'settings.nvim.yank-highlight'
