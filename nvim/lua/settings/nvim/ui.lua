@@ -2,7 +2,8 @@ vim.o.mouse = 'a'
 
 vim.o.termguicolors = true
 
-vim.wo.number = true
+vim.o.number = true
+vim.o.relativenumber = true
 
 vim.wo.signcolumn = 'yes'
 

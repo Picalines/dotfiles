@@ -1,7 +1,7 @@
 return {
 	'nvim-treesitter/nvim-treesitter-textobjects',
 
-	event = 'VeryLazy',
+	event = { 'BufReadPre', 'BufNewFile' },
 
 	config = function()
 		local util = require 'util'
