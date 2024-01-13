@@ -30,12 +30,26 @@ return {
 	},
 
 	config = function(_, opts)
+		local util = require 'util'
+
 		require('toggleterm').setup(opts)
 
 		vim.api.nvim_create_autocmd('TermOpen', {
 			pattern = { 'term://*' },
-			callback = function()
-				vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { buffer = 0 })
+			callback = function(event)
+				util.declare_keymaps {
+					opts = {
+						silent = true,
+						buffer = event.buf,
+						remap = true,
+					},
+					t = {
+						['<Esc>'] = [[<C-\><C-n>]],
+					},
+					n = {
+						['<Esc>'] = '<leader>t',
+					},
+				}
 			end,
 		})
 
