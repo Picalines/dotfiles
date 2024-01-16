@@ -30,39 +30,41 @@ return {
 		},
 
 		preview_config = {
-			border = 'rounded',
+			border = 'none',
 			relative = 'cursor',
 		},
 
 		on_attach = function(bufnr)
+			local util = require 'util'
 			local gitsigns = package.loaded.gitsigns
 
-			require('util').declare_keymaps {
+			util.declare_keymaps {
 				opts = {
 					buffer = bufnr,
 				},
 
 				n = {
-					['<leader>C'] = { gitsigns.preview_hunk, 'Preview git change' },
-				},
+					['<leader>H'] = { gitsigns.preview_hunk, 'Preview hunk' },
+					['<leader>ha'] = { gitsigns.stage_hunk, 'Stage hunk' },
+					['<leader>hu'] = { gitsigns.undo_stage_hunk, 'Undo stage hunk' },
+					['<leader>hr'] = { gitsigns.reset_hunk, 'Reset hunk' },
 
-				[{ 'n', 'v' }] = {
-					[']C'] = {
-						desc = 'Jump to next [C]hange',
+					[']h'] = {
+						desc = 'Jump to next [h]unk',
 						function()
 							if vim.wo.diff then
-								return ']C'
+								return ']h'
 							end
 							vim.schedule(gitsigns.next_hunk)
 							return '<Ignore>'
 						end,
 					},
 
-					['[C'] = {
-						desc = 'Jump to previous [C]hange',
+					['[h'] = {
+						desc = 'Jump to previous [h]unk',
 						function()
 							if vim.wo.diff then
-								return '[C'
+								return '[h'
 							end
 							vim.schedule(gitsigns.prev_hunk)
 							return '<Ignore>'
