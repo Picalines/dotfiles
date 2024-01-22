@@ -194,7 +194,10 @@ return {
 			filesystem = {
 				group_empty_dirs = false,
 				hijack_netrw_behavior = 'open_default',
-				use_libuv_file_watcher = true,
+
+				-- temp fix, see https://github.com/nvim-neo-tree/neo-tree.nvim/issues/914
+				use_libuv_file_watcher = not vim.fn.has 'win32',
+
 				bind_to_cwd = true,
 				filtered_items = {
 					visible = false, -- when true, they will just be displayed differently than normal items
