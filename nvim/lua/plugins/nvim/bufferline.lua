@@ -1,7 +1,7 @@
 return {
 	'akinsho/bufferline.nvim',
 
-	enabled = true, -- *will* replaced by nvim-cokeline
+	enabled = false, -- replaced by nvim-cokeline
 
 	dependencies = {
 		{ 'tiagovla/scope.nvim', opts = {} },

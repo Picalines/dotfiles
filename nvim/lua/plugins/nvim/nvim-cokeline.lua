@@ -1,7 +1,7 @@
 return {
 	'willothy/nvim-cokeline',
 
-	enabled = false, -- WIP
+	enabled = true,
 
 	dependencies = {
 		'nvim-lua/plenary.nvim',
@@ -12,41 +12,42 @@ return {
 	},
 
 	config = function()
-		local empty = {}
+		local get_hex = require('cokeline.hlgroups').get_hl_attr
+		local sidebar_win = require('cokeline.sidebar').get_win
 
-		local function get_hl(hl_name)
-			local id = vim.api.nvim_get_hl_id_by_name(hl_name)
-			return vim.api.nvim_get_hl(id, empty)
+		local function get_fg(hl)
+			return get_hex(hl, 'fg')
 		end
 
-		local function get_fg(hl_name)
-			local f = get_hl(hl_name).foreground
-			return f
+		local function get_bg(hl)
+			return get_hex(hl, 'bg')
 		end
 
-		local function get_bg(hl_name)
-			return get_hl(hl_name).background
-		end
-
-		local function fg_getter(hl_name)
+		local function get_fg_dyn(hl)
 			return function()
-				return get_fg(hl_name)
+				return get_fg(hl)
 			end
 		end
 
-		local function bg_getter(hl_name)
+		local function get_bg_dyn(hl)
 			return function()
-				return get_bg(hl_name)
+				return get_bg(hl)
 			end
+		end
+
+		local function is_sidebar_opened()
+			return sidebar_win 'left' ~= nil
 		end
 
 		require('cokeline').setup {
 			default_hl = {
 				fg = function(buffer)
-					return buffer.is_focused and get_fg 'Normal' or get_fg 'Comment'
+					return get_fg(buffer.is_focused and 'Normal' or 'Comment')
 				end,
-				bg = bg_getter 'ColorColumn',
+				bg = get_bg_dyn 'Normal',
 			},
+
+			fill_hl = 'Normal',
 
 			sidebar = {
 				filetype = { 'NvimTree', 'neo-tree' },
@@ -55,10 +56,10 @@ return {
 						text = ' ',
 					},
 					{
-						text = function(buf)
-							return buf.filetype
+						text = function()
+							return vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
 						end,
-						fg = fg_getter 'NeoTreeNormal',
+						fg = get_fg_dyn 'Normal',
 						bold = true,
 					},
 				},
@@ -66,8 +67,13 @@ return {
 
 			components = {
 				{
-					text = '│',
-					fg = fg_getter 'ColorColumn',
+					text = function(buffer)
+						if buffer.index > 1 or is_sidebar_opened() then
+							return '│ '
+						end
+						return ' '
+					end,
+					fg = get_fg_dyn 'VertSplit',
 				},
 				{
 					text = function(buffer)
@@ -81,15 +87,35 @@ return {
 					text = function(buffer)
 						return buffer.unique_prefix
 					end,
-					fg = fg_getter 'Comment',
+					fg = get_fg_dyn 'Comment',
 					italic = true,
+				},
+				{
+					text = function(buffer)
+						return buffer.unique_prefix
+					end,
+					fg = get_fg_dyn 'Comment'
 				},
 				{
 					text = function(buffer)
 						return buffer.filename
 					end,
+					fg = function(buffer)
+						local d = buffer.diagnostics
+						if d.errors > 0 then
+							return get_fg 'DiagnosticOk'
+						elseif d.warnings > 0 then
+							return get_fg 'DiagnosticWarn'
+						end
+					end,
 					bold = function(buffer)
 						return buffer.is_focused
+					end,
+					strikethrough = function(buffer)
+						return not buffer:is_valid()
+					end,
+					italic = function(buffer)
+						return buffer.is_readonly
 					end,
 				},
 				{
