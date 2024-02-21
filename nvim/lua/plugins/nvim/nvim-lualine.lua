@@ -2,7 +2,17 @@ return {
 	'nvim-lualine/lualine.nvim',
 
 	config = function()
-		local noice_statusline = require('noice').api.statusline
+		local util = require 'util'
+
+		local noice_status = require('noice').api.status
+
+		local function no_bg(mode)
+			if type(mode) ~= 'table' then
+				mode = { mode }
+			end
+
+			return util.override_deep(mode, { color = { bg = 'NONE' } })
+		end
 
 		require('lualine').setup {
 			options = {
@@ -19,36 +29,33 @@ return {
 			sections = {
 				lualine_a = {},
 
-				lualine_b = {
-					{
-						'filetype',
-						icon_only = true,
-						separator = '',
-						padding = { left = 1, right = 0 },
-					},
-					{
-						'filename',
-					},
-				},
+				lualine_b = {},
 
 				lualine_c = {
-					'branch',
-					'diff',
-					'diagnostics',
+					no_bg 'branch',
 
-					{
-						noice_statusline.mode.get,
-						cond = noice_statusline.mode.has,
+					no_bg 'diff',
+
+					no_bg 'diagnostics',
+
+					no_bg {
+						noice_status.mode.get,
+						cond = noice_status.mode.has,
 						color = { fg = '#ff9e64' },
 					},
 				},
 
-				lualine_x = { 'location', 'encoding' },
+				lualine_x = { no_bg 'location', no_bg 'encoding' },
 
 				lualine_y = {},
 
 				lualine_z = {},
 			},
 		}
+
+		vim.cmd [[
+			highlight lualine_c_inactive guibg=NONE
+			highlight lualine_c_normal guibg=NONE
+		]]
 	end,
 }
