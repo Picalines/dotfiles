@@ -53,8 +53,6 @@ return {
 
 			sort_case_insensitive = false,
 
-			enable_cursor_hijack = true,
-
 			nesting_rules = {},
 
 			source_selector = {
