@@ -63,21 +63,19 @@ return {
 				server_config = {}
 			end
 
-			local function on_server_attach(client, bufnr)
+			local custom_on_attach = server_config.on_attach or util.noop
+
+			local function on_attach(client, bufnr)
 				declare_lsp_keymaps(client, bufnr)
-				pcall(server_config.on_attach, client, bufnr)
+				pcall(custom_on_attach, client, bufnr)
 			end
 
-			server_config = util.override_deep(server_config, {
-				capabilities = server_config.capabilities or default_capabilities,
-				settings = server_config.settings,
-				init_options = server_config.init_options,
-				filetypes = server_config.filetypes,
-				handlers = vim.tbl_extend('force', default_handlers, server_config.handlers or {}),
-				on_attach = on_server_attach,
-			})
+			local default_server_config = {
+				capabilities = default_capabilities,
+				handlers = default_handlers,
+			}
 
-			lspconfig[server_name].setup(server_config)
+			lspconfig[server_name].setup(util.override_deep(default_server_config, server_config, { on_attach = on_attach }))
 		end
 
 		mason_lspconfig.setup_handlers { setup_server }
