@@ -65,6 +65,12 @@ return {
 				},
 			},
 
+			buffers = {
+				filter_visible = function(buffer)
+					return buffer.type ~= 'terminal' and buffer.type ~= 'quickfix'
+				end,
+			},
+
 			components = {
 				{
 					text = function(buffer)
@@ -94,7 +100,7 @@ return {
 					text = function(buffer)
 						return buffer.unique_prefix
 					end,
-					fg = get_fg_dyn 'Comment'
+					fg = get_fg_dyn 'Comment',
 				},
 				{
 					text = function(buffer)
