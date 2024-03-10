@@ -47,8 +47,6 @@ return {
 
 			hide_root_node = true,
 
-			enable_normal_mode_for_inputs = false,
-
 			open_files_do_not_replace_types = { 'terminal', 'trouble', 'qf' },
 
 			sort_case_insensitive = false,
