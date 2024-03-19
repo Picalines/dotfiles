@@ -1,6 +1,8 @@
 return {
 	'rest-nvim/rest.nvim',
 
+	enabled = false,
+
 	event = 'BufAdd',
 
 	dependencies = { 'nvim-lua/plenary.nvim' },
