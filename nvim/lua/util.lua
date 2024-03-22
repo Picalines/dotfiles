@@ -40,8 +40,9 @@ function M.switch_app(funcs)
 	end
 
 	funcs.nvim = funcs.nvim or M.noop
-	funcs.neovide = funcs.neovide or M.noop
 	funcs.vscode = funcs.vscode or M.noop
+	funcs.neovide = funcs.neovide or M.noop
+	funcs.terminal = funcs.terminal or M.noop
 
 	if vim.g.vscode then
 		funcs.vscode()
@@ -50,6 +51,8 @@ function M.switch_app(funcs)
 
 		if vim.g.neovide then
 			funcs.neovide()
+		else
+			funcs.terminal()
 		end
 	end
 end
