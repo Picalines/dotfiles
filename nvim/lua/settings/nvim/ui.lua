@@ -1,3 +1,5 @@
+local util = require 'util'
+
 vim.o.mouse = 'a'
 
 vim.o.termguicolors = true
@@ -22,3 +24,7 @@ define_sign('DiagnosticSignError', '')
 define_sign('DiagnosticSignWarn', '')
 define_sign('DiagnosticSignInfo', '')
 define_sign('DiagnosticSignHint', '󰌵')
+
+util.per_filetype('markdown', function()
+	vim.wo.wrap = true
+end)
