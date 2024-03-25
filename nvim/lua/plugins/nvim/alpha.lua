@@ -13,11 +13,13 @@ return {
 		end
 
 		dashboard.section.buttons.val = {
+			button('e', '  File Tree', 'Neotree filesystem<CR>'),
+			button('o', '󰮗  Old files', 'Telescope oldfiles<CR>'),
 			button('n', '󰯁  New file', 'ene <BAR> startinsert<CR>'),
 			button('f', '󰈞  Find file', 'Telescope find_files<CR>'),
-			button('d', '  Folder Tree', 'Neotree filesystem current / reveal_force_cwd<CR>'),
-			button('o', '󰮗  Old files', 'Telescope oldfiles<CR>'),
-			button('e', '  File Tree', 'Neotree filesystem<CR>'),
+			button('c', '  Change Directory', 'Neotree filesystem current / reveal_force_cwd<CR>'),
+			button('l', '󰒲  Lazy', 'Lazy<CR>'),
+			button('m', '󰏗  Mason', 'Mason<CR>'),
 			button('q', '  Quit', 'qa<CR>'),
 		}
 
