@@ -3,18 +3,21 @@ return {
 
 	dependencies = { 'nvim-treesitter/nvim-treesitter' },
 
-	keys = { 'cm' },
+	event = 'LspAttach',
 
-	config = function()
+	opts = {
+		use_default_keymaps = false,
+	},
+
+	config = function(_, opts)
 		local treesj = require 'treesj'
+		local util = require 'util'
 
-		treesj.setup {
-			use_default_keymaps = false,
-		}
+		treesj.setup(opts)
 
-		require('util').declare_keymaps {
+		util.declare_keymaps {
 			n = {
-				['cm'] = { treesj.toggle, 'Split/Join node' },
+				['cI'] = { treesj.toggle, 'Change indentation' },
 			},
 		}
 	end,
