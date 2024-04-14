@@ -22,4 +22,10 @@ return {
 
 		overrides = {},
 	},
+
+	config = function(_, opts)
+		require('evergarden').setup(opts)
+
+		vim.cmd ':hi NoiceCursor gui=inverse'
+	end,
 }
