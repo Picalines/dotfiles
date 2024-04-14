@@ -20,6 +20,7 @@ return {
 			button('c', '  Change Directory', 'Neotree filesystem current / reveal_force_cwd<CR>'),
 			button('l', '󰒲  Lazy', 'Lazy<CR>'),
 			button('m', '󰏗  Mason', 'Mason<CR>'),
+			button('t', '󰏘  Theme', 'PickColorScheme<CR>'),
 			button('q', '  Quit', 'qa<CR>'),
 		}
 
