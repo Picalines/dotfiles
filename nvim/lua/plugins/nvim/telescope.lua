@@ -12,8 +12,8 @@ return {
 			'nvim-telescope/telescope-fzf-native.nvim',
 			build = 'make',
 			cond = function()
-				return not vim.fn.has('win32')
-			end
+				return vim.fn.has 'win32' == 0
+			end,
 		},
 
 		'nvim-telescope/telescope-ui-select.nvim',

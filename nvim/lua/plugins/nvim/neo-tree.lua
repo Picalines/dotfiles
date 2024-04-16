@@ -194,7 +194,7 @@ return {
 				hijack_netrw_behavior = 'open_default',
 
 				-- temp fix, see https://github.com/nvim-neo-tree/neo-tree.nvim/issues/914
-				use_libuv_file_watcher = not vim.fn.has 'win32',
+				use_libuv_file_watcher = vim.fn.has 'win32' == 0,
 
 				bind_to_cwd = true,
 				filtered_items = {
