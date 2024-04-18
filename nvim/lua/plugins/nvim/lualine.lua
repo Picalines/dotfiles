@@ -14,10 +14,10 @@ return {
 			return util.override_deep(mode, { color = { bg = 'NONE' } })
 		end
 
-		require('lualine').setup {
+		local opts = {
 			options = {
 				icons_enabled = true,
-				theme = 'onedark',
+				theme = 'auto',
 				component_separators = '|',
 				section_separators = '',
 
@@ -53,9 +53,37 @@ return {
 			},
 		}
 
-		vim.cmd [[
-			highlight lualine_c_inactive guibg=NONE
-			highlight lualine_c_normal guibg=NONE
-		]]
+		local modes = {
+			'normal',
+			'insert',
+			'visual',
+			'replace',
+			'command',
+			'inactive',
+		}
+
+		local remove_bg_cmd = table.concat(
+			util.map(modes, function(mode)
+				return 'highlight! lualine_c_' .. mode .. ' guibg=NONE'
+			end),
+			'\n'
+		)
+
+		vim.cmd(remove_bg_cmd)
+
+		vim.api.nvim_create_autocmd({ 'ColorScheme' }, {
+			pattern = '*',
+			command = remove_bg_cmd,
+		})
+
+		local lualine = require 'lualine'
+
+		local orig_refresh = lualine.refresh
+		lualine.refresh = function(refresh_opts)
+			orig_refresh(refresh_opts)
+			vim.cmd(remove_bg_cmd)
+		end
+
+		lualine.setup(opts)
 	end,
 }
