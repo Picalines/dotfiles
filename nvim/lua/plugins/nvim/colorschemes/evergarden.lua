@@ -24,8 +24,16 @@ return {
 	},
 
 	config = function(_, opts)
-		require('evergarden').setup(opts)
+		vim.api.nvim_create_autocmd({ 'ColorScheme' }, {
+			pattern = '*',
+			command = [[
+				if g:colors_name ==# "evergarden"
+					hi NoiceCursor gui=inverse
+					hi! link NormalFloat Normal
+				endif
+			]],
+		})
 
-		vim.cmd ':hi NoiceCursor gui=inverse'
+		require('evergarden').setup(opts)
 	end,
 }
