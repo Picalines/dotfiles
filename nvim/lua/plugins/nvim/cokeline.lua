@@ -39,10 +39,20 @@ return {
 			return sidebar_win 'left' ~= nil
 		end
 
+		local function get_sign_text(name)
+			return (vim.fn.sign_getdefined(name)[1] or {}).text
+		end
+
+		local function get_sign_texthl(name)
+			return (vim.fn.sign_getdefined(name)[1] or {}).texthl
+		end
+
+		local muted_hl = '@comment'
+
 		require('cokeline').setup {
 			default_hl = {
 				fg = function(buffer)
-					return get_fg(buffer.is_focused and 'Normal' or 'Comment')
+					return get_fg(buffer.is_focused and 'Normal' or muted_hl)
 				end,
 				bg = get_bg_dyn 'Normal',
 			},
@@ -59,8 +69,9 @@ return {
 						text = function()
 							return vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
 						end,
-						fg = get_fg_dyn 'Normal',
-						bold = true,
+						bold = function(buffer)
+							return buffer.is_focused
+						end,
 					},
 				},
 			},
@@ -79,7 +90,7 @@ return {
 						end
 						return ' '
 					end,
-					fg = get_fg_dyn 'VertSplit',
+					fg = get_fg_dyn 'WinSeparator',
 				},
 				{
 					text = function(buffer)
@@ -93,26 +104,18 @@ return {
 					text = function(buffer)
 						return buffer.unique_prefix
 					end,
-					fg = get_fg_dyn 'Comment',
+					fg = get_fg_dyn(muted_hl),
 					italic = true,
 				},
 				{
 					text = function(buffer)
 						return buffer.unique_prefix
 					end,
-					fg = get_fg_dyn 'Comment',
+					fg = get_fg_dyn(muted_hl),
 				},
 				{
 					text = function(buffer)
 						return buffer.filename
-					end,
-					fg = function(buffer)
-						local d = buffer.diagnostics
-						if d.errors > 0 then
-							return get_fg 'DiagnosticOk'
-						elseif d.warnings > 0 then
-							return get_fg 'DiagnosticWarn'
-						end
 					end,
 					bold = function(buffer)
 						return buffer.is_focused
@@ -126,8 +129,30 @@ return {
 				},
 				{
 					text = function(buffer)
+						local sign_text
+						local d = buffer.diagnostics
+						if d.errors > 0 then
+							sign_text = get_sign_text 'DiagnosticSignError'
+						elseif d.warnings > 0 then
+							sign_text = get_sign_text 'DiagnosticSignWarn'
+						end
+
+						return sign_text and (' ' .. sign_text:sub(1, -2)) or ''
+					end,
+					fg = function(buffer)
+						local d = buffer.diagnostics
+						if d.errors > 0 then
+							return get_sign_texthl 'DiagnosticSignError'
+						elseif d.warnings > 0 then
+							return get_sign_texthl 'DiagnosticSignWarn'
+						end
+					end,
+				},
+				{
+					text = function(buffer)
 						return buffer.is_modified and ' +' or ''
 					end,
+					bold = true,
 				},
 				{
 					text = ' ',
