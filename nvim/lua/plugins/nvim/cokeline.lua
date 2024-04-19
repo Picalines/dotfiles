@@ -51,8 +51,8 @@ return {
 
 		require('cokeline').setup {
 			default_hl = {
-				fg = function(buffer)
-					return get_fg(buffer.is_focused and 'Normal' or muted_hl)
+				fg = function(buffer_or_tab)
+					return get_fg((buffer_or_tab.is_focused or buffer_or_tab.is_active) and 'Normal' or muted_hl)
 				end,
 				bg = get_bg_dyn 'Normal',
 			},
@@ -156,6 +156,26 @@ return {
 				},
 				{
 					text = ' ',
+				},
+			},
+
+			tabs = {
+				placement = 'right',
+				components = {
+					{
+						text = function(tab)
+							if tab.is_first and tab.is_last then
+								return ''
+							end
+							return ' ' .. tostring(tab.number) .. ' '
+						end,
+					},
+					{
+						text = function(tab)
+							return tab.is_last and '' or '|'
+						end,
+						fg = get_fg_dyn 'WinSeparator',
+					},
 				},
 			},
 		}
