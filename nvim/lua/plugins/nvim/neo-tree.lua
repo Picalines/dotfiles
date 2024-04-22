@@ -51,8 +51,6 @@ return {
 
 			sort_case_insensitive = false,
 
-			nesting_rules = {},
-
 			source_selector = {
 				winbar = false,
 				statusline = false,
@@ -110,32 +108,32 @@ return {
 				},
 				git_status = {
 					symbols = {
-						added = '✚',
+						added = '+',
 						modified = '',
 						conflict = '',
 						unstaged = '󰏫',
 						staged = '✓',
 						renamed = '➜',
-						untracked = '+',
+						untracked = '?',
 						deleted = '-',
 						ignored = '◌',
 					},
 				},
 				file_size = {
-					enabled = true,
-					required_width = 64, -- min width of window required to show this column
+					enabled = false,
+					required_width = 64,
 				},
 				type = {
-					enabled = true,
-					required_width = 122, -- min width of window required to show this column
+					enabled = false,
+					required_width = 122,
 				},
 				last_modified = {
-					enabled = true,
-					required_width = 88, -- min width of window required to show this column
+					enabled = false,
+					required_width = 88,
 				},
 				created = {
-					enabled = true,
-					required_width = 110, -- min width of window required to show this column
+					enabled = false,
+					required_width = 110,
 				},
 				symlink_target = {
 					enabled = false,
