@@ -29,8 +29,12 @@ return {
 	},
 
 	config = function()
-		local cmds = require('util').cmds
+		local util = require 'util'
 		local fs_actions = require 'neo-tree.sources.filesystem.commands'
+		local events = require 'neo-tree.events'
+		local popups = require 'neo-tree.ui.popups'
+
+		local cmds = util.cmds
 
 		require('neo-tree').setup {
 			sources = {
@@ -140,7 +144,6 @@ return {
 				},
 			},
 
-			commands = {},
 			window = {
 				position = 'left',
 				width = 40,
@@ -151,7 +154,7 @@ return {
 				mappings = {
 					['<leader>e'] = cmds ':wincmd p',
 
-					['<esc>'] = 'cancel', -- close preview or floating neo-tree window
+					['<esc>'] = 'cancel',
 
 					['<cr>'] = 'open',
 					['<2-LeftMouse>'] = 'open',
@@ -193,8 +196,8 @@ return {
 
 				-- temp fix, see https://github.com/nvim-neo-tree/neo-tree.nvim/issues/914
 				use_libuv_file_watcher = vim.fn.has 'win32' == 0,
-
 				bind_to_cwd = true,
+
 				filtered_items = {
 					visible = false, -- when true, they will just be displayed differently than normal items
 					hide_dotfiles = false,
@@ -221,33 +224,16 @@ return {
 						-- ".null-ls_*",
 					},
 				},
+
 				follow_current_file = {
 					enabled = true,
 					leave_dirs_open = false,
 				},
+
 				window = {
 					mappings = {
-						['<bs>'] = function(state)
-							fs_actions.navigate_up(state)
-
-							local cwd = vim.fn.getcwd()
-							local cwd_parent = vim.fn.fnamemodify(cwd, ':h')
-							vim.api.nvim_set_current_dir(cwd_parent)
-						end,
-
-						['/'] = function(state)
-							fs_actions.set_root(state)
-
-							local tree = state.tree
-							local node = tree:get_node()
-							local root = node.path
-
-							if node.type == 'file' then
-								root = vim.fn.fnamemodify(root, ':h')
-							end
-
-							vim.api.nvim_set_current_dir(root)
-						end,
+						['<bs>'] = 'navigate_up',
+						['/'] = 'set_root',
 
 						['H'] = 'toggle_hidden',
 						['f'] = 'fuzzy_finder',
@@ -255,11 +241,7 @@ return {
 						['[c'] = 'prev_git_modified',
 						[']c'] = 'next_git_modified',
 
-						['.'] = function(state)
-							local node = state.tree:get_node()
-							local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
-							vim.api.nvim_input(': ' .. path .. '<Home>')
-						end,
+						['.'] = 'run_command',
 
 						['o'] = { 'show_help', nowait = false, config = { title = 'Order by', prefix_key = 'o' } },
 						['oc'] = { 'order_by_created', nowait = false },
@@ -270,13 +252,41 @@ return {
 						['os'] = { 'order_by_size', nowait = false },
 						['ot'] = { 'order_by_type', nowait = false },
 					},
+
 					fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
 						['<down>'] = 'move_cursor_down',
 						['<C-n>'] = 'move_cursor_down',
 						['<up>'] = 'move_cursor_up',
 						['<C-p>'] = 'move_cursor_up',
 					},
-					commands = {},
+				},
+
+				commands = {
+					navigate_up = function(state)
+						fs_actions.navigate_up(state)
+
+						local cwd = vim.fn.getcwd()
+						local cwd_parent = vim.fn.fnamemodify(cwd, ':h')
+						vim.api.nvim_set_current_dir(cwd_parent)
+					end,
+					set_root = function(state)
+						fs_actions.set_root(state)
+
+						local tree = state.tree
+						local node = tree:get_node()
+						local root = node.path
+
+						if node.type == 'file' then
+							root = vim.fn.fnamemodify(root, ':h')
+						end
+
+						vim.api.nvim_set_current_dir(root)
+					end,
+					run_command = function(state)
+						local node = state.tree:get_node()
+						local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
+						vim.api.nvim_input(': ' .. path .. '<Home>')
+					end,
 				},
 			},
 
@@ -329,8 +339,8 @@ return {
 						['gu'] = 'git_unstage_file',
 						['gr'] = 'git_revert_file',
 						['gc'] = 'git_commit',
-						['gp'] = 'git_push',
-						['gg'] = 'git_commit_and_push',
+						['gp'] = 'git_pull',
+						['gP'] = 'git_push',
 
 						['o'] = { 'show_help', nowait = false, config = { title = 'Order by', prefix_key = 'o' } },
 						['oc'] = { 'order_by_created', nowait = false },
@@ -340,6 +350,14 @@ return {
 						['os'] = { 'order_by_size', nowait = false },
 						['ot'] = { 'order_by_type', nowait = false },
 					},
+				},
+
+				commands = {
+					git_pull = function()
+						local result = vim.fn.systemlist { 'git', 'pull' }
+						events.fire_event(events.GIT_EVENT)
+						popups.alert('git pull', result)
+					end,
 				},
 			},
 		}
