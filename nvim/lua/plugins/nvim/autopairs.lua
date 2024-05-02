@@ -67,6 +67,19 @@ return {
 			end
 		end
 
+		local function all_conds(...)
+			local conds = { ... }
+			return function(o)
+				for _, cond in ipairs(conds) do
+					if not cond(o) then
+						return false
+					end
+				end
+
+				return true
+			end
+		end
+
 		local function any_cond(...)
 			local conds = { ... }
 			return function(o)
@@ -80,20 +93,28 @@ return {
 			end
 		end
 
+		local function not_cond(cond)
+			return function(o)
+				return not cond(o)
+			end
+		end
+
 		autopairs.add_rules {
 			Rule('<', '>', { 'typescript', 'typescriptreact' }):with_pair(
-				any_cond(
-					is_in_ts_tree { 'type_identifier' },
-					is_in_ts_tree { 'function_declaration', 'identifier' },
-					is_in_ts_tree { 'call_expression', 'identifier' },
-					is_in_ts_tree { 'call_expression', 'member_expression', 'property_identifier' },
-					is_in_ts_tree { 'new_expression', 'identifier' },
-					is_in_ts_tree { 'new_expression', 'member_expression', 'property_identifier' },
-					is_inside_ts_node { 'type_alias_declaration', 'type_annotation', 'type_parameters', 'type_arguments' }
+				all_conds(
+					not_cond(is_in_ts_tree { 'string_fragment' }),
+					not_cond(is_in_ts_tree { 'string' }),
+					any_cond(
+						is_in_ts_tree { 'type_identifier' },
+						is_in_ts_tree { 'function_declaration', 'identifier' },
+						is_in_ts_tree { 'call_expression', 'identifier' },
+						is_in_ts_tree { 'call_expression', 'member_expression', 'property_identifier' },
+						is_in_ts_tree { 'new_expression', 'identifier' },
+						is_in_ts_tree { 'new_expression', 'member_expression', 'property_identifier' },
+						is_inside_ts_node { 'type_alias_declaration', 'type_annotation', 'type_parameters', 'type_arguments' }
+					)
 				)
-			):with_move(function(o)
-				return o.char == '>'
-			end),
+			),
 		}
 	end,
 }
