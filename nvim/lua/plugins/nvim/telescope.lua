@@ -49,6 +49,18 @@ return {
 				find_files = {
 					previewer = false,
 				},
+
+				oldfiles = {
+					previewer = false,
+				},
+
+				current_buffer_fuzzy_find = {
+					side_by_side = true,
+					layout_strategy = 'vertical',
+					layout_config = {
+						preview_height = 0.6,
+					},
+				},
 			},
 		}
 
