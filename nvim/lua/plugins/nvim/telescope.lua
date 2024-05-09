@@ -38,11 +38,13 @@ return {
 					},
 				},
 			},
+
 			extensions = {
 				['ui-select'] = {
 					themes.get_dropdown {},
 				},
 			},
+
 			pickers = {
 				find_files = {
 					previewer = false,
