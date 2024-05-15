@@ -6,6 +6,17 @@ return {
 		local alpha = require 'alpha'
 		local dashboard = require 'alpha.themes.dashboard'
 
+		dashboard.section.header.val = {
+			[[                                               ██                  ]],
+			[[      ████ ██████           █████  █████ ███                  ]],
+			[[     ███████████             █████ █████                       ]],
+			[[    ████████████████████████████████ ███ ████████████ ]],
+			[[   ███████████████    ███████████████ ████ ████████████████ ]],
+			[[  █████████████████████ ███████████ ████ ██████████████ ]],
+			[[ █████ █████████    ███ ███████████ ████ █████ ████ █████ ]],
+			[[█████   █████████████████████ ███████ ███████████████]],
+		}
+
 		local function button(...)
 			local args = { ... }
 			args[3] = ':silent! ' .. args[3]
@@ -13,15 +24,15 @@ return {
 		end
 
 		dashboard.section.buttons.val = {
-			button('e', '  File Tree', 'Neotree filesystem<CR>'),
-			button('o', '󰮗  Old files', 'Telescope oldfiles<CR>'),
-			button('n', '󰯁  New file', 'ene <BAR> startinsert<CR>'),
-			button('f', '󰈞  Find file', 'Telescope find_files<CR>'),
-			button('c', '  Change Directory', 'Neotree filesystem current / reveal_force_cwd<CR>'),
-			button('l', '󰒲  Lazy', 'Lazy<CR>'),
-			button('m', '󰏗  Mason', 'Mason<CR>'),
-			button('t', '󰏘  Theme', 'PickColorScheme<CR>'),
-			button('q', '  Quit', 'qa<CR>'),
+			button('e', '  explore', 'Neotree filesystem<CR>'),
+			button('o', '󰮗  old files', 'Telescope oldfiles<CR>'),
+			button('n', '󰯁  edit new', 'ene <BAR> startinsert<CR>'),
+			button('f', '󰈞  find files', 'Telescope find_files<CR>'),
+			button('c', '  change dir', 'Neotree filesystem current / reveal_force_cwd<CR>'),
+			button('l', '󰒲  lazy', 'Lazy<CR>'),
+			button('m', '󰏗  mason', 'Mason<CR>'),
+			button('t', '󰏘  theme', 'PickColorScheme<CR>'),
+			button('q', '  quit', 'qa<CR>'),
 		}
 
 		local small_height = 35
