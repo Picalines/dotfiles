@@ -32,7 +32,7 @@ return {
 			button('l', '󰒲  lazy', 'Lazy<CR>'),
 			button('m', '󰏗  mason', 'Mason<CR>'),
 			button('t', '󰏘  theme', 'PickColorScheme<CR>'),
-			button('q', '  quit', 'qa<CR>'),
+			button('q', '  quit', 'qa<CR>'),
 		}
 
 		local small_height = 35
