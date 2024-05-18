@@ -11,6 +11,27 @@ return {
 
 		{ 'folke/neodev.nvim', config = true },
 		'numToStr/Comment.nvim',
+
+		{
+			'dgagn/diagflow.nvim',
+			event = 'LspAttach',
+			opts = {
+				enable = true,
+				severity_colors = {
+					error = 'DiagnosticError',
+					warning = 'DiagnosticWarn',
+					info = 'DiagnosticInfo',
+					hint = 'DiagnosticHint',
+				},
+				gap_size = 1,
+				scope = 'cursor',
+				toggle_event = { 'InsertEnter', 'InsertLeave' },
+				padding_top = 0,
+				padding_right = 0,
+				text_align = 'left',
+				placement = 'inline',
+			},
+		},
 	},
 
 	config = function()
