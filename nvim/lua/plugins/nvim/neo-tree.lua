@@ -33,6 +33,7 @@ return {
 		local fs_actions = require 'neo-tree.sources.filesystem.commands'
 		local events = require 'neo-tree.events'
 		local popups = require 'neo-tree.ui.popups'
+		local inputs = require 'neo-tree.ui.inputs'
 
 		local cmds = util.cmds
 
@@ -341,6 +342,7 @@ return {
 						['gu'] = 'git_unstage_file',
 						['gr'] = 'git_revert_file',
 						['gc'] = 'git_commit',
+						['gC'] = 'git_commit_amend',
 						['gp'] = 'git_pull',
 						['gP'] = 'git_push',
 
@@ -359,6 +361,45 @@ return {
 						local result = vim.fn.systemlist { 'git', 'pull' }
 						events.fire_event(events.GIT_EVENT)
 						popups.alert('git pull', result)
+					end,
+					git_commit = function(_)
+						-- NOTE: i've changed the default git_commit, because i don't know
+						-- why they've made the message input popup misaligned :(
+						local popup_options = {
+							relative = 'win',
+							size = vim.fn.winwidth(0) - 2,
+							position = { row = vim.api.nvim_win_get_height(0) - 2, col = 1 },
+						}
+
+						inputs.input('Commit message', '', function(msg)
+							local commit_result = vim.fn.systemlist { 'git', 'commit', '-m', msg }
+							if vim.v.shell_error ~= 0 or (#commit_result > 0 and vim.startswith(commit_result[1], 'fatal:')) then
+								popups.alert('ERROR: git commit', commit_result)
+								return
+							end
+							events.fire_event(events.GIT_EVENT)
+							popups.alert('git commit', commit_result)
+						end, popup_options)
+					end,
+					git_commit_amend = function()
+						local popup_options = {
+							relative = 'win',
+							size = vim.fn.winwidth(0) - 2,
+							position = { row = vim.api.nvim_win_get_height(0) - 2, col = 1 },
+						}
+
+						local message = tostring(vim.fn.system { 'git', 'show', '-s', '--format=%s' })
+						message = message:gsub('\n$', '') -- NOTICE: input() immediately returns if str ends with \n
+
+						inputs.input('Amend message', message, function(new_message)
+							local amend_result = vim.fn.systemlist { 'git', 'commit', '--amend', '-m', new_message }
+							if vim.v.shell_error ~= 0 or (#amend_result > 0 and vim.startswith(amend_result[1], 'fatal:')) then
+								popups.alert('ERROR: git commit --amend', amend_result)
+								return
+							end
+							events.fire_event(events.GIT_EVENT)
+							popups.alert('git commit --amend', amend_result)
+						end, popup_options)
 					end,
 				},
 			},
