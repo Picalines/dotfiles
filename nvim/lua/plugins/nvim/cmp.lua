@@ -1,29 +1,22 @@
 return {
-	-- Autocompletion
 	'hrsh7th/nvim-cmp',
 
 	dependencies = {
-		-- Snippet Engine & its associated nvim-cmp source
 		'L3MON4D3/LuaSnip',
 		'saadparwaiz1/cmp_luasnip',
-
-		-- Adds LSP completion capabilities
-		'hrsh7th/cmp-nvim-lsp',
-
-		-- Adds a number of user-friendly snippets
 		'rafamadriz/friendly-snippets',
 
-		-- Icons
-		'onsails/lspkind.nvim',
+		'hrsh7th/cmp-nvim-lsp',
+		'hrsh7th/cmp-buffer',
 
-		-- Additional completion sources
-		'hrsh7th/cmp-calc',
+		'onsails/lspkind.nvim',
 		'hrsh7th/cmp-nvim-lsp-signature-help',
 	},
 
 	event = { 'InsertEnter', 'CmdlineEnter' },
 
 	config = function()
+		local util = require 'util'
 		local cmp = require 'cmp'
 		local luasnip = require 'luasnip'
 		local lspkind = require 'lspkind'
@@ -61,6 +54,13 @@ return {
 		end
 
 		cmp.setup {
+			sources = {
+				{ name = 'nvim_lsp' },
+				{ name = 'luasnip' },
+				{ name = 'buffer' },
+				{ name = 'nvim_lsp_signature_help' },
+			},
+
 			mapping = cmp.mapping.preset.insert {
 				['<C-Space>'] = cmp.mapping.complete(),
 
@@ -76,6 +76,7 @@ return {
 				},
 			},
 
+			---@diagnostic disable-next-line: missing-fields
 			formatting = {
 				format = lspkind.cmp_format {
 					mode = 'symbol',
@@ -84,16 +85,27 @@ return {
 				},
 			},
 
-			sources = {
-				{ name = 'nvim_lsp' },
-				{ name = 'luasnip' },
-				{ name = 'nvim_lsp_signature_help' },
-				{ name = 'calc' },
-			},
-
 			snippet = {
 				expand = function(args)
 					luasnip.lsp_expand(args.body)
+				end,
+			},
+		}
+
+		util.declare_keymaps {
+			opts = {
+				silent = true,
+			},
+			i = {
+				['<C-k>'] = function()
+					if luasnip.expand_or_jumpable() then
+						luasnip.expand_or_jump()
+					end
+				end,
+				['<C-j>'] = function()
+					if luasnip.jumpable(-1) then
+						luasnip.jump(-1)
+					end
 				end,
 			},
 		}
