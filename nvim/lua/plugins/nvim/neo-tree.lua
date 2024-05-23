@@ -30,12 +30,22 @@ return {
 
 	config = function()
 		local util = require 'util'
+
+		util.declare_keymaps {
+			opts = {
+				silent = true,
+			},
+			n = {
+				['<leader>e'] = { ':Neotree focus filesystem<CR>', 'File [E]xplorer' },
+				['<leader>G'] = { ':Neotree focus git_status float<CR>', 'Open [G]it tree' },
+				['<leader>D'] = { ':Neotree diagnostics toggle bottom<CR>', 'Open [d]iagnostics list' },
+			},
+		}
+
 		local fs_actions = require 'neo-tree.sources.filesystem.commands'
 		local events = require 'neo-tree.events'
 		local popups = require 'neo-tree.ui.popups'
 		local inputs = require 'neo-tree.ui.inputs'
-
-		local cmds = util.cmds
 
 		require('neo-tree').setup {
 			sources = {
@@ -153,7 +163,8 @@ return {
 					nowait = true,
 				},
 				mappings = {
-					['<leader>e'] = cmds ':wincmd p',
+					['<leader>e'] = util.cmds ':Neotree close filesystem',
+					['<C-o>'] = util.cmds ':wincmd p',
 
 					['<esc>'] = 'cancel',
 
@@ -402,18 +413,6 @@ return {
 						end, popup_options)
 					end,
 				},
-			},
-		}
-
-		require('util').declare_keymaps {
-			opts = {
-				silent = true,
-			},
-			n = {
-				['<leader>e'] = { ':Neotree focus filesystem<CR>', 'Jump to File [E]xplorer' },
-				['<leader>E'] = { ':Neotree toggle filesystem<CR>', 'Toggle File [E]xplorer window' },
-				['<leader>G'] = { ':Neotree focus git_status float<CR>', 'Open [G]it tree' },
-				['<leader>D'] = { ':Neotree diagnostics toggle bottom<CR>', 'Open [d]iagnostics list' },
 			},
 		}
 	end,
