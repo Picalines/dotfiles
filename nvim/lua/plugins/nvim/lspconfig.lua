@@ -53,7 +53,7 @@ return {
 				n = {
 					['<leader>R'] = { vim.lsp.buf.rename, 'LSP: [R]ename' },
 					['<leader>A'] = { vim.lsp.buf.code_action, 'LSP: Code [A]ction' },
-					['<leader>F'] = { vim.cmd.Format, 'LSP: [F]ormat current buffer' },
+					['<leader>F'] = { ':Format<CR>', 'LSP: [F]ormat current buffer' },
 					['<leader>H'] = { toggle_inlay_hints, 'LSP: Toggle inlay [H]ints' },
 
 					['gD'] = { ':Glance definitions<CR>', 'LSP: [G]o to [D]efinition' },
