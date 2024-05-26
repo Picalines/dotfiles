@@ -2,15 +2,13 @@ return {
 	'hrsh7th/nvim-cmp',
 
 	dependencies = {
-		'L3MON4D3/LuaSnip',
-		'saadparwaiz1/cmp_luasnip',
-		'rafamadriz/friendly-snippets',
-
 		'hrsh7th/cmp-nvim-lsp',
 		'hrsh7th/cmp-buffer',
 
 		'onsails/lspkind.nvim',
 		'hrsh7th/cmp-nvim-lsp-signature-help',
+
+		'L3MON4D3/LuaSnip',
 	},
 
 	event = { 'InsertEnter', 'CmdlineEnter' },
@@ -20,10 +18,6 @@ return {
 		local cmp = require 'cmp'
 		local luasnip = require 'luasnip'
 		local lspkind = require 'lspkind'
-
-		require('luasnip.loaders.from_vscode').lazy_load()
-
-		luasnip.config.setup {}
 
 		local function has_words_before()
 			unpack = unpack or table.unpack
