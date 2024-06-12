@@ -10,6 +10,7 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
+require 'settings.nvim.colorscheme'
 require 'settings.nvim.editing'
 require 'settings.nvim.environment'
 require 'settings.nvim.lsp'
