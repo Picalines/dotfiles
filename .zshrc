@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-if [[ -n ~/.zsh_aliases ]]; then
+if [[ -f ~/.zsh_aliases ]]; then
     source ~/.zsh_aliases
 fi
 
