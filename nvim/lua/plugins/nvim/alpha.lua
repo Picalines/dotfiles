@@ -23,12 +23,14 @@ return {
 			return dashboard.button(unpack(args))
 		end
 
+		local cd_path = (vim.fn.has 'win32' == 1) and '/' or '~'
+
 		dashboard.section.buttons.val = {
 			button('e', '  explore', 'Neotree filesystem<CR>'),
 			button('o', '󰮗  old files', 'Telescope oldfiles<CR>'),
 			button('n', '󰯁  edit new', 'ene <BAR> startinsert<CR>'),
 			button('f', '󰈞  find files', 'Telescope find_files<CR>'),
-			button('c', '  change dir', 'Neotree filesystem current / reveal_force_cwd<CR>'),
+			button('c', '  change dir', 'Neotree filesystem current ' .. cd_path .. ' reveal_force_cwd<CR>'),
 			button('l', '󰒲  lazy', 'Lazy<CR>'),
 			button('m', '󰏗  mason', 'Mason<CR>'),
 			button('t', '󰏘  theme', 'PickColorScheme<CR>'),
