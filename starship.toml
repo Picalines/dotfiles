@@ -29,7 +29,7 @@ style = 'fg:dir'
 format = '[ $path]($style)'
 use_os_path_sep = false
 truncation_length = 3
-truncation_symbol = '󱞩/'
+truncation_symbol = '/'
 
 [cmd_duration]
 style = 'fg:duration'
