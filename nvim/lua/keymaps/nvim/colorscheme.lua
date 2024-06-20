@@ -49,9 +49,17 @@ end
 
 vim.api.nvim_create_user_command('PickColorScheme', open_colorscheme_picker, {})
 
+vim.o.background = persist.get_item('background', 'dark')
+
+local function toggle_background()
+	vim.o.background = vim.o.background == 'dark' and 'light' or 'dark'
+	persist.save_item('background', vim.o.background)
+end
+
 util.declare_keymaps {
 	opts = { silent = true },
 	n = {
 		['<leader><C-t>'] = { ':PickColorScheme<CR>', 'Select color [t]heme' },
+		['<leader><C-b>'] = { toggle_background, 'Toggle [b]ackground' },
 	},
 }
