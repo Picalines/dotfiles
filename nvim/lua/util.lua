@@ -176,6 +176,20 @@ function M.override_deep(...)
 	return vim.tbl_deep_extend('force', ...)
 end
 
+---@param array1 table
+---@param array2 table
+---@return table
+function M.join(array1, array2)
+	local joined = {}
+	for i = 1, #array1 do
+		joined[i] = array1[i]
+	end
+	for i = 1, #array2 do
+		table.insert(joined, array2[i])
+	end
+	return joined
+end
+
 ---@generic T
 ---@param tbl table<any, T>
 ---@param value T

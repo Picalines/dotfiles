@@ -73,10 +73,16 @@ return {
 		safe_load_extension 'noice'
 
 		local ignore_files = { '.gitignore', '.arcignore' }
+		local always_exclude = { 'node_modules', 'package-lock.json', 'pnpm-lock.json' }
 
-		local rg_picker_args = util.flat_map(ignore_files, function(file)
-			return vim.fn.filereadable(file) and { '--ignore-file', file } or {}
-		end)
+		local rg_picker_args = util.join(
+			util.flat_map(ignore_files, function(file)
+				return vim.fn.filereadable(file) and { '--ignore-file', file } or {}
+			end),
+			util.flat_map(always_exclude, function(path)
+				return { '-g', '!' .. path }
+			end)
+		)
 
 		local find_files = util.curry(builtin.find_files, {
 			find_command = { 'rg', '--files', unpack(rg_picker_args) },
