@@ -14,5 +14,8 @@ util.declare_keymaps {
 		['<S-Up>'] = { '<C-W>+', 'Increase window height' },
 		['<S-Left>'] = { '<C-W><', 'Decrease window width' },
 		['<S-Right>'] = { '<C-W>>', 'Increase window width' },
+
+		['<C-W>nx'] = { ':NoiceDismiss<CR>', 'Dismiss [N]otifications' },
+		['<C-W>nf'] = { ':NoicePick<CR>', '[F]ind [N]otification' },
 	},
 }
