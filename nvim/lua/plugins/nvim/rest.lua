@@ -51,10 +51,7 @@ return {
 			pattern = { '*.http', '*.https' },
 			callback = function(event)
 				require('util').declare_keymaps {
-					opts = {
-						buffer = event.buf,
-					},
-					n = {
+					[{ 'n', buffer = event.buf }] = {
 						['<leader>r'] = { rest.run, '[R]un [R]est' },
 					},
 				}

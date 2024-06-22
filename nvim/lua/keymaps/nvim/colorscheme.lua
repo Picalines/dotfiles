@@ -57,8 +57,7 @@ local function toggle_background()
 end
 
 util.declare_keymaps {
-	opts = { silent = true },
-	n = {
+	[{ 'n', silent = true }] = {
 		['<leader><C-t>'] = { ':PickColorScheme<CR>', 'Select color [t]heme' },
 		['<leader><C-b>'] = { toggle_background, 'Toggle [b]ackground' },
 	},

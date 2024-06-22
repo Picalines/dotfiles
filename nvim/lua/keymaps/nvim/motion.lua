@@ -1,12 +1,7 @@
 local util = require 'util'
 
 util.declare_keymaps {
-	opts = {
-		silent = true,
-		expr = true,
-	},
-
-	[{ 'n', 'v' }] = {
+	[{ 'n', 'v', silent = true, expr = true }] = {
 		['k'] = "v:count == 0 ? 'gk' : 'k'",
 		['j'] = "v:count == 0 ? 'gj' : 'j'",
 	},

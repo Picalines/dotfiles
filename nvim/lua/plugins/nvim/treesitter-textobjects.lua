@@ -90,17 +90,17 @@ return {
 
 		local ts_repeat_move = require 'nvim-treesitter.textobjects.repeatable_move'
 
-		require('util').declare_keymaps {
+		util.declare_keymaps {
 			[{ 'n', 'x', 'o' }] = {
-				-- vim way: ; goes to the direction you were moving.
 				[';'] = ts_repeat_move.repeat_last_move,
 				[','] = ts_repeat_move.repeat_last_move_opposite,
+			},
 
-				-- Optionally, make builtin f, F, t, T also repeatable with ; and ,,
-				['f'] = ts_repeat_move.builtin_f,
-				['F'] = ts_repeat_move.builtin_F,
-				['t'] = ts_repeat_move.builtin_t,
-				['T'] = ts_repeat_move.builtin_T,
+			[{ 'n', 'x', 'o', expr = true }] = {
+				['f'] = ts_repeat_move.builtin_f_expr,
+				['F'] = ts_repeat_move.builtin_F_expr,
+				['t'] = ts_repeat_move.builtin_t_expr,
+				['T'] = ts_repeat_move.builtin_T_expr,
 			},
 		}
 	end,

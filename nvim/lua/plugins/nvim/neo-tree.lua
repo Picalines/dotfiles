@@ -32,10 +32,7 @@ return {
 		local util = require 'util'
 
 		util.declare_keymaps {
-			opts = {
-				silent = true,
-			},
-			n = {
+			[{ 'n', silent = true }] = {
 				['<leader>e'] = { ':Neotree focus filesystem<CR>', 'File [E]xplorer' },
 				['<leader>G'] = { ':Neotree focus git_status float<CR>', 'Open [G]it tree' },
 				['<leader>D'] = { ':Neotree diagnostics toggle bottom<CR>', 'Open [d]iagnostics list' },

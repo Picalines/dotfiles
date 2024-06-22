@@ -1,10 +1,7 @@
 local util = require 'util'
 
 util.declare_keymaps {
-	opts = {
-		silent = true,
-	},
-	n = {
+	[{ 'n', silent = true }] = {
 		['<leader>wa'] = { ':wa! | :qa!<CR>', '[W]rite [a]ll and quit' },
 	},
 }

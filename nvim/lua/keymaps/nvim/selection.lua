@@ -1,8 +1,5 @@
 require('util').declare_keymaps {
-	opts = {
-		silent = true,
-	},
-	v = {
+	[{ 'v', silent = true }] = {
 		-- keep clipboard after paste in visual mode
 		['p'] = '"_dP',
 	},

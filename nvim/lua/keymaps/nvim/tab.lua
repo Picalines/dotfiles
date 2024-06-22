@@ -1,10 +1,7 @@
 local util = require 'util'
 
 util.declare_keymaps {
-	opts = {
-		silent = true,
-	},
-	n = {
+	[{ 'n', silent = true }] = {
 		['<C-t>e'] = { ':tabnew<CR>', '[E]empty [t]ab' },
 		['<C-t>c'] = { ':tabclose<CR>', 'Close [t]ab' },
 		[']t'] = { ':tabnext<CR>', 'Next [t]ab' },

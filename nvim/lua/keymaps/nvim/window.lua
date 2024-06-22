@@ -1,10 +1,7 @@
 local util = require 'util'
 
 util.declare_keymaps {
-	opts = {
-		silent = true,
-	},
-	n = {
+	[{ 'n', silent = true }] = {
 		['<C-j>'] = { '<C-W>j', 'Move to bottom window' },
 		['<C-k>'] = { '<C-W>k', 'Move to upper window' },
 		['<C-h>'] = { '<C-W>h', 'Move to left window' },

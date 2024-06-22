@@ -50,11 +50,7 @@ return {
 		end, { range = true })
 
 		util.declare_keymaps {
-			opts = {
-				silent = true,
-			},
-
-			[{ 'n', 'v' }] = {
+			[{ 'n', 'v', silent = true }] = {
 				['<leader>F'] = { ':Format<CR>', 'Format current buffer' },
 			},
 		}

@@ -46,11 +46,7 @@ return {
 
 		local function declare_lsp_keymaps(_, bufnr)
 			util.declare_keymaps {
-				opts = {
-					buffer = bufnr,
-					silent = true,
-				},
-				n = {
+				[{ 'n', buffer = bufnr, silent = true }] = {
 					['<leader>R'] = { vim.lsp.buf.rename, 'LSP: [R]ename' },
 					['<leader>A'] = { vim.lsp.buf.code_action, 'LSP: Code [A]ction' },
 					['<leader>F'] = { ':Format<CR>', 'LSP: [F]ormat current buffer' },

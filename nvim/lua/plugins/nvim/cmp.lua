@@ -88,10 +88,7 @@ return {
 		}
 
 		util.declare_keymaps {
-			opts = {
-				silent = true,
-			},
-			i = {
+			[{ 'i', silent = true }] = {
 				['<C-k>'] = function()
 					if luasnip.expand_or_jumpable() then
 						luasnip.expand_or_jump()

@@ -8,24 +8,39 @@ function M.declare_keymaps(declaration)
 	local base_opts = declaration.opts or {}
 	declaration.opts = nil
 
-	for mode, keymaps in pairs(declaration) do
+	for section_key, keymaps in pairs(declaration) do
+		local modes = {}
+		local section_opts = {}
+
+		if type(section_key) ~= 'table' then
+			section_key = { section_key }
+		end
+
+		for opt_key, opt_value in pairs(section_key) do
+			if type(opt_key) == 'string' then
+				section_opts[opt_key] = opt_value
+			else
+				modes[opt_key] = opt_value
+			end
+		end
+
 		for lhs, keymap in pairs(keymaps) do
-			local rhs, opts
+			local rhs, map_opts
 
 			if type(keymap) == 'table' then
 				rhs = keymap[1]
-				opts = keymap
-				opts.desc = opts[2] or opts.desc
-				opts[1] = nil
-				opts[2] = nil
+				map_opts = keymap
+				map_opts.desc = map_opts[2] or map_opts.desc
+				map_opts[1] = nil
+				map_opts[2] = nil
 			else
 				rhs = keymap
-				opts = {}
+				map_opts = {}
 			end
 
-			opts = vim.tbl_extend('force', base_opts, opts)
+			local opts = vim.tbl_extend('force', base_opts, section_opts, map_opts)
 
-			vim.keymap.set(mode, lhs, rhs, opts)
+			vim.keymap.set(modes, lhs, rhs, opts)
 		end
 	end
 end

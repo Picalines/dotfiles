@@ -39,11 +39,7 @@ return {
 			local gitsigns = package.loaded.gitsigns
 
 			util.declare_keymaps {
-				opts = {
-					buffer = bufnr,
-				},
-
-				n = {
+				[{ 'n', buffer = bufnr }] = {
 					['<leader>hp'] = { gitsigns.preview_hunk, 'Preview hunk' },
 					['<leader>ha'] = { gitsigns.stage_hunk, 'Stage hunk' },
 					['<leader>hu'] = { gitsigns.undo_stage_hunk, 'Undo stage hunk' },
