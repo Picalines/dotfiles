@@ -25,10 +25,9 @@ local function close_buffer()
 end
 
 local function close_all_buffers()
-	vim.cmd [[
-		:silent wa
-		:silent bd *
-	]]
+	vim.cmd ':silent wa!'
+	vim.cmd ':silent! %bd'
+	vim.cmd ':Neotree filesystem current reveal_force_cwd'
 end
 
 util.declare_keymaps {
