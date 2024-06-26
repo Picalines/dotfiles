@@ -6,24 +6,47 @@ return {
 
 		local noice_status = require('noice').api.status
 
-		local function no_bg(mode)
-			if type(mode) ~= 'table' then
-				mode = { mode }
+		local function get_neotree_winid()
+			local fs_state = require('neo-tree.sources.manager').get_state 'filesystem'
+			if not fs_state then
+				return nil
 			end
 
-			return util.override_deep(mode, { color = { bg = 'NONE' } })
+			local is_opened = require('neo-tree.ui.renderer').is_window_valid(fs_state.winid)
+			return is_opened and fs_state.winid or nil
 		end
+
+		local function get_neotree_width()
+			local fs_winid = get_neotree_winid()
+			return fs_winid ~= nil and vim.api.nvim_win_get_width(fs_winid) or 0
+		end
+
+		local neotree_shift = {
+			function()
+				return string.rep(' ', math.max(0, get_neotree_width() - 1)) .. '│'
+			end,
+			cond = function()
+				return get_neotree_winid() ~= nil
+			end,
+			color = function()
+				return { fg = require('cokeline.hlgroups').get_hl_attr('WinSeparator', 'fg'), bg = 'NONE' }
+			end,
+		}
 
 		local opts = {
 			options = {
 				icons_enabled = true,
 				theme = 'auto',
-				component_separators = '|',
+				component_separators = '',
 				section_separators = '',
 
 				ignore_focus = { 'neo-tree' },
 
 				globalstatus = true,
+
+				refresh = {
+					statusline = 25,
+				},
 			},
 
 			sections = {
@@ -32,26 +55,42 @@ return {
 				lualine_b = {},
 
 				lualine_c = {
-					no_bg 'branch',
-
-					no_bg 'diff',
-
-					no_bg 'diagnostics',
-
-					no_bg {
+					'branch',
+					'diff',
+					'diagnostics',
+					{
+						---@diagnostic disable-next-line: undefined-field
 						noice_status.mode.get,
+						---@diagnostic disable-next-line: undefined-field
 						cond = noice_status.mode.has,
 						color = { fg = '#ff9e64' },
 					},
 				},
 
-				lualine_x = { no_bg 'location', no_bg 'encoding' },
+				lualine_x = { 'location', 'encoding' },
 
 				lualine_y = {},
 
 				lualine_z = {},
 			},
 		}
+
+		local SIDEBAR_SHIFT_ENABLED = false
+		if SIDEBAR_SHIFT_ENABLED then
+			table.insert(opts.sections.lualine_c, 0, neotree_shift)
+		end
+
+		for _, section in pairs(opts.sections) do
+			for i, component in pairs(section) do
+				if type(component) ~= 'table' then
+					---@diagnostic disable-next-line: cast-local-type
+					component = { component }
+				end
+
+				---@diagnostic disable-next-line: assign-type-mismatch
+				section[i] = util.override_deep({ color = { bg = 'NONE' } }, component)
+			end
+		end
 
 		local modes = {
 			'normal',
