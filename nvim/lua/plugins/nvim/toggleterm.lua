@@ -9,6 +9,7 @@ return {
 		terminal_mappings = false,
 
 		hide_numbers = true,
+		shade_terminals = false,
 
 		persist_mode = false,
 		close_on_exit = true,
@@ -45,6 +46,7 @@ return {
 					},
 					t = {
 						['<Esc>'] = [[<C-\><C-n>]],
+						['<C-p>'] = [[<C-\><C-n>pi]],
 					},
 					n = {
 						['<Esc>'] = '<leader>t',
