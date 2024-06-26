@@ -21,8 +21,7 @@ return {
 		local lspkind = require 'lspkind'
 
 		local function has_words_before()
-			unpack = unpack or table.unpack
-			local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+			local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
 			return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
 		end
 
@@ -56,19 +55,19 @@ return {
 				{ name = 'nvim_lsp_signature_help' },
 			},
 
-			mapping = cmp.mapping.preset.insert {
+			mapping = {
 				['<C-Space>'] = cmp.mapping.complete(),
+				['<C-a>'] = cmp.mapping.complete(),
 
 				['<Tab>'] = cmp.mapping(select_next, { 'i', 's' }),
 				['<S-Tab>'] = cmp.mapping(select_prev, { 'i', 's' }),
 
-				['<C-k>'] = cmp.mapping.scroll_docs(-4),
-				['<C-j>'] = cmp.mapping.scroll_docs(4),
-
-				['<CR>'] = cmp.mapping.confirm {
-					behavior = cmp.ConfirmBehavior.Replace,
+				['<C-y>'] = cmp.mapping.confirm {
+					behavior = cmp.ConfirmBehavior.Insert,
 					select = true,
 				},
+
+				['<C-n>'] = cmp.mapping.abort(),
 			},
 
 			---@diagnostic disable-next-line: missing-fields
@@ -84,6 +83,10 @@ return {
 				expand = function(args)
 					luasnip.lsp_expand(args.body)
 				end,
+			},
+
+			experimental = {
+				ghost_text = true,
 			},
 		}
 
