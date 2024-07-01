@@ -179,8 +179,10 @@ return {
 					['l'] = 'open',
 					['w'] = 'open_with_window_picker',
 					['h'] = 'close_node',
-					['S'] = 'open_split',
-					['s'] = 'open_vsplit',
+					['v'] = 'open_vsplit',
+					['V'] = 'open_split',
+					['s'] = 'noop', -- leap.nvim
+
 					['t'] = 'open_tabnew',
 					-- ['h'] = 'close_all_subnodes',
 					-- ["<cr>"] = "open_drop",
