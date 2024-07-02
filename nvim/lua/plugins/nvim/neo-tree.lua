@@ -182,6 +182,7 @@ return {
 					['v'] = 'open_vsplit',
 					['V'] = 'open_split',
 					['s'] = 'noop', -- leap.nvim
+					['S'] = 'noop',
 
 					['t'] = 'open_tabnew',
 					-- ['h'] = 'close_all_subnodes',
