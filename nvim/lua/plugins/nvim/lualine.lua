@@ -62,7 +62,10 @@ return {
 						'macro',
 						fmt = macro_component,
 					},
-					'branch',
+					{
+						'branch',
+						icon = '󰊢',
+					},
 					'diff',
 					'diagnostics',
 				},
