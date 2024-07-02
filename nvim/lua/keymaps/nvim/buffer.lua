@@ -41,6 +41,7 @@ util.declare_keymaps {
 		['<leader>s'] = { ':silent w<CR>', '[S]ave file' },
 
 		['<C-b>e'] = { ':enew<CR>', '[E]empty [b]uffer' },
+		['<C-b>r'] = { ':e<CR>', '[R]eload [b]uffer' },
 		['<C-b>c'] = { close_buffer, '[C]lose [b]uffer' },
 		['<C-b>C'] = { close_all_buffers, '[C]lose all [b]uffers' },
 		[']b'] = { ':bn<CR>', 'Next [b]uffer' },
