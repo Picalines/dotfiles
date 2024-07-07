@@ -57,6 +57,9 @@ return {
 					{
 						'mode',
 						color = { gui = 'bold' },
+						fmt = function(mode)
+							return string.lower(mode)
+						end,
 					},
 					{
 						'macro',
