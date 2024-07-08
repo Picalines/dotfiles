@@ -17,6 +17,7 @@ return {
 			css = { { 'prettierd', 'prettier' } },
 			svelte = { { 'prettierd', 'prettier' } },
 			vue = { { 'prettierd', 'prettier' } },
+			graphql = { { 'prettierd', 'prettier' } },
 
 			go = { 'gofmt' },
 			cs = { 'csharpier' },
