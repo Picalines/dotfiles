@@ -196,13 +196,31 @@ end
 ---@return table
 function M.join(array1, array2)
 	local joined = {}
-	for i = 1, #array1 do
-		joined[i] = array1[i]
+	for k, v in pairs(array1) do
+		joined[k] = v
 	end
-	for i = 1, #array2 do
-		table.insert(joined, array2[i])
+	for k, v in pairs(array2) do
+		set_or_push(joined, k, v)
 	end
 	return joined
+end
+
+---@param array table
+---@param separator any
+---@return table
+function M.separate(array, separator)
+	if #array <= 1 then
+		return array
+	end
+
+	local separated = {}
+	for i = 1, #array - 1 do
+		table.insert(separated, array[i])
+		table.insert(separated, separator)
+	end
+
+	table.insert(separated, array[#array])
+	return separated
 end
 
 ---@generic T
