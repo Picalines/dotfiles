@@ -32,8 +32,18 @@ return {
 
 	config = function(_, opts)
 		local util = require 'util'
+		local terminal = require 'toggleterm.terminal'
 
 		require('toggleterm').setup(opts)
+
+		local function send_exit_key()
+			local current_term = terminal.get_focused_id()
+			if current_term == nil then
+				return
+			end
+
+			terminal.get(current_term):send ''
+		end
 
 		vim.api.nvim_create_autocmd('TermOpen', {
 			pattern = { 'term://*' },
@@ -46,6 +56,7 @@ return {
 					},
 					t = {
 						['<Esc>'] = [[<C-\><C-n>]],
+						['<C-[>'] = send_exit_key,
 						['<C-p>'] = [[<C-\><C-n>pi]],
 					},
 					n = {
