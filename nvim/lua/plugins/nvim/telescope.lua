@@ -85,7 +85,7 @@ return {
 		)
 
 		local find_files = util.curry(builtin.find_files, {
-			find_command = { 'rg', '--files', unpack(rg_picker_args) },
+			find_command = { 'rg', '--hidden', '--files', unpack(rg_picker_args) },
 		})
 
 		local live_grep = util.curry(builtin.live_grep, {
