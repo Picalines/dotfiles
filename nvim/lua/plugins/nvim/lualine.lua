@@ -1,6 +1,8 @@
 return {
 	'nvim-lualine/lualine.nvim',
 
+	enabled = false, -- replaced by heirline.nvim
+
 	config = function()
 		local util = require 'util'
 		local lualine = require 'lualine'

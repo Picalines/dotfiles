@@ -1,7 +1,13 @@
 return {
 	'rebelot/heirline.nvim',
 
-	enabled = false, -- TODO: replace cokeline & lualine
+	enabled = true, -- TODO: replace cokeline & lualine
+
+	dependencies = {
+		'kyazdani42/nvim-web-devicons',
+
+		{ 'tiagovla/scope.nvim', opts = {} },
+	},
 
 	event = 'UiEnter',
 
@@ -15,6 +21,8 @@ return {
 			visual = h_util.get_highlight('@comment').fg,
 			cursor = h_util.get_highlight('Cursor').fg,
 			search = h_util.get_highlight('Search').fg,
+			win_separator = h_util.get_highlight('WinSeparator').fg,
+			muted = h_util.get_highlight('@comment').fg,
 			float_border = h_util.get_highlight('FloatBorder').fg,
 			diag_warn = h_util.get_highlight('DiagnosticWarn').fg,
 			diag_error = h_util.get_highlight('DiagnosticError').fg,
@@ -28,6 +36,172 @@ return {
 		local Space = { provider = ' ', hl = { bg = 'NONE', fg = 'NONE' } }
 
 		local Align = { provider = '%=' }
+
+		local FileIcon = {
+			init = function(self)
+				local filename = self.filename
+				local extension = vim.fn.fnamemodify(filename, ':e')
+				self.icon, self.icon_color = require('nvim-web-devicons').get_icon_color(filename, extension, { default = true })
+			end,
+			provider = function(self)
+				return self.icon and (self.icon .. ' ')
+			end,
+			hl = function(self)
+				return { fg = self.icon_color }
+			end,
+		}
+
+		local TablineFileName = {
+			provider = function(self)
+				local filename = self.filename
+				filename = filename == '' and '[No Name]' or vim.fn.fnamemodify(filename, ':t')
+				return filename
+			end,
+			hl = function(self)
+				local is_current = self.is_active
+				return { bold = is_current, fg = is_current and 'normal' or 'muted' }
+			end,
+		}
+
+		local TablineFileFlags = {
+			{
+				condition = function(self)
+					return vim.api.nvim_get_option_value('modified', { buf = self.bufnr })
+				end,
+				provider = ' +',
+				hl = { fg = 'diff_add' },
+			},
+		}
+
+		local Buffer = {
+			init = function(self)
+				self.filename = vim.api.nvim_buf_get_name(self.bufnr)
+			end,
+			on_click = {
+				callback = function(_, minwid)
+					vim.api.nvim_win_set_buf(0, minwid)
+				end,
+				minwid = function(self)
+					return self.bufnr
+				end,
+				name = 'heirline_tabline_buffer_callback',
+			},
+			FileIcon,
+			TablineFileName,
+			TablineFileFlags,
+			Space,
+		}
+
+		local get_bufs = function()
+			return vim.tbl_filter(function(bufnr)
+				return vim.api.nvim_get_option_value('buflisted', { buf = bufnr })
+			end, vim.api.nvim_list_bufs())
+		end
+
+		local buflist_cache = {}
+
+		local function update_buflist()
+			vim.schedule(function()
+				local buffers = get_bufs()
+				for i, v in ipairs(buffers) do
+					buflist_cache[i] = v
+				end
+				for i = #buffers + 1, #buflist_cache do
+					buflist_cache[i] = nil
+				end
+
+				if #buflist_cache > 1 then
+					vim.o.showtabline = 2 -- always
+				elseif vim.o.showtabline ~= 1 then
+					vim.o.showtabline = 1 -- only when #tabpages > 1
+				end
+			end)
+		end
+
+		vim.api.nvim_create_autocmd({ 'VimEnter', 'UIEnter', 'BufAdd', 'BufDelete' }, {
+			callback = update_buflist,
+		})
+
+		vim.api.nvim_create_autocmd({ 'User' }, {
+			pattern = 'LazyLoad',
+			callback = function(event)
+				if event.data == 'heirline.nvim' then
+					update_buflist()
+				end
+			end,
+		})
+
+		local BufferLine = h_util.make_buflist(Buffer, { provider = '', hl = { fg = 'gray' } }, { provider = '', hl = { fg = 'gray' } }, function()
+			return buflist_cache
+		end, false)
+
+		local Tabpage = {
+			provider = function(self)
+				return '%' .. self.tabnr .. 'T ' .. self.tabpage .. ' %T'
+			end,
+			hl = function(self)
+				return { bold = self.is_active, fg = self.is_active and 'normal' or 'muted' }
+			end,
+		}
+
+		local TabPageList = {
+			condition = function()
+				return #vim.api.nvim_list_tabpages() >= 2
+			end,
+			{ provider = '%=' },
+			h_util.make_tablist(Tabpage),
+		}
+
+		local TabLineOffset = {
+			condition = function(self)
+				local win = vim.api.nvim_tabpage_list_wins(0)[1]
+				local bufnr = vim.api.nvim_win_get_buf(win)
+				self.winid = win
+
+				if vim.bo[bufnr].filetype == 'neo-tree' then
+					self.title = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+					return true
+				end
+			end,
+
+			flexible = 1,
+
+			{
+				{
+					provider = function(self)
+						local title = self.title
+						local width = math.max(0, vim.api.nvim_win_get_width(self.winid) - 1)
+						local pad = math.max(0, width - #title)
+						return title:sub(1, width) .. string.rep(' ', pad)
+					end,
+
+					hl = function(self)
+						local is_focused = vim.api.nvim_get_current_win() == self.winid
+						return { bold = is_focused, fg = is_focused and 'normal' or 'muted' }
+					end,
+				},
+				{
+					provider = '| ',
+					hl = { fg = 'win_separator' },
+				},
+			},
+
+			{
+				provider = function(self)
+					return self.title
+				end,
+
+				hl = function(self)
+					local is_focused = vim.api.nvim_get_current_win() == self.winid
+					return { bold = is_focused, fg = is_focused and 'normal' or 'muted' }
+				end,
+
+				{
+					provider = ' > ',
+					hl = { fg = 'win_separator' },
+				},
+			},
+		}
 
 		local ViMode = {
 			init = function(self)
@@ -279,6 +453,13 @@ return {
 				LeftStatusline,
 				Align,
 				RightStatusline,
+			},
+			---@diagnostic disable-next-line: missing-fields
+			tabline = {
+				Space,
+				TabLineOffset,
+				BufferLine,
+				TabPageList,
 			},
 		}
 
