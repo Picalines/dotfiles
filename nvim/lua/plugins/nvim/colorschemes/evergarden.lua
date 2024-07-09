@@ -18,6 +18,7 @@ return {
 			types = { italic = true },
 			keyword = { italic = true },
 			comment = { italic = true },
+			sign = {},
 		},
 
 		overrides = {},
