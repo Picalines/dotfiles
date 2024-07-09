@@ -28,9 +28,9 @@ return {
 			diag_error = h_util.get_highlight('DiagnosticError').fg,
 			diag_hint = h_util.get_highlight('DiagnosticHint').fg,
 			diag_info = h_util.get_highlight('DiagnosticInfo').fg,
-			diff_del = h_util.get_highlight('DiffDelete').fg,
-			diff_add = h_util.get_highlight('DiffAdd').fg,
-			diff_change = h_util.get_highlight('DiffChange').fg,
+			diff_del = h_util.get_highlight('@diff.minus').fg,
+			diff_add = h_util.get_highlight('@diff.plus').fg,
+			diff_change = h_util.get_highlight('@diff.delta').fg,
 		}
 
 		local Space = { provider = ' ', hl = { bg = 'NONE', fg = 'NONE' } }
