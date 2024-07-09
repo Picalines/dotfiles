@@ -475,5 +475,6 @@ return {
 
 		-- https://github.com/rebelot/heirline.nvim/issues/203#issuecomment-2208395807
 		vim.cmd [[:au VimLeavePre * set stl=]]
+		vim.cmd [[:au VimLeavePre * set tabline=]]
 	end,
 }
