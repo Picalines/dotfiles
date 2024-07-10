@@ -48,21 +48,28 @@ return {
 
 	config = function()
 		local util = require 'util'
+		local persist = require 'persist'
+
+		vim.lsp.inlay_hint.enable(persist.get_item('lsp_inlay_hints', false))
 
 		local function toggle_inlay_hints()
 			---@diagnostic disable-next-line: missing-parameter
 			local is_enabled = not vim.lsp.inlay_hint.is_enabled()
 			vim.lsp.inlay_hint.enable(is_enabled)
+			persist.save_item('lsp_inlay_hints', is_enabled)
 			print('Inlay hints: ' .. (is_enabled and 'on' or 'off'))
 		end
 
 		local function declare_lsp_keymaps(_, bufnr)
 			util.declare_keymaps {
 				[{ 'n', buffer = bufnr, silent = true }] = {
+					['<leader>Li'] = { ':LspInfo<CR>', 'See [L]sp [I]nfo' },
+					['<leader>Lr'] = { ':echo "Restarting LSP" | LspRestart<CR>', '[L]sp [R]estart' },
+					['<leader>Ll'] = { ':LspLog<CR>', 'See [L]sp [L]og' },
+					['<leader>Lh'] = { toggle_inlay_hints, 'LSP: Toggle inlay [H]ints' },
+
 					['<leader>R'] = { vim.lsp.buf.rename, 'LSP: [R]ename' },
 					['<leader>A'] = { vim.lsp.buf.code_action, 'LSP: Code [A]ction' },
-					['<leader>F'] = { ':Format<CR>', 'LSP: [F]ormat current buffer' },
-					['<leader>H'] = { toggle_inlay_hints, 'LSP: Toggle inlay [H]ints' },
 
 					['gD'] = { ':Glance definitions<CR>', 'LSP: [G]o to [D]efinition' },
 					['gR'] = { ':Glance references<CR>', 'LSP: [G]o to [R]eferences' },

@@ -42,7 +42,7 @@ function M.get_item(key, default)
 end
 
 ---@param key string
----@param value number|string
+---@param value number|string|boolean
 function M.save_item(key, value)
 	M._storage[key] = value
 	M.save()
