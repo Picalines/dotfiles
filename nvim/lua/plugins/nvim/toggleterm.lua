@@ -1,7 +1,9 @@
 return {
 	'akinsho/toggleterm.nvim',
 
-	keys = '<leader>t',
+	keys = {
+		{ '<leader>t', desc = 'Toggle Terminal' },
+	},
 
 	opts = {
 		open_mapping = '<leader>t',
