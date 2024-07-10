@@ -35,8 +35,9 @@ end
 
 util.declare_keymaps {
 	[{ 'n', silent = true }] = {
-		['<leader><C-q>'] = { ':wa! | :qa!<CR>', 'Write all and [q]uit' },
 		['<leader>w'] = { ':silent w<CR>', '[W]rite file' },
+		['<leader>W'] = { ':wa!<CR>', '[W]rite all' },
+		['<leader><leader>q'] = { ':wa! | :qa!<CR>', '[W]rite all and [q]uit' },
 
 		['<C-b>e'] = { ':enew<CR>', '[E]empty [b]uffer' },
 		['<C-b>r'] = { ':e<CR>', '[R]eload [b]uffer' },
@@ -49,6 +50,6 @@ util.declare_keymaps {
 	},
 
 	[{ 'v', silent = true }] = {
-		['<leader>s'] = { ":s/", '[S]ubstitute' },
+		['<leader>s'] = { ':s/', '[S]ubstitute' },
 	},
 }
