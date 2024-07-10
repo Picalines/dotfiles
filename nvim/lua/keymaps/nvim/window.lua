@@ -12,7 +12,7 @@ util.declare_keymaps {
 		['<S-Left>'] = { '<C-W><', 'Decrease window width' },
 		['<S-Right>'] = { '<C-W>>', 'Increase window width' },
 
-		['<C-W>nx'] = { ':NoiceDismiss<CR>', 'Dismiss [N]otifications' },
-		['<C-W>nf'] = { ':NoicePick<CR>', '[F]ind [N]otification' },
+		['<leader>Nd'] = { ':NoiceDismiss<CR>', 'Dismiss [N]otifications' },
+		['<leader>Nf'] = { ':NoicePick<CR>', '[F]ind [N]otification' },
 	},
 }

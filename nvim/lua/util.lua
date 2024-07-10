@@ -40,7 +40,13 @@ function M.declare_keymaps(declaration)
 
 			local opts = vim.tbl_extend('force', base_opts, section_opts, map_opts)
 
-			vim.keymap.set(modes, lhs, rhs, opts)
+			if type(lhs) ~= 'table' then
+				lhs = { lhs }
+			end
+
+			for _, lhs_i in ipairs(lhs) do
+				vim.keymap.set(modes, lhs_i, rhs, opts)
+			end
 		end
 	end
 end

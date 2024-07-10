@@ -10,7 +10,7 @@ return {
 
 		util.declare_keymaps {
 			n = {
-				['<C-w>?'] = { ':WhichKey<CR>', 'Keymap help' },
+				['<leader>?'] = { ':WhichKey<CR>', 'Keymap help' },
 			},
 		}
 	end,
