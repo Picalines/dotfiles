@@ -7,7 +7,19 @@ return {
 		'williamboman/mason.nvim',
 		'williamboman/mason-lspconfig.nvim',
 
-		'j-hui/fidget.nvim',
+		{
+			'j-hui/fidget.nvim',
+
+			opts = {
+				notification = {
+					window = {
+						x_padding = 2,
+						y_padding = 1,
+						relative = 'editor',
+					},
+				},
+			},
+		},
 
 		{ 'folke/neodev.nvim', config = true },
 		'numToStr/Comment.nvim',

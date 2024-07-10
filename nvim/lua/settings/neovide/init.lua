@@ -6,6 +6,9 @@ vim.g.neovide_show_border = true
 
 vim.g.neovide_hide_mouse_when_typing = true
 
+vim.g.neovide_floating_blur_amount_x = 0
+vim.g.neovide_floating_blur_amount_y = 0
+
 vim.o.guifont = 'Hack Nerd Font Mono'
 
 vim.g.neovide_scale_factor = persist.get_item('neovide_scale_factor', 0.9)
