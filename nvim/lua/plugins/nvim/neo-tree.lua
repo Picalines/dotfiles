@@ -110,8 +110,8 @@ return {
 					highlight = 'NeoTreeFileIcon',
 				},
 				modified = {
-					symbol = '',
-					highlight = 'NeoTreeModified',
+					symbol = '+',
+					highlight = '@diff.plus',
 				},
 				name = {
 					trailing_slash = false,
@@ -121,7 +121,7 @@ return {
 				git_status = {
 					symbols = {
 						added = '+',
-						modified = '',
+						modified = '~',
 						conflict = '',
 						unstaged = '󰏫',
 						staged = '✓',
