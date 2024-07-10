@@ -202,15 +202,11 @@ function M.override_deep(...)
 	return vim.tbl_deep_extend('force', ...)
 end
 
----@param array1 table
----@param array2 table
+---@param ... table
 ---@return table
-function M.join(array1, array2)
+function M.join(...)
 	local joined = {}
-	for k, v in pairs(array1) do
-		joined[k] = v
-	end
-	for k, v in pairs(array2) do
+	for k, v in pairs { ... } do
 		set_or_push(joined, k, v)
 	end
 	return joined
