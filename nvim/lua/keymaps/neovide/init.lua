@@ -17,9 +17,9 @@ vim.api.nvim_create_user_command('ZoomOut', zoom_fn(-0.1), {})
 
 util.declare_keymaps {
 	[{ 'n', silent = true, nowait = true }] = {
-		['<C-+>'] = ':ZoomIn<CR>',
-		['<C-_>'] = ':ZoomOut<CR>',
+		['<C-+>'] = { ':ZoomIn<CR>', 'Increase font size' },
+		['<C-_>'] = { ':ZoomOut<CR>', 'Decrease font size' },
 
-		['<leader><C-f>'] = toggle_fullscreen,
+		['<leader><C-f>'] = { toggle_fullscreen, 'Toggle [F]ullscreen' },
 	},
 }
