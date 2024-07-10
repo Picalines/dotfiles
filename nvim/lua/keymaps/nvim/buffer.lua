@@ -34,11 +34,9 @@ local function close_all_buffers()
 end
 
 util.declare_keymaps {
-	opts = {
-		silent = true,
-	},
-	n = {
-		['<leader>s'] = { ':silent w<CR>', '[S]ave file' },
+	[{ 'n', silent = true }] = {
+		['<leader><C-q>'] = { ':wa! | :qa!<CR>', 'Write all and [q]uit' },
+		['<leader>w'] = { ':silent w<CR>', '[W]rite file' },
 
 		['<C-b>e'] = { ':enew<CR>', '[E]empty [b]uffer' },
 		['<C-b>r'] = { ':e<CR>', '[R]eload [b]uffer' },
@@ -46,5 +44,11 @@ util.declare_keymaps {
 		['<C-b>C'] = { close_all_buffers, '[C]lose all [b]uffers' },
 		[']b'] = { ':bn<CR>', 'Next [b]uffer' },
 		['[b'] = { ':bp<CR>', 'Prev [b]uffer' },
+
+		['<leader>s'] = { ':%s/', '[S]ubstitute' },
+	},
+
+	[{ 'v', silent = true }] = {
+		['<leader>s'] = { ":s/", '[S]ubstitute' },
 	},
 }
