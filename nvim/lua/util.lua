@@ -45,7 +45,12 @@ function M.declare_keymaps(declaration)
 			end
 
 			for _, lhs_i in ipairs(lhs) do
-				vim.keymap.set(modes, lhs_i, rhs, opts)
+				local ok = pcall(vim.keymap.set, modes, lhs_i, rhs, opts)
+				if not ok then
+					local lhs_s = tostring(lhs_i)
+					local modes_s = table.concat(modes, ',')
+					print('failed map `' .. lhs_s .. '` in ' .. modes_s)
+				end
 			end
 		end
 	end
