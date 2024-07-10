@@ -10,7 +10,7 @@ return {
 
 	keys = {
 		{
-			'<leader>u',
+			'<leader>U',
 			'<cmd>Telescope undo<cr>',
 			desc = '[u]ndo history',
 		},
