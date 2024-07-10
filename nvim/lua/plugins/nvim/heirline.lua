@@ -390,8 +390,8 @@ return {
 			-- %L = number of lines in the buffer
 			-- %c = column number
 			-- %P = percentage through file of displayed window
-			provider = '%04l:%04c',
-			hl = { fg = 'normal' },
+			provider = '%04l/%04L:%04c',
+			hl = { fg = 'muted' },
 		}
 
 		local ScrollBar = {
@@ -406,7 +406,7 @@ return {
 					return self.sbar[i]
 				end,
 			},
-			hl = { fg = 'diag_hint', bg = 'float_border' },
+			hl = { fg = 'muted', bg = 'float_border' },
 		}
 
 		local LSPActive = {
@@ -423,7 +423,7 @@ return {
 				end,
 			},
 
-			hl = { fg = 'visual', bold = true },
+			hl = { fg = 'cursor', bold = true },
 		}
 
 		vim.o.laststatus = 3 -- global statusline
