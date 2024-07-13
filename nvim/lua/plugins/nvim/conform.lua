@@ -22,6 +22,20 @@ return {
 			go = { 'gofmt' },
 			cs = { 'csharpier' },
 		},
+
+		notify_on_error = true,
+
+		formatters = {
+			isort = {
+				command = 'isort',
+				args = {
+					'--profile',
+					'black',
+					'--quiet',
+					'-',
+				},
+			},
+		},
 	},
 
 	config = function(_, opts)
