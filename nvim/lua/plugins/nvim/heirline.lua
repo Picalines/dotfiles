@@ -12,30 +12,45 @@ return {
 	event = 'UiEnter',
 
 	config = function()
+		vim.o.laststatus = 3 -- global statusline
+
 		local util = require 'util'
 		local h_util = require 'heirline.utils'
 		local h_conditions = require 'heirline.conditions'
 
-		local colors = {
-			normal = h_util.get_highlight('Normal').fg,
-			visual = h_util.get_highlight('@comment').fg,
-			cursor = h_util.get_highlight('Cursor').fg,
-			search = h_util.get_highlight('Search').fg,
-			win_separator = h_util.get_highlight('WinSeparator').fg,
-			muted = h_util.get_highlight('@comment').fg,
-			float_border = h_util.get_highlight('FloatBorder').fg,
-			diag_warn = h_util.get_highlight('DiagnosticWarn').fg,
-			diag_error = h_util.get_highlight('DiagnosticError').fg,
-			diag_hint = h_util.get_highlight('DiagnosticHint').fg,
-			diag_info = h_util.get_highlight('DiagnosticInfo').fg,
-			diff_del = h_util.get_highlight('@diff.minus').fg,
-			diff_add = h_util.get_highlight('@diff.plus').fg,
-			diff_change = h_util.get_highlight('@diff.delta').fg,
-		}
+		---@param hl_name string
+		---@param attribute 'fg' | 'bg'
+		local function get_highlight(hl_name, attribute)
+			local hl = vim.api.nvim_get_hl(0, { name = hl_name, link = true, create = false })
+			if hl.link then
+				return get_highlight(hl.link, attribute)
+			end
+
+			return hl[attribute] or get_highlight('Normal', attribute) or 'red'
+		end
+
+		local function setup_colors()
+			return {
+				normal = get_highlight('Normal', 'fg'),
+				visual = get_highlight('@comment', 'fg'),
+				cursor = get_highlight('Cursor', 'fg'),
+				search = get_highlight('Search', 'fg'),
+				win_separator = get_highlight('WinSeparator', 'fg'),
+				muted = get_highlight('@comment', 'fg'),
+				float_border = get_highlight('FloatBorder', 'fg'),
+				diag_warn = get_highlight('DiagnosticWarn', 'fg'),
+				diag_error = get_highlight('DiagnosticError', 'fg'),
+				diag_hint = get_highlight('DiagnosticHint', 'fg'),
+				diag_info = get_highlight('DiagnosticInfo', 'fg'),
+				diff_del = get_highlight('@diff.minus', 'fg'),
+				diff_add = get_highlight('@diff.plus', 'fg'),
+				diff_change = get_highlight('@diff.delta', 'fg'),
+			}
+		end
 
 		local Space = { provider = ' ', hl = { bg = 'NONE', fg = 'NONE' } }
 
-		local Align = { provider = '%=' }
+		local Align = { provider = '%=', hl = { bg = 'NONE', fg = 'NONE' } }
 
 		local FileIcon = {
 			init = function(self)
@@ -386,12 +401,14 @@ return {
 		}
 
 		local Ruler = {
-			-- %l = current line number
-			-- %L = number of lines in the buffer
-			-- %c = column number
-			-- %P = percentage through file of displayed window
-			provider = '%04l/%04L:%04c',
-			hl = { fg = 'muted' },
+			{
+				-- %l = current line number
+				-- %L = number of lines in the buffer
+				-- %c = column number
+				-- %P = percentage through file of displayed window
+				provider = '%04l/%04L:%04c',
+				hl = { fg = 'muted' },
+			},
 		}
 
 		local ScrollBar = {
@@ -426,7 +443,22 @@ return {
 			hl = { fg = 'cursor', bold = true },
 		}
 
-		vim.o.laststatus = 3 -- global statusline
+		---@param component table
+		---@param child table
+		---@param side 'left' | 'right'
+		local function Append(component, child, side)
+			local condition = component.condition or function()
+				return true
+			end
+
+			component = util.copy_deep(component)
+			component.condition = nil
+
+			local spaced = { condition = condition, component }
+			table.insert(spaced, side == 'left' and 1 or #component, child)
+
+			return spaced
+		end
 
 		local LeftStatusline = util.map({
 			ViMode,
@@ -434,7 +466,7 @@ return {
 			Git,
 			Diagnostics,
 		}, function(component)
-			return util.join({ Space }, component)
+			return Append(component, Space, 'left')
 		end)
 
 		local RightStatusline = util.map({
@@ -442,7 +474,7 @@ return {
 			Ruler,
 			ScrollBar,
 		}, function(component)
-			return util.join(component, { Space })
+			return Append(component, Space, 'right')
 		end)
 
 		local heirline = require 'heirline'
@@ -461,15 +493,16 @@ return {
 				BufferLine,
 				TabPageList,
 			},
+			opts = {
+				colors = setup_colors(),
+			},
 		}
 
-		heirline.load_colors(colors)
-
+		vim.api.nvim_create_augroup('Heirline', { clear = true })
 		vim.api.nvim_create_autocmd({ 'ColorScheme' }, {
-			pattern = '*',
+			group = 'Heirline',
 			callback = function()
-				heirline.load_colors(colors)
-				heirline.reset_highlights()
+				h_util.on_colorscheme(setup_colors())
 			end,
 		})
 

@@ -188,6 +188,22 @@ function M.filter(tbl, keep_predicate)
 	return filtered_tbl
 end
 
+---@generic T
+---@param value T
+---@return T
+function M.copy_deep(value)
+	if type(value) ~= 'table' then
+		return value
+	end
+
+	local copy = {}
+	for k, v in pairs(value) do
+		copy[k] = M.copy_deep(v)
+	end
+
+	return setmetatable(copy, getmetatable(value))
+end
+
 ---@generic K, T
 ---@param ... table<K, T>
 ---@return table<K, T>
