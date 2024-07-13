@@ -2,7 +2,8 @@ local io = require 'io'
 
 local M = {}
 
-local PERSIST_PATH = vim.fn.expand '~/nvim-persist.json'
+---@diagnostic disable-next-line: param-type-mismatch
+local PERSIST_PATH = vim.fs.joinpath(vim.fn.stdpath 'data', 'persist.json')
 
 M._storage = {}
 
