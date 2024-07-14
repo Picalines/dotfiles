@@ -1,4 +1,4 @@
-format = "$os$username$directory$cmd_duration$status > "
+format = "$directory$cmd_duration$status > "
 
 add_newline = false
 
@@ -11,22 +11,9 @@ dir = '#bright-white'
 duration = '#cbcb41'
 status = '#b487f4'
 
-[os]
-format = '[ $symbol](fg:os bold)'
-disabled = false
-
-[os.symbols]
-Windows = ''
-Ubuntu = ''
-Raspbian = ''
-Macos = ''
-
-[username]
-format = '[ $user](fg:username)'
-
 [directory]
 style = 'fg:dir'
-format = '[ $path]($style)'
+format = '[$path]($style)'
 use_os_path_sep = false
 truncation_length = 3
 truncation_symbol = '/'
@@ -56,4 +43,3 @@ disabled = false
 "node_modules" = ''
 ".github" = ''
 ".git" = ''
-"/mnt" = ''
