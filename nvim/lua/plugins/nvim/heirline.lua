@@ -18,33 +18,22 @@ return {
 		local h_util = require 'heirline.utils'
 		local h_conditions = require 'heirline.conditions'
 
-		---@param hl_name string
-		---@param attribute 'fg' | 'bg'
-		local function get_highlight(hl_name, attribute)
-			local hl = vim.api.nvim_get_hl(0, { name = hl_name, link = true, create = false })
-			if hl.link then
-				return get_highlight(hl.link, attribute)
-			end
-
-			return hl[attribute] or get_highlight('Normal', attribute) or 'red'
-		end
-
 		local function setup_colors()
 			return {
-				normal = get_highlight('Normal', 'fg'),
-				visual = get_highlight('@comment', 'fg'),
-				cursor = get_highlight('Cursor', 'fg'),
-				search = get_highlight('Search', 'fg'),
-				win_separator = get_highlight('WinSeparator', 'fg'),
-				muted = get_highlight('@comment', 'fg'),
-				float_border = get_highlight('FloatBorder', 'fg'),
-				diag_warn = get_highlight('DiagnosticWarn', 'fg'),
-				diag_error = get_highlight('DiagnosticError', 'fg'),
-				diag_hint = get_highlight('DiagnosticHint', 'fg'),
-				diag_info = get_highlight('DiagnosticInfo', 'fg'),
-				diff_del = get_highlight('@diff.minus', 'fg'),
-				diff_add = get_highlight('@diff.plus', 'fg'),
-				diff_change = get_highlight('@diff.delta', 'fg'),
+				normal = util.get_hl_attr('Normal', 'fg'),
+				visual = util.get_hl_attr('@comment', 'fg'),
+				cursor = util.get_hl_attr('Cursor', 'fg'),
+				search = util.get_hl_attr('Search', 'fg'),
+				win_separator = util.get_hl_attr('WinSeparator', 'fg'),
+				muted = util.get_hl_attr('@comment', 'fg'),
+				float_border = util.get_hl_attr('FloatBorder', 'fg'),
+				diag_warn = util.get_hl_attr('DiagnosticWarn', 'fg'),
+				diag_error = util.get_hl_attr('DiagnosticError', 'fg'),
+				diag_hint = util.get_hl_attr('DiagnosticHint', 'fg'),
+				diag_info = util.get_hl_attr('DiagnosticInfo', 'fg'),
+				diff_del = util.get_hl_attr('@diff.minus', 'fg'),
+				diff_add = util.get_hl_attr('@diff.plus', 'fg'),
+				diff_change = util.get_hl_attr('@diff.delta', 'fg'),
 			}
 		end
 

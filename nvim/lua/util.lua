@@ -56,6 +56,50 @@ function M.declare_keymaps(declaration)
 	end
 end
 
+---@generic T
+---@param value T | nil
+---@param default T
+---@return T
+function M.replace_nil(value, default)
+	if value == nil then
+		return default
+	end
+
+	return value
+end
+
+---@class get_hl_attr_opts
+---@field follow_link? boolean
+---@field fallback_hl? string
+---@field default_value? string
+
+---@param hl_name string
+---@param attribute 'fg' | 'bg'
+---@param opts? get_hl_attr_opts
+function M.get_hl_attr(hl_name, attribute, opts)
+	if opts == nil then
+		opts = {}
+	end
+
+	local hl = vim.api.nvim_get_hl(0, {
+		name = hl_name,
+		link = M.replace_nil(opts.follow_link, true),
+		create = false,
+	})
+
+	if hl.link then
+		return M.get_hl_attr(hl.link, attribute, opts)
+	end
+
+	if hl[attribute] then
+		return hl[attribute]
+	end
+
+	local fallback_attr_value = M.get_hl_attr(M.replace_nil(opts.fallback_hl, 'Normal'), attribute, opts)
+
+	return fallback_attr_value or M.replace_nil(opts.default_value, 'red')
+end
+
 function M.switch_app(funcs)
 	for app, f in pairs(funcs) do
 		if type(app) == 'table' then
