@@ -12,6 +12,11 @@ return {
 		leap.opts.case_sensitive = false
 		leap.opts.highlight_unlabeled_phase_one_targets = true
 
+		leap.opts.special_keys.next_target = '<Enter>'
+		leap.opts.special_keys.prev_target = '<S-Enter>'
+		leap.opts.special_keys.next_group = '<Tab>'
+		leap.opts.special_keys.prev_group = '<S-Tab>'
+
 		util.declare_keymaps {
 			[{ 'n', 'x', 'o' }] = {
 				['s'] = '<Plug>(leap-forward)',
