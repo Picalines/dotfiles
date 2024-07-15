@@ -35,7 +35,7 @@ return {
 			[{ 'n', silent = true }] = {
 				['<leader>e'] = { ':Neotree focus filesystem<CR>', 'File [E]xplorer' },
 				['<leader>G'] = { ':Neotree focus git_status float<CR>', 'Open [G]it tree' },
-				['<leader>D'] = { ':Neotree diagnostics toggle bottom<CR>', 'Open [d]iagnostics list' },
+				['<leader>D'] = { ':Neotree focus diagnostics bottom<CR>', 'Open [D]iagnostics list' },
 			},
 		}
 
@@ -351,6 +351,11 @@ return {
 					delay = 100,
 					event = 'vim_diagnostic_changed',
 					max_items = 10000,
+				},
+				window = {
+					mappings = {
+						['<leader>D'] = util.cmds ':Neotree close diagnostics',
+					},
 				},
 			},
 
