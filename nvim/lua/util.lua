@@ -164,6 +164,20 @@ function M.clamp(value, min, max)
 	return math.max(min, math.min(max, value))
 end
 
+---@generic K, T
+---@param table table<K, T>
+---@param predicate fun(value: T, key: K): boolean
+---@return K | nil, T | nil
+function M.find(table, predicate)
+	for key, value in pairs(table) do
+		if predicate(value, key) then
+			return key, value
+		end
+	end
+
+	return nil, nil
+end
+
 ---@generic K, T, U
 ---@param tbl table<K, T>
 ---@param func fun(value: T, key: K): U
