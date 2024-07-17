@@ -1,6 +1,8 @@
 return {
 	'michaelrommel/nvim-silicon',
 
+	enabled = false,
+
 	event = 'VeryLazy',
 
 	opts = {
@@ -47,11 +49,11 @@ return {
 			},
 
 			v = {
-				['<leader><C-s>'] = { ':Silicon<CR>', 'Screenshot selected lines' },
+				['<leader><leader>s'] = { ':Silicon<CR>', 'Screenshot selected lines' },
 			},
 
 			n = {
-				['<leader><C-s>'] = { 'maggVG:Silicon<CR><esc>`a', 'Screenshot buffer' },
+				['<leader><leader>s'] = { 'maggVG:Silicon<CR><esc>`a', 'Screenshot buffer' },
 			},
 		}
 	end,

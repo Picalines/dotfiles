@@ -58,7 +58,7 @@ end
 
 util.declare_keymaps {
 	[{ 'n', silent = true }] = {
-		['<leader><C-t>'] = { ':PickColorScheme<CR>', 'Select color [t]heme' },
-		['<leader><C-b>'] = { toggle_background, 'Toggle [b]ackground' },
+		['<leader><leader>t'] = { ':PickColorScheme<CR>', 'Select color [t]heme' },
+		['<leader><leader>b'] = { toggle_background, 'Toggle [b]ackground' },
 	},
 }

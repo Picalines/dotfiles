@@ -20,6 +20,6 @@ util.declare_keymaps {
 		['<C-+>'] = { ':ZoomIn<CR>', 'Increase font size' },
 		['<C-_>'] = { ':ZoomOut<CR>', 'Decrease font size' },
 
-		['<leader><C-f>'] = { toggle_fullscreen, 'Toggle [F]ullscreen' },
+		['<leader><leader>f'] = { toggle_fullscreen, 'Toggle [F]ullscreen' },
 	},
 }
