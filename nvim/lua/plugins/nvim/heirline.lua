@@ -444,7 +444,7 @@ return {
 			component.condition = nil
 
 			local spaced = { condition = condition, component }
-			table.insert(spaced, side == 'left' and 1 or #component, child)
+			table.insert(spaced, side == 'left' and 1 or (#component + 1), child)
 
 			return spaced
 		end
