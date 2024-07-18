@@ -1,3 +1,5 @@
+local util = require 'util'
+
 vim.o.mouse = 'a'
 
 vim.o.termguicolors = true
@@ -13,3 +15,5 @@ vim.o.breakindent = true
 vim.o.fillchars = 'eob: '
 
 vim.opt.scrolloff = 8
+
+util.per_filetype('help', util.cmds 'wincmd L')
