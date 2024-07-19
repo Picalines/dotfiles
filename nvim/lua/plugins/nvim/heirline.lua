@@ -41,6 +41,23 @@ return {
 
 		local Align = { provider = '%=', hl = { bg = 'NONE', fg = 'NONE' } }
 
+		---@param component table
+		---@param child table
+		---@param side 'left' | 'right'
+		local function Append(component, child, side)
+			local condition = component.condition or function()
+				return true
+			end
+
+			component = util.copy_deep(component)
+			component.condition = nil
+
+			local wrapped = { condition = condition, component }
+			table.insert(wrapped, side == 'left' and 1 or (#component + 1), child)
+
+			return wrapped
+		end
+
 		local FileIcon = {
 			init = function(self)
 				local filename = self.filename
@@ -344,50 +361,41 @@ return {
 			},
 		}
 
-		local Diagnostics = {
-			condition = h_conditions.has_diagnostics,
+		---@class DiagnisticCounterOpts
+		---@field severity vim.diagnostic.Severity
+		---@field fallback_icon string
+		---@field hl string
 
-			static = {
-				error_icon = vim.diagnostic.config().signs.text[vim.diagnostic.severity.ERROR] or 'E',
-				warn_icon = vim.diagnostic.config().signs.text[vim.diagnostic.severity.WARN] or 'W',
-				info_icon = vim.diagnostic.config().signs.text[vim.diagnostic.severity.INFO] or 'I',
-				hint_icon = vim.diagnostic.config().signs.text[vim.diagnostic.severity.INFO] or 'H',
-			},
+		---@param opts DiagnisticCounterOpts
+		local function DiagnisticCounter(opts)
+			local function get_diagnostic_count()
+				return #vim.diagnostic.get(0, { severity = opts.severity })
+			end
 
-			init = function(self)
-				self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-				self.warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
-				self.hints = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
-				self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
-			end,
+			return {
+				condition = function()
+					return get_diagnostic_count() > 0
+				end,
 
-			update = { 'DiagnosticChanged', 'BufEnter' },
+				update = { 'DiagnosticChanged', 'BufEnter' },
 
-			{
-				provider = function(self)
-					return self.errors > 0 and (self.error_icon .. ' ' .. self.errors .. ' ')
+				init = function(self)
+					self.icon = vim.diagnostic.config().signs.text[opts.severity] or opts.fallback_icon
+					self.diagnostic_count = get_diagnostic_count()
 				end,
-				hl = { fg = 'diag_error' },
-			},
-			{
-				provider = function(self)
-					return self.warnings > 0 and (self.warn_icon .. ' ' .. self.warnings .. ' ')
-				end,
-				hl = { fg = 'diag_warn' },
-			},
-			{
-				provider = function(self)
-					return self.info > 0 and (self.info_icon .. ' ' .. self.info .. ' ')
-				end,
-				hl = { fg = 'diag_info' },
-			},
-			{
-				provider = function(self)
-					return self.hints > 0 and (self.hint_icon .. ' ' .. self.hints)
-				end,
-				hl = { fg = 'diag_hint' },
-			},
-		}
+
+				{
+					hl = { fg = opts.hl },
+					provider = function(self)
+						return self.icon .. ' ' .. tostring(self.diagnostic_count)
+					end,
+				},
+			}
+		end
+
+		local ErrorCount = DiagnisticCounter { severity = vim.diagnostic.severity.ERROR, fallback_icon = 'E', hl = 'diag_error' }
+		local WarningCount = DiagnisticCounter { severity = vim.diagnostic.severity.WARN, fallback_icon = 'W', hl = 'diag_warn' }
+		local InfoCount = DiagnisticCounter { severity = vim.diagnostic.severity.INFO, fallback_icon = 'I', hl = 'diag_info' }
 
 		local TerminalList = {
 			update = { 'TermOpen', 'TermClose', 'BufEnter' },
@@ -479,28 +487,13 @@ return {
 			hl = { fg = 'cursor', bold = true },
 		}
 
-		---@param component table
-		---@param child table
-		---@param side 'left' | 'right'
-		local function Append(component, child, side)
-			local condition = component.condition or function()
-				return true
-			end
-
-			component = util.copy_deep(component)
-			component.condition = nil
-
-			local spaced = { condition = condition, component }
-			table.insert(spaced, side == 'left' and 1 or (#component + 1), child)
-
-			return spaced
-		end
-
 		local LeftStatusline = util.map({
 			ViMode,
 			MacroRec,
 			Git,
-			Diagnostics,
+			ErrorCount,
+			WarningCount,
+			InfoCount,
 			TerminalList,
 		}, function(component)
 			return Append(component, Space, 'left')
