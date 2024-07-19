@@ -280,8 +280,10 @@ end
 ---@return table
 function M.join(...)
 	local joined = {}
-	for k, v in pairs { ... } do
-		set_or_push(joined, k, v)
+	for _, tbl in pairs { ... } do
+		for k, v in pairs(tbl) do
+			set_or_push(joined, k, v)
+		end
 	end
 	return joined
 end

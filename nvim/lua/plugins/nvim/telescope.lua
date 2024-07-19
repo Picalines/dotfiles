@@ -76,9 +76,9 @@ return {
 		safe_load_extension 'noice'
 
 		local ignore_files = { '.gitignore', '.arcignore' }
-		local always_exclude = { '.git', 'node_modules', 'package-lock.json', 'pnpm-lock.json' }
+		local always_exclude = { '.git', 'node_modules', '{package,pnpm}-lock.json', '{dist,build}', '*.bundle.js', '.geodata' }
 
-		local rg_picker_args = util.join(
+		local rg_args = util.join(
 			{ '--hidden' },
 			util.flat_map(ignore_files, function(file)
 				return vim.fn.filereadable(file) and { '--ignore-file', file } or {}
@@ -89,11 +89,11 @@ return {
 		)
 
 		local find_files = util.curry(builtin.find_files, {
-			find_command = { 'rg', '--files', unpack(rg_picker_args) },
+			find_command = util.join({ 'rg', '--files' }, rg_args),
 		})
 
 		local live_grep = util.curry(builtin.live_grep, {
-			additional_args = rg_picker_args,
+			additional_args = rg_args,
 		})
 
 		require('util').declare_keymaps {
