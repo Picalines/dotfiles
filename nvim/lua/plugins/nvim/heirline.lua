@@ -389,6 +389,53 @@ return {
 			},
 		}
 
+		local TerminalList = {
+			update = { 'TermOpen', 'TermClose', 'BufEnter' },
+
+			init = function(self)
+				self.icon = ''
+
+				local terms = require 'toggleterm.terminal'
+				local all_terminals = terms.get_all(true)
+
+				local current_index, _ = util.find(all_terminals, function(term)
+					return term:is_focused()
+				end)
+
+				local current_buftype = vim.api.nvim_get_option_value('buftype', { buf = 0 })
+
+				self.is_in_terminal = current_buftype == 'terminal'
+				self.current_terminal = current_index
+				self.terminal_count = #all_terminals
+			end,
+
+			condition = function()
+				local require_ok, terms = pcall(require, 'toggleterm.terminal')
+				if not require_ok then
+					return false
+				end
+
+				local all_terminals = terms.get_all(true)
+				return #all_terminals > 0
+			end,
+
+			{
+
+				provider = function(self)
+					local indicator
+					if not self.is_in_terminal then
+						indicator = tostring(self.terminal_count)
+					else
+						indicator = tostring(self.current_terminal) .. '/' .. tostring(self.terminal_count)
+					end
+
+					return self.icon .. ' ' .. indicator
+				end,
+
+				hl = { fg = 'visual' },
+			},
+		}
+
 		local Ruler = {
 			{
 				-- %l = current line number
@@ -454,6 +501,7 @@ return {
 			MacroRec,
 			Git,
 			Diagnostics,
+			TerminalList,
 		}, function(component)
 			return Append(component, Space, 'left')
 		end)
