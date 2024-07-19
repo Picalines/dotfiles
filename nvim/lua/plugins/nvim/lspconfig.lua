@@ -115,7 +115,14 @@ return {
 			end
 
 			local default_server_config = {
-				capabilities = default_capabilities,
+				capabilities = util.override_deep(default_capabilities, {
+					workspace = {
+						didChangeWatchedFiles = {
+							dynamicRegistration = true,
+						},
+					},
+				}),
+
 				handlers = default_handlers,
 			}
 
