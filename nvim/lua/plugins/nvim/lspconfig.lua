@@ -47,8 +47,10 @@ return {
 	},
 
 	config = function()
-		local util = require 'util'
-		local persist = require 'persist'
+		local keymap = require 'util.keymap'
+		local tbl = require 'util.table'
+		local func = require 'util.func'
+		local persist = require 'util.persist'
 
 		vim.lsp.inlay_hint.enable(persist.get_item('lsp_inlay_hints', false))
 
@@ -61,7 +63,7 @@ return {
 		end
 
 		local function declare_lsp_keymaps(_, bufnr)
-			util.declare_keymaps {
+			keymap.declare {
 				[{ 'n', buffer = bufnr, silent = true }] = {
 					['<leader>Li'] = { ':LspInfo<CR>', 'See [L]sp [I]nfo' },
 					['<leader>Lr'] = { ':echo "Restarting LSP" | LspRestart<CR>', '[L]sp [R]estart' },
@@ -97,7 +99,7 @@ return {
 		local default_handlers = {}
 
 		local function setup_server(server_name)
-			if util.contains_value(ignored_servers, server_name) then
+			if tbl.contains_value(ignored_servers, server_name) then
 				return
 			end
 
@@ -107,7 +109,7 @@ return {
 				server_config = {}
 			end
 
-			local custom_on_attach = server_config.on_attach or util.noop
+			local custom_on_attach = server_config.on_attach or func.noop
 
 			local function on_attach(client, bufnr)
 				declare_lsp_keymaps(client, bufnr)
@@ -115,7 +117,7 @@ return {
 			end
 
 			local default_server_config = {
-				capabilities = util.override_deep(default_capabilities, {
+				capabilities = tbl.override_deep(default_capabilities, {
 					workspace = {
 						didChangeWatchedFiles = {
 							dynamicRegistration = true,
@@ -126,7 +128,7 @@ return {
 				handlers = default_handlers,
 			}
 
-			lspconfig[server_name].setup(util.override_deep(default_server_config, server_config, { on_attach = on_attach }))
+			lspconfig[server_name].setup(tbl.override_deep(default_server_config, server_config, { on_attach = on_attach }))
 		end
 
 		mason_lspconfig.setup_handlers { setup_server }

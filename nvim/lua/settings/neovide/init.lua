@@ -1,4 +1,4 @@
-local persist = require 'persist'
+local persist = require 'util.persist'
 
 vim.g.neovide_refresh_rate = 90
 

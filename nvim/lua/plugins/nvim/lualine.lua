@@ -4,7 +4,7 @@ return {
 	enabled = false, -- replaced by heirline.nvim
 
 	config = function()
-		local util = require 'util'
+		local tbl = require 'util.table'
 		local lualine = require 'lualine'
 
 		local lualine_sections = { 'a', 'b', 'c', 'x', 'y', 'z' }
@@ -17,11 +17,11 @@ return {
 			'inactive',
 		}
 
-		local lualine_mode_theme = util.flat_map(lualine_sections, function(section)
+		local lualine_mode_theme = tbl.flat_map(lualine_sections, function(section)
 			return { [section] = { bg = 'none' } }
 		end)
 
-		local lualine_theme = util.flat_map(lualine_modes, function(mode)
+		local lualine_theme = tbl.flat_map(lualine_modes, function(mode)
 			return { [mode] = lualine_mode_theme }
 		end)
 

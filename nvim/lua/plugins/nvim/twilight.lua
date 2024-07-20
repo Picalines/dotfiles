@@ -13,12 +13,12 @@ return {
 	},
 
 	config = function(_, opts)
-		local util = require 'util'
+		local keymap = require 'util.keymap'
 		local twilight = require 'twilight'
 
 		twilight.setup(opts)
 
-		util.declare_keymaps {
+		keymap.declare {
 			[{ 'n', silent = true }] = {
 				['<leader>Z'] = { ':Twilight<CR>', 'Toggle [Z]en mode' },
 			},

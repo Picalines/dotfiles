@@ -29,9 +29,10 @@ return {
 	},
 
 	config = function()
-		local util = require 'util'
+		local keymap = require 'util.keymap'
+		local func = require 'util.func'
 
-		util.declare_keymaps {
+		keymap.declare {
 			[{ 'n', silent = true }] = {
 				['<leader>e'] = { ':Neotree focus filesystem<CR>', 'File [E]xplorer' },
 				['<leader>G'] = { ':Neotree focus git_status float<CR>', 'Open [G]it tree' },
@@ -169,8 +170,8 @@ return {
 					nowait = true,
 				},
 				mappings = {
-					['<leader>e'] = util.cmds ':Neotree close filesystem',
-					['<C-o>'] = util.cmds ':wincmd p',
+					['<leader>e'] = func.cmd ':Neotree close filesystem',
+					['<C-o>'] = func.cmd ':wincmd p',
 
 					['<esc>'] = 'cancel',
 
@@ -354,7 +355,7 @@ return {
 				},
 				window = {
 					mappings = {
-						['<leader>D'] = util.cmds ':Neotree close diagnostics',
+						['<leader>D'] = func.cmd ':Neotree close diagnostics',
 					},
 				},
 			},

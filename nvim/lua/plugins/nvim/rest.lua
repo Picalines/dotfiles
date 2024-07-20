@@ -43,6 +43,7 @@ return {
 	},
 
 	config = function(_, opts)
+		local keymap = require 'util.keymap'
 		local rest = require 'rest-nvim'
 
 		rest.setup(opts)
@@ -50,7 +51,7 @@ return {
 		vim.api.nvim_create_autocmd({ 'BufAdd' }, {
 			pattern = { '*.http', '*.https' },
 			callback = function(event)
-				require('util').declare_keymaps {
+				keymap.declare {
 					[{ 'n', buffer = event.buf }] = {
 						['<leader>r'] = { rest.run, '[R]un [R]est' },
 					},

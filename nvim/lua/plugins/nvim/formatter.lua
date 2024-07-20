@@ -6,8 +6,8 @@ return {
 	event = { 'BufReadPre', 'BufNewFile' },
 
 	config = function()
+		local tbl = require 'util.table'
 		local f_util = require 'formatter.util'
-		local c_util = require 'util'
 
 		local function map_formatter(formatter, config_mapper)
 			local config = formatter()
@@ -25,7 +25,7 @@ return {
 		end
 
 		local with_current_file_cwd = format_mapper(function(config)
-			return c_util.override(config, {
+			return tbl.override(config, {
 				cwd = f_util.get_current_buffer_file_dir(),
 			})
 		end)

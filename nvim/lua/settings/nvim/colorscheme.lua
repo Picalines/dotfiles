@@ -1,4 +1,4 @@
-local persist = require 'persist'
+local persist = require 'util.persist'
 
 local function load_colorscheme()
 	vim.cmd 'hi clear'

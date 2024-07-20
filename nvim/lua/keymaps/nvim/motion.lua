@@ -1,13 +1,14 @@
-local util = require 'util'
+local keymap = require 'util.keymap'
+local func = require 'util.func'
 
-util.declare_keymaps {
+keymap.declare {
 	[{ 'n', 'v', silent = true, expr = true }] = {
 		['k'] = "v:count == 0 ? 'gk' : 'k'",
 		['j'] = "v:count == 0 ? 'gj' : 'j'",
 	},
 }
 
-util.declare_keymaps {
+keymap.declare {
 	opts = {
 		silent = true,
 	},
@@ -38,7 +39,7 @@ util.declare_keymaps {
 	},
 
 	n = {
-		['[d'] = { vim.diagnostic.goto_prev, 'Go to previous [d]iagnostic' },
-		[']d'] = { vim.diagnostic.goto_next, 'Go to next [d]iagnostic' },
+		['[d'] = { func.curry(vim.diagnostic.jump, { count = -1, float = false }), 'Go to previous [d]iagnostic' },
+		[']d'] = { func.curry(vim.diagnostic.jump, { count = 1, float = false }), 'Go to next [d]iagnostic' },
 	},
 }

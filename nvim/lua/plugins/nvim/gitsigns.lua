@@ -35,10 +35,10 @@ return {
 		},
 
 		on_attach = function(bufnr)
-			local util = require 'util'
+			local keymap = require 'util.keymap'
 			local gitsigns = package.loaded.gitsigns
 
-			util.declare_keymaps {
+			keymap.declare {
 				[{ 'n', buffer = bufnr }] = {
 					['<leader>hp'] = { gitsigns.preview_hunk, 'Preview hunk' },
 					['<leader>ha'] = { gitsigns.stage_hunk, 'Stage hunk' },

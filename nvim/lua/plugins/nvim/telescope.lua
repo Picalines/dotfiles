@@ -20,7 +20,9 @@ return {
 	},
 
 	config = function()
-		local util = require 'util'
+		local tbl = require 'util.table'
+		local func = require 'util.func'
+		local keymap = require 'util.keymap'
 		local telescope = require 'telescope'
 		local actions = require 'telescope.actions'
 		local themes = require 'telescope.themes'
@@ -78,25 +80,25 @@ return {
 		local ignore_files = { '.gitignore', '.arcignore' }
 		local always_exclude = { '.git', 'node_modules', '{package,pnpm}-lock.json', '{dist,build}', '*.bundle.js', '.geodata' }
 
-		local rg_args = util.join(
+		local rg_args = tbl.join(
 			{ '--hidden' },
-			util.flat_map(ignore_files, function(file)
+			tbl.flat_map(ignore_files, function(file)
 				return vim.fn.filereadable(file) and { '--ignore-file', file } or {}
 			end),
-			util.flat_map(always_exclude, function(path)
+			tbl.flat_map(always_exclude, function(path)
 				return { '-g', '!' .. path }
 			end)
 		)
 
-		local find_files = util.curry(builtin.find_files, {
-			find_command = util.join({ 'rg', '--files' }, rg_args),
+		local find_files = func.curry(builtin.find_files, {
+			find_command = tbl.join({ 'rg', '--files' }, rg_args),
 		})
 
-		local live_grep = util.curry(builtin.live_grep, {
+		local live_grep = func.curry(builtin.live_grep, {
 			additional_args = rg_args,
 		})
 
-		require('util').declare_keymaps {
+		keymap.declare {
 			n = {
 				['<leader>ff'] = { find_files, '[F]ind [F]iles' },
 				['<leader>fo'] = { builtin.oldfiles, '[F]ind [O]ld files' },

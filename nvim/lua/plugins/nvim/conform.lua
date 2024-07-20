@@ -39,8 +39,8 @@ return {
 	},
 
 	config = function(_, opts)
+		local keymap = require 'util.keymap'
 		local conform = require 'conform'
-		local util = require 'util'
 
 		conform.setup(opts)
 
@@ -64,7 +64,7 @@ return {
 			buf_format(range)
 		end, { range = true })
 
-		util.declare_keymaps {
+		keymap.declare {
 			[{ 'n', 'v', silent = true }] = {
 				['<leader>F'] = { ':Format<CR>', 'Format current buffer' },
 			},

@@ -1,4 +1,4 @@
-local util = require 'util'
+local keymap = require 'util.keymap'
 
 local function is_modified(buffer)
 	return vim.api.nvim_get_option_value('modified', { buf = buffer })
@@ -33,7 +33,7 @@ local function close_all_buffers()
 	]]
 end
 
-util.declare_keymaps {
+keymap.declare {
 	[{ 'n', silent = true }] = {
 		['<leader>w'] = { ':silent w<CR>', '[W]rite file' },
 		['<leader>W'] = { ':wa!<CR>', '[W]rite all' },

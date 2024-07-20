@@ -15,7 +15,7 @@ return {
 	event = { 'InsertEnter', 'CmdlineEnter' },
 
 	config = function()
-		local util = require 'util'
+		local keymap = require 'util.keymap'
 		local cmp = require 'cmp'
 		local luasnip = require 'luasnip'
 		local lspkind = require 'lspkind'
@@ -90,7 +90,7 @@ return {
 			},
 		}
 
-		util.declare_keymaps {
+		keymap.declare {
 			[{ 'i', silent = true }] = {
 				['<C-k>'] = function()
 					if luasnip.expand_or_jumpable() then

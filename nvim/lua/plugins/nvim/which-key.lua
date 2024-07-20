@@ -4,11 +4,11 @@ return {
 	opts = {},
 
 	config = function(_, opts)
-		local util = require 'util'
+		local keymap = require 'util.keymap'
 
 		require('which-key').setup(opts)
 
-		util.declare_keymaps {
+		keymap.declare {
 			n = {
 				['<leader>?'] = { ':WhichKey<CR>', 'Keymap help' },
 			},

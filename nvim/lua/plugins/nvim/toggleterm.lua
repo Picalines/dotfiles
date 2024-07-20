@@ -34,7 +34,9 @@ return {
 	},
 
 	config = function(_, opts)
-		local util = require 'util'
+		local tbl = require 'util.table'
+		local func = require 'util.func'
+		local keymap = require 'util.keymap'
 
 		local toggleterm = require 'toggleterm'
 		local toggleterm_ui = require 'toggleterm.ui'
@@ -63,7 +65,7 @@ return {
 			end
 
 			local all_terminals = terminals.get_all(false)
-			local current_term_index, _ = util.find(all_terminals, function(t)
+			local current_term_index, _ = tbl.find(all_terminals, function(t)
 				return t.id == current_term_id
 			end)
 
@@ -102,7 +104,7 @@ return {
 		vim.api.nvim_create_autocmd('TermOpen', {
 			pattern = { 'term://*' },
 			callback = function(event)
-				util.declare_keymaps {
+				keymap.declare {
 					opts = {
 						silent = true,
 						buffer = event.buf,
@@ -116,13 +118,13 @@ return {
 						['<Esc>'] = { '<leader>t', 'Exit terminal' },
 						['<C-c>'] = { send_sigterm_and_reopen, 'Send SIGTERM' },
 
-						[']t'] = { util.curry(open_next_term, 'next'), 'Next [T]erminal' },
-						['[t'] = { util.curry(open_next_term, 'prev'), 'Previous [T]erminal' },
+						[']t'] = { func.curry(open_next_term, 'next'), 'Next [T]erminal' },
+						['[t'] = { func.curry(open_next_term, 'prev'), 'Previous [T]erminal' },
 					},
 
 					t = {
 						['<Esc>'] = { [[<C-\><C-n>]], 'Exit terminal mode' },
-						['<C-[>'] = { util.curry(send_keys, ''), 'Send <Esc> to terminal' },
+						['<C-[>'] = { func.curry(send_keys, ''), 'Send <Esc> to terminal' },
 						['<C-p>'] = { [[<C-\><C-n>pi]], '[P]aste' },
 					},
 				}

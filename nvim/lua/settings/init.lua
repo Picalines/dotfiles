@@ -1,6 +1,6 @@
-local util = require 'util'
+local app = require 'util.app'
 
-util.switch_app {
+app.switch {
 	nvim = function()
 		require 'settings.nvim'
 	end,

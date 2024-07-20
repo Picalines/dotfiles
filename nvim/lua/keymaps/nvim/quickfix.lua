@@ -1,6 +1,7 @@
-local util = require 'util'
+local keymap = require 'util.keymap'
+local autocmd = require 'util.autocmd'
 
-util.declare_keymaps {
+keymap.declare {
 	[{ 'n', silent = true }] = {
 		[']q'] = { ':cnext<CR>zz', 'Go to next [q]uickfix item' },
 		['[q'] = { ':cprevious<CR>zz', 'Go to previous [q]uickfix item' },
@@ -8,10 +9,10 @@ util.declare_keymaps {
 	},
 }
 
-util.per_filetype('qf', function(opts)
+autocmd.per_filetype('qf', function(opts)
 	vim.bo[opts.buf].modifiable = true
 
-	util.declare_keymaps {
+	keymap.declare {
 		[{ 'n', silent = true, buffer = opts.buf }] = {
 			[{ 'q', '<leader>Q' }] = { ':cclose<CR>', '[C]lose [q]uickfix list' },
 			['n'] = { ':cnewer<CR>', 'Go to newer [q]uickfix list' },

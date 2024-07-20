@@ -8,8 +8,7 @@ return {
 	},
 
 	config = function(_, opts)
-		local util = require 'util'
-
+		local tbl = require 'util.table'
 		local autopairs = require 'nvim-autopairs'
 		local Rule = require 'nvim-autopairs.rule'
 
@@ -30,7 +29,7 @@ return {
 				variants = { variants }
 			end
 
-			return util.contains_value(variants, value)
+			return tbl.contains_value(variants, value)
 		end
 
 		local function is_inside_ts_node(node_types)

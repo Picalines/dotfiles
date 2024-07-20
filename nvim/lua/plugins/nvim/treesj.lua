@@ -10,12 +10,12 @@ return {
 	},
 
 	config = function(_, opts)
+		local keymap = require 'util.keymap'
 		local treesj = require 'treesj'
-		local util = require 'util'
 
 		treesj.setup(opts)
 
-		util.declare_keymaps {
+		keymap.declare {
 			n = {
 				['cI'] = { treesj.toggle, 'Change indentation' },
 			},

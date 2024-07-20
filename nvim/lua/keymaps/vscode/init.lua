@@ -1,8 +1,10 @@
+local keymap = require 'util.keymap'
+
 local function vscode_call(action)
 	return ':lua require("vscode-neovim").call("' .. action .. '")<CR>'
 end
 
-require('util').declare_keymaps {
+keymap.declare {
 	opts = {
 		silent = true,
 	},

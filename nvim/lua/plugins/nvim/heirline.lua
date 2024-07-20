@@ -12,28 +12,29 @@ return {
 	event = 'UiEnter',
 
 	config = function()
-		vim.o.laststatus = 3 -- global statusline
-
-		local util = require 'util'
+		local tbl = require 'util.table'
+		local hl = require 'util.highlight'
 		local h_util = require 'heirline.utils'
 		local h_conditions = require 'heirline.conditions'
 
+		vim.o.laststatus = 3 -- global statusline
+
 		local function setup_colors()
 			return {
-				normal = util.get_hl_attr('Normal', 'fg'),
-				visual = util.get_hl_attr('@comment', 'fg'),
-				cursor = util.get_hl_attr('Cursor', 'fg'),
-				search = util.get_hl_attr('Search', 'fg'),
-				win_separator = util.get_hl_attr('WinSeparator', 'fg'),
-				muted = util.get_hl_attr('@comment', 'fg'),
-				float_border = util.get_hl_attr('FloatBorder', 'fg'),
-				diag_warn = util.get_hl_attr('DiagnosticWarn', 'fg'),
-				diag_error = util.get_hl_attr('DiagnosticError', 'fg'),
-				diag_hint = util.get_hl_attr('DiagnosticHint', 'fg'),
-				diag_info = util.get_hl_attr('DiagnosticInfo', 'fg'),
-				diff_del = util.get_hl_attr('@diff.minus', 'fg'),
-				diff_add = util.get_hl_attr('@diff.plus', 'fg'),
-				diff_change = util.get_hl_attr('@diff.delta', 'fg'),
+				normal = hl.hl_attr('Normal', 'fg'),
+				visual = hl.hl_attr('@comment', 'fg'),
+				cursor = hl.hl_attr('Cursor', 'fg'),
+				search = hl.hl_attr('Search', 'fg'),
+				win_separator = hl.hl_attr('WinSeparator', 'fg'),
+				muted = hl.hl_attr('@comment', 'fg'),
+				float_border = hl.hl_attr('FloatBorder', 'fg'),
+				diag_warn = hl.hl_attr('DiagnosticWarn', 'fg'),
+				diag_error = hl.hl_attr('DiagnosticError', 'fg'),
+				diag_hint = hl.hl_attr('DiagnosticHint', 'fg'),
+				diag_info = hl.hl_attr('DiagnosticInfo', 'fg'),
+				diff_del = hl.hl_attr('@diff.minus', 'fg'),
+				diff_add = hl.hl_attr('@diff.plus', 'fg'),
+				diff_change = hl.hl_attr('@diff.delta', 'fg'),
 			}
 		end
 
@@ -49,7 +50,7 @@ return {
 				return true
 			end
 
-			component = util.copy_deep(component)
+			component = tbl.copy_deep(component)
 			component.condition = nil
 
 			local wrapped = { condition = condition, component }
@@ -406,7 +407,7 @@ return {
 				local terms = require 'toggleterm.terminal'
 				local all_terminals = terms.get_all(true)
 
-				local current_index, _ = util.find(all_terminals, function(term)
+				local current_index, _ = tbl.find(all_terminals, function(term)
 					return term:is_focused()
 				end)
 
@@ -487,7 +488,7 @@ return {
 			hl = { fg = 'cursor', bold = true },
 		}
 
-		local LeftStatusline = util.map({
+		local LeftStatusline = tbl.map({
 			ViMode,
 			MacroRec,
 			Git,
@@ -499,7 +500,7 @@ return {
 			return Append(component, Space, 'left')
 		end)
 
-		local RightStatusline = util.map({
+		local RightStatusline = tbl.map({
 			LSPActive,
 			Ruler,
 			ScrollBar,

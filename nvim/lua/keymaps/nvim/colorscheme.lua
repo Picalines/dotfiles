@@ -1,5 +1,5 @@
-local util = require 'util'
-local persist = require 'persist'
+local keymap = require 'util.keymap'
+local persist = require 'util.persist'
 
 local function open_colorscheme_picker()
 	local actions = require 'telescope.actions'
@@ -56,7 +56,7 @@ local function toggle_background()
 	persist.save_item('background', vim.o.background)
 end
 
-util.declare_keymaps {
+keymap.declare {
 	[{ 'n', silent = true }] = {
 		['<leader><leader>t'] = { ':PickColorScheme<CR>', 'Select color [t]heme' },
 		['<leader><leader>b'] = { toggle_background, 'Toggle [b]ackground' },

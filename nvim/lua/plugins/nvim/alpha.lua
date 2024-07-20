@@ -2,7 +2,7 @@ return {
 	'goolord/alpha-nvim',
 
 	config = function()
-		local util = require 'util'
+		local mathu = require 'util.math'
 		local alpha = require 'alpha'
 		local dashboard = require 'alpha.themes.dashboard'
 
@@ -39,7 +39,7 @@ return {
 
 		local small_height = 35
 		local win_height = vim.fn.winheight(0)
-		local zoom_factor = util.clamp(win_height, 0, small_height) / small_height
+		local zoom_factor = mathu.clamp(win_height, 0, small_height) / small_height
 		local headerPadding = math.max(2, math.floor(win_height * zoom_factor * 0.2))
 
 		dashboard.config.layout = {

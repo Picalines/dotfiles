@@ -1,4 +1,5 @@
-local util = require 'util'
+local autocmd = require 'util.autocmd'
+local func = require 'util.func'
 
 vim.o.mouse = 'a'
 
@@ -16,4 +17,4 @@ vim.o.fillchars = 'eob: '
 
 vim.opt.scrolloff = 8
 
-util.per_filetype('help', util.cmds 'wincmd L')
+autocmd.per_filetype('help', func.cmd 'wincmd L')

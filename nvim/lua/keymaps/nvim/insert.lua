@@ -1,4 +1,6 @@
-require('util').declare_keymaps {
+local keymap = require 'util.keymap'
+
+keymap.declare {
 	i = {
 		['<C-p>'] = '<C-r>*',
 	},

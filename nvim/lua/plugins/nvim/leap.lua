@@ -4,7 +4,8 @@ return {
 	lazy = false,
 
 	config = function()
-		local util = require 'util'
+		local keymap = require 'util.keymap'
+		local hl = require 'util.highlight'
 		local leap = require 'leap'
 
 		leap.setup {}
@@ -17,7 +18,7 @@ return {
 		leap.opts.special_keys.next_group = '<Tab>'
 		leap.opts.special_keys.prev_group = '<S-Tab>'
 
-		util.declare_keymaps {
+		keymap.declare {
 			[{ 'n', 'x', 'o' }] = {
 				['s'] = '<Plug>(leap-forward)',
 				['S'] = '<Plug>(leap-backward)',
@@ -31,9 +32,9 @@ return {
 		}
 
 		local function setup_highlights()
-			vim.api.nvim_set_hl(0, 'LeapBackdrop', { fg = util.get_hl_attr('@comment', 'fg') })
-			vim.api.nvim_set_hl(0, 'LeapMatch', { fg = util.get_hl_attr('Search', 'fg'), reverse = true })
-			vim.api.nvim_set_hl(0, 'LeapLabel', { fg = util.get_hl_attr('@diff.change', 'fg'), reverse = true })
+			vim.api.nvim_set_hl(0, 'LeapBackdrop', { fg = hl.hl_attr('@comment', 'fg') })
+			vim.api.nvim_set_hl(0, 'LeapMatch', { fg = hl.hl_attr('Search', 'fg'), reverse = true })
+			vim.api.nvim_set_hl(0, 'LeapLabel', { fg = hl.hl_attr('@diff.change', 'fg'), reverse = true })
 		end
 
 		setup_highlights()

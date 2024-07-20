@@ -4,9 +4,11 @@ return {
 	event = { 'BufReadPre', 'BufNewFile' },
 
 	config = function()
-		local util = require 'util'
-		local flatten = util.flatten
-		local flat_map = util.flat_map
+		local tbl = require 'util.table'
+		local keymap = require 'util.keymap'
+
+		local flatten = tbl.flatten
+		local flat_map = tbl.flat_map
 
 		local function declare_select(part_keys, declarations)
 			return {
@@ -16,9 +18,9 @@ return {
 					local obj_name = declaration[1]
 					local obj_parts = declaration[2]
 					return flat_map(obj_parts, function(part)
-						local keymap = part_keys[part] .. obj_key
+						local map = part_keys[part] .. obj_key
 						local capture_group = obj_name .. '.' .. part
-						return { [keymap] = capture_group }
+						return { [map] = capture_group }
 					end)
 				end),
 			}
@@ -90,7 +92,7 @@ return {
 
 		local ts_repeat_move = require 'nvim-treesitter.textobjects.repeatable_move'
 
-		util.declare_keymaps {
+		keymap.declare {
 			[{ 'n', 'x', 'o' }] = {
 				[';'] = ts_repeat_move.repeat_last_move,
 				[','] = ts_repeat_move.repeat_last_move_opposite,

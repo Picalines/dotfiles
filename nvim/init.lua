@@ -14,7 +14,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('persist').load()
+local persist = require 'util.persist'
+pcall(persist.load)
 
 require 'plugins'
 require 'settings'

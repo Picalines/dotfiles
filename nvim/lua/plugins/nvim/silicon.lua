@@ -39,11 +39,11 @@ return {
 	},
 
 	config = function(_, opts)
-		local util = require 'util'
+		local keymap = require 'util.keymap'
 
 		require('silicon').setup(opts)
 
-		util.declare_keymaps {
+		keymap.declare {
 			opts = {
 				silent = true,
 			},

@@ -1,6 +1,6 @@
-local util = require 'util'
+local keymap = require 'util.keymap'
 
-util.declare_keymaps {
+keymap.declare {
 	[{ 'n', silent = true }] = {
 		['<C-t>e'] = { ':tabnew<CR>', '[E]empty [t]ab' },
 		['<C-t>c'] = { ':tabclose<CR>', 'Close [t]ab' },
