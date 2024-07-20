@@ -72,13 +72,16 @@ end
 ---@field follow_link? boolean
 ---@field fallback_hl? string
 ---@field default_value? string
+---@field _rec_depth? number
 
 ---@param hl_name string
 ---@param attribute 'fg' | 'bg'
 ---@param opts? get_hl_attr_opts
 function M.get_hl_attr(hl_name, attribute, opts)
 	if opts == nil then
-		opts = {}
+		opts = { _rec_depth = 0 }
+	else
+		opts._rec_depth = M.replace_nil(opts._rec_depth, 0) + 1
 	end
 
 	local hl = vim.api.nvim_get_hl(0, {
@@ -95,9 +98,13 @@ function M.get_hl_attr(hl_name, attribute, opts)
 		return hl[attribute]
 	end
 
-	local fallback_attr_value = M.get_hl_attr(M.replace_nil(opts.fallback_hl, 'Normal'), attribute, opts)
+	local fallback_hl = M.replace_nil(opts.fallback_hl, 'Normal')
 
-	return fallback_attr_value or M.replace_nil(opts.default_value, 'red')
+	if hl_name ~= fallback_hl then
+		return M.get_hl_attr(fallback_hl, attribute, opts)
+	else
+		return M.replace_nil(opts.default_value, 'white')
+	end
 end
 
 function M.switch_app(funcs)
