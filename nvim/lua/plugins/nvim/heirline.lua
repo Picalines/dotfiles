@@ -81,7 +81,8 @@ return {
 		local BufferName = {
 			provider = function(self)
 				local filename = self.filename
-				filename = filename == '' and '[No Name]' or vim.fn.fnamemodify(filename, ':t')
+				local fileformat = self.is_active and ':t' or ':t:r'
+				filename = filename == '' and '[No Name]' or vim.fn.fnamemodify(filename, fileformat)
 				return filename
 			end,
 			hl = function(self)
@@ -149,11 +150,10 @@ return {
 				end,
 				name = 'heirline_tabline_buffer_callback',
 			},
-			BufferIcon,
+			Append(BufferIcon, Space, 'left'),
 			Append(BufferName, Space, 'left'),
 			Append(ModifiedFlag 'tab', Space, 'left'),
 			Append(ReadonlyFlag 'tab', Space, 'left'),
-			Space,
 		}
 
 		local get_bufs = function()
@@ -195,13 +195,19 @@ return {
 			end,
 		})
 
-		local BufferLine = h_util.make_buflist(Buffer, { provider = '', hl = { fg = 'gray' } }, { provider = '', hl = { fg = 'gray' } }, function()
-			return buflist_cache
-		end, false)
+		local BufferLine = h_util.make_buflist(
+			Buffer,
+			{ provider = '', hl = { fg = 'win_separator' } },
+			{ provider = '', hl = { fg = 'win_separator' } },
+			function()
+				return buflist_cache
+			end,
+			false
+		)
 
-		local Tabpage = {
+		local TabPage = {
 			provider = function(self)
-				return '%' .. self.tabnr .. 'T ' .. self.tabpage .. ' %T'
+				return '%' .. self.tabnr .. 'T' .. self.tabpage .. ' %T'
 			end,
 			hl = function(self)
 				return { bold = self.is_active, fg = self.is_active and 'normal' or 'muted' }
@@ -213,10 +219,10 @@ return {
 				return #vim.api.nvim_list_tabpages() >= 2
 			end,
 			{ provider = '%=' },
-			h_util.make_tablist(Tabpage),
+			h_util.make_tablist(TabPage),
 		}
 
-		local TabLineOffset = {
+		local SidebarOffset = {
 			condition = function(self)
 				local win = vim.api.nvim_tabpage_list_wins(0)[1]
 				local bufnr = vim.api.nvim_win_get_buf(win)
@@ -245,7 +251,7 @@ return {
 					end,
 				},
 				{
-					provider = '| ',
+					provider = '|',
 					hl = { fg = 'win_separator' },
 				},
 			},
@@ -261,7 +267,7 @@ return {
 				end,
 
 				{
-					provider = ' > ',
+					provider = ' >',
 					hl = { fg = 'win_separator' },
 				},
 			},
@@ -566,7 +572,7 @@ return {
 			---@diagnostic disable-next-line: missing-fields
 			tabline = {
 				Space,
-				TabLineOffset,
+				SidebarOffset,
 				BufferLine,
 				TabPageList,
 			},
