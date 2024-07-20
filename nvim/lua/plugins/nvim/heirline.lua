@@ -28,10 +28,10 @@ return {
 				win_separator = hl.hl_attr('WinSeparator', 'fg'),
 				muted = hl.hl_attr('@comment', 'fg'),
 				float_border = hl.hl_attr('FloatBorder', 'fg'),
-				diag_warn = hl.hl_attr('DiagnosticWarn', 'fg'),
 				diag_error = hl.hl_attr('DiagnosticError', 'fg'),
-				diag_hint = hl.hl_attr('DiagnosticHint', 'fg'),
+				diag_warn = hl.hl_attr('DiagnosticWarn', 'fg'),
 				diag_info = hl.hl_attr('DiagnosticInfo', 'fg'),
+				diag_hint = hl.hl_attr('DiagnosticHint', 'fg'),
 				diff_del = hl.hl_attr('@diff.minus', 'fg'),
 				diff_add = hl.hl_attr('@diff.plus', 'fg'),
 				diff_change = hl.hl_attr('@diff.delta', 'fg'),
@@ -397,6 +397,7 @@ return {
 		local ErrorCount = DiagnisticCounter { severity = vim.diagnostic.severity.ERROR, fallback_icon = 'E', hl = 'diag_error' }
 		local WarningCount = DiagnisticCounter { severity = vim.diagnostic.severity.WARN, fallback_icon = 'W', hl = 'diag_warn' }
 		local InfoCount = DiagnisticCounter { severity = vim.diagnostic.severity.INFO, fallback_icon = 'I', hl = 'diag_info' }
+		local HintCount = DiagnisticCounter { severity = vim.diagnostic.severity.HINT, fallback_icon = 'H', hl = 'diag_hint' }
 
 		local TerminalList = {
 			update = { 'TermOpen', 'TermClose', 'BufEnter' },
@@ -495,6 +496,7 @@ return {
 			ErrorCount,
 			WarningCount,
 			InfoCount,
+			HintCount,
 			TerminalList,
 		}, function(component)
 			return Append(component, Space, 'left')
