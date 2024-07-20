@@ -59,21 +59,26 @@ return {
 			return wrapped
 		end
 
-		local FileIcon = {
+		local BufferIcon = {
 			init = function(self)
-				local filename = self.filename
-				local extension = vim.fn.fnamemodify(filename, ':e')
-				self.icon, self.icon_color = require('nvim-web-devicons').get_icon_color(filename, extension, { default = true })
+				local icons_ok, icons = pcall(require, 'nvim-web-devicons')
+				if icons_ok then
+					local filename = self.filename
+					local extension = vim.fn.fnamemodify(filename, ':e')
+					self.icon, self.icon_color = icons.get_icon_color(filename, extension, { default = true })
+				else
+					self.icon, self.icon_color = nil, 'normal'
+				end
 			end,
 			provider = function(self)
-				return self.icon and (self.icon .. ' ')
+				return self.icon or ''
 			end,
 			hl = function(self)
 				return { fg = self.icon_color }
 			end,
 		}
 
-		local TablineFileName = {
+		local BufferName = {
 			provider = function(self)
 				local filename = self.filename
 				filename = filename == '' and '[No Name]' or vim.fn.fnamemodify(filename, ':t')
@@ -85,15 +90,51 @@ return {
 			end,
 		}
 
-		local TablineFileFlags = {
-			{
+		---@param line_type 'status' | 'tab'
+		local function ModifiedFlag(line_type)
+			local condition
+
+			if line_type == 'status' then
+				condition = function()
+					return not h_conditions.is_git_repo() and vim.bo.buftype ~= 'prompt' and vim.bo.modified
+				end
+			elseif line_type == 'tab' then
 				condition = function(self)
 					return vim.api.nvim_get_option_value('modified', { buf = self.bufnr })
-				end,
-				provider = ' +',
-				hl = { fg = 'diff_add' },
-			},
-		}
+				end
+			end
+
+			return {
+				condition = condition,
+				{
+					provider = '+',
+					hl = { fg = 'diff_add' },
+				},
+			}
+		end
+
+		---@param line_type 'status' | 'tab'
+		local function ReadonlyFlag(line_type)
+			local condition
+
+			if line_type == 'status' then
+				condition = function()
+					return vim.bo.buftype ~= 'terminal' and (not vim.bo.modifiable or vim.bo.readonly)
+				end
+			elseif line_type == 'tab' then
+				condition = function(self)
+					return not vim.api.nvim_get_option_value('modifiable', { buf = self.bufnr }) or vim.api.nvim_get_option_value('readonly', { buf = self.bufnr })
+				end
+			end
+
+			return {
+				condition = condition,
+				{
+					provider = '',
+					hl = { fg = 'visual' },
+				},
+			}
+		end
 
 		local Buffer = {
 			init = function(self)
@@ -108,9 +149,10 @@ return {
 				end,
 				name = 'heirline_tabline_buffer_callback',
 			},
-			FileIcon,
-			TablineFileName,
-			TablineFileFlags,
+			BufferIcon,
+			Append(BufferName, Space, 'left'),
+			Append(ModifiedFlag 'tab', Space, 'left'),
+			Append(ReadonlyFlag 'tab', Space, 'left'),
 			Space,
 		}
 
@@ -493,6 +535,8 @@ return {
 			ViMode,
 			MacroRec,
 			Git,
+			ModifiedFlag 'status',
+			ReadonlyFlag 'status',
 			ErrorCount,
 			WarningCount,
 			InfoCount,
