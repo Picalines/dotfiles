@@ -1,5 +1,83 @@
 local M = {}
 
+---@generic T
+---@param value T
+---@param length integer
+---@return T[]
+function M.fill(value, length)
+	local array = {}
+	for i = 1, length do
+		array[i] = value
+	end
+	return array
+end
+
+---@generic T
+---@param length integer
+---@param func fun(index: integer): T
+---@return T[]
+function M.generate(length, func)
+	local array = {}
+	for i = 1, length do
+		array[i] = func(i)
+	end
+	return array
+end
+
+---@generic T
+---@param value T
+---@return T
+function M.copy(value)
+	if type(value) ~= 'table' then
+		return value
+	end
+
+	local copy = {}
+	for k, v in pairs(value) do
+		copy[k] = v
+	end
+
+	return setmetatable(copy, getmetatable(value))
+end
+
+---@generic T
+---@param value T
+---@return T
+function M.copy_deep(value)
+	if type(value) ~= 'table' then
+		return value
+	end
+
+	local copy = {}
+	for k, v in pairs(value) do
+		copy[k] = M.copy_deep(v)
+	end
+
+	return setmetatable(copy, getmetatable(value))
+end
+
+---@generic K
+---@param tbl table<K, any>
+---@return K[]
+function M.keys(tbl)
+	local keys = {}
+	for key, _ in pairs(tbl) do
+		table.insert(keys, key)
+	end
+	return keys
+end
+
+---@generic V
+---@param tbl table<any, V>
+---@return V[]
+function M.values(tbl)
+	local values = {}
+	for _, value in pairs(tbl) do
+		table.insert(values, value)
+	end
+	return values
+end
+
 ---@generic K, T
 ---@param table table<K, T>
 ---@param predicate fun(value: T, key: K): boolean
@@ -14,6 +92,19 @@ function M.find(table, predicate)
 	return nil, nil
 end
 
+---@generic T
+---@param tbl table<any, T>
+---@param value T
+---@return boolean
+function M.contains_value(tbl, value)
+	for _, v in pairs(tbl) do
+		if v == value then
+			return true
+		end
+	end
+	return false
+end
+
 ---@generic K, T, U
 ---@param tbl table<K, T>
 ---@param func fun(value: T, key: K): U
@@ -26,10 +117,24 @@ function M.map(tbl, func)
 	return mapped_tbl
 end
 
+--- TODO: split to array.lua and table.lua
+---@generic K, T, KF, TF
+---@param tbl table<K, T>
+---@param func fun(key: K, value: T): KF, TF
+---@return table<KF, TF>
+function M.map_pairs(tbl, func)
+	local mapped_tbl = {}
+	for k, v in pairs(tbl) do
+		local kf, vf = func(k, v)
+		mapped_tbl[kf] = vf
+	end
+	return mapped_tbl
+end
+
 ---@param tbl table
 ---@param key any
 ---@param value any
-function M.set_or_insert(tbl, key, value)
+function M.set_or_append(tbl, key, value)
 	if type(key) == 'number' then
 		table.insert(tbl, value)
 	else
@@ -46,7 +151,7 @@ function M.flat_map(tbl, func)
 	for k, v in pairs(tbl) do
 		local t = func(v, k)
 		for tk, tv in pairs(t) do
-			M.set_or_insert(mapped_tbl, tk, tv)
+			M.set_or_append(mapped_tbl, tk, tv)
 		end
 	end
 	return mapped_tbl
@@ -76,26 +181,23 @@ function M.filter(tbl, keep_predicate)
 	local filtered_tbl = {}
 	for k, v in pairs(tbl) do
 		if keep_predicate(v, k) then
-			M.set_or_insert(filtered_tbl, k, v)
+			M.set_or_append(filtered_tbl, k, v)
 		end
 	end
 	return filtered_tbl
 end
 
----@generic T
----@param value T
----@return T
-function M.copy_deep(value)
-	if type(value) ~= 'table' then
-		return value
+---@generic K, V
+---@param table table<K, V>
+---@return table<V, integer>
+function M.count_values(table)
+	local counts = {}
+
+	for _, value in pairs(table) do
+		counts[value] = (counts[value] or 0) + 1
 	end
 
-	local copy = {}
-	for k, v in pairs(value) do
-		copy[k] = M.copy_deep(v)
-	end
-
-	return setmetatable(copy, getmetatable(value))
+	return counts
 end
 
 ---@generic K, T
@@ -118,7 +220,7 @@ function M.join(...)
 	local joined = {}
 	for _, tbl in pairs { ... } do
 		for k, v in pairs(tbl) do
-			M.set_or_insert(joined, k, v)
+			M.set_or_append(joined, k, v)
 		end
 	end
 	return joined
@@ -142,17 +244,16 @@ function M.separate(array, separator)
 	return separated
 end
 
----@generic T
----@param tbl table<any, T>
----@param value T
----@return boolean
-function M.contains_value(tbl, value)
-	for _, v in pairs(tbl) do
-		if v == value then
-			return true
-		end
+---@generic K, V
+---@param tbl table<K, V>
+---@return table<V, K[]>
+function M.inverse(tbl)
+	local inversed = {}
+	for k, v in pairs(tbl) do
+		inversed[v] = inversed[v] or {}
+		table.insert(inversed[v], k)
 	end
-	return false
+	return inversed
 end
 
 return M

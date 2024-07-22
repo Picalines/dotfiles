@@ -17,6 +17,8 @@ return {
 		local h_util = require 'heirline.utils'
 		local h_conditions = require 'heirline.conditions'
 
+		local heirline = require 'heirline'
+
 		vim.o.laststatus = 3 -- global statusline
 
 		local function setup_colors()
@@ -83,16 +85,30 @@ return {
 		}
 
 		local BufferName = {
-			provider = function(self)
-				local filename = self.filename
-				local fileformat = self.is_active and ':t' or ':t:r'
-				filename = filename == '' and '[No Name]' or vim.fn.fnamemodify(filename, fileformat)
-				return filename
+			init = function(self)
+				self.display_name = self.filename == '' and '[No Name]' or vim.fn.fnamemodify(self.filename, ':t')
 			end,
-			hl = function(self)
-				local is_current = self.is_active
-				return { bold = is_current, fg = is_current and 'normal' or 'muted' }
-			end,
+
+			{
+				condition = function(self)
+					return self.buffer_prefixes and self.buffer_prefixes[self.bufnr]
+				end,
+
+				provider = function(self)
+					return self.buffer_prefixes[self.bufnr] .. '/'
+				end,
+
+				hl = { fg = 'visual', italic = true },
+			},
+			{
+				provider = function(self)
+					return self.is_active and self.display_name or vim.fn.fnamemodify(self.display_name, ':r')
+				end,
+
+				hl = function(self)
+					return { bold = self.is_active, fg = self.is_active and 'normal' or 'muted' }
+				end,
+			},
 		}
 
 		---@param line_type 'status' | 'tab'
@@ -156,29 +172,76 @@ return {
 			Append(ReadonlyFlag 'tab', Space, 'right'),
 		}
 
-		local get_bufs = function()
-			return vim.tbl_filter(function(bufnr)
+		local function get_listed_buffers()
+			return tbl.filter(vim.api.nvim_list_bufs(), function(bufnr)
 				return vim.api.nvim_get_option_value('buflisted', { buf = bufnr })
-			end, vim.api.nvim_list_bufs())
+			end)
+		end
+
+		local function compute_unique_prefixes(bufnrs)
+			-- "inspiration": https://github.com/willothy/nvim-cokeline/blob/adfd1eb87e0804b6b86126e03611db6f62bb2909/lua/cokeline/buffers.lua#L57
+
+			local is_windows = vim.fn.has 'win32' == 1
+			local path_separator = not is_windows and '/' or '\\'
+
+			local prefixes = tbl.generate(#bufnrs, function()
+				return {}
+			end)
+
+			local paths = tbl.map(bufnrs, function(bufnr)
+				return vim.fn.reverse(vim.split(vim.api.nvim_buf_get_name(bufnr), path_separator))
+			end)
+
+			for i = 1, #paths do
+				for j = i + 1, #paths do
+					local k = 1
+					while paths[i][k] == paths[j][k] and paths[i][k] do
+						k = k + 1
+						prefixes[i][k - 1] = prefixes[i][k - 1] or paths[i][k]
+						prefixes[j][k - 1] = prefixes[j][k - 1] or paths[j][k]
+					end
+					if k ~= 1 then
+						prefixes[i][k - 1] = prefixes[i][k - 1] or paths[i][k]
+						prefixes[j][k - 1] = prefixes[j][k - 1] or paths[j][k]
+					end
+				end
+			end
+
+			return tbl.map(prefixes, function(path)
+				return table.concat(vim.fn.reverse(path), '/')
+			end)
 		end
 
 		local buflist_cache = {}
 
 		local function update_buflist()
 			vim.schedule(function()
-				local buffers = get_bufs()
-				for i, v in ipairs(buffers) do
-					buflist_cache[i] = v
-				end
-				for i = #buffers + 1, #buflist_cache do
-					buflist_cache[i] = nil
-				end
+				buflist_cache = get_listed_buffers()
 
 				if #buflist_cache > 1 then
 					vim.o.showtabline = 2 -- always
 				elseif vim.o.showtabline ~= 1 then
 					vim.o.showtabline = 1 -- only when #tabpages > 1
 				end
+
+				local bufnr_to_name = tbl.map_pairs(buflist_cache, function(_, bufnr)
+					return bufnr, vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ':t')
+				end)
+
+				local name_to_bufnr = tbl.inverse(bufnr_to_name)
+
+				local buffer_prefixes = {}
+				for _, bufnrs in pairs(name_to_bufnr) do
+					if #bufnrs > 1 then
+						local prefixes = compute_unique_prefixes(bufnrs)
+						for i, prefix in pairs(prefixes) do
+							buffer_prefixes[bufnrs[i]] = prefix
+						end
+					end
+				end
+
+				---@diagnostic disable-next-line: inject-field
+				heirline.tabline.buffer_prefixes = buffer_prefixes
 			end)
 		end
 
@@ -551,8 +614,6 @@ return {
 		}, function(component)
 			return Append(component, Space, 'right')
 		end)
-
-		local heirline = require 'heirline'
 
 		heirline.setup {
 			---@diagnostic disable-next-line: missing-fields

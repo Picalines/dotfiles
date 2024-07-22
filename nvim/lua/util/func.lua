@@ -40,4 +40,20 @@ function M.cmd(...)
 	end
 end
 
+---@param threshold number
+---@return fun(x: number): boolean
+function M.greater_than(threshold)
+	return function(x)
+		return x > threshold
+	end
+end
+
+---@param threshold number
+---@return fun(x: number): boolean
+function M.less_than(threshold)
+	return function(x)
+		return x < threshold
+	end
+end
+
 return M
