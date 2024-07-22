@@ -50,13 +50,17 @@ return {
 				return true
 			end
 
+			local update = component.update
+
 			component = tbl.copy_deep(component)
 			component.condition = nil
+			component.update = nil
 
-			local wrapped = { condition = condition, component }
-			table.insert(wrapped, side == 'left' and 1 or (#component + 1), child)
-
-			return wrapped
+			return {
+				condition = condition,
+				update = update,
+				side == 'left' and { child, component } or { component, child },
+			}
 		end
 
 		local BufferIcon = {
@@ -107,10 +111,8 @@ return {
 
 			return {
 				condition = condition,
-				{
-					provider = '+',
-					hl = { fg = 'diff_add' },
-				},
+				provider = '+',
+				hl = { fg = 'diff_add' },
 			}
 		end
 
@@ -130,10 +132,8 @@ return {
 
 			return {
 				condition = condition,
-				{
-					provider = '',
-					hl = { fg = 'visual' },
-				},
+				provider = '',
+				hl = { fg = 'visual' },
 			}
 		end
 
@@ -150,10 +150,10 @@ return {
 				end,
 				name = 'heirline_tabline_buffer_callback',
 			},
-			Append(BufferIcon, Space, 'left'),
-			Append(BufferName, Space, 'left'),
-			Append(ModifiedFlag 'tab', Space, 'left'),
-			Append(ReadonlyFlag 'tab', Space, 'left'),
+			Append(BufferIcon, Space, 'right'),
+			Append(BufferName, Space, 'right'),
+			Append(ModifiedFlag 'tab', Space, 'right'),
+			Append(ReadonlyFlag 'tab', Space, 'right'),
 		}
 
 		local get_bufs = function()
@@ -257,14 +257,16 @@ return {
 			},
 
 			{
-				provider = function(self)
-					return self.title
-				end,
+				{
+					provider = function(self)
+						return self.title
+					end,
 
-				hl = function(self)
-					local is_focused = vim.api.nvim_get_current_win() == self.winid
-					return { bold = is_focused, fg = is_focused and 'normal' or 'muted' }
-				end,
+					hl = function(self)
+						local is_focused = vim.api.nvim_get_current_win() == self.winid
+						return { bold = is_focused, fg = is_focused and 'normal' or 'muted' }
+					end,
+				},
 
 				{
 					provider = ' >',
@@ -327,15 +329,16 @@ return {
 					t = 'cursor',
 				},
 			},
-			{
-				provider = function(self)
-					return '%2(' .. (self.mode_names[self.mode] or self.mode) .. '%)'
-				end,
-				hl = function(self)
-					local mode = self.mode:sub(1, 1) -- get only the first mode character
-					return { fg = self.mode_colors[mode], bold = true }
-				end,
-			},
+
+			provider = function(self)
+				return '%2(' .. (self.mode_names[self.mode] or self.mode) .. '%)'
+			end,
+
+			hl = function(self)
+				local mode = self.mode:sub(1, 1) -- get only the first mode character
+				return { fg = self.mode_colors[mode], bold = true }
+			end,
+
 			update = {
 				'ModeChanged',
 				pattern = '*:*',
@@ -349,16 +352,13 @@ return {
 			condition = function()
 				return vim.fn.reg_recording() ~= '' and vim.o.cmdheight == 0
 			end,
-			{
-				provider = ' ',
-				hl = { fg = 'search', bold = true },
-			},
-			{
-				provider = function()
-					return vim.fn.reg_recording()
-				end,
-				hl = { fg = 'search', bold = true },
-			},
+
+			provider = function()
+				return ' ' .. vim.fn.reg_recording()
+			end,
+
+			hl = { fg = 'search', bold = true },
+
 			update = {
 				'RecordingEnter',
 				'RecordingLeave',
@@ -433,12 +433,11 @@ return {
 					self.diagnostic_count = get_diagnostic_count()
 				end,
 
-				{
-					hl = { fg = opts.hl },
-					provider = function(self)
-						return self.icon .. ' ' .. tostring(self.diagnostic_count)
-					end,
-				},
+				provider = function(self)
+					return self.icon .. ' ' .. tostring(self.diagnostic_count)
+				end,
+
+				hl = { fg = opts.hl },
 			}
 		end
 
@@ -477,46 +476,41 @@ return {
 				return #all_terminals > 0
 			end,
 
-			{
+			provider = function(self)
+				local indicator
+				if not self.is_in_terminal then
+					indicator = tostring(self.terminal_count)
+				else
+					indicator = tostring(self.current_terminal) .. '/' .. tostring(self.terminal_count)
+				end
 
-				provider = function(self)
-					local indicator
-					if not self.is_in_terminal then
-						indicator = tostring(self.terminal_count)
-					else
-						indicator = tostring(self.current_terminal) .. '/' .. tostring(self.terminal_count)
-					end
+				return self.icon .. ' ' .. indicator
+			end,
 
-					return self.icon .. ' ' .. indicator
-				end,
-
-				hl = { fg = 'visual' },
-			},
+			hl = { fg = 'visual' },
 		}
 
 		local Ruler = {
-			{
-				-- %l = current line number
-				-- %L = number of lines in the buffer
-				-- %c = column number
-				-- %P = percentage through file of displayed window
-				provider = '%04l/%04L:%04c',
-				hl = { fg = 'muted' },
-			},
+			-- %l = current line number
+			-- %L = number of lines in the buffer
+			-- %c = column number
+			-- %P = percentage through file of displayed window
+			provider = '%04l/%04L:%04c',
+			hl = { fg = 'muted' },
 		}
 
 		local ScrollBar = {
 			static = {
 				sbar = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' },
 			},
-			{
-				provider = function(self)
-					local curr_line = vim.api.nvim_win_get_cursor(0)[1]
-					local lines = vim.api.nvim_buf_line_count(0)
-					local i = math.floor((curr_line - 1) / lines * #self.sbar) + 1
-					return self.sbar[i]
-				end,
-			},
+
+			provider = function(self)
+				local curr_line = vim.api.nvim_win_get_cursor(0)[1]
+				local lines = vim.api.nvim_buf_line_count(0)
+				local i = math.floor((curr_line - 1) / lines * #self.sbar) + 1
+				return self.sbar[i]
+			end,
+
 			hl = { fg = 'muted', bg = 'float_border' },
 		}
 
@@ -524,15 +518,13 @@ return {
 			condition = h_conditions.lsp_attached,
 			update = { 'LspAttach', 'LspDetach' },
 
-			{
-				provider = function()
-					local names = {}
-					for _, server in pairs(vim.lsp.get_clients { bufnr = 0 }) do
-						table.insert(names, server.name)
-					end
-					return table.concat(names, ' ') .. ' '
-				end,
-			},
+			provider = function()
+				local names = {}
+				for _, server in pairs(vim.lsp.get_clients { bufnr = 0 }) do
+					table.insert(names, server.name)
+				end
+				return table.concat(names, ' ') .. ' '
+			end,
 
 			hl = { fg = 'cursor', bold = true },
 		}
@@ -572,7 +564,7 @@ return {
 			---@diagnostic disable-next-line: missing-fields
 			tabline = {
 				Space,
-				SidebarOffset,
+				Append(SidebarOffset, Space, 'right'),
 				BufferLine,
 				TabPageList,
 			},
