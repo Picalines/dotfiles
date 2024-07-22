@@ -11,11 +11,17 @@ return {
 			'j-hui/fidget.nvim',
 
 			opts = {
+				progress = {
+					display = {
+						done_icon = '',
+					},
+				},
 				notification = {
 					window = {
 						x_padding = 2,
 						y_padding = 1,
 						relative = 'editor',
+						normal_hl = 'Visual',
 					},
 				},
 			},
