@@ -1,3 +1,5 @@
+local tbl = require 'util.table'
+
 local M = {}
 
 function M.noop(...)
@@ -25,6 +27,16 @@ function M.curry(func, ...)
 	local curried = { ... }
 	return function(...)
 		return func(unpack(curried), ...)
+	end
+end
+
+---@generic O, R
+---@param func fun(opts: O): R
+---@param opts table
+---@return fun(opts: O): R
+function M.curry_opts(func, opts)
+	return function(p_opts)
+		return func(tbl.override_deep(opts, p_opts or {}))
 	end
 end
 
