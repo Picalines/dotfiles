@@ -17,7 +17,7 @@ return {
 		close_on_exit = true,
 
 		direction = 'float',
-		auto_scroll = true,
+		auto_scroll = false,
 
 		float_opts = {
 			border = 'rounded',
