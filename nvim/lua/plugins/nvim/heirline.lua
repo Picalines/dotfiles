@@ -29,6 +29,7 @@ return {
 				search = hl.hl_attr('Search', 'fg'),
 				win_separator = hl.hl_attr('WinSeparator', 'fg'),
 				muted = hl.hl_attr('@comment', 'fg'),
+				attribute = hl.hl_attr('@attribute', 'fg'),
 				float_border = hl.hl_attr('FloatBorder', 'fg'),
 				diag_error = hl.hl_attr('DiagnosticError', 'fg'),
 				diag_warn = hl.hl_attr('DiagnosticWarn', 'fg'),
@@ -547,10 +548,10 @@ return {
 					indicator = tostring(self.current_terminal) .. '/' .. tostring(self.terminal_count)
 				end
 
-				return self.icon .. ' ' .. indicator
+				return indicator .. ' ' .. self.icon
 			end,
 
-			hl = { fg = 'visual' },
+			hl = { fg = 'attribute' },
 		}
 
 		local Ruler = {
@@ -602,12 +603,12 @@ return {
 			WarningCount,
 			InfoCount,
 			HintCount,
-			TerminalList,
 		}, function(component)
 			return Append(component, Space, 'left')
 		end)
 
 		local RightStatusline = tbl.map({
+			TerminalList,
 			LSPActive,
 			Ruler,
 			ScrollBar,
