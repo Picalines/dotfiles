@@ -7,10 +7,10 @@ keymap.declare {
 		['<C-h>'] = { '<C-W>h', 'Move to left window' },
 		['<C-l>'] = { '<C-W>l', 'Move to right window' },
 
-		['<S-Down>'] = { '<C-W>-', 'Decrease window height' },
-		['<S-Up>'] = { '<C-W>+', 'Increase window height' },
-		['<S-Left>'] = { '<C-W><', 'Decrease window width' },
-		['<S-Right>'] = { '<C-W>>', 'Increase window width' },
+		['<S-Down>'] = { '5<C-W>-', 'Decrease window height' },
+		['<S-Up>'] = { '5<C-W>+', 'Increase window height' },
+		['<S-Left>'] = { '5<C-W><', 'Decrease window width' },
+		['<S-Right>'] = { '5<C-W>>', 'Increase window width' },
 
 		['<leader>Nd'] = { ':NoiceDismiss<CR>', 'Dismiss [N]otifications' },
 		['<leader>Nf'] = { ':NoicePick<CR>', '[F]ind [N]otification' },
