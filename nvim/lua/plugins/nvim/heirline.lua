@@ -25,7 +25,6 @@ return {
 			return {
 				normal = hl.hl_attr('Normal', 'fg'),
 				visual = hl.hl_attr('@comment', 'fg'),
-				cursor = hl.hl_attr('Cursor', 'fg'),
 				search = hl.hl_attr('Search', 'fg'),
 				win_separator = hl.hl_attr('WinSeparator', 'fg'),
 				muted = hl.hl_attr('@comment', 'fg'),
@@ -390,7 +389,7 @@ return {
 					R = 'diff_change',
 					r = 'diff_change',
 					['!'] = 'red',
-					t = 'cursor',
+					t = 'search',
 				},
 			},
 
