@@ -70,6 +70,10 @@ return {
 						end,
 					},
 				},
+
+				[{ 'o', 'x', buffer = bufnr, silent = true }] = {
+					['ih'] = { ':<C-U>Gitsigns select_hunk<CR>', 'Select hunk' },
+				},
 			}
 		end,
 	},
