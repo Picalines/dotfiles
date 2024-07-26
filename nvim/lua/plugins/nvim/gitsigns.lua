@@ -1,5 +1,8 @@
+local is_arc = vim.fn.executable 'arc'
+
 return {
-	'lewis6991/gitsigns.nvim',
+	not is_arc and 'lewis6991/gitsigns.nvim',
+	dir = is_arc and '~/Arcadia/junk/a-matveev9/gitsigns.arc.nvim' or nil,
 
 	event = { 'BufReadPre', 'BufNewFile' },
 
