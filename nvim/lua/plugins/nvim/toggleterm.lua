@@ -39,7 +39,6 @@ return {
 		local keymap = require 'util.keymap'
 
 		local toggleterm = require 'toggleterm'
-		local toggleterm_ui = require 'toggleterm.ui'
 
 		local terminals = require 'toggleterm.terminal'
 		local Terminal = terminals.Terminal
@@ -57,8 +56,25 @@ return {
 			end)
 		end
 
+		---@param terminal Terminal
+		local function open_term_keep_mode(terminal)
+			local was_in_insert = vim.fn.mode() == 't'
+
+			if was_in_insert then
+				vim.cmd 'stopinsert'
+			end
+
+			vim.schedule(function()
+				terminal:open()
+
+				if not was_in_insert then
+					vim.cmd 'stopinsert'
+				end
+			end)
+		end
+
 		---@param dir 'next' | 'prev' | 'next_or_prev'
-		local function open_next_term(dir)
+		local function switch_term(dir)
 			local current_term_id = terminals.get_focused_id()
 			if current_term_id == nil then
 				return
@@ -80,15 +96,14 @@ return {
 
 			local next_term = all_terminals[next_index]
 			if next_term ~= nil then
-				next_term:open()
-				toggleterm_ui.stopinsert()
+				open_term_keep_mode(next_term)
 			end
 		end
 
 		local function send_sigterm_and_reopen()
 			local current_term = terminals.get(terminals.get_focused_id())
 			if current_term ~= nil then
-				open_next_term 'next_or_prev'
+				switch_term 'next_or_prev'
 
 				vim.fn.jobstop(current_term.job_id)
 			end
@@ -113,19 +128,21 @@ return {
 					},
 
 					n = {
-						['<C-t>'] = { open_new_term, 'Open new [T]erminal session' },
-
 						['<Esc>'] = { '<leader>t', 'Exit terminal' },
 						['<C-c>'] = { send_sigterm_and_reopen, 'Send SIGTERM' },
-
-						[']t'] = { func.curry(open_next_term, 'next'), 'Next [T]erminal' },
-						['[t'] = { func.curry(open_next_term, 'prev'), 'Previous [T]erminal' },
 					},
 
 					t = {
 						['<Esc>'] = { [[<C-\><C-n>]], 'Exit terminal mode' },
 						['<C-[>'] = { func.curry(send_keys, ''), 'Send <Esc> to terminal' },
 						['<C-p>'] = { [[<C-\><C-n>pi]], '[P]aste' },
+					},
+
+					[{ 'n', 't' }] = {
+						['<C-t>'] = { open_new_term, 'Open new [T]erminal session' },
+
+						['<C-l>'] = { func.curry(switch_term, 'next'), 'Next [T]erminal' },
+						['<C-h>'] = { func.curry(switch_term, 'prev'), 'Previous [T]erminal' },
 					},
 				}
 			end,
