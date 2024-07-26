@@ -590,7 +590,7 @@ return {
 				return table.concat(names, ' ') .. ' '
 			end,
 
-			hl = { fg = 'cursor', bold = true },
+			hl = { fg = 'search', bold = true },
 		}
 
 		local LeftStatusline = tbl.map({
