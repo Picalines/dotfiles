@@ -1,4 +1,4 @@
-local is_arc = vim.fn.executable 'arc'
+local is_arc = vim.fn.has 'win32' == 0 and vim.fn.executable 'arc'
 
 return {
 	not is_arc and 'lewis6991/gitsigns.nvim',
