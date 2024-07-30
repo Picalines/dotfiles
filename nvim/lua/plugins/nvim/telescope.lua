@@ -130,6 +130,8 @@ return {
 			['<leader>fd'] = { builtin.diagnostics, '[F]ind [D]iagnostics' },
 			['<leader>fr'] = { builtin.resume, '[F]ind [R]esume' },
 			['<leader>f/'] = { builtin.current_buffer_fuzzy_find, '[F]ind in current buffer' },
+			['<leader>fs'] = { builtin.lsp_document_symbols, '[F]ind [D]ocument [S]ymbols' },
+			['<leader>fS'] = { builtin.lsp_dynamic_workspace_symbols, '[F]ind workspace [S]ymbols' },
 		}
 
 		keymap.declare {
