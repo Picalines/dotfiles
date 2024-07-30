@@ -35,21 +35,21 @@ end
 
 keymap.declare {
 	[{ 'n', silent = true }] = {
-		['<leader>w'] = { ':silent w<CR>', '[W]rite file' },
-		['<leader>W'] = { ':wa!<CR>', '[W]rite all' },
-		['<leader><leader>q'] = { ':wa! | :qa!<CR>', '[W]rite all and [q]uit' },
+		['<leader>w'] = { ':silent w<CR>', 'Write file' },
+		['<leader>W'] = { ':wa!<CR>', 'Write all' },
+		['<leader><leader>q'] = { ':wa! | :qa!<CR>', 'Write all and quit' },
 
-		['<C-b>e'] = { ':enew<CR>', '[E]empty [b]uffer' },
-		['<C-b>r'] = { ':e<CR>', '[R]eload [b]uffer' },
-		['<C-b>c'] = { close_buffer, '[C]lose [b]uffer' },
-		['<C-b>C'] = { close_all_buffers, '[C]lose all [b]uffers' },
-		[']b'] = { ':bn<CR>', 'Next [b]uffer' },
-		['[b'] = { ':bp<CR>', 'Prev [b]uffer' },
+		['<C-b>e'] = { ':enew<CR>', 'Make empty buffer' },
+		['<C-b>r'] = { ':e<CR>', 'Reload buffer' },
+		['<C-b>c'] = { close_buffer, 'Close buffer' },
+		['<C-b>C'] = { close_all_buffers, 'Close all buffers' },
+		[']b'] = { ':bn<CR>', 'Next buffer' },
+		['[b'] = { ':bp<CR>', 'Prev buffer' },
 
-		['<leader>s'] = { ':%s/', '[S]ubstitute' },
+		['<leader>s'] = { ':%s/', 'Substitute' },
 	},
 
 	[{ 'v', silent = true }] = {
-		['<leader>s'] = { ':s/', '[S]ubstitute' },
+		['<leader>s'] = { ':s/', 'Substitute' },
 	},
 }

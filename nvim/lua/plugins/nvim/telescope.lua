@@ -121,17 +121,17 @@ return {
 		end
 
 		local picker_maps = {
-			['<leader>ff'] = { find_files, '[F]ind [F]iles' },
-			['<leader>fo'] = { builtin.oldfiles, '[F]ind [O]ld files' },
-			['<leader>fb'] = { builtin.buffers, '[F]ind [B]uffer' },
-			['<leader>fg'] = { live_grep, '[F]ind [G]lobal' },
-			['<leader>fc'] = { builtin.commands, '[F]ind [C]ommands' },
-			['<leader>fh'] = { builtin.help_tags, '[F]ind [H]elp' },
-			['<leader>fd'] = { builtin.diagnostics, '[F]ind [D]iagnostics' },
-			['<leader>fr'] = { builtin.resume, '[F]ind [R]esume' },
-			['<leader>f/'] = { builtin.current_buffer_fuzzy_find, '[F]ind in current buffer' },
-			['<leader>fs'] = { builtin.lsp_document_symbols, '[F]ind [D]ocument [S]ymbols' },
-			['<leader>fS'] = { builtin.lsp_dynamic_workspace_symbols, '[F]ind workspace [S]ymbols' },
+			['<leader>ff'] = { find_files, 'Find files' },
+			['<leader>fo'] = { builtin.oldfiles, 'Find old files' },
+			['<leader>fb'] = { builtin.buffers, 'Find buffer' },
+			['<leader>fg'] = { live_grep, 'Find global' },
+			['<leader>fc'] = { builtin.commands, 'Find commands' },
+			['<leader>fh'] = { builtin.help_tags, 'Find help' },
+			['<leader>fd'] = { builtin.diagnostics, 'Find diagnostics' },
+			['<leader>fr'] = { builtin.resume, 'Find resume' },
+			['<leader>f/'] = { builtin.current_buffer_fuzzy_find, 'Find in current buffer' },
+			['<leader>fs'] = { builtin.lsp_document_symbols, 'Find document symbols' },
+			['<leader>fS'] = { builtin.lsp_dynamic_workspace_symbols, 'Find workspace symbols' },
 		}
 
 		keymap.declare {

@@ -53,7 +53,7 @@ return {
 			callback = function(event)
 				keymap.declare {
 					[{ 'n', buffer = event.buf }] = {
-						['<leader>r'] = { rest.run, '[R]un [R]est' },
+						['<leader>r'] = { rest.run, 'Run rest' },
 					},
 				}
 			end,

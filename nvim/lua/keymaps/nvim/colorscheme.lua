@@ -58,7 +58,7 @@ end
 
 keymap.declare {
 	[{ 'n', silent = true }] = {
-		['<leader><leader>t'] = { ':PickColorScheme<CR>', 'Select color [t]heme' },
-		['<leader><leader>b'] = { toggle_background, 'Toggle [b]ackground' },
+		['<leader><leader>t'] = { ':PickColorScheme<CR>', 'Select color theme' },
+		['<leader><leader>b'] = { toggle_background, 'Toggle background' },
 	},
 }

@@ -34,9 +34,9 @@ return {
 
 		keymap.declare {
 			[{ 'n', silent = true }] = {
-				['<leader>e'] = { ':Neotree focus filesystem<CR>', 'File [E]xplorer' },
-				['<leader>G'] = { ':Neotree focus git_status float<CR>', 'Open [G]it tree' },
-				['<leader>D'] = { ':Neotree focus diagnostics bottom<CR>', 'Open [D]iagnostics list' },
+				['<leader>e'] = { ':Neotree focus filesystem<CR>', 'File explorer' },
+				['<leader>G'] = { ':Neotree focus git_status float<CR>', 'Git tree' },
+				['<leader>D'] = { ':Neotree focus diagnostics bottom<CR>', 'Diagnostics list' },
 			},
 		}
 

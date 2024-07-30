@@ -139,10 +139,10 @@ return {
 					},
 
 					[{ 'n', 't' }] = {
-						['<C-t>'] = { open_new_term, 'Open new [T]erminal session' },
+						['<C-t>'] = { open_new_term, 'Open new terminal session' },
 
-						['<C-l>'] = { func.curry(switch_term, 'next'), 'Next [T]erminal' },
-						['<C-h>'] = { func.curry(switch_term, 'prev'), 'Previous [T]erminal' },
+						['<C-l>'] = { func.curry(switch_term, 'next'), 'Next terminal' },
+						['<C-h>'] = { func.curry(switch_term, 'prev'), 'Previous terminal' },
 					},
 				}
 			end,

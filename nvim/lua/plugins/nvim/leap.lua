@@ -20,9 +20,9 @@ return {
 
 		keymap.declare {
 			[{ 'n', 'x', 'o' }] = {
-				['s'] = '<Plug>(leap-forward)',
-				['S'] = '<Plug>(leap-backward)',
-				['gs'] = '<Plug>(leap-from-window)',
+				['s'] = { '<Plug>(leap-forward)', 'Leap forward' },
+				['S'] = { '<Plug>(leap-backward)', 'Leap backward' },
+				['gs'] = { '<Plug>(leap-from-window)', 'Leap global' },
 			},
 
 			v = {

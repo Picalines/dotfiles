@@ -72,19 +72,19 @@ return {
 			[{ 'n', silent = true }] = {
 				['K'] = { vim.lsp.buf.hover, 'LSP: Hover' },
 
-				['<leader>R'] = { vim.lsp.buf.rename, 'LSP: [R]ename' },
-				['<leader>A'] = { vim.lsp.buf.code_action, 'LSP: Code [A]ction' },
+				['<leader>R'] = { vim.lsp.buf.rename, 'LSP: Rename' },
+				['<leader>A'] = { vim.lsp.buf.code_action, 'LSP: Code action' },
 
-				['gD'] = { ':Glance definitions<CR>', 'LSP: [G]o to [D]efinition' },
-				['gR'] = { ':Glance references<CR>', 'LSP: [G]o to [R]eferences' },
-				['gI'] = { ':Glance implementations<CR>', 'LSP: [G]o to [I]mplementation' },
-				['gT'] = { ':Glance type_definitions<CR>', 'LSP: [G]o to [T]ype definition' },
-				['gC'] = { vim.lsp.buf.declaration, 'LSP: [G]o to to De[c]laration' },
+				['gD'] = { ':Glance definitions<CR>', 'LSP: Go to definition' },
+				['gR'] = { ':Glance references<CR>', 'LSP: Go to references' },
+				['gI'] = { ':Glance implementations<CR>', 'LSP: Go to implementation' },
+				['gT'] = { ':Glance type_definitions<CR>', 'LSP: Go to type definition' },
+				['gC'] = { vim.lsp.buf.declaration, 'LSP: Go to to Declaration' },
 
-				['<leader>Li'] = { ':LspInfo<CR>', 'LSP: See [I]nfo' },
-				['<leader>Lr'] = { ':echo "Restarting LSP" | LspRestart<CR>', 'LSP: [R]estart' },
-				['<leader>Ll'] = { ':LspLog<CR>', 'LSP: See [L]ogs' },
-				['<leader>Lh'] = { toggle_inlay_hints, 'LSP: Toggle inlay [h]ints' },
+				['<leader>Li'] = { ':LspInfo<CR>', 'LSP: See info' },
+				['<leader>Lr'] = { ':echo "Restarting LSP" | LspRestart<CR>', 'LSP: Restart' },
+				['<leader>Ll'] = { ':LspLog<CR>', 'LSP: See logs' },
+				['<leader>Lh'] = { toggle_inlay_hints, 'LSP: Toggle inlay hints' },
 			},
 		}
 

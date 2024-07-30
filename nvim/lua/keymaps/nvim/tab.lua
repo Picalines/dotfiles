@@ -2,11 +2,11 @@ local keymap = require 'util.keymap'
 
 keymap.declare {
 	[{ 'n', silent = true }] = {
-		['<C-t>e'] = { ':tabnew<CR>', '[E]empty [t]ab' },
-		['<C-t>c'] = { ':tabclose<CR>', 'Close [t]ab' },
-		[']t'] = { ':tabnext<CR>', 'Next [t]ab' },
-		['[t'] = { ':tabprev<CR>', 'Prev [t]ab' },
-		['>t'] = { ':tabmove +<CR>', 'Move [t]ab right' },
-		['<t'] = { ':tabmove -<CR>', 'Move [t]ab left' },
+		['<C-t>e'] = { ':tabnew<CR>', 'Empty tab' },
+		['<C-t>c'] = { ':tabclose<CR>', 'Close tab' },
+		[']t'] = { ':tabnext<CR>', 'Next tab' },
+		['[t'] = { ':tabprev<CR>', 'Prev tab' },
+		['>t'] = { ':tabmove +<CR>', 'Move tab right' },
+		['<t'] = { ':tabmove -<CR>', 'Move tab left' },
 	},
 }

@@ -3,9 +3,9 @@ local autocmd = require 'util.autocmd'
 
 keymap.declare {
 	[{ 'n', silent = true }] = {
-		[']q'] = { ':cnext<CR>zz', 'Go to next [q]uickfix item' },
-		['[q'] = { ':cprevious<CR>zz', 'Go to previous [q]uickfix item' },
-		['<leader>Q'] = { ':copen<CR>', '[O]pen [q]uickfix list' },
+		[']q'] = { ':cnext<CR>zz', 'Go to next quickfix item' },
+		['[q'] = { ':cprevious<CR>zz', 'Go to previous quickfix item' },
+		['<leader>Q'] = { ':copen<CR>', 'Open quickfix list' },
 	},
 }
 
@@ -14,9 +14,9 @@ autocmd.per_filetype('qf', function(opts)
 
 	keymap.declare {
 		[{ 'n', silent = true, buffer = opts.buf }] = {
-			[{ 'q', '<leader>Q' }] = { ':cclose<CR>', '[C]lose [q]uickfix list' },
-			['n'] = { ':cnewer<CR>', 'Go to newer [q]uickfix list' },
-			['p'] = { ':colder<CR>', 'Go to older [q]uickfix list' },
+			[{ 'q', '<leader>Q' }] = { ':cclose<CR>', 'Close quickfix list' },
+			['n'] = { ':cnewer<CR>', 'Go to newer quickfix list' },
+			['p'] = { ':colder<CR>', 'Go to older quickfix list' },
 
 			['J'] = ':cnext<CR>zz<C-w>w',
 			['K'] = ':cprev<CR>zz<C-w>w',

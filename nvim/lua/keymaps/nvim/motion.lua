@@ -39,7 +39,7 @@ keymap.declare {
 	},
 
 	n = {
-		['[d'] = { func.curry(vim.diagnostic.jump, { count = -1, float = false }), 'Go to previous [d]iagnostic' },
-		[']d'] = { func.curry(vim.diagnostic.jump, { count = 1, float = false }), 'Go to next [d]iagnostic' },
+		['[d'] = { func.curry(vim.diagnostic.jump, { count = -1, float = false }), 'Go to previous diagnostic' },
+		[']d'] = { func.curry(vim.diagnostic.jump, { count = 1, float = false }), 'Go to next diagnostic' },
 	},
 }

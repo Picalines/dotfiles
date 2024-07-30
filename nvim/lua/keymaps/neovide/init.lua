@@ -19,6 +19,6 @@ keymap.declare {
 		['<C-+>'] = { ':ZoomIn<CR>', 'Increase font size' },
 		['<C-_>'] = { ':ZoomOut<CR>', 'Decrease font size' },
 
-		['<leader><leader>f'] = { toggle_fullscreen, 'Toggle [F]ullscreen' },
+		['<leader><leader>f'] = { toggle_fullscreen, 'Toggle Fullscreen' },
 	},
 }
