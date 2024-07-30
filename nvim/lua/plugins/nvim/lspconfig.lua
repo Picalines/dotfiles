@@ -68,29 +68,25 @@ return {
 			print('Inlay hints: ' .. (is_enabled and 'on' or 'off'))
 		end
 
-		local function declare_lsp_keymaps(_, bufnr)
-			keymap.declare {
-				[{ 'n', buffer = bufnr, silent = true }] = {
-					['<leader>Li'] = { ':LspInfo<CR>', 'See [L]sp [I]nfo' },
-					['<leader>Lr'] = { ':echo "Restarting LSP" | LspRestart<CR>', '[L]sp [R]estart' },
-					['<leader>Ll'] = { ':LspLog<CR>', 'See [L]sp [L]og' },
-					['<leader>Lh'] = { toggle_inlay_hints, 'LSP: Toggle inlay [H]ints' },
+		keymap.declare {
+			[{ 'n', silent = true }] = {
+				['K'] = { vim.lsp.buf.hover, 'LSP: Hover' },
 
-					['<leader>R'] = { vim.lsp.buf.rename, 'LSP: [R]ename' },
-					['<leader>A'] = { vim.lsp.buf.code_action, 'LSP: Code [A]ction' },
+				['<leader>R'] = { vim.lsp.buf.rename, 'LSP: [R]ename' },
+				['<leader>A'] = { vim.lsp.buf.code_action, 'LSP: Code [A]ction' },
 
-					['gD'] = { ':Glance definitions<CR>', 'LSP: [G]o to [D]efinition' },
-					['gR'] = { ':Glance references<CR>', 'LSP: [G]o to [R]eferences' },
-					['gI'] = { ':Glance implementations<CR>', 'LSP: [G]o to [I]mplementation' },
-					['gT'] = { ':Glance type_definitions<CR>', 'LSP: [G]o to [T]ype definition' },
-					-- ['gC'] = { vim.lsp.buf.declaration, 'LSP: [G]o to to De[c]laration' },
-					-- ['<leader>fSd'] = { ts_builtin.lsp_document_symbols, '[F]ind [D]ocument [S]ymbols' },
-					-- ['<leader>fSw'] = { ts_builtin.lsp_dynamic_workspace_symbols, '[F]ind [W]orkspace [S]ymbols' },
+				['gD'] = { ':Glance definitions<CR>', 'LSP: [G]o to [D]efinition' },
+				['gR'] = { ':Glance references<CR>', 'LSP: [G]o to [R]eferences' },
+				['gI'] = { ':Glance implementations<CR>', 'LSP: [G]o to [I]mplementation' },
+				['gT'] = { ':Glance type_definitions<CR>', 'LSP: [G]o to [T]ype definition' },
+				['gC'] = { vim.lsp.buf.declaration, 'LSP: [G]o to to De[c]laration' },
 
-					['K'] = { vim.lsp.buf.hover, 'LSP: Hover' },
-				},
-			}
-		end
+				['<leader>Li'] = { ':LspInfo<CR>', 'LSP: See [I]nfo' },
+				['<leader>Lr'] = { ':echo "Restarting LSP" | LspRestart<CR>', 'LSP: [R]estart' },
+				['<leader>Ll'] = { ':LspLog<CR>', 'LSP: See [L]ogs' },
+				['<leader>Lh'] = { toggle_inlay_hints, 'LSP: Toggle inlay [h]ints' },
+			},
+		}
 
 		local lspconfig = require 'lspconfig'
 		local mason_lspconfig = require 'mason-lspconfig'
@@ -118,7 +114,7 @@ return {
 			local custom_on_attach = server_config.on_attach or func.noop
 
 			local function on_attach(client, bufnr)
-				declare_lsp_keymaps(client, bufnr)
+				-- declare_lsp_keymaps(client, bufnr)
 				pcall(custom_on_attach, client, bufnr)
 			end
 
