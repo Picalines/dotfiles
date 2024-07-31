@@ -3,52 +3,71 @@ return {
 
 	event = { 'BufReadPre', 'BufNewFile' },
 
-	opts = {
-		formatters_by_ft = {
-			lua = { 'stylua' },
-			python = { 'isort', 'black' },
-
-			javascript = { { 'prettierd', 'prettier' } },
-			javascriptreact = { { 'prettierd', 'prettier' } },
-			typescript = { { 'prettierd', 'prettier' } },
-			typescriptreact = { { 'prettierd', 'prettier' } },
-			json = { { 'prettierd', 'prettier' } },
-			html = { { 'prettierd', 'prettier' } },
-			css = { { 'prettierd', 'prettier' } },
-			svelte = { { 'prettierd', 'prettier' } },
-			vue = { { 'prettierd', 'prettier' } },
-			graphql = { { 'prettierd', 'prettier' } },
-
-			go = { 'gofmt' },
-			cs = { 'csharpier' },
-		},
-
-		notify_on_error = true,
-
-		formatters = {
-			isort = {
-				command = 'isort',
-				args = {
-					'--profile',
-					'black',
-					'--quiet',
-					'-',
-				},
-			},
-		},
-	},
-
-	config = function(_, opts)
+	config = function()
 		local keymap = require 'util.keymap'
+		local tbl = require 'util.table'
 		local conform = require 'conform'
 
-		conform.setup(opts)
+		keymap.declare {
+			[{ 'n', silent = true }] = {
+				['<leader>F'] = { ':Format<CR>', 'Format buffer' },
+			},
 
-		vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+			[{ 'v', silent = true }] = {
+				['<leader>F'] = { ':Format<CR>', 'Format selection' },
+			},
+		}
 
-		local function buf_format(range)
-			conform.format { async = true, lsp_fallback = true, range = range }
+		local function is_formatter_available(formatter, bufnr)
+			return conform.get_formatter_info(formatter, bufnr).available
 		end
+
+		local function only_first(formatters)
+			return tbl.override(formatters, { stop_after_first = true })
+		end
+
+		local function biome_or_prettier(bufnr)
+			if is_formatter_available('biome', bufnr) then
+				return { 'biome' }
+			end
+
+			return only_first { 'prettierd', 'prettier' }
+		end
+
+		conform.setup {
+			formatters_by_ft = {
+				lua = { 'stylua' },
+				python = { 'isort', 'black' },
+
+				javascript = biome_or_prettier,
+				javascriptreact = biome_or_prettier,
+				typescript = biome_or_prettier,
+				typescriptreact = biome_or_prettier,
+				json = biome_or_prettier,
+				html = biome_or_prettier,
+				css = biome_or_prettier,
+				svelte = biome_or_prettier,
+				vue = biome_or_prettier,
+				graphql = biome_or_prettier,
+
+				go = { 'gofmt' },
+				cs = { 'csharpier' },
+			},
+
+			notify_on_error = true,
+
+			formatters = {
+				isort = {
+					command = 'isort',
+					args = {
+						'--profile',
+						'black',
+						'--quiet',
+						'-',
+					},
+				},
+			},
+		}
 
 		vim.api.nvim_create_user_command('Format', function(args)
 			local range = nil
@@ -61,13 +80,13 @@ return {
 				}
 			end
 
-			buf_format(range)
+			conform.format {
+				async = true,
+				lsp_fallback = true,
+				range = range,
+			}
 		end, { range = true })
 
-		keymap.declare {
-			[{ 'n', 'v', silent = true }] = {
-				['<leader>F'] = { ':Format<CR>', 'Format current buffer' },
-			},
-		}
+		vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 	end,
 }
