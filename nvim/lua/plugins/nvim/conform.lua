@@ -7,6 +7,7 @@ return {
 		local keymap = require 'util.keymap'
 		local tbl = require 'util.table'
 		local conform = require 'conform'
+		local conform_util = require 'conform.util'
 
 		keymap.declare {
 			[{ 'n', silent = true }] = {
@@ -18,21 +19,15 @@ return {
 			},
 		}
 
-		local function is_formatter_available(formatter, bufnr)
-			return conform.get_formatter_info(formatter, bufnr).available
-		end
+		-- local function is_formatter_available(formatter, bufnr)
+		-- 	return conform.get_formatter_info(formatter, bufnr).available
+		-- end
 
 		local function only_first(formatters)
 			return tbl.override(formatters, { stop_after_first = true })
 		end
 
-		local function biome_or_prettier(bufnr)
-			if is_formatter_available('biome', bufnr) then
-				return { 'biome' }
-			end
-
-			return only_first { 'prettierd', 'prettier' }
-		end
+		local biome_or_prettier = only_first { 'biome', 'prettierd', 'prettier' }
 
 		conform.setup {
 			formatters_by_ft = {
@@ -65,6 +60,11 @@ return {
 						'--quiet',
 						'-',
 					},
+				},
+
+				biome = {
+					cwd = conform_util.root_file { 'biome.json' },
+					require_cwd = true,
 				},
 			},
 		}
