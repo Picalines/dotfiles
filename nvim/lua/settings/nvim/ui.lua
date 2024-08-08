@@ -14,6 +14,8 @@ vim.o.wrap = false
 vim.o.breakindent = true
 
 vim.o.fillchars = 'eob: '
+vim.o.showbreak = '󱞩'
+vim.o.linebreak = true
 
 vim.opt.scrolloff = 8
 
