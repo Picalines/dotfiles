@@ -17,6 +17,8 @@ vim.o.fillchars = 'eob: '
 vim.o.showbreak = '󱞩'
 vim.o.linebreak = true
 
+vim.o.matchpairs = vim.o.matchpairs .. ',<:>'
+
 vim.opt.scrolloff = 8
 
 autocmd.per_filetype('help', func.cmd 'wincmd L')
