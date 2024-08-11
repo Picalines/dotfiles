@@ -34,7 +34,7 @@ keymap.declare {
 		['<C-h>'] = '<Left>',
 
 		['<C-b>'] = '<C-o>b',
-		['<C-e>'] = '<Left><C-o>e<Right>',
+		['<C-e>'] = '<Esc><Cmd>norm! e<CR>a',
 		['<C-w>'] = '<C-o>w',
 	},
 
