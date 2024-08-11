@@ -19,6 +19,8 @@ vim.o.linebreak = true
 
 vim.o.matchpairs = vim.o.matchpairs .. ',<:>'
 
-vim.opt.scrolloff = 8
+vim.o.scrolloff = 8
+
+vim.o.equalalways = true
 
 autocmd.per_filetype('help', func.cmd 'wincmd L')
