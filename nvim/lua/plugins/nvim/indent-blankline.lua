@@ -10,7 +10,7 @@ return {
 	opts = {
 		indent = {
 			char = '┊',
-			highlight = { 'Whitespace' },
+			highlight = { 'FoldColumn' },
 		},
 
 		scope = {
