@@ -135,9 +135,9 @@ return {
 		}
 
 		keymap.declare {
-			n = picker_maps,
+			[{ 'n' }] = picker_maps,
 
-			v = tbl.map_pairs(picker_maps, function(lhs, rhs)
+			[{ 'v' }] = tbl.map_pairs(picker_maps, function(lhs, rhs)
 				local v_rhs = tbl.copy(rhs)
 				v_rhs[1] = pick_visual(v_rhs[1])
 				return lhs, v_rhs

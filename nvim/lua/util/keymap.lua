@@ -1,53 +1,61 @@
+local tbl = require 'util.table'
+
 local M = {}
 
-function M.declare(declaration)
-	local base_opts = declaration.opts or {}
-	declaration.opts = nil
+---@class keymap_info
+---@field modes string[]
+---@field opts table
 
-	for section_key, keymaps in pairs(declaration) do
-		local modes = {}
-		local section_opts = {}
+---@param decl_table table
+---@param _info? keymap_info
+function M.declare(decl_table, _info)
+	if _info == nil then
+		_info = { modes = {}, opts = {} }
+	end
 
-		if type(section_key) ~= 'table' then
-			section_key = { section_key }
-		end
+	for key, value in pairs(decl_table) do
+		if type(key) == 'string' then -- mapping
+			local lhs = key
+			local rhs, local_opts
 
-		for opt_key, opt_value in pairs(section_key) do
-			if type(opt_key) == 'string' then
-				section_opts[opt_key] = opt_value
+			if type(value) == 'table' then
+				rhs = value[1]
+				local_opts = tbl.copy_deep(value)
+				local_opts.desc = value.desc or value[2]
+				local_opts[1] = nil
+				local_opts[2] = nil
 			else
-				modes[opt_key] = opt_value
-			end
-		end
-
-		for lhs, keymap in pairs(keymaps) do
-			local rhs, map_opts
-
-			if type(keymap) == 'table' then
-				rhs = keymap[1]
-				map_opts = keymap
-				map_opts.desc = map_opts[2] or map_opts.desc
-				map_opts[1] = nil
-				map_opts[2] = nil
-			else
-				rhs = keymap
-				map_opts = {}
+				rhs = value
+				local_opts = {}
 			end
 
-			local opts = vim.tbl_extend('force', base_opts, section_opts, map_opts)
-
-			if type(lhs) ~= 'table' then
-				lhs = { lhs }
+			local modes = _info.modes
+			if #modes == 0 then
+				modes = { 'n' }
 			end
 
-			for _, lhs_i in ipairs(lhs) do
-				local ok = pcall(vim.keymap.set, modes, lhs_i, rhs, opts)
-				if not ok then
-					local lhs_s = tostring(lhs_i)
-					local modes_s = table.concat(modes, ',')
-					print('failed map `' .. lhs_s .. '` in ' .. modes_s)
+			local opts = tbl.override_deep(_info.opts, local_opts)
+
+			local ok = pcall(vim.keymap.set, modes, lhs, rhs, opts)
+			if not ok then
+				print('keymap: failed to map`' .. lhs .. '`')
+			end
+		elseif type(key) == 'table' and type(value) == 'table' then
+			local group_modes = {}
+			local group_opts = {}
+
+			for s_key, s_value in pairs(key) do
+				if type(s_key) == 'number' then
+					group_modes[#group_modes + 1] = s_value
+				elseif type(s_key) == 'string' then
+					group_opts[s_key] = s_value
 				end
 			end
+
+			M.declare(value, {
+				modes = tbl.join(_info.modes, group_modes),
+				opts = tbl.override_deep(_info.opts, group_opts),
+			})
 		end
 	end
 end

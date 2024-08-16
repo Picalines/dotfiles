@@ -9,7 +9,7 @@ return {
 		require('which-key').setup(opts)
 
 		keymap.declare {
-			n = {
+			[{ 'n' }] = {
 				['<leader>?'] = { ':WhichKey<CR>', 'Keymap help' },
 			},
 		}

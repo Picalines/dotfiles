@@ -44,16 +44,14 @@ return {
 		require('silicon').setup(opts)
 
 		keymap.declare {
-			opts = {
-				silent = true,
-			},
+			[{ silent = true }] = {
+				[{ 'v' }] = {
+					['<leader><leader>s'] = { ':Silicon<CR>', 'Screenshot selected lines' },
+				},
 
-			v = {
-				['<leader><leader>s'] = { ':Silicon<CR>', 'Screenshot selected lines' },
-			},
-
-			n = {
-				['<leader><leader>s'] = { 'maggVG:Silicon<CR><esc>`a', 'Screenshot buffer' },
+				[{ 'n' }] = {
+					['<leader><leader>s'] = { 'maggVG:Silicon<CR><esc>`a', 'Screenshot buffer' },
+				},
 			},
 		}
 	end,

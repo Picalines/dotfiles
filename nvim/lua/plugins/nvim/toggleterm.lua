@@ -120,29 +120,24 @@ return {
 			pattern = { 'term://*' },
 			callback = function(event)
 				keymap.declare {
-					opts = {
-						silent = true,
-						buffer = event.buf,
-						remap = true,
-						nowait = true,
-					},
+					[{ buffer = event.buf, silent = true, remap = true, nowait = true }] = {
+						[{ 'n' }] = {
+							['<Esc>'] = { '<leader>t', 'Exit terminal' },
+							['<C-c>'] = { send_sigterm_and_reopen, 'Send SIGTERM' },
+						},
 
-					n = {
-						['<Esc>'] = { '<leader>t', 'Exit terminal' },
-						['<C-c>'] = { send_sigterm_and_reopen, 'Send SIGTERM' },
-					},
+						[{ 't' }] = {
+							['<Esc>'] = { [[<C-\><C-n>]], 'Exit terminal mode' },
+							['<C-[>'] = { func.curry(send_keys, ''), 'Send <Esc> to terminal' },
+							['<C-p>'] = { [[<C-\><C-n>pi]], '[P]aste' },
+						},
 
-					t = {
-						['<Esc>'] = { [[<C-\><C-n>]], 'Exit terminal mode' },
-						['<C-[>'] = { func.curry(send_keys, ''), 'Send <Esc> to terminal' },
-						['<C-p>'] = { [[<C-\><C-n>pi]], '[P]aste' },
-					},
+						[{ 'n', 't' }] = {
+							['<C-t>'] = { open_new_term, 'Open new terminal session' },
 
-					[{ 'n', 't' }] = {
-						['<C-t>'] = { open_new_term, 'Open new terminal session' },
-
-						['<C-l>'] = { func.curry(switch_term, 'next'), 'Next terminal' },
-						['<C-h>'] = { func.curry(switch_term, 'prev'), 'Previous terminal' },
+							['<C-l>'] = { func.curry(switch_term, 'next'), 'Next terminal' },
+							['<C-h>'] = { func.curry(switch_term, 'prev'), 'Previous terminal' },
+						},
 					},
 				}
 			end,

@@ -5,10 +5,6 @@ local function vscode_call(action)
 end
 
 keymap.declare {
-	opts = {
-		silent = true,
-	},
-
 	[{ 'n', 'v' }] = {
 		['<Space>'] = '<Nop>',
 
@@ -23,18 +19,18 @@ keymap.declare {
 		['gl'] = '$',
 	},
 
-	i = {
+	[{ 'i' }] = {
 		['<C-j>'] = '<Down>',
 		['<C-k>'] = '<Up>',
 		['<C-l>'] = '<Right>',
 		['<C-h>'] = '<Left>',
 	},
 
-	v = {
+	[{ 'v' }] = {
 		['p'] = '"_dP',
 	},
 
-	n = {
+	[{ 'n' }] = {
 		['<C-j>'] = vscode_call 'workbench.action.navigateDown',
 		['<C-k>'] = vscode_call 'workbench.action.navigateUp',
 		['<C-h>'] = vscode_call 'workbench.action.navigateLeft',

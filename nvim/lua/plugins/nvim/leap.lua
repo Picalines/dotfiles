@@ -25,7 +25,7 @@ return {
 				['gs'] = { '<Plug>(leap-from-window)', 'Leap global' },
 			},
 
-			v = {
+			[{ 'v' }] = {
 				['x'] = '<Plug>(leap-forward)',
 				['X'] = '<Plug>(leap-backward)',
 			},

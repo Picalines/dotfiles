@@ -9,10 +9,6 @@ keymap.declare {
 }
 
 keymap.declare {
-	opts = {
-		silent = true,
-	},
-
 	[{ 'n', 'v' }] = {
 		['<Space>'] = '<Nop>',
 
@@ -27,18 +23,7 @@ keymap.declare {
 		['gl'] = '$',
 	},
 
-	i = {
-		['<C-j>'] = '<Down>',
-		['<C-k>'] = '<Up>',
-		['<C-l>'] = '<Right>',
-		['<C-h>'] = '<Left>',
-
-		['<C-b>'] = '<C-o>b',
-		['<C-e>'] = '<Esc><Cmd>norm! e<CR>a',
-		['<C-w>'] = '<C-o>w',
-	},
-
-	n = {
+	[{ 'n', silent = true }] = {
 		['[d'] = { func.curry(vim.diagnostic.jump, { count = -1, float = false }), 'Go to previous diagnostic' },
 		[']d'] = { func.curry(vim.diagnostic.jump, { count = 1, float = false }), 'Go to next diagnostic' },
 	},

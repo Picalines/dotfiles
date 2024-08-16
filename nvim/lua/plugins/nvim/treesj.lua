@@ -16,7 +16,7 @@ return {
 		treesj.setup(opts)
 
 		keymap.declare {
-			n = {
+			[{ 'n' }] = {
 				['cI'] = { treesj.toggle, 'Change indentation' },
 			},
 		}
