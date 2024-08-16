@@ -7,17 +7,14 @@ return {
 		local tbl = require 'util.table'
 		local keymap = require 'util.keymap'
 
-		local flatten = tbl.flatten
-		local flat_map = tbl.flat_map
-
 		local function declare_select(part_keys, declarations)
 			return {
 				enable = true,
 				lookahead = true,
-				keymaps = flat_map(declarations, function(declaration, obj_key)
+				keymaps = tbl.flat_map(declarations, function(obj_key, declaration)
 					local obj_name = declaration[1]
 					local obj_parts = declaration[2]
-					return flat_map(obj_parts, function(part)
+					return tbl.flat_map(obj_parts, function(_, part)
 						local map = part_keys[part] .. obj_key
 						local capture_group = obj_name .. '.' .. part
 						return { [map] = capture_group }
@@ -27,11 +24,11 @@ return {
 		end
 
 		local function declare_swap(swap_keys, declarations)
-			return flatten {
+			return tbl.flatten {
 				enable = true,
-				flat_map({ 'next', 'previous' }, function(dir)
+				tbl.flat_map({ 'next', 'previous' }, function(_, dir)
 					return {
-						['swap_' .. dir] = flat_map(declarations, function(capture_group, obj_key)
+						['swap_' .. dir] = tbl.flat_map(declarations, function(obj_key, capture_group)
 							return { [swap_keys[dir] .. obj_key] = capture_group }
 						end),
 					}
@@ -40,13 +37,13 @@ return {
 		end
 
 		local function declare_move(jump_keys, declarations)
-			return flatten {
+			return tbl.flatten {
 				enable = true,
 				set_jumps = true,
-				flat_map({ 'next', 'previous' }, function(dir)
-					return flat_map({ 'start', 'end' }, function(range, range_i)
+				tbl.flat_map({ 'next', 'previous' }, function(_, dir)
+					return tbl.flat_map({ 'start', 'end' }, function(range_i, range)
 						return {
-							['goto_' .. dir .. '_' .. range] = flat_map(declarations, function(capture_group, obj_keys)
+							['goto_' .. dir .. '_' .. range] = tbl.flat_map(declarations, function(obj_keys, capture_group)
 								return { [jump_keys[dir] .. obj_keys[range_i]] = capture_group }
 							end),
 						}

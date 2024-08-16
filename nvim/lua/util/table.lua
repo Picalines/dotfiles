@@ -1,27 +1,16 @@
 local M = {}
 
----@generic T
----@param value T
+---@generic K, T
 ---@param length integer
----@return T[]
-function M.fill(value, length)
-	local array = {}
-	for i = 1, length do
-		array[i] = value
-	end
-	return array
-end
-
----@generic T
----@param length integer
----@param func fun(index: integer): T
----@return T[]
+---@param func fun(index: integer): K, T
+---@return table<K, T>
 function M.generate(length, func)
-	local array = {}
+	local tbl = {}
 	for i = 1, length do
-		array[i] = func(i)
+		local key, value = func(i)
+		tbl[key] = value
 	end
-	return array
+	return tbl
 end
 
 ---@generic T
@@ -80,11 +69,11 @@ end
 
 ---@generic K, T
 ---@param table table<K, T>
----@param predicate fun(value: T, key: K): boolean
+---@param predicate fun(key: K, value: T): boolean
 ---@return K | nil, T | nil
 function M.find(table, predicate)
 	for key, value in pairs(table) do
-		if predicate(value, key) then
+		if predicate(key, value) then
 			return key, value
 		end
 	end
@@ -105,53 +94,28 @@ function M.contains_value(tbl, value)
 	return false
 end
 
----@generic K, T, U
----@param tbl table<K, T>
----@param func fun(value: T, key: K): U
----@return table<K, U>
-function M.map(tbl, func)
-	local mapped_tbl = {}
-	for k, v in pairs(tbl) do
-		mapped_tbl[k] = func(v, k)
-	end
-	return mapped_tbl
-end
-
---- TODO: split to array.lua and table.lua
 ---@generic K, T, KF, TF
 ---@param tbl table<K, T>
 ---@param func fun(key: K, value: T): KF, TF
 ---@return table<KF, TF>
-function M.map_pairs(tbl, func)
+function M.map(tbl, func)
 	local mapped_tbl = {}
-	for k, v in pairs(tbl) do
-		local kf, vf = func(k, v)
-		mapped_tbl[kf] = vf
+	for key, value in pairs(tbl) do
+		local m_key, m_value = func(key, value)
+		mapped_tbl[m_key] = m_value
 	end
 	return mapped_tbl
 end
 
----@param tbl table
----@param key any
----@param value any
-function M.set_or_append(tbl, key, value)
-	if type(key) == 'number' then
-		table.insert(tbl, value)
-	else
-		tbl[key] = value
-	end
-end
-
 ---@generic KS, KR, VS, VR
 ---@param tbl table<KS, VS>
----@param func fun(value: VS, key: KS): table<KR, VR>
+---@param func fun(key: KS, value: VS): table<KR, VR>
 ---@return table<KR, VR>
 function M.flat_map(tbl, func)
 	local mapped_tbl = {}
-	for k, v in pairs(tbl) do
-		local t = func(v, k)
-		for tk, tv in pairs(t) do
-			M.set_or_append(mapped_tbl, tk, tv)
+	for key, value in pairs(tbl) do
+		for m_key, m_value in pairs(func(key, value)) do
+			mapped_tbl[m_key] = m_value
 		end
 	end
 	return mapped_tbl
@@ -161,13 +125,13 @@ end
 ---@return table
 function M.flatten(tbl)
 	local flattened_tbl = {}
-	for k, v in pairs(tbl) do
-		if type(k) == 'number' and type(v) == 'table' then
-			for kk, vv in pairs(v) do
-				flattened_tbl[kk] = vv
+	for key, value in pairs(tbl) do
+		if type(key) == 'number' and type(value) == 'table' then
+			for i_key, i_value in pairs(value) do
+				flattened_tbl[i_key] = i_value
 			end
 		else
-			flattened_tbl[k] = v
+			flattened_tbl[key] = value
 		end
 	end
 	return flattened_tbl
@@ -175,16 +139,16 @@ end
 
 ---@generic K, T
 ---@param tbl table<K, T>
----@param keep_predicate fun(value: T, key: K): boolean
+---@param keep_predicate fun(key: K, value: T): boolean
 ---@return table<K, T>
 function M.filter(tbl, keep_predicate)
-	local filtered_tbl = {}
-	for k, v in pairs(tbl) do
-		if keep_predicate(v, k) then
-			M.set_or_append(filtered_tbl, k, v)
+	local filtered = {}
+	for key, value in pairs(tbl) do
+		if keep_predicate(key, value) then
+			filtered[key] = value
 		end
 	end
-	return filtered_tbl
+	return filtered
 end
 
 ---@generic K, V
@@ -192,11 +156,9 @@ end
 ---@return table<V, integer>
 function M.count_values(table)
 	local counts = {}
-
 	for _, value in pairs(table) do
 		counts[value] = (counts[value] or 0) + 1
 	end
-
 	return counts
 end
 
@@ -212,36 +174,6 @@ end
 ---@return table<K, T>
 function M.override_deep(...)
 	return vim.tbl_deep_extend('force', ...)
-end
-
----@param ... table
----@return table
-function M.join(...)
-	local joined = {}
-	for _, tbl in pairs { ... } do
-		for k, v in pairs(tbl) do
-			M.set_or_append(joined, k, v)
-		end
-	end
-	return joined
-end
-
----@param array table
----@param separator any
----@return table
-function M.separate(array, separator)
-	if #array <= 1 then
-		return array
-	end
-
-	local separated = {}
-	for i = 1, #array - 1 do
-		table.insert(separated, array[i])
-		table.insert(separated, separator)
-	end
-
-	table.insert(separated, array[#array])
-	return separated
 end
 
 ---@generic K, V

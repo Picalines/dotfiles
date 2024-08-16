@@ -54,6 +54,7 @@ return {
 
 	config = function()
 		local keymap = require 'util.keymap'
+		local array = require 'util.array'
 		local tbl = require 'util.table'
 		local func = require 'util.func'
 		local persist = require 'util.persist'
@@ -101,7 +102,7 @@ return {
 		local default_handlers = {}
 
 		local function setup_server(server_name)
-			if tbl.contains_value(ignored_servers, server_name) then
+			if array.contains(ignored_servers, server_name) then
 				return
 			end
 

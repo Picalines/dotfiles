@@ -20,6 +20,7 @@ return {
 	},
 
 	config = function()
+		local array = require 'util.array'
 		local tbl = require 'util.table'
 		local func = require 'util.func'
 		local keymap = require 'util.keymap'
@@ -81,18 +82,18 @@ return {
 		local ignore_files = { '.gitignore', '.arcignore' }
 		local always_exclude = { '.git', 'node_modules', '{package,pnpm}-lock.json', '{dist,build}', '*.bundle.js', '.geodata' }
 
-		local rg_args = tbl.join(
+		local rg_args = array.concat(
 			{ '--hidden' },
-			tbl.flat_map(ignore_files, function(file)
+			array.flat_map(ignore_files, function(file)
 				return vim.fn.filereadable(file) and { '--ignore-file', file } or {}
 			end),
-			tbl.flat_map(always_exclude, function(path)
+			array.flat_map(always_exclude, function(path)
 				return { '-g', '!' .. path }
 			end)
 		)
 
 		local find_files = func.curry_opts(builtin.find_files, {
-			find_command = tbl.join({ 'rg', '--files' }, rg_args),
+			find_command = array.concat({ 'rg', '--files' }, rg_args),
 		})
 
 		local live_grep = func.curry_opts(builtin.live_grep, {
@@ -137,8 +138,8 @@ return {
 		keymap.declare {
 			[{ 'n' }] = picker_maps,
 
-			[{ 'v' }] = tbl.map_pairs(picker_maps, function(lhs, rhs)
-				local v_rhs = tbl.copy(rhs)
+			[{ 'v' }] = tbl.map(picker_maps, function(lhs, rhs)
+				local v_rhs = array.copy(rhs)
 				v_rhs[1] = pick_visual(v_rhs[1])
 				return lhs, v_rhs
 			end),

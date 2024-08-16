@@ -1,4 +1,5 @@
 local tbl = require 'util.table'
+local array = require 'util.array'
 
 local M = {}
 
@@ -53,7 +54,7 @@ function M.declare(decl_table, _info)
 			end
 
 			M.declare(value, {
-				modes = tbl.join(_info.modes, group_modes),
+				modes = array.concat(_info.modes, group_modes),
 				opts = tbl.override_deep(_info.opts, group_opts),
 			})
 		end

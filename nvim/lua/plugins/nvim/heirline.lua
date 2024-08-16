@@ -12,6 +12,7 @@ return {
 	event = 'UiEnter',
 
 	config = function()
+		local array = require 'util.array'
 		local tbl = require 'util.table'
 		local hl = require 'util.highlight'
 		local h_util = require 'heirline.utils'
@@ -173,7 +174,7 @@ return {
 		}
 
 		local function get_listed_buffers()
-			return tbl.filter(vim.api.nvim_list_bufs(), function(bufnr)
+			return array.filter(vim.api.nvim_list_bufs(), function(bufnr)
 				return vim.api.nvim_get_option_value('buflisted', { buf = bufnr })
 			end)
 		end
@@ -184,11 +185,11 @@ return {
 			local is_windows = vim.fn.has 'win32' == 1
 			local path_separator = not is_windows and '/' or '\\'
 
-			local prefixes = tbl.generate(#bufnrs, function()
+			local prefixes = array.generate(#bufnrs, function()
 				return {}
 			end)
 
-			local paths = tbl.map(bufnrs, function(bufnr)
+			local paths = array.map(bufnrs, function(bufnr)
 				return vim.fn.reverse(vim.split(vim.api.nvim_buf_get_name(bufnr), path_separator))
 			end)
 
@@ -207,7 +208,7 @@ return {
 				end
 			end
 
-			return tbl.map(prefixes, function(path)
+			return array.map(prefixes, function(path)
 				return table.concat(vim.fn.reverse(path), '/')
 			end)
 		end
@@ -224,7 +225,7 @@ return {
 					vim.o.showtabline = 1 -- only when #tabpages > 1
 				end
 
-				local bufnr_to_name = tbl.map_pairs(buflist_cache, function(_, bufnr)
+				local bufnr_to_name = tbl.map(buflist_cache, function(_, bufnr)
 					return bufnr, vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ':t')
 				end)
 
@@ -518,7 +519,7 @@ return {
 				local terms = require 'toggleterm.terminal'
 				local all_terminals = terms.get_all(true)
 
-				local current_index, _ = tbl.find(all_terminals, function(term)
+				local current_index = array.find_index(all_terminals, function(term)
 					return term:is_focused()
 				end)
 
@@ -592,7 +593,7 @@ return {
 			hl = { fg = 'search', bold = true },
 		}
 
-		local LeftStatusline = tbl.map({
+		local LeftStatusline = array.map({
 			ViMode,
 			MacroRec,
 			Git,
@@ -606,7 +607,7 @@ return {
 			return Append(component, Space, 'left')
 		end)
 
-		local RightStatusline = tbl.map({
+		local RightStatusline = array.map({
 			TerminalList,
 			LSPActive,
 			Ruler,

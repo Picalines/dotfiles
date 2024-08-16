@@ -1,6 +1,6 @@
 local lazy = require 'lazy'
 local app = require 'util.app'
-local tbl = require 'util.table'
+local array = require 'util.array'
 
 local lazy_modules = {}
 
@@ -23,6 +23,6 @@ app.switch {
 	end,
 }
 
-lazy.setup(tbl.map(lazy_modules, function(module)
+lazy.setup(array.map(lazy_modules, function(module)
 	return { import = module }
 end))
