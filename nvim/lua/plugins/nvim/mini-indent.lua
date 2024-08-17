@@ -34,7 +34,7 @@ return {
 
 		vim.api.nvim_set_hl(0, 'MiniIndentscopeSymbol', { link = 'Whitespace' })
 
-		autocmd.per_filetype({ 'help' }, function(args)
+		autocmd.per_filetype({ 'help', 'neo-tree', 'lazy' }, function(args)
 			vim.b[args.buf].miniindentscope_disable = true
 		end)
 	end,
