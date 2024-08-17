@@ -1,8 +1,6 @@
 return {
 	'rebelot/heirline.nvim',
 
-	enabled = true, -- TODO: replace cokeline & lualine
-
 	dependencies = {
 		'kyazdani42/nvim-web-devicons',
 
