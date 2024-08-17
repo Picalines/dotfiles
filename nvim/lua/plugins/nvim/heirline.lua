@@ -12,10 +12,11 @@ return {
 	event = 'UiEnter',
 
 	config = function()
-		local func = require 'util.func'
 		local array = require 'util.array'
-		local tbl = require 'util.table'
+		local func = require 'util.func'
 		local hl = require 'util.highlight'
+		local tbl = require 'util.table'
+
 		local h_util = require 'heirline.utils'
 		local h_conditions = require 'heirline.conditions'
 
