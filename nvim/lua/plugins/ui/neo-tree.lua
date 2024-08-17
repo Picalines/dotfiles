@@ -29,6 +29,7 @@ return {
 	},
 
 	config = function()
+		local app = require 'util.app'
 		local keymap = require 'util.keymap'
 		local func = require 'util.func'
 
@@ -217,7 +218,7 @@ return {
 				hijack_netrw_behavior = 'open_default',
 
 				-- temp fix, see https://github.com/nvim-neo-tree/neo-tree.nvim/issues/914
-				use_libuv_file_watcher = vim.fn.has 'win32' == 0,
+				use_libuv_file_watcher = app.os() ~= 'windows',
 				bind_to_cwd = true,
 
 				filtered_items = {

@@ -2,7 +2,9 @@ return {
 	'goolord/alpha-nvim',
 
 	config = function()
+		local app = require 'util.app'
 		local mathu = require 'util.math'
+
 		local alpha = require 'alpha'
 		local dashboard = require 'alpha.themes.dashboard'
 
@@ -23,7 +25,7 @@ return {
 			return dashboard.button(unpack(args))
 		end
 
-		local cd_path = (vim.fn.has 'win32' == 1) and '/' or '~'
+		local cd_path = app.os() == 'windows' and '/' or '~'
 
 		dashboard.section.buttons.val = {
 			button('e', '  explore', 'Neotree filesystem<CR>'),

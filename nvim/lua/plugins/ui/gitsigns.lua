@@ -1,4 +1,6 @@
-local is_arc = vim.fn.has 'win32' == 0 and vim.fn.executable 'arc' == 1
+local app = require 'util.app'
+
+local is_arc = app.os() ~= 'windows' and vim.fn.executable 'arc' == 1
 
 return {
 	not is_arc and 'lewis6991/gitsigns.nvim',

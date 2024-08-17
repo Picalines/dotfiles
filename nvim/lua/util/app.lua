@@ -18,4 +18,22 @@ function M.client()
 	return 'terminal'
 end
 
+---@alias os_id
+---| 'windows'
+---| 'macos'
+---| 'linux'
+
+---@return os_id
+function M.os()
+	if vim.fn.has 'win32' == 1 then
+		return 'windows'
+	end
+
+	if vim.fn.has 'macunix' == 1 then
+		return 'macos'
+	end
+
+	return 'linux'
+end
+
 return M

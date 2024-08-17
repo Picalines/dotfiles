@@ -1,5 +1,9 @@
+local app = require 'util.app'
+
 return {
 	'akinsho/toggleterm.nvim',
+
+	enabled = false, -- TODO: replace with terminal.nvim
 
 	keys = {
 		{ '<leader>t', desc = 'Toggle Terminal' },
@@ -25,7 +29,7 @@ return {
 		},
 
 		shell = function()
-			if vim.fn.has 'win32' == 1 then
+			if app.os() == 'windows' then
 				return 'powershell'
 			end
 

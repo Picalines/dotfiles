@@ -1,3 +1,5 @@
+local app = require 'util.app'
+
 return {
 	'nvim-telescope/telescope.nvim',
 
@@ -12,7 +14,7 @@ return {
 			'nvim-telescope/telescope-fzf-native.nvim',
 			build = 'make',
 			cond = function()
-				return vim.fn.has 'win32' == 0
+				return app.os() ~= 'windows'
 			end,
 		},
 

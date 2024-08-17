@@ -10,6 +10,7 @@ return {
 	event = 'UiEnter',
 
 	config = function()
+		local app = require 'util.app'
 		local array = require 'util.array'
 		local func = require 'util.func'
 		local hl = require 'util.highlight'
@@ -179,7 +180,7 @@ return {
 		local function compute_unique_prefixes(bufnrs)
 			-- "inspiration": https://github.com/willothy/nvim-cokeline/blob/adfd1eb87e0804b6b86126e03611db6f62bb2909/lua/cokeline/buffers.lua#L57
 
-			local is_windows = vim.fn.has 'win32' == 1
+			local is_windows = app.os() == 'windows'
 			local path_separator = not is_windows and '/' or '\\'
 
 			local prefixes = array.generate(#bufnrs, function()
