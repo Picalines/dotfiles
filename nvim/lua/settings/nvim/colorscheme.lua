@@ -7,4 +7,7 @@ local function load_colorscheme()
 end
 
 -- NOTE: all colorschemes should be loaded already.
-pcall(load_colorscheme)
+local ok, error = pcall(load_colorscheme)
+if not ok then
+	print('failed to load persisted colorscheme: ' .. vim.inspect(error))
+end
