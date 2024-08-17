@@ -34,7 +34,7 @@ return {
 	},
 
 	config = function(_, opts)
-		local tbl = require 'util.table'
+		local array = require 'util.array'
 		local func = require 'util.func'
 		local keymap = require 'util.keymap'
 
@@ -81,7 +81,7 @@ return {
 			end
 
 			local all_terminals = terminals.get_all(false)
-			local current_term_index, _ = tbl.find(all_terminals, function(t)
+			local current_term_index, _ = array.find_index(all_terminals, function(t)
 				return t.id == current_term_id
 			end)
 

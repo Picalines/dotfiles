@@ -1,15 +1,19 @@
 local app = require 'util.app'
 
-app.switch {
-	nvim = function()
-		require 'keymaps.nvim'
-	end,
+require 'keymaps.text-editing.insert'
+require 'keymaps.text-editing.motion'
+require 'keymaps.text-editing.visual'
 
-	neovide = function()
-		require 'keymaps.neovide'
-	end,
+if app.client() == 'vscode' then
+	require 'keymaps.ui.vscode'
+else
+	require 'keymaps.ui.buffer'
+	require 'keymaps.ui.colorscheme'
+	require 'keymaps.ui.quickfix'
+	require 'keymaps.ui.tab'
+	require 'keymaps.ui.window'
 
-	vscode = function()
-		require 'keymaps.vscode'
-	end,
-}
+	if app.client() == 'neovide' then
+		require 'keymaps.ui.neovide'
+	end
+end

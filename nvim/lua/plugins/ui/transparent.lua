@@ -1,6 +1,11 @@
 return {
 	'xiyaowong/transparent.nvim',
 
+	cond = function()
+		local app = require 'util.app'
+		return app.client() == 'terminal'
+	end,
+
 	config = function()
 		local transparent = require 'transparent'
 

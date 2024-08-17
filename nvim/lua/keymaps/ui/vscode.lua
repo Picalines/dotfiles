@@ -1,35 +1,10 @@
 local keymap = require 'util.keymap'
 
 local function vscode_call(action)
-	return ':lua require("vscode-neovim").call("' .. action .. '")<CR>'
+	return '<Cmd>lua require("vscode-neovim").call("' .. action .. '")<CR>'
 end
 
 keymap.declare {
-	[{ 'n', 'v' }] = {
-		['<Space>'] = '<Nop>',
-
-		['<C-u>'] = '<C-u>zz',
-		['<C-d>'] = '<C-d>zz',
-
-		['n'] = 'nzzzv',
-		['N'] = 'Nzzzv',
-
-		['gh'] = '^',
-		['gH'] = '0',
-		['gl'] = '$',
-	},
-
-	[{ 'i' }] = {
-		['<C-j>'] = '<Down>',
-		['<C-k>'] = '<Up>',
-		['<C-l>'] = '<Right>',
-		['<C-h>'] = '<Left>',
-	},
-
-	[{ 'v' }] = {
-		['p'] = '"_dP',
-	},
-
 	[{ 'n' }] = {
 		['<C-j>'] = vscode_call 'workbench.action.navigateDown',
 		['<C-k>'] = vscode_call 'workbench.action.navigateUp',
@@ -53,7 +28,7 @@ keymap.declare {
 		['<leader>fg'] = vscode_call 'workbench.action.findInFiles',
 		['<leader>f/'] = vscode_call 'actions.find',
 
-		['<leader>s'] = vscode_call 'workbench.action.files.save',
+		['<leader>w'] = vscode_call 'workbench.action.files.save',
 
 		['<C-t>e'] = vscode_call 'workbench.action.files.newUntitledFile',
 		['<C-t>c'] = vscode_call 'workbench.action.closeActiveEditor',

@@ -2,27 +2,35 @@ local lazy = require 'lazy'
 local app = require 'util.app'
 local array = require 'util.array'
 
-local lazy_modules = {}
+local client = app.client()
 
-local function add_module(module)
-	lazy_modules[#lazy_modules + 1] = module
-end
-
-app.switch {
-	nvim = function()
-		add_module 'plugins.nvim'
-		add_module 'plugins.nvim.colorschemes'
-	end,
-
-	vscode = function()
-		add_module 'plugins.vscode'
-	end,
-
-	terminal = function()
-		add_module 'plugins.terminal'
-	end,
+local client_modules = {
+	terminal = {
+		'colorschemes',
+		'lang-service',
+		'text-editing',
+		'treesitter',
+		'ui',
+	},
+	neovide = {},
+	vscode = {
+		'text-editing',
+		'treesitter',
+	},
 }
 
+local lazy_modules
+
+if client == 'vscode' then
+	lazy_modules = client_modules.vscode
+else
+	lazy_modules = client_modules.terminal
+
+	if client == 'neovide' then
+		lazy_modules = array.concat(lazy_modules, client_modules.neovide)
+	end
+end
+
 lazy.setup(array.map(lazy_modules, function(module)
-	return { import = module }
+	return { import = 'plugins.' .. module }
 end))
