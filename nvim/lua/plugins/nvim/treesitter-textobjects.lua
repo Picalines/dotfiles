@@ -52,7 +52,8 @@ return {
 			}
 		end
 
-		local ts_config = {
+		---@diagnostic disable-next-line: missing-fields
+		require('nvim-treesitter.configs').setup {
 			textobjects = {
 				select = declare_select({ outer = 'a', inner = 'i', lhs = '(', rhs = ')' }, {
 					['='] = { '@assignment', { 'outer', 'inner', 'lhs', 'rhs' } },
@@ -84,8 +85,6 @@ return {
 				}),
 			},
 		}
-
-		require('nvim-treesitter.configs').setup(ts_config)
 
 		local ts_repeat_move = require 'nvim-treesitter.textobjects.repeatable_move'
 
