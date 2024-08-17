@@ -1,14 +1,13 @@
-vim.o.clipboard = 'unnamedplus'
+vim.go.clipboard = 'unnamedplus'
 
-vim.o.hlsearch = false
-vim.o.incsearch = true
+vim.go.hlsearch = false
+vim.go.incsearch = true
+vim.go.ignorecase = true
+vim.go.smartcase = true
 
-vim.o.undofile = true
+vim.go.undofile = true
 
-vim.o.completeopt = 'menuone,noselect'
-
-vim.o.ignorecase = true
-vim.o.smartcase = true
+vim.go.completeopt = 'menuone,noselect'
 
 require 'settings.nvim.colorscheme'
 require 'settings.nvim.editing'

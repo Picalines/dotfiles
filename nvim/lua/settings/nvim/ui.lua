@@ -1,26 +1,23 @@
 local autocmd = require 'util.autocmd'
 local func = require 'util.func'
 
-vim.o.mouse = 'a'
+vim.go.mouse = 'a'
+vim.go.termguicolors = true
+vim.go.equalalways = true
 
-vim.o.termguicolors = true
+vim.go.wrap = false
+vim.go.breakindent = true
 
-vim.o.number = true
-vim.o.relativenumber = true
+vim.go.matchpairs = vim.o.matchpairs .. ',<:>'
 
-vim.wo.signcolumn = 'yes'
+vim.wo.scrolloff = 8
 
-vim.o.wrap = false
-vim.o.breakindent = true
+vim.go.number = true
+vim.go.relativenumber = true
+vim.go.signcolumn = 'yes'
 
-vim.o.fillchars = 'eob: '
-vim.o.showbreak = '󱞩'
-vim.o.linebreak = true
-
-vim.o.matchpairs = vim.o.matchpairs .. ',<:>'
-
-vim.o.scrolloff = 8
-
-vim.o.equalalways = true
+vim.go.fillchars = 'eob: '
+vim.go.showbreak = '󱞩'
+vim.go.linebreak = true
 
 autocmd.per_filetype('help', func.cmd 'wincmd L')
