@@ -41,7 +41,7 @@ return {
 		indent = { enable = true },
 
 		incremental_selection = {
-			enable = true,
+			enable = false,
 			keymaps = {
 				init_selection = 'vn',
 				node_incremental = 'n',

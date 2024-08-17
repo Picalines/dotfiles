@@ -5,7 +5,6 @@ return {
 
 	config = function()
 		local tbl = require 'util.table'
-		local keymap = require 'util.keymap'
 
 		local function declare_select(part_keys, declarations)
 			return {
@@ -83,22 +82,6 @@ return {
 					[{ 'a', 'A' }] = '@parameter.inner',
 					[{ 'p', 'P' }] = '@property.inner',
 				}),
-			},
-		}
-
-		local ts_repeat_move = require 'nvim-treesitter.textobjects.repeatable_move'
-
-		keymap.declare {
-			[{ 'n', 'x', 'o' }] = {
-				[';'] = ts_repeat_move.repeat_last_move,
-				[','] = ts_repeat_move.repeat_last_move_opposite,
-			},
-
-			[{ 'n', 'x', 'o', expr = true }] = {
-				['f'] = ts_repeat_move.builtin_f_expr,
-				['F'] = ts_repeat_move.builtin_F_expr,
-				['t'] = ts_repeat_move.builtin_t_expr,
-				['T'] = ts_repeat_move.builtin_T_expr,
 			},
 		}
 	end,
