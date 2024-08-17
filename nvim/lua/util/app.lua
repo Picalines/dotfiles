@@ -11,10 +11,12 @@ function M.switch(app_funcs)
 		end
 	end
 
-	app_funcs.nvim = app_funcs.nvim or func.noop
-	app_funcs.vscode = app_funcs.vscode or func.noop
-	app_funcs.neovide = app_funcs.neovide or func.noop
-	app_funcs.terminal = app_funcs.terminal or func.noop
+	app_funcs = func.default_opts(app_funcs, {
+		nvim = func.noop,
+		vscode = func.noop,
+		neovide = func.noop,
+		terminal = func.noop,
+	})
 
 	if vim.g.vscode then
 		app_funcs.vscode()

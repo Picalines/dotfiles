@@ -12,6 +12,7 @@ return {
 	event = 'UiEnter',
 
 	config = function()
+		local func = require 'util.func'
 		local array = require 'util.array'
 		local tbl = require 'util.table'
 		local hl = require 'util.highlight'
@@ -24,20 +25,20 @@ return {
 
 		local function setup_colors()
 			return {
-				normal = hl.hl_attr('Normal', 'fg'),
-				visual = hl.hl_attr('@comment', 'fg'),
-				search = hl.hl_attr('Search', 'fg'),
-				win_separator = hl.hl_attr('WinSeparator', 'fg'),
-				muted = hl.hl_attr('@comment', 'fg'),
-				attribute = hl.hl_attr('@attribute', 'fg'),
-				float_border = hl.hl_attr('FloatBorder', 'fg'),
-				diag_error = hl.hl_attr('DiagnosticError', 'fg'),
-				diag_warn = hl.hl_attr('DiagnosticWarn', 'fg'),
-				diag_info = hl.hl_attr('DiagnosticInfo', 'fg'),
-				diag_hint = hl.hl_attr('DiagnosticHint', 'fg'),
-				diff_del = hl.hl_attr('@diff.minus', 'fg'),
-				diff_add = hl.hl_attr('@diff.plus', 'fg'),
-				diff_change = hl.hl_attr('@diff.delta', 'fg'),
+				normal = hl.attr('Normal', 'fg'),
+				visual = hl.attr('@comment', 'fg'),
+				search = hl.attr('Search', 'fg'),
+				win_separator = hl.attr('WinSeparator', 'fg'),
+				muted = hl.attr('@comment', 'fg'),
+				attribute = hl.attr('@attribute', 'fg'),
+				float_border = hl.attr('FloatBorder', 'fg'),
+				diag_error = hl.attr('DiagnosticError', 'fg'),
+				diag_warn = hl.attr('DiagnosticWarn', 'fg'),
+				diag_info = hl.attr('DiagnosticInfo', 'fg'),
+				diag_hint = hl.attr('DiagnosticHint', 'fg'),
+				diff_del = hl.attr('@diff.minus', 'fg'),
+				diff_add = hl.attr('@diff.plus', 'fg'),
+				diff_change = hl.attr('@diff.delta', 'fg'),
 			}
 		end
 
@@ -49,10 +50,7 @@ return {
 		---@param child table
 		---@param side 'left' | 'right'
 		local function Append(component, child, side)
-			local condition = component.condition or function()
-				return true
-			end
-
+			local condition = component.condition or func.const(true)
 			local update = component.update
 
 			component = tbl.copy_deep(component)

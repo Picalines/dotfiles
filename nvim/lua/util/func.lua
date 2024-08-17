@@ -18,6 +18,18 @@ function M.default(value, default)
 	return value
 end
 
+---@generic T
+---@param opts_arg T | nil
+---@param defaults T
+---@return T
+function M.default_opts(opts_arg, defaults)
+	if opts_arg == nil then
+		return defaults
+	end
+
+	return tbl.override_deep(defaults, opts_arg)
+end
+
 ---(lua is not typescript, sorry)
 ---@generic Args, R
 ---@param func fun(...: Args): R
@@ -49,6 +61,15 @@ function M.cmd(...)
 		for _, cmd in pairs(cmds) do
 			vim.cmd(cmd)
 		end
+	end
+end
+
+---@generic T
+---@param x T
+---@return fun(...): T
+function M.const(x)
+	return function()
+		return x
 	end
 end
 

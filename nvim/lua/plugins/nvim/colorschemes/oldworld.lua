@@ -6,14 +6,15 @@ return {
 	priority = 1000,
 
 	config = function(_, opts)
+		local hl = require 'util.highlight'
+
 		require('oldworld').setup(opts)
 
 		vim.api.nvim_create_autocmd('ColorScheme', {
 			pattern = 'oldworld',
 			callback = function()
-				vim.api.nvim_set_hl(0, 'NormalNC', { link = 'Normal' })
-
-				vim.api.nvim_set_hl(0, 'TabLineFill', { bg = 'NONE' })
+				hl.link('NormalNC', 'Normal')
+				hl.clear('TabLineFill', 'all')
 			end,
 		})
 	end,

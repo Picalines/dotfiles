@@ -8,8 +8,10 @@ return {
 	},
 
 	config = function(_, opts)
+		local hl = require 'util.highlight'
+
 		require('mini.trailspace').setup(opts)
 
-		vim.api.nvim_set_hl(0, 'MiniTrailspace', { link = 'Visual' })
+		hl.link('MiniTrailspace', 'Visual')
 	end,
 }

@@ -28,11 +28,12 @@ return {
 	},
 
 	config = function(_, opts)
+		local hl = require 'util.highlight'
 		local autocmd = require 'util.autocmd'
 
 		require('mini.indentscope').setup(opts)
 
-		vim.api.nvim_set_hl(0, 'MiniIndentscopeSymbol', { link = 'Whitespace' })
+		hl.link('MiniIndentscopeSymbol', 'Whitespace')
 
 		autocmd.per_filetype({ 'help', 'neo-tree', 'lazy' }, function(args)
 			vim.b[args.buf].miniindentscope_disable = true

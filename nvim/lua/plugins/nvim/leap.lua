@@ -32,9 +32,9 @@ return {
 		}
 
 		local function setup_highlights()
-			vim.api.nvim_set_hl(0, 'LeapBackdrop', { fg = hl.hl_attr('@comment', 'fg') })
-			vim.api.nvim_set_hl(0, 'LeapMatch', { fg = hl.hl_attr('Search', 'fg'), reverse = true })
-			vim.api.nvim_set_hl(0, 'LeapLabel', { fg = hl.hl_attr('@diff.change', 'fg'), reverse = true })
+			vim.api.nvim_set_hl(0, 'LeapBackdrop', { fg = hl.attr('@comment', 'fg') })
+			vim.api.nvim_set_hl(0, 'LeapMatch', { fg = hl.attr('Search', 'fg'), reverse = true })
+			vim.api.nvim_set_hl(0, 'LeapLabel', { fg = hl.attr('@diff.change', 'fg'), reverse = true })
 		end
 
 		setup_highlights()
