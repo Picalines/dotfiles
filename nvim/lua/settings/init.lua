@@ -21,3 +21,5 @@ end
 if app.client() == 'neovide' then
 	require 'settings.ui.neovide'
 end
+
+-- NOTE: lsp folder is loaded by lspconfig

@@ -105,7 +105,7 @@ return {
 				return
 			end
 
-			local server_config_ok, server_config = pcall(require, 'lsp.servers.' .. server_name)
+			local server_config_ok, server_config = pcall(require, 'settings.lsp.servers.' .. server_name)
 
 			if not server_config_ok then
 				server_config = {}
