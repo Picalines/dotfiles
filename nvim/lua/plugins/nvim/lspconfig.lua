@@ -28,7 +28,6 @@ return {
 		},
 
 		{ 'folke/neodev.nvim', config = true },
-		'numToStr/Comment.nvim',
 
 		{
 			'dgagn/diagflow.nvim',
