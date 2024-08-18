@@ -278,7 +278,6 @@ return {
 			condition = function()
 				return #vim.api.nvim_list_tabpages() >= 2
 			end,
-			{ provider = '%=' },
 			h_util.make_tablist(TabPage),
 		}
 
@@ -294,44 +293,22 @@ return {
 				end
 			end,
 
-			flexible = 1,
-
 			{
-				{
-					provider = function(self)
-						local title = self.title
-						local width = math.max(0, vim.api.nvim_win_get_width(self.winid) - 1)
-						local pad = math.max(0, width - #title)
-						return title:sub(1, width) .. string.rep(' ', pad)
-					end,
+				provider = function(self)
+					local title = self.title
+					local width = math.max(0, vim.api.nvim_win_get_width(self.winid) - 1)
+					local pad = math.max(0, width - #title)
+					return title:sub(1, width) .. string.rep(' ', pad)
+				end,
 
-					hl = function(self)
-						local is_focused = vim.api.nvim_get_current_win() == self.winid
-						return { bold = is_focused, fg = is_focused and 'normal' or 'muted' }
-					end,
-				},
-				{
-					provider = '|',
-					hl = { fg = 'win_separator' },
-				},
+				hl = function(self)
+					local is_focused = vim.api.nvim_get_current_win() == self.winid
+					return { bold = is_focused, fg = is_focused and 'normal' or 'muted' }
+				end,
 			},
-
 			{
-				{
-					provider = function(self)
-						return self.title
-					end,
-
-					hl = function(self)
-						local is_focused = vim.api.nvim_get_current_win() == self.winid
-						return { bold = is_focused, fg = is_focused and 'normal' or 'muted' }
-					end,
-				},
-
-				{
-					provider = ' >',
-					hl = { fg = 'win_separator' },
-				},
+				provider = '|',
+				hl = { fg = 'win_separator' },
 			},
 		}
 
@@ -615,7 +592,8 @@ return {
 				Space,
 				Append(SidebarOffset, Space, 'right'),
 				BufferLine,
-				TabPageList,
+				Align,
+				Append(TabPageList, Space, 'left'),
 			},
 			opts = {
 				colors = setup_colors(),
