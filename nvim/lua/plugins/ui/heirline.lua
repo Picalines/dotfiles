@@ -512,28 +512,19 @@ return {
 			init = function(self)
 				self.icon = ''
 
-				local terms = require 'toggleterm.terminal'
-				local all_terminals = terms.get_all(true)
-
-				local current_index = array.find_index(all_terminals, function(term)
-					return term:is_focused()
-				end)
-
 				local current_buftype = vim.api.nvim_get_option_value('buftype', { buf = 0 })
-
 				self.is_in_terminal = current_buftype == 'terminal'
-				self.current_terminal = current_index
-				self.terminal_count = #all_terminals
+
+				local terminal = require 'terminal'
+				local active_terminals = require 'terminal.active_terminals'
+
+				self.current_terminal = terminal.current_term_index() or 0
+				self.terminal_count = active_terminals:len()
 			end,
 
 			condition = function()
-				local require_ok, terms = pcall(require, 'toggleterm.terminal')
-				if not require_ok then
-					return false
-				end
-
-				local all_terminals = terms.get_all(true)
-				return #all_terminals > 0
+				local ok, active_terminals = pcall(require, 'terminal.active_terminals')
+				return ok and active_terminals:len() > 0
 			end,
 
 			provider = function(self)

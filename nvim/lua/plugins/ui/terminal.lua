@@ -1,8 +1,6 @@
 return {
 	'rebelot/terminal.nvim',
 
-	enabled = true, -- TODO: replace toggleterm
-
 	event = 'VeryLazy',
 
 	config = function()
