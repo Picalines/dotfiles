@@ -6,21 +6,14 @@ return {
 	priority = 1000,
 
 	config = function()
-		require('github-theme').setup {
-			options = {
-				styles = {
-					comments = 'italic',
-					keywords = 'bold',
-				},
-			},
+		local autocmd = require 'util.autocmd'
+		local hl = require 'util.highlight'
 
-			groups = {
-				all = {
-					NormalFloat = { link = 'Normal' },
-					VertSplit = { link = 'WinBar' },
-					FloatBorder = { guifg = '#e6edf3' },
-				},
-			},
-		}
+		require('github-theme').setup {}
+
+		autocmd.on_colorscheme('github_*', function()
+			hl.link('NormalFloat', 'Normal')
+			hl.link('NormalSB', 'Normal')
+		end)
 	end,
 }
