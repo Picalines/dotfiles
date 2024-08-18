@@ -24,8 +24,10 @@ return {
 		leap.opts.special_keys.next_group = { '<Tab>' }
 		leap.opts.special_keys.prev_group = { '<S-Tab>' }
 
-		leap.opts.safe_labels = array.filter(leap.opts.safe_labels, function(l)
-			return l ~= 'n'
+		local unsafe_labels = { 'n', 'S' }
+
+		leap.opts.safe_labels = array.filter(leap.opts.safe_labels, function(label)
+			return not array.contains(unsafe_labels, label)
 		end)
 
 		local function select_node_clever(forward_key)
