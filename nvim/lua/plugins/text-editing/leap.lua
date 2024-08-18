@@ -4,11 +4,12 @@ return {
 	lazy = false,
 
 	config = function()
+		local array = require 'util.array'
+		local autocmd = require 'util.autocmd'
 		local func = require 'util.func'
 		local hl = require 'util.highlight'
 		local keymap = require 'util.keymap'
 		local tbl = require 'util.table'
-		local array = require 'util.array'
 
 		local leap = require 'leap'
 		local leap_treesitter = require 'leap.treesitter'
@@ -62,8 +63,6 @@ return {
 
 		setup_highlights()
 
-		vim.api.nvim_create_autocmd('ColorScheme', {
-			callback = setup_highlights,
-		})
+		autocmd.on_colorscheme('*', setup_highlights)
 	end,
 }

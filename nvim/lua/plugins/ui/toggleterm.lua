@@ -38,6 +38,7 @@ return {
 	},
 
 	config = function(_, opts)
+		local autocmd = require 'util.autocmd'
 		local array = require 'util.array'
 		local func = require 'util.func'
 		local keymap = require 'util.keymap'
@@ -120,31 +121,28 @@ return {
 			end
 		end
 
-		vim.api.nvim_create_autocmd('TermOpen', {
-			pattern = { 'term://*' },
-			callback = function(event)
-				keymap.declare {
-					[{ buffer = event.buf, silent = true, remap = true, nowait = true }] = {
-						[{ 'n' }] = {
-							['<Esc>'] = { '<leader>t', 'Exit terminal' },
-							['<C-c>'] = { send_sigterm_and_reopen, 'Send SIGTERM' },
-						},
-
-						[{ 't' }] = {
-							['<Esc>'] = { [[<C-\><C-n>]], 'Exit terminal mode' },
-							['<C-[>'] = { func.curry(send_keys, ''), 'Send <Esc> to terminal' },
-							['<C-p>'] = { [[<C-\><C-n>pi]], '[P]aste' },
-						},
-
-						[{ 'n', 't' }] = {
-							['<C-t>'] = { open_new_term, 'Open new terminal session' },
-
-							['<C-l>'] = { func.curry(switch_term, 'next'), 'Next terminal' },
-							['<C-h>'] = { func.curry(switch_term, 'prev'), 'Previous terminal' },
-						},
+		autocmd.on_terminal_open(function(event)
+			keymap.declare {
+				[{ buffer = event.buf, silent = true, remap = true, nowait = true }] = {
+					[{ 'n' }] = {
+						['<Esc>'] = { '<leader>t', 'Exit terminal' },
+						['<C-c>'] = { send_sigterm_and_reopen, 'Send SIGTERM' },
 					},
-				}
-			end,
-		})
+
+					[{ 't' }] = {
+						['<Esc>'] = { [[<C-\><C-n>]], 'Exit terminal mode' },
+						['<C-[>'] = { func.curry(send_keys, ''), 'Send <Esc> to terminal' },
+						['<C-p>'] = { [[<C-\><C-n>pi]], '[P]aste' },
+					},
+
+					[{ 'n', 't' }] = {
+						['<C-t>'] = { open_new_term, 'Open new terminal session' },
+
+						['<C-l>'] = { func.curry(switch_term, 'next'), 'Next terminal' },
+						['<C-h>'] = { func.curry(switch_term, 'prev'), 'Previous terminal' },
+					},
+				},
+			}
+		end)
 	end,
 }

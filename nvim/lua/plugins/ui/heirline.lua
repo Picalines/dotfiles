@@ -12,6 +12,7 @@ return {
 	config = function()
 		local app = require 'util.app'
 		local array = require 'util.array'
+		local autocmd = require 'util.autocmd'
 		local func = require 'util.func'
 		local hl = require 'util.highlight'
 		local tbl = require 'util.table'
@@ -248,14 +249,11 @@ return {
 			callback = update_buflist,
 		})
 
-		vim.api.nvim_create_autocmd({ 'User' }, {
-			pattern = 'LazyLoad',
-			callback = function(event)
-				if event.data == 'heirline.nvim' then
-					update_buflist()
-				end
-			end,
-		})
+		autocmd.on_user_event('LazyLoad', function(event)
+			if event.data == 'heirline.nvim' then
+				update_buflist()
+			end
+		end)
 
 		local BufferLine = h_util.make_buflist(
 			Buffer,
@@ -634,12 +632,10 @@ return {
 		}
 
 		vim.api.nvim_create_augroup('Heirline', { clear = true })
-		vim.api.nvim_create_autocmd({ 'ColorScheme' }, {
-			group = 'Heirline',
-			callback = function()
-				h_util.on_colorscheme(setup_colors())
-			end,
-		})
+
+		autocmd.on_colorscheme('*', function()
+			h_util.on_colorscheme(setup_colors())
+		end)
 
 		-- https://github.com/rebelot/heirline.nvim/issues/203#issuecomment-2208395807
 		vim.cmd [[:au VimLeavePre * set stl=]]

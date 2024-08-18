@@ -6,13 +6,11 @@ return {
 	priority = 1000,
 
 	config = function()
-		vim.api.nvim_create_autocmd({ 'ColorScheme' }, {
-			pattern = '*',
-			command = [[
-				if g:colors_name ==# "aquarium"
-					highlight NonText guibg=none
-				endif
-			]],
-		})
+		local autocmd = require 'util.autocmd'
+		local hl = require 'util.highlight'
+
+		autocmd.on_colorscheme('aquarium', function()
+			hl.clear('NonText', 'bg')
+		end)
 	end,
 }

@@ -25,16 +25,14 @@ return {
 	},
 
 	config = function(_, opts)
-		vim.api.nvim_create_autocmd({ 'ColorScheme' }, {
-			pattern = '*',
-			command = [[
-				if g:colors_name ==# "evergarden"
-					hi NoiceCursor gui=inverse
-					hi! link NormalFloat Normal
-				endif
-			]],
-		})
+		local autocmd = require 'util.autocmd'
+		local hl = require 'util.highlight'
 
 		require('evergarden').setup(opts)
+
+		autocmd.on_colorscheme('evergarden', function()
+			vim.cmd 'hi NoiceCursor gui=inverse'
+			hl.link('NormalFloat', 'Normal')
+		end)
 	end,
 }

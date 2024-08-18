@@ -35,13 +35,18 @@ return {
 
 		hl.link('MiniIndentscopeSymbol', 'Whitespace')
 
+		local function disable_mini_indentscope(event)
+			vim.b[event.buf].miniindentscope_disable = true
+		end
+
 		autocmd.per_filetype({
 			'help',
 			'neo-tree',
 			'neo-tree-popup',
 			'lazy',
-		}, function(args)
-			vim.b[args.buf].miniindentscope_disable = true
-		end)
+			'noice',
+		}, disable_mini_indentscope)
+
+		autocmd.on_terminal_open(disable_mini_indentscope)
 	end,
 }
