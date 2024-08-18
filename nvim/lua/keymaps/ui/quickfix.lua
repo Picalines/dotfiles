@@ -9,12 +9,13 @@ keymap.declare {
 	},
 }
 
-autocmd.per_filetype('qf', function(opts)
-	vim.bo[opts.buf].modifiable = true
+autocmd.per_filetype('qf', function(event)
+	vim.bo[event.buf].modifiable = true
 
 	keymap.declare {
-		[{ 'n', silent = true, buffer = opts.buf }] = {
-			[{ 'q', '<leader>Q' }] = { ':cclose<CR>', 'Close quickfix list' },
+		[{ 'n', remap = true, silent = true, buffer = event.buf }] = {
+			['q'] = { ':cclose<CR>', 'Close quickfix list' },
+			['<leader>Q'] = { ':cclose<CR>', 'Close quickfix list' },
 			['n'] = { ':cnewer<CR>', 'Go to newer quickfix list' },
 			['p'] = { ':colder<CR>', 'Go to older quickfix list' },
 
