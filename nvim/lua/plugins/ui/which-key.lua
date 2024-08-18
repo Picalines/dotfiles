@@ -10,7 +10,7 @@ return {
 
 		keymap.declare {
 			[{ 'n' }] = {
-				['<leader>?'] = { ':WhichKey<CR>', 'Keymap help' },
+				['<leader>?'] = { '<Cmd>WhichKey<CR>', 'Keymap help' },
 			},
 		}
 	end,

@@ -12,7 +12,7 @@ keymap.declare {
 		['<S-Left>'] = { '5<C-W><', 'Decrease window width' },
 		['<S-Right>'] = { '5<C-W>>', 'Increase window width' },
 
-		['<leader>Nd'] = { ':NoiceDismiss<CR>', 'Dismiss notifications' },
-		['<leader>Nf'] = { ':NoicePick<CR>', 'Find notification' },
+		['<leader>Nd'] = { '<Cmd>NoiceDismiss<CR>', 'Dismiss notifications' },
+		['<leader>Nf'] = { '<Cmd>NoicePick<CR>', 'Find notification' },
 	},
 }

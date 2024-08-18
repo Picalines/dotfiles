@@ -11,11 +11,11 @@ return {
 
 		keymap.declare {
 			[{ 'n', silent = true }] = {
-				['<leader>F'] = { ':Format<CR>', 'Format buffer' },
+				['<leader>F'] = { '<Cmd>Format<CR>', 'Format buffer' },
 			},
 
 			[{ 'v', silent = true }] = {
-				['<leader>F'] = { ':Format<CR>', 'Format selection' },
+				['<leader>F'] = { '<Cmd>Format<CR>', 'Format selection' },
 			},
 		}
 

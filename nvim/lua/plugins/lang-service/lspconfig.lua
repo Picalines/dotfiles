@@ -75,15 +75,15 @@ return {
 				['<leader>R'] = { vim.lsp.buf.rename, 'LSP: Rename' },
 				['<leader>A'] = { vim.lsp.buf.code_action, 'LSP: Code action' },
 
-				['gD'] = { ':Glance definitions<CR>', 'LSP: Go to definition' },
-				['gR'] = { ':Glance references<CR>', 'LSP: Go to references' },
-				['gI'] = { ':Glance implementations<CR>', 'LSP: Go to implementation' },
-				['gT'] = { ':Glance type_definitions<CR>', 'LSP: Go to type definition' },
+				['gD'] = { '<Cmd>Glance definitions<CR>', 'LSP: Go to definition' },
+				['gR'] = { '<Cmd>Glance references<CR>', 'LSP: Go to references' },
+				['gI'] = { '<Cmd>Glance implementations<CR>', 'LSP: Go to implementation' },
+				['gT'] = { '<Cmd>Glance type_definitions<CR>', 'LSP: Go to type definition' },
 				['gC'] = { vim.lsp.buf.declaration, 'LSP: Go to to Declaration' },
 
-				['<leader>Li'] = { ':LspInfo<CR>', 'LSP: See info' },
-				['<leader>Lr'] = { ':echo "Restarting LSP" | LspRestart<CR>', 'LSP: Restart' },
-				['<leader>Ll'] = { ':LspLog<CR>', 'LSP: See logs' },
+				['<leader>Li'] = { '<Cmd>LspInfo<CR>', 'LSP: See info' },
+				['<leader>Lr'] = { '<Cmd>echo "Restarting LSP" | LspRestart<CR>', 'LSP: Restart' },
+				['<leader>Ll'] = { '<Cmd>LspLog<CR>', 'LSP: See logs' },
 				['<leader>Lh'] = { toggle_inlay_hints, 'LSP: Toggle inlay hints' },
 			},
 		}
