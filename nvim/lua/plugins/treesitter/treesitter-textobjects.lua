@@ -15,7 +15,7 @@ return {
 					local obj_parts = declaration[2]
 					return tbl.flat_map(obj_parts, function(_, part)
 						local map = part_keys[part] .. obj_key
-						local capture_group = obj_name .. '.' .. part
+						local capture_group = string.format('%s.%s', obj_name, part)
 						return { [map] = capture_group }
 					end)
 				end),
@@ -41,8 +41,9 @@ return {
 				set_jumps = true,
 				tbl.flat_map({ 'next', 'previous' }, function(_, dir)
 					return tbl.flat_map({ 'start', 'end' }, function(range_i, range)
+						local key = string.format('goto_%s_%s', dir, range)
 						return {
-							['goto_' .. dir .. '_' .. range] = tbl.flat_map(declarations, function(obj_keys, capture_group)
+							[key] = tbl.flat_map(declarations, function(obj_keys, capture_group)
 								return { [jump_keys[dir] .. obj_keys[range_i]] = capture_group }
 							end),
 						}

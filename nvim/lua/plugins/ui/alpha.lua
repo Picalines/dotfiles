@@ -32,7 +32,7 @@ return {
 			button('o', '󰮗  old files', 'Telescope oldfiles<CR>'),
 			button('n', '󰯁  edit new', 'ene <BAR> startinsert<CR>'),
 			button('f', '󰈞  find files', 'Telescope find_files<CR>'),
-			button('c', '  change dir', 'Neotree filesystem current ' .. cd_path .. ' reveal_force_cwd<CR>'),
+			button('c', '  change dir', string.format('Neotree filesystem current %s reveal_force_cwd<CR>', cd_path)),
 			button('l', '󰒲  lazy', 'Lazy<CR>'),
 			button('m', '󰏗  mason', 'Mason<CR>'),
 			button('t', '󰏘  theme', 'PickColorScheme<CR>'),

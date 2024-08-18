@@ -86,7 +86,7 @@ return {
 
 		local BufferName = {
 			init = function(self)
-				self.display_name = self.filename == '' and ('[%d]'):format(self.bufnr) or vim.fn.fnamemodify(self.filename, ':t')
+				self.display_name = self.filename == '' and string.format('[%d]', self.bufnr) or vim.fn.fnamemodify(self.filename, ':t')
 			end,
 
 			{
@@ -267,7 +267,7 @@ return {
 
 		local TabPage = {
 			provider = function(self)
-				return '%' .. self.tabnr .. 'T' .. self.tabpage .. ' %T'
+				return string.format('%%%dT%s %%T', self.tabnr, self.tabpage)
 			end,
 			hl = function(self)
 				return { bold = self.is_active, fg = self.is_active and 'normal' or 'muted' }
@@ -471,7 +471,7 @@ return {
 				end,
 
 				provider = function(self)
-					return self.icon .. ' ' .. tostring(self.diagnostic_count)
+					return string.format('%s %d', self.icon, self.diagnostic_count)
 				end,
 
 				hl = { fg = opts.hl },
@@ -509,10 +509,10 @@ return {
 				if not self.is_in_terminal then
 					indicator = tostring(self.terminal_count)
 				else
-					indicator = tostring(self.current_terminal) .. '/' .. tostring(self.terminal_count)
+					indicator = string.format('%d/%d', self.current_terminal, self.terminal_count)
 				end
 
-				return indicator .. ' ' .. self.icon
+				return string.format('%s %s', indicator, self.icon)
 			end,
 
 			hl = { fg = 'attribute' },

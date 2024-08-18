@@ -39,7 +39,7 @@ function M.declare(decl_table, _info)
 
 			local ok = pcall(vim.keymap.set, modes, lhs, rhs, opts)
 			if not ok then
-				print('keymap: failed to map`' .. lhs .. '`')
+				print(string.format('keymap: failed to map `%s`', lhs))
 			end
 		elseif type(key) == 'table' and type(value) == 'table' then
 			local group_modes = {}

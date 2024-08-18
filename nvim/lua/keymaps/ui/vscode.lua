@@ -1,7 +1,7 @@
 local keymap = require 'util.keymap'
 
 local function vscode_call(action)
-	return '<Cmd>lua require("vscode-neovim").call("' .. action .. '")<CR>'
+	return string.format('<Cmd>lua require("vscode-neovim").call("%s")<CR>', action)
 end
 
 keymap.declare {
