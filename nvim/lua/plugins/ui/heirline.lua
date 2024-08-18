@@ -86,7 +86,7 @@ return {
 
 		local BufferName = {
 			init = function(self)
-				self.display_name = self.filename == '' and '[No Name]' or vim.fn.fnamemodify(self.filename, ':t')
+				self.display_name = self.filename == '' and ('[%d]'):format(self.bufnr) or vim.fn.fnamemodify(self.filename, ':t')
 			end,
 
 			{
@@ -231,8 +231,8 @@ return {
 				local name_to_bufnr = tbl.inverse(bufnr_to_name)
 
 				local buffer_prefixes = {}
-				for _, bufnrs in pairs(name_to_bufnr) do
-					if #bufnrs > 1 then
+				for bufname, bufnrs in pairs(name_to_bufnr) do
+					if #bufname > 0 and #bufnrs > 1 then
 						local prefixes = compute_unique_prefixes(bufnrs)
 						for i, prefix in pairs(prefixes) do
 							buffer_prefixes[bufnrs[i]] = prefix
