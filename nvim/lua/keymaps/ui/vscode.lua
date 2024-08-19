@@ -17,9 +17,9 @@ keymap.declare {
 		['gD'] = vscode_call 'editor.action.revealDefinition',
 		['gR'] = vscode_call 'editor.action.goToReferences',
 		['gI'] = vscode_call 'editor.action.goToImplementation',
-		['<leader>A'] = vscode_call 'editor.action.quickFix',
+		['<leader>a'] = vscode_call 'editor.action.quickFix',
 		['<leader>F'] = vscode_call 'editor.action.formatDocument',
-		['<leader>R'] = vscode_call 'editor.action.rename',
+		['<leader>r'] = vscode_call 'editor.action.rename',
 
 		[']d'] = vscode_call 'editor.action.marker.next',
 		['[d'] = vscode_call 'editor.action.marker.prev',

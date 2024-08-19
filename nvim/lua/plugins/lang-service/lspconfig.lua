@@ -72,8 +72,8 @@ return {
 			[{ 'n', silent = true }] = {
 				['K'] = { vim.lsp.buf.hover, 'LSP: Hover' },
 
-				['<leader>R'] = { vim.lsp.buf.rename, 'LSP: Rename' },
-				['<leader>A'] = { vim.lsp.buf.code_action, 'LSP: Code action' },
+				['<leader>r'] = { vim.lsp.buf.rename, 'LSP: Rename' },
+				['<leader>a'] = { vim.lsp.buf.code_action, 'LSP: Code action' },
 
 				['gD'] = { '<Cmd>Glance definitions<CR>', 'LSP: Go to definition' },
 				['gR'] = { '<Cmd>Glance references<CR>', 'LSP: Go to references' },
@@ -81,10 +81,10 @@ return {
 				['gT'] = { '<Cmd>Glance type_definitions<CR>', 'LSP: Go to type definition' },
 				['gC'] = { vim.lsp.buf.declaration, 'LSP: Go to to Declaration' },
 
-				['<leader>Li'] = { '<Cmd>LspInfo<CR>', 'LSP: See info' },
-				['<leader>Lr'] = { '<Cmd>echo "Restarting LSP" | LspRestart<CR>', 'LSP: Restart' },
-				['<leader>Ll'] = { '<Cmd>LspLog<CR>', 'LSP: See logs' },
-				['<leader>Lh'] = { toggle_inlay_hints, 'LSP: Toggle inlay hints' },
+				['<leader>li'] = { '<Cmd>LspInfo<CR>', 'LSP: See info' },
+				['<leader>lr'] = { '<Cmd>echo "Restarting LSP" | LspRestart<CR>', 'LSP: Restart' },
+				['<leader>ll'] = { '<Cmd>LspLog<CR>', 'LSP: See logs' },
+				['<leader>lh'] = { toggle_inlay_hints, 'LSP: Toggle inlay hints' },
 			},
 		}
 

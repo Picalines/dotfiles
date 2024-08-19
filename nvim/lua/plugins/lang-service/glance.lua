@@ -52,7 +52,7 @@ return {
 					['o'] = actions.jump,
 					['l'] = actions.open_fold,
 					['h'] = actions.close_fold,
-					['<leader>l'] = actions.enter_win 'preview',
+					['<C-h>'] = actions.enter_win 'preview',
 					['q'] = actions.close,
 					['Q'] = actions.close,
 					['<Esc>'] = actions.close,
@@ -62,10 +62,11 @@ return {
 					['Q'] = actions.close,
 					['<Tab>'] = actions.next_location,
 					['<S-Tab>'] = actions.previous_location,
-					['<leader>l'] = actions.enter_win 'list',
+					['<C-l>'] = actions.enter_win 'list',
 				},
 			},
 
+			---@diagnostic disable-next-line: missing-fields
 			hooks = {
 				before_open = function(results, open, jump)
 					if #results == 1 then

@@ -36,8 +36,8 @@ return {
 		keymap.declare {
 			[{ 'n', silent = true }] = {
 				['<leader>e'] = { '<Cmd>Neotree focus filesystem<CR>', 'File explorer' },
-				['<leader>G'] = { '<Cmd>Neotree focus git_status float<CR>', 'Git tree' },
-				['<leader>D'] = { '<Cmd>Neotree focus diagnostics bottom<CR>', 'Diagnostics list' },
+				['<leader>g'] = { '<Cmd>Neotree focus git_status float<CR>', 'Git tree' },
+				['<C-w>D'] = { '<Cmd>Neotree focus diagnostics bottom<CR>', 'Diagnostics list' },
 			},
 		}
 
@@ -356,7 +356,8 @@ return {
 				},
 				window = {
 					mappings = {
-						['<leader>D'] = func.cmd ':Neotree close diagnostics',
+						['q'] = func.cmd ':Neotree close diagnostics',
+						['<C-w>D'] = func.cmd ':Neotree close diagnostics',
 					},
 				},
 			},

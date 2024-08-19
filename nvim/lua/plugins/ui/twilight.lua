@@ -20,7 +20,7 @@ return {
 
 		keymap.declare {
 			[{ 'n', silent = true }] = {
-				['<leader>Z'] = { '<Cmd>Twilight<CR>', 'Toggle zen mode' },
+				['<leader>z'] = { '<Cmd>Twilight<CR>', 'Toggle zen mode' },
 			},
 		}
 	end,
