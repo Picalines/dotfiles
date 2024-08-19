@@ -62,6 +62,13 @@ return {
 			vim.schedule(func.cmd 'startinsert')
 		end
 
+		local function kill_current_terminal()
+			local term = terminal.get_current_term()
+			if term then
+				vim.fn.jobstop(term.jobid)
+			end
+		end
+
 		local function close_float_term()
 			if is_float_win() then
 				terminal.toggle()
@@ -70,7 +77,7 @@ return {
 
 		keymap.declare {
 			[{ 'n' }] = {
-				['<leader>t'] = { toggle_terminal, 'Toggle terminal' },
+				['<leader>c'] = { toggle_terminal, 'Toggle terminal (cmd)' },
 			},
 
 			[{ 't' }] = {
@@ -88,17 +95,27 @@ return {
 						['<Esc>'] = { close_float_term, 'Close floating terminal' },
 
 						['<C-t>'] = { new_terminal_tab, 'New terminal' },
+						['<C-c>'] = { kill_current_terminal, 'Kill terminal process' },
 						['<Tab>'] = { terminal_map.cycle_next, 'Cycle next terminal' },
 						['<S-Tab>'] = { terminal_map.cycle_prev, 'Cycle next terminal' },
 
-						['<A-h>'] = { terminal_map.move { open_cmd = 'topleft 40vnew' }, 'Move: left split' },
-						['<A-j>'] = { terminal_map.move { open_cmd = 'bot new | resize 20' }, 'Move: bottom split' },
-						['<A-k>'] = { terminal_map.move { open_cmd = 'top new | resize 20' }, 'Move: top split' },
-						['<A-l>'] = { terminal_map.move { open_cmd = 'botright 40vnew' }, 'Move: right split' },
+						['<A-h>'] = { terminal_map.move { open_cmd = 'exe "topleft " . (&columns/4) . "vnew"' }, 'Move: left split' },
+						['<A-j>'] = { terminal_map.move { open_cmd = 'bot new | exe "resize " . (&lines/4)' }, 'Move: bottom split' },
+						['<A-k>'] = { terminal_map.move { open_cmd = 'top new | exe "resize " . (&lines/4)' }, 'Move: top split' },
+						['<A-l>'] = { terminal_map.move { open_cmd = 'exe "botright " . (&columns/4) . "vnew"' }, 'Move: right split' },
 						['<A-f>'] = { terminal_map.move(float_layout), 'Move: float' },
 					},
 				},
 			}
 		end)
+
+		vim.api.nvim_create_autocmd('WinLeave', {
+			pattern = 'term://*',
+			callback = function()
+				if is_float_win() then
+					close_float_term()
+				end
+			end,
+		})
 	end,
 }
