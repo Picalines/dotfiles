@@ -24,12 +24,26 @@ return {
 	config = function()
 		local array = require 'util.array'
 		local tbl = require 'util.table'
-		local func = require 'util.func'
 		local keymap = require 'util.keymap'
 		local telescope = require 'telescope'
 		local actions = require 'telescope.actions'
 		local themes = require 'telescope.themes'
 		local builtin = require 'telescope.builtin'
+
+		local ignore_files = { '.gitignore', '.arcignore' }
+		local always_exclude = { '.git', 'node_modules', '{package,pnpm}-lock.json', '{dist,build}', '*.bundle.js', '.geodata' }
+
+		local rg_args = array.concat(
+			{ '--hidden' },
+			array.flat_map(ignore_files, function(file)
+				return vim.fn.filereadable(file) and { '--ignore-file', file } or {}
+			end),
+			array.flat_map(always_exclude, function(path)
+				return { '-g', '!' .. path }
+			end)
+		)
+
+		local rg_file_args = array.concat({ 'rg', '--files' }, rg_args)
 
 		telescope.setup {
 			defaults = {
@@ -65,6 +79,11 @@ return {
 			pickers = {
 				find_files = {
 					previewer = false,
+					find_command = rg_file_args,
+				},
+
+				live_grep = {
+					additional_args = rg_args,
 				},
 
 				oldfiles = {
@@ -80,27 +99,6 @@ return {
 		safe_load_extension 'fzf'
 		safe_load_extension 'ui-select'
 		safe_load_extension 'noice'
-
-		local ignore_files = { '.gitignore', '.arcignore' }
-		local always_exclude = { '.git', 'node_modules', '{package,pnpm}-lock.json', '{dist,build}', '*.bundle.js', '.geodata' }
-
-		local rg_args = array.concat(
-			{ '--hidden' },
-			array.flat_map(ignore_files, function(file)
-				return vim.fn.filereadable(file) and { '--ignore-file', file } or {}
-			end),
-			array.flat_map(always_exclude, function(path)
-				return { '-g', '!' .. path }
-			end)
-		)
-
-		local find_files = func.curry_opts(builtin.find_files, {
-			find_command = array.concat({ 'rg', '--files' }, rg_args),
-		})
-
-		local live_grep = func.curry_opts(builtin.live_grep, {
-			additional_args = rg_args,
-		})
 
 		local function exit_visual_mode()
 			vim.api.nvim_feedkeys(':', 'nx', false)
@@ -124,10 +122,10 @@ return {
 		end
 
 		local picker_maps = {
-			['<leader>ff'] = { find_files, 'Find files' },
+			['<leader>ff'] = { builtin.find_files, 'Find files' },
 			['<leader>fo'] = { builtin.oldfiles, 'Find old files' },
 			['<leader>fb'] = { builtin.buffers, 'Find buffer' },
-			['<leader>fg'] = { live_grep, 'Find global' },
+			['<leader>fg'] = { builtin.live_grep, 'Find global' },
 			['<leader>fc'] = { builtin.commands, 'Find commands' },
 			['<leader>fh'] = { builtin.help_tags, 'Find help' },
 			['<leader>fd'] = { builtin.diagnostics, 'Find diagnostics' },
