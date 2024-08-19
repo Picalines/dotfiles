@@ -5,6 +5,6 @@ vim.go.mouse = 'a'
 vim.go.termguicolors = true
 vim.go.equalalways = true
 
-vim.wo.scrolloff = 8
+vim.go.scrolloff = 8
 
 autocmd.per_filetype('help', func.cmd 'wincmd L')
