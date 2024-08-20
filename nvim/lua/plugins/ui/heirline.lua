@@ -15,6 +15,7 @@ return {
 		local autocmd = require 'util.autocmd'
 		local func = require 'util.func'
 		local hl = require 'util.highlight'
+		local string_util = require 'util.string'
 		local tbl = require 'util.table'
 
 		local h_util = require 'heirline.utils'
@@ -297,8 +298,7 @@ return {
 				provider = function(self)
 					local title = self.title
 					local width = math.max(0, vim.api.nvim_win_get_width(self.winid) - 1)
-					local pad = math.max(0, width - #title)
-					return title:sub(1, width) .. string.rep(' ', pad)
+					return string_util.pad_centered(title, ' ', width)
 				end,
 
 				hl = function(self)
