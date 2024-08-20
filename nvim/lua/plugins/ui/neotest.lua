@@ -96,6 +96,15 @@ return {
 			adapters = {
 				make_jest_adapter(),
 			},
+
+			icons = {
+				unknown = '',
+				running = '',
+				skipped = '',
+				failed = '',
+				passed = '',
+				watching = '',
+			},
 		}
 
 		local function run_file_tests()

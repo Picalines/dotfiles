@@ -122,15 +122,15 @@ return {
 				},
 				git_status = {
 					symbols = {
-						added = '+',
-						modified = '~',
+						added = '',
+						modified = '',
 						conflict = '',
-						unstaged = '󰏫',
-						staged = '✓',
-						renamed = '➜',
-						untracked = '?',
-						deleted = '-',
-						ignored = '◌',
+						unstaged = '',
+						staged = '',
+						renamed = '',
+						untracked = '',
+						deleted = '',
+						ignored = '',
 					},
 				},
 				file_size = {

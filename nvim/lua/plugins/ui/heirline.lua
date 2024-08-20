@@ -149,7 +149,7 @@ return {
 
 			return {
 				condition = condition,
-				provider = '',
+				provider = '',
 				hl = { fg = 'visual' },
 			}
 		end
@@ -296,6 +296,7 @@ return {
 
 			{
 				provider = function(self)
+					-- TODO: add  icon
 					local title = self.title
 					local width = math.max(0, vim.api.nvim_win_get_width(self.winid) - 1)
 					return string_util.pad_centered(title, ' ', width)
@@ -414,7 +415,7 @@ return {
 
 			{
 				provider = function(self)
-					return '󰊢 ' .. self.status_dict.head
+					return ' ' .. self.status_dict.head
 				end,
 				hl = { bold = true },
 			},
@@ -487,7 +488,7 @@ return {
 			update = { 'TermOpen', 'TermClose', 'BufEnter' },
 
 			init = function(self)
-				self.icon = ''
+				self.icon = ''
 
 				local current_buftype = vim.api.nvim_get_option_value('buftype', { buf = 0 })
 				self.is_in_terminal = current_buftype == 'terminal'
