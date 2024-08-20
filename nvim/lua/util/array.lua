@@ -110,6 +110,32 @@ function M.contains(array, value)
 	return false
 end
 
+---@generic T
+---@param array T[]
+---@param predicate fun(value: T, index: integer): boolean
+---@return boolean
+function M.some(array, predicate)
+	for index, value in ipairs(array) do
+		if predicate(value, index) then
+			return true
+		end
+	end
+	return false
+end
+
+---@generic T
+---@param array T[]
+---@param predicate fun(value: T, index: integer): boolean
+---@return boolean
+function M.every(array, predicate)
+	for index, value in ipairs(array) do
+		if not predicate(value, index) then
+			return false
+		end
+	end
+	return true
+end
+
 ---@generic T, U
 ---@param array T[]
 ---@param map fun(item: T, index: integer): U
