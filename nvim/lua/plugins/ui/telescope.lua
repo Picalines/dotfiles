@@ -89,6 +89,10 @@ return {
 				oldfiles = {
 					previewer = false,
 				},
+
+				buffers = {
+					previewer = false,
+				},
 			},
 		}
 
