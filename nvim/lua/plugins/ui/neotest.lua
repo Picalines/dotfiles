@@ -105,6 +105,12 @@ return {
 				passed = '',
 				watching = '',
 			},
+
+			status = {
+				enabled = true,
+				signs = true,
+				virtual_text = false,
+			},
 		}
 
 		local function run_file_tests()
