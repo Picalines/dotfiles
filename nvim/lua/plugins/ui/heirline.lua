@@ -415,7 +415,9 @@ return {
 
 			{
 				provider = function(self)
-					return ' ' .. self.status_dict.head
+					local branch = tostring(self.status_dict.head)
+					branch = branch:gsub('^users/[^/]+/', '')
+					return ' ' .. branch
 				end,
 				hl = { bold = true },
 			},
