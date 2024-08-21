@@ -546,14 +546,28 @@ return {
 
 		local LSPActive = {
 			condition = h_conditions.lsp_attached,
-			update = { 'LspAttach', 'LspDetach' },
+			update = { 'LspAttach', 'LspDetach', 'BufEnter' },
 
-			provider = function()
-				local names = {}
-				for _, server in pairs(vim.lsp.get_clients { bufnr = 0 }) do
-					table.insert(names, server.name)
-				end
-				return table.concat(names, ' ') .. ' '
+			static = {
+				server_icons = {
+					biome = '',
+					csharp_ls = '󰌛',
+					cssls = '',
+					eslint = '󰱺',
+					jsonls = '',
+					lua_ls = '',
+					omnisharp = '󰈸',
+					pyright = '󰌠',
+					tailwindcss = '󱏿',
+					tsserver = '',
+				},
+			},
+
+			provider = function(self)
+				local names = array.map(vim.lsp.get_clients { bufnr = 0 }, function(server)
+					return self.server_icons[server.name] or server.name
+				end)
+				return table.concat(names, ' ')
 			end,
 
 			hl = { fg = 'search', bold = true },
