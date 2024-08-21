@@ -296,9 +296,9 @@ return {
 
 			{
 				provider = function(self)
-					local title = string.rep(' ', 2) .. self.title
+					local title = '  ' .. self.title
 					local width = math.max(0, vim.api.nvim_win_get_width(self.winid) - 1)
-					return string_util.pad_centered(title, ' ', width):gsub('  [^ ]', ' ')
+					return string_util.pad_centered(title, ' ', width):gsub('  ([^ ])', ' %1')
 				end,
 
 				hl = function(self)
