@@ -64,6 +64,23 @@ function M.cmd(...)
 	end
 end
 
+---@param timeout integer
+---@param callback fun()
+---@return fun() cancel
+function M.wait(timeout, callback)
+	local timer = vim.loop.new_timer()
+
+	timer:start(timeout, 0, function()
+		timer:stop()
+		timer:close()
+		vim.schedule(callback)
+	end)
+
+	return function()
+		timer:stop()
+	end
+end
+
 ---@generic T
 ---@param x T
 ---@return fun(...): T

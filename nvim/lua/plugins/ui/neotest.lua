@@ -13,6 +13,7 @@ return {
 	config = function()
 		local array = require 'util.array'
 		local keymap = require 'util.keymap'
+		local func = require 'util.func'
 
 		local neotest = require 'neotest'
 
@@ -52,20 +53,18 @@ return {
 				local actions = require 'telescope.actions'
 				local state = require 'telescope.actions.state'
 
-				vim.schedule(function()
-					telescope.find_files {
-						attach_mappings = function(prompt_bufnr)
-							actions.select_default:replace(function()
-								actions.close(prompt_bufnr)
-								local selected = state.get_selected_entry()
-								if selected and selected[1] then
-									on_selected(selected[1])
-								end
-							end)
-							return true
-						end,
-					}
-				end)
+				telescope.find_files {
+					attach_mappings = function(prompt_bufnr)
+						actions.select_default:replace(function()
+							actions.close(prompt_bufnr)
+							local selected = state.get_selected_entry()
+							if selected and selected[1] then
+								on_selected(selected[1])
+							end
+						end)
+						return true
+					end,
+				}
 			end
 
 			local build_spec = adapter.build_spec
@@ -77,12 +76,16 @@ return {
 				end)
 
 				if not has_config then
-					prompt_config_path(vim.schedule_wrap(function(path)
-						local lookup_key = vim.api.nvim_buf_get_name(0)
-						lookup_key = lookup_key:gsub('tests/.*', 'tests')
-						config_file_lookup[lookup_key] = path
-					end))
-					return nil
+					-- NOTE: telescope glitches sometimes without the delay
+					func.wait(100, function()
+						prompt_config_path(vim.schedule_wrap(function(path)
+							local lookup_key = vim.api.nvim_buf_get_name(0)
+							lookup_key = lookup_key:gsub('tests/.*', 'tests')
+							config_file_lookup[lookup_key] = path
+						end))
+					end)
+
+					spec.command = {}
 				end
 
 				return spec
