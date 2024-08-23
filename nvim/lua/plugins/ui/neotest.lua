@@ -43,13 +43,13 @@ return {
 			})
 
 			local adapter = require 'neotest-jest' {
-				jestConfigFile = function()
-					local path = vim.fn.expand '%:p:h'
+				jestConfigFile = function(path)
 					local root_config = jest_util.getJestConfig(path)
 					if root_config then
 						return root_config
 					end
 
+					path = vim.fn.fnamemodify(path, ':p')
 					local cwd = vim.fn.getcwd()
 
 					while #path >= #cwd and path ~= '.' do
