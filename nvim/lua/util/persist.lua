@@ -35,7 +35,7 @@ end
 ---@return T
 function M.get_item(key, default)
 	local stored_value = M._storage[key]
-	if stored_value ~= nil then
+	if type(default) == type(stored_value) then
 		return stored_value
 	end
 
@@ -43,7 +43,7 @@ function M.get_item(key, default)
 end
 
 ---@param key string
----@param value number|string|boolean
+---@param value any
 function M.save_item(key, value)
 	M._storage[key] = value
 	M.save()
