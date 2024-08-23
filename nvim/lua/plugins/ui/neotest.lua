@@ -12,15 +12,35 @@ return {
 
 	config = function()
 		local array = require 'util.array'
-		local keymap = require 'util.keymap'
 		local func = require 'util.func'
+		local keymap = require 'util.keymap'
+		local persist = require 'util.persist'
 
 		local neotest = require 'neotest'
 
 		local function make_jest_adapter()
 			local jest_util = require 'neotest-jest.jest-util'
 
-			local config_file_lookup = {}
+			---@type table<string, string>
+			local config_file_lookup = persist.get_item('neotest.jest.configs', {})
+
+			vim.api.nvim_create_user_command('NeotestJestConfigPaths', function(opts)
+				opts.fargs = func.default_opts(opts.fargs, { 'show' })
+				local action = opts.fargs[1]
+
+				if action == 'show' then
+					print(vim.inspect(config_file_lookup))
+				elseif action == 'clear' then
+					config_file_lookup = {}
+				end
+
+				persist.save_item('neotest.jest.configs', config_file_lookup)
+			end, {
+				nargs = '?',
+				complete = function()
+					return { 'show', 'clear' }
+				end,
+			})
 
 			local adapter = require 'neotest-jest' {
 				jestConfigFile = function()
@@ -82,6 +102,7 @@ return {
 							local lookup_key = vim.api.nvim_buf_get_name(0)
 							lookup_key = lookup_key:gsub('tests/.*', 'tests')
 							config_file_lookup[lookup_key] = path
+							persist.save_item('neotest.jest.configs', config_file_lookup)
 						end))
 					end)
 
