@@ -70,7 +70,7 @@ return {
 		local BufferIcon = {
 			init = function(self)
 				local icons_ok, icons = pcall(require, 'nvim-web-devicons')
-				if icons_ok then
+				if #self.filename > 0 and icons_ok then
 					local filename = self.filename
 					local extension = vim.fn.fnamemodify(filename, ':e')
 					self.icon, self.icon_color = icons.get_icon_color(filename, extension, { default = true })
@@ -79,7 +79,7 @@ return {
 				end
 			end,
 			provider = function(self)
-				return self.icon or ''
+				return self.icon or ''
 			end,
 			hl = function(self)
 				return { fg = self.icon_color }
