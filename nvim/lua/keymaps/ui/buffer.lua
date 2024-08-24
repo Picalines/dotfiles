@@ -35,21 +35,11 @@ end
 
 keymap.declare {
 	[{ 'n', silent = true }] = {
-		['<leader>w'] = { '<Cmd>silent w<CR>', 'Write file' },
-		['<leader>W'] = { '<Cmd>wa!<CR>', 'Write all' },
-		['<leader><leader>q'] = { '<Cmd>wa! | :qa!<CR>', 'Write all and quit' },
-
 		['<C-b>e'] = { '<Cmd>enew<CR>', 'Make empty buffer' },
 		['<C-b>r'] = { '<Cmd>e<CR>', 'Reload buffer' },
 		['<C-b>c'] = { close_buffer, 'Close buffer' },
 		['<C-b>C'] = { close_all_buffers, 'Close all buffers' },
 		[']b'] = { '<Cmd>bn<CR>', 'Next buffer' },
 		['[b'] = { '<Cmd>bp<CR>', 'Prev buffer' },
-
-		['<leader>s'] = { ':%s/', 'Substitute' },
-	},
-
-	[{ 'v', silent = true }] = {
-		['<leader>s'] = { ':s/', 'Substitute' },
 	},
 }
