@@ -27,20 +27,21 @@ return {
 
 		local function setup_colors()
 			return {
-				normal = hl.attr('Normal', 'fg'),
-				visual = hl.attr('@comment', 'fg'),
-				search = hl.attr('Search', 'fg'),
-				win_separator = hl.attr('WinSeparator', 'fg'),
-				muted = hl.attr('@comment', 'fg'),
 				attribute = hl.attr('@attribute', 'fg'),
-				float_border = hl.attr('FloatBorder', 'fg'),
 				diag_error = hl.attr('DiagnosticError', 'fg'),
-				diag_warn = hl.attr('DiagnosticWarn', 'fg'),
-				diag_info = hl.attr('DiagnosticInfo', 'fg'),
 				diag_hint = hl.attr('DiagnosticHint', 'fg'),
-				diff_del = hl.attr('@diff.minus', 'fg'),
+				diag_info = hl.attr('DiagnosticInfo', 'fg'),
+				diag_warn = hl.attr('DiagnosticWarn', 'fg'),
 				diff_add = hl.attr('@diff.plus', 'fg'),
 				diff_change = hl.attr('@diff.delta', 'fg'),
+				diff_del = hl.attr('@diff.minus', 'fg'),
+				float_border = hl.attr('FloatBorder', 'fg'),
+				keyword = hl.attr('@keyword', 'fg'),
+				muted = hl.attr('@comment', 'fg'),
+				normal = hl.attr('Normal', 'fg'),
+				search = hl.attr('Search', 'fg'),
+				visual = hl.attr('@comment', 'fg'),
+				win_separator = hl.attr('WinSeparator', 'fg'),
 			}
 		end
 
@@ -391,10 +392,10 @@ return {
 			end,
 
 			provider = function()
-				return ' ' .. vim.fn.reg_recording()
+				return ' ' .. vim.fn.reg_recording()
 			end,
 
-			hl = { fg = 'search', bold = true },
+			hl = { fg = 'keyword', bold = true },
 
 			update = {
 				'RecordingEnter',
