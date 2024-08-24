@@ -41,9 +41,12 @@ return {
 
 		autocmd.per_filetype({
 			'help',
+			'lazy',
 			'neo-tree',
 			'neo-tree-popup',
-			'lazy',
+			'neotest-output',
+			'neotest-output-panel',
+			'neotest-summary',
 			'noice',
 		}, disable_mini_indentscope)
 
