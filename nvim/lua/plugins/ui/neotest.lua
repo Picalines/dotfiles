@@ -12,6 +12,7 @@ return {
 
 	config = function()
 		local array = require 'util.array'
+		local autocmd = require 'util.autocmd'
 		local func = require 'util.func'
 		local keymap = require 'util.keymap'
 		local persist = require 'util.persist'
@@ -121,8 +122,36 @@ return {
 				make_jest_adapter(),
 			},
 
+			status = {
+				enabled = true,
+				signs = true,
+				virtual_text = false,
+			},
+
+			output = {
+				enabled = true,
+				open_on_run = false,
+			},
+
+			---@diagnostic disable-next-line: missing-fields
+			summary = {
+				enabled = true,
+				follow = true,
+				animated = false,
+				---@diagnostic disable-next-line: missing-fields
+				mappings = {
+					expand = 'l',
+					expand_all = 'L',
+					output = 'o',
+					jumpto = '<Cr>',
+					stop = 's',
+					next_failed = ']f',
+					prev_failed = '[f',
+				},
+			},
+
 			icons = {
-				unknown = '',
+				unknown = '',
 				running = '',
 				skipped = '',
 				failed = '',
@@ -130,10 +159,12 @@ return {
 				watching = '',
 			},
 
-			status = {
-				enabled = true,
-				signs = true,
-				virtual_text = false,
+			highlights = {
+				adapter_name = '@attribute',
+				dir = 'Directory',
+				namespace = 'Directory',
+				file = 'Normal',
+				expand_marker = 'NeotestIndent',
 			},
 		}
 
@@ -146,8 +177,27 @@ return {
 				['<leader>tr'] = { neotest.run.run, 'Test: run nearest' },
 				['<leader>tf'] = { run_file_tests, 'Test: run file' },
 				['<leader>ts'] = { neotest.run.stop, 'Test: stop nearest' },
-				['<leader>to'] = { neotest.output.open, 'Test: output' },
+				['<leader>tl'] = { neotest.summary.toggle, 'Test: list' },
+				['<leader>to'] = { neotest.output_panel.toggle, 'Test: output' },
 			},
 		}
+
+		autocmd.per_filetype({ 'neotest-summary' }, function(event)
+			keymap.declare {
+				[{ 'n', buffer = event.buf }] = {
+					['q'] = { neotest.summary.close, 'Close panel' },
+					['<leader>tl'] = { neotest.summary.close, 'Close panel' },
+				},
+			}
+		end)
+
+		autocmd.per_filetype({ 'neotest-output-panel' }, function(event)
+			keymap.declare {
+				[{ 'n', buffer = event.buf }] = {
+					['q'] = { neotest.output_panel.close, 'Close panel' },
+					['<leader>to'] = { neotest.output_panel.close, 'Close panel' },
+				},
+			}
+		end)
 	end,
 }
