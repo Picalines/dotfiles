@@ -8,9 +8,17 @@ return {
 		local array = require 'util.array'
 		local starter = require 'mini.starter'
 
+		---@class StarterItem
+		---@field [1] string name
+		---@field [2] string action
+
 		---@param section_name string
-		---@param child_items string[][]
+		---@param child_items StarterItem[] | (fun(): StarterItem[] | nil)
 		local function new_section(section_name, child_items)
+			if type(child_items) == 'function' then
+				child_items = child_items() or {}
+			end
+
 			return array.map(child_items, function(item)
 				local name, action = item[1], item[2]
 				return { section = section_name, name = name, action = action }
@@ -24,7 +32,8 @@ return {
 
 			items = {
 				new_section('Files', {
-					{ 'Old Files', 'Telescope oldfiles' },
+					{ 'Explore Files', 'Neotree filesystem reveal' },
+					{ 'Recent Files', 'Telescope oldfiles' },
 					{ 'Find Files', 'Telescope find_files' },
 					{ 'Change Directory', string.format('Neotree filesystem current %s', app.os() == 'windows' and '/' or '~') },
 				}),
@@ -32,6 +41,24 @@ return {
 					{ 'New Buffer', 'enew' },
 					{ 'Quit', 'wqa!' },
 				}),
+				new_section('Workspaces', function()
+					local ok, workspaces = pcall(require, 'workspaces')
+					if not ok then
+						return
+					end
+
+					return array.concat(
+						{
+							{ 'Open Workspace', 'WorkspacesOpen' },
+						},
+						array.map(workspaces.get(), function(ws, index)
+							return {
+								string.format('%d. %s', index, ws.name),
+								string.format('WorkspacesOpen %s', ws.name),
+							}
+						end)
+					)
+				end),
 				new_section('Manage', {
 					{ 'Lazy', 'Lazy' },
 					{ 'Mason', 'Mason' },
