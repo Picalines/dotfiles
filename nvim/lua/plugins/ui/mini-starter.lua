@@ -39,7 +39,8 @@ return {
 				}),
 				new_section('Editor', {
 					{ 'New Buffer', 'enew' },
-					{ 'Quit', 'wqa!' },
+					{ 'Theme', 'PickColorScheme' },
+					{ 'Quit', 'wa | qa!' },
 				}),
 				new_section('Workspaces', function()
 					local ok, workspaces = pcall(require, 'workspaces')
@@ -62,14 +63,13 @@ return {
 				new_section('Manage', {
 					{ 'Lazy', 'Lazy' },
 					{ 'Mason', 'Mason' },
-					{ 'Theme', 'PickColorScheme' },
 				}),
 			},
 
 			silent = false,
 
 			content_hooks = {
-				starter.gen_hook.adding_bullet(),
+				starter.gen_hook.adding_bullet ' ',
 				starter.gen_hook.aligning('center', 'center'),
 			},
 
