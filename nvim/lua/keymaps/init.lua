@@ -3,8 +3,6 @@ local app = require 'util.app'
 require 'keymaps.text-editing.command'
 require 'keymaps.text-editing.insert'
 require 'keymaps.text-editing.motion'
-require 'keymaps.text-editing.visual'
-require 'keymaps.text-editing.void'
 
 if app.client() == 'vscode' then
 	require 'keymaps.ui.vscode'

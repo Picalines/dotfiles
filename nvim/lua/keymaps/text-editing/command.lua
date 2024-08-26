@@ -7,12 +7,20 @@ keymap.declare {
 		['<leader><leader>q'] = { '<Cmd>wa | qa!<CR>', 'Write all and quit' },
 
 		['<leader>s'] = { ':%s/', 'Substitute' },
+		['<leader>g'] = { ':%g/', 'Global command' },
 	},
 
 	[{ 'v' }] = {
 		['<leader>s'] = { ':s/', 'Substitute' },
+		['<leader>g'] = { ':g/', 'Global command' },
 
 		['<leader>o'] = { ':sort<CR>', 'Sort' },
 		['<leader>O'] = { ':sort!<CR>', 'Sort (reversed)' },
+
+		['p'] = '"_dP',
+	},
+
+	[{ 'n', 'v' }] = {
+		['<leader>x'] = { '"_', 'Void register' },
 	},
 }
