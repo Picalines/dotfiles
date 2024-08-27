@@ -22,11 +22,17 @@ function M.save()
 	local file = io.open(PERSIST_PATH, 'w+')
 	if not file then
 		print(PERSIST_PATH .. ': failed to write')
-		return
+		return false
 	end
 
-	file:write(vim.json.encode(M._storage))
+	local jsons = vim.json.encode(M._storage)
+	if jsons == '[]' then
+		jsons = '{}'
+	end
+
+	file:write(jsons)
 	file:close()
+	return true
 end
 
 ---@generic T
@@ -48,5 +54,26 @@ function M.save_item(key, value)
 	M._storage[key] = value
 	M.save()
 end
+
+function M.clear()
+	M._storage = {}
+	M.save()
+end
+
+vim.api.nvim_create_user_command('Persist', function(opts)
+	local action = opts.fargs[1]
+
+	if action == 'clear' then
+		M.clear()
+		print 'persist file cleared'
+	elseif action == 'open_file' then
+		vim.cmd.e(PERSIST_PATH)
+	end
+end, {
+	nargs = 1,
+	complete = function()
+		return { 'clear', 'open_file' }
+	end,
+})
 
 return M
