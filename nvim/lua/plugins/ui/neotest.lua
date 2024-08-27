@@ -168,15 +168,25 @@ return {
 			},
 		}
 
-		local function run_file_tests()
-			neotest.run.run(vim.fn.expand '%')
+		local function with_file_path(fn)
+			return function(...)
+				return fn(vim.fn.expand '%', ...)
+			end
+		end
+
+		local function with_output_panel_clear(fn)
+			return function(...)
+				neotest.output_panel.clear()
+				fn(...)
+			end
 		end
 
 		keymap.declare {
 			[{ 'n' }] = {
-				['<leader>tr'] = { neotest.run.run, 'Test: run nearest' },
-				['<leader>tf'] = { run_file_tests, 'Test: run file' },
-				['<leader>ts'] = { neotest.run.stop, 'Test: stop nearest' },
+				['<leader>tr'] = { with_output_panel_clear(neotest.run.run), 'Test: run nearest' },
+				['<leader>ts'] = { with_output_panel_clear(with_file_path(neotest.run.run)), 'Test: run suite' },
+				['<leader>tc'] = { neotest.run.stop, 'Test: cancel nearest' },
+				['<leader>tC'] = { with_file_path(neotest.run.stop), 'Test: cancel suite' },
 				['<leader>tl'] = { neotest.summary.toggle, 'Test: list' },
 				['<leader>to'] = { neotest.output_panel.toggle, 'Test: output' },
 			},
