@@ -52,7 +52,7 @@ return {
 						{
 							{ 'Open Workspace', 'WorkspacesOpen' },
 						},
-						array.map(workspaces.get(), function(ws, index)
+						array.map(array.take(workspaces.get(), 5), function(ws, index)
 							return {
 								string.format('%d. %s', index, ws.name),
 								string.format('WorkspacesOpen %s', ws.name),

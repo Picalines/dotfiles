@@ -188,6 +188,18 @@ function M.concat(...)
 	return whole_array
 end
 
+---@generic T
+---@param array T[]
+---@param max_length integer
+---@return T[]
+function M.take(array, max_length)
+	local array_part = {}
+	for i = 1, math.min(#array, max_length) do
+		array_part[i] = array[i]
+	end
+	return array_part
+end
+
 ---@generic T, S
 ---@param array T[]
 ---@param separator S
