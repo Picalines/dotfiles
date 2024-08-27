@@ -58,8 +58,10 @@ return {
 				end)
 			end
 
-			terminal.run(shell_cmd, { layout = layout })
-			vim.schedule(func.cmd 'startinsert')
+			vim.schedule(function()
+				terminal.run(shell_cmd, { layout = layout })
+				vim.cmd 'startinsert'
+			end)
 		end
 
 		local function kill_current_terminal()
