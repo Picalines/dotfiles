@@ -119,7 +119,7 @@ return {
 
 			if line_type == 'status' then
 				condition = function()
-					return not h_conditions.is_git_repo() and vim.bo.buftype ~= 'prompt' and vim.bo.modified
+					return vim.bo.buftype ~= 'prompt' and vim.bo.modified
 				end
 			elseif line_type == 'tab' then
 				condition = function(self)
