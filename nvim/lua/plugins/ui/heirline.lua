@@ -259,8 +259,8 @@ return {
 
 		local BufferLine = h_util.make_buflist(
 			Buffer,
-			{ provider = '', hl = { fg = 'win_separator' } },
-			{ provider = '', hl = { fg = 'win_separator' } },
+			{ provider = ' ', hl = { fg = 'win_separator' } },
+			{ provider = ' ', hl = { fg = 'win_separator' } },
 			function()
 				return buflist_cache
 			end,
