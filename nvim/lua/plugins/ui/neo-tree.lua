@@ -11,7 +11,9 @@ return {
 		-- FIXME: there's a bug when you use the :cd command without anything else
 
 		local app = require 'util.app'
+		local autocmd = require 'util.autocmd'
 		local func = require 'util.func'
+		local hl = require 'util.highlight'
 		local keymap = require 'util.keymap'
 		local nt_fs = require 'neo-tree.sources.filesystem.commands'
 
@@ -61,7 +63,7 @@ return {
 				},
 				modified = {
 					symbol = '+',
-					highlight = '@diff.plus',
+					highlight = 'NeoTreeModified',
 				},
 				name = {
 					trailing_slash = false,
@@ -222,5 +224,9 @@ return {
 				},
 			},
 		}
+
+		autocmd.on_colorscheme('*', function()
+			vim.api.nvim_set_hl(0, 'NeoTreeModified', { fg = hl.attr('@diff.plus', 'fg'), bg = 'NONE' })
+		end)
 	end,
 }
