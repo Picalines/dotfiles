@@ -4,6 +4,7 @@ local M = {}
 
 ---@class autocmd_event
 ---@field buf integer
+---@field data any
 
 local on_group = vim.api.nvim_create_augroup('autocmd.on', { clear = true })
 
