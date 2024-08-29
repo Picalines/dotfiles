@@ -17,7 +17,7 @@ return {
 
 		keymap.declare {
 			[{ 'n' }] = {
-				['cI'] = { treesj.toggle, 'Change indentation' },
+				['<leader>j'] = { treesj.toggle, 'Join Treesitter nodes' },
 			},
 		}
 	end,
