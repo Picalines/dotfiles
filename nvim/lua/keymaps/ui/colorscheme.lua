@@ -1,4 +1,5 @@
 local keymap = require 'util.keymap'
+local autocmd = require 'util.autocmd'
 local persist = require 'util.persist'
 
 local function open_colorscheme_picker()
@@ -62,10 +63,16 @@ vim.api.nvim_create_user_command('PickColorScheme', open_colorscheme_picker, {})
 
 vim.o.background = persist.get_item('background', 'dark')
 
-local function toggle_background()
-	vim.o.background = vim.o.background == 'dark' and 'light' or 'dark'
+local function persist_background()
 	persist.save_item('background', vim.o.background)
 end
+
+local function toggle_background()
+	vim.o.background = vim.o.background == 'dark' and 'light' or 'dark'
+	persist_background()
+end
+
+autocmd.on_colorscheme('*', persist_background)
 
 keymap.declare {
 	[{ 'n', silent = true }] = {
