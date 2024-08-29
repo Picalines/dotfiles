@@ -6,4 +6,4 @@ vim.go.breakindent = true
 vim.go.showbreak = '󱞩'
 vim.go.linebreak = true
 
-autocmd.per_filetype({ 'javascriptreact', 'typescriptreact', 'markdown' }, func.cmd 'setlocal wrap')
+autocmd.on_filetype({ 'javascriptreact', 'typescriptreact', 'markdown' }, func.cmd 'setlocal wrap')

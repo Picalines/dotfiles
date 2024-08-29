@@ -9,7 +9,7 @@ keymap.declare {
 	},
 }
 
-autocmd.per_filetype('qf', function(event)
+autocmd.on_filetype('qf', function(event)
 	vim.bo[event.buf].modifiable = true
 
 	keymap.declare {

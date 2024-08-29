@@ -7,4 +7,4 @@ vim.go.equalalways = true
 
 vim.go.scrolloff = 8
 
-autocmd.per_filetype('help', func.cmd 'wincmd L')
+autocmd.on_filetype('help', func.cmd 'wincmd L')

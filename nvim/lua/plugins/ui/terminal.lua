@@ -90,7 +90,7 @@ return {
 			},
 		}
 
-		autocmd.on_terminal_open(function(event)
+		autocmd.on('TermOpen', '*', function(event)
 			keymap.declare {
 				[{ buffer = event.buf }] = {
 					[{ 'n', nowait = true }] = {
@@ -111,13 +111,21 @@ return {
 			}
 		end)
 
-		vim.api.nvim_create_autocmd('WinLeave', {
-			pattern = 'term://*',
-			callback = function()
-				if is_float_win() then
-					close_float_term()
-				end
-			end,
-		})
+		autocmd.on('WinLeave', 'term://*', function()
+			if is_float_win() then
+				close_float_term()
+			end
+		end)
+
+		autocmd.on({ 'TermOpen', 'TermEnter' }, '*', function(event)
+			local win = vim.fn.bufwinid(event.buf)
+			if win == -1 then
+				return
+			end
+
+			vim.api.nvim_set_option_value('number', false, { win = win, scope = 'local' })
+			vim.api.nvim_set_option_value('relativenumber', false, { win = win, scope = 'local' })
+			vim.api.nvim_set_option_value('signcolumn', 'no', { win = win, scope = 'local' })
+		end)
 	end,
 }

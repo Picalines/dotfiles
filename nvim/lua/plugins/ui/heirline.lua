@@ -251,7 +251,7 @@ return {
 			callback = update_buflist,
 		})
 
-		autocmd.on_user_event('LazyLoad', function(event)
+		autocmd.on_user('LazyLoad', function(event)
 			if event.data == 'heirline.nvim' then
 				update_buflist()
 			end

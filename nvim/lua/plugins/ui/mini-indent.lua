@@ -39,7 +39,7 @@ return {
 			vim.b[event.buf].miniindentscope_disable = true
 		end
 
-		autocmd.per_filetype({
+		autocmd.on_filetype({
 			'help',
 			'lazy',
 			'neo-tree',
@@ -50,6 +50,6 @@ return {
 			'noice',
 		}, disable_mini_indentscope)
 
-		autocmd.on_terminal_open(disable_mini_indentscope)
+		autocmd.on({ 'TermOpen', 'TermEnter' }, '*', disable_mini_indentscope)
 	end,
 }

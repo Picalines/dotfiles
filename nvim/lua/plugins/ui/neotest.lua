@@ -248,7 +248,7 @@ return {
 			},
 		}
 
-		autocmd.per_filetype({ 'neotest-summary' }, function(event)
+		autocmd.on_filetype('neotest-summary', function(event)
 			keymap.declare {
 				[{ 'n', buffer = event.buf }] = {
 					['q'] = { neotest.summary.close, 'Close panel' },
@@ -257,7 +257,7 @@ return {
 			}
 		end)
 
-		autocmd.per_filetype({ 'neotest-output-panel' }, function(event)
+		autocmd.on_filetype('neotest-output-panel', function(event)
 			keymap.declare {
 				[{ 'n', buffer = event.buf }] = {
 					['q'] = { neotest.output_panel.close, 'Close panel' },
