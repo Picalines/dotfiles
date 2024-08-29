@@ -81,6 +81,24 @@ function M.wait(timeout, callback)
 	end
 end
 
+---@param timeout integer
+---@param fn fun()
+function M.debounce(timeout, fn)
+	local timer = vim.loop.new_timer()
+
+	return function(...)
+		local fn_args = { ... }
+		timer:stop()
+		timer:start(
+			timeout,
+			0,
+			vim.schedule_wrap(function()
+				fn(unpack(fn_args))
+			end)
+		)
+	end
+end
+
 ---@generic T
 ---@param x T
 ---@return fun(...): T

@@ -1,4 +1,5 @@
 local io = require 'io'
+local func = require 'util.func'
 
 local M = {}
 
@@ -18,11 +19,11 @@ function M.load()
 	file:close()
 end
 
-function M.save()
+M.save = func.debounce(500, function()
 	local file = io.open(PERSIST_PATH, 'w+')
 	if not file then
 		print(PERSIST_PATH .. ': failed to write')
-		return false
+		return
 	end
 
 	local jsons = vim.json.encode(M._storage)
@@ -32,8 +33,7 @@ function M.save()
 
 	file:write(jsons)
 	file:close()
-	return true
-end
+end)
 
 ---@generic T
 ---@param key string
@@ -48,11 +48,14 @@ function M.get_item(key, default)
 	return default
 end
 
+---@generic T
 ---@param key string
----@param value any
+---@param value T
+---@return T
 function M.save_item(key, value)
 	M._storage[key] = value
 	M.save()
+	return value
 end
 
 function M.clear()
