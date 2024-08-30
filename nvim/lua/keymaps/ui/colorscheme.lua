@@ -1,6 +1,4 @@
 local keymap = require 'util.keymap'
-local autocmd = require 'util.autocmd'
-local persist = require 'util.persist'
 
 local function open_colorscheme_picker()
 	local actions = require 'telescope.actions'
@@ -19,11 +17,6 @@ local function open_colorscheme_picker()
 		local colorscheme = current_entry[1]
 		vim.cmd.colorscheme(colorscheme)
 		return colorscheme
-	end
-
-	local function select_colorscheme()
-		local colorscheme = update_colorscheme()
-		persist.save_item('colorscheme', colorscheme)
 	end
 
 	local function reset_colorscheme()
@@ -49,7 +42,7 @@ local function open_colorscheme_picker()
 
 			actions.select_default:replace(function()
 				actions.close(prompt_bufnr)
-				select_colorscheme()
+				update_colorscheme()
 			end)
 
 			return true
@@ -61,18 +54,9 @@ end
 
 vim.api.nvim_create_user_command('PickColorScheme', open_colorscheme_picker, {})
 
-vim.o.background = persist.get_item('background', 'dark')
-
-local function persist_background()
-	persist.save_item('background', vim.o.background)
-end
-
 local function toggle_background()
 	vim.o.background = vim.o.background == 'dark' and 'light' or 'dark'
-	persist_background()
 end
-
-autocmd.on_colorscheme('*', persist_background)
 
 keymap.declare {
 	[{ 'n', silent = true }] = {

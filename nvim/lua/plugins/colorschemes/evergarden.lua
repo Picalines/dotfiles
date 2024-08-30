@@ -32,6 +32,7 @@ return {
 
 		autocmd.on_colorscheme('evergarden', function()
 			vim.cmd 'hi NoiceCursor gui=inverse'
+			vim.o.background = 'dark'
 			hl.link('NormalFloat', 'Normal')
 		end)
 	end,
