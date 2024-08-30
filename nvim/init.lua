@@ -17,6 +17,6 @@ vim.opt.rtp:prepend(lazypath)
 local persist = require 'util.persist'
 pcall(persist.load)
 
-require 'plugins'
-require 'settings'
-require 'keymaps'
+pcall(require, 'plugins')
+pcall(require, 'settings')
+pcall(require, 'keymaps')
