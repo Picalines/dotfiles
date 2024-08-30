@@ -53,8 +53,11 @@ end
 ---@param value T
 ---@return T
 function M.save_item(key, value)
-	M._storage[key] = value
-	M.save()
+	if M._storage[key] ~= value then
+		M._storage[key] = value
+		M.save()
+	end
+
 	return value
 end
 
