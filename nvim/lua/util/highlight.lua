@@ -81,7 +81,7 @@ function M.clear(target_hl, attrs, opts)
 	elseif attrs == 'bg' then
 		new_attrs = { bg = 'NONE' }
 	else
-		new_attrs = { fg = 'NONE', bg = 'NONE' }
+		new_attrs = {}
 	end
 
 	vim.api.nvim_set_hl(opts.ns_id, target_hl, new_attrs)
