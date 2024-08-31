@@ -29,15 +29,15 @@ return {
 			autoclose = true,
 		}
 
-		local function is_float_win()
-			local winid = vim.api.nvim_get_current_win()
-			local config = vim.api.nvim_win_get_config(winid)
-			return not not config.zindex
-		end
+		local last_terminal_index
+
+		autocmd.on('BufEnter', 'term://*', function()
+			last_terminal_index = terminal.current_term_index()
+		end)
 
 		local function toggle_terminal()
 			if active_terminals:len() > 0 then
-				terminal.toggle()
+				terminal.toggle(last_terminal_index, float_layout)
 			else
 				terminal.run(shell_cmd)
 				vim.schedule(func.cmd 'startinsert')
@@ -50,30 +50,18 @@ return {
 			end
 
 			local current_term = terminal.get_current_term()
-			local layout
 			if current_term then
-				layout = tbl.copy_deep(current_term.layout)
-				vim.schedule(function()
-					current_term:close()
-				end)
-			end
+				local layout = tbl.copy_deep(current_term.layout)
 
-			vim.schedule(function()
+				current_term:close()
 				terminal.run(shell_cmd, { layout = layout })
-				vim.cmd 'startinsert'
-			end)
+			end
 		end
 
 		local function kill_current_terminal()
 			local term = terminal.get_current_term()
 			if term then
 				vim.fn.jobstop(term.jobid)
-			end
-		end
-
-		local function close_float_term()
-			if is_float_win() then
-				terminal.toggle()
 			end
 		end
 
