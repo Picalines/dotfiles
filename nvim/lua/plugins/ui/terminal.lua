@@ -92,21 +92,20 @@ return {
 
 		autocmd.on('TermOpen', '*', function(event)
 			keymap.declare {
-				[{ buffer = event.buf }] = {
-					[{ 'n', nowait = true }] = {
-						['<Esc>'] = { close_float_term, 'Close floating terminal' },
+				[{ 'n', nowait = true, buffer = event.buf }] = {
+					['<Esc>'] = { terminal_map.toggle, 'Close floating terminal' },
+					['q'] = { terminal_map.toggle, 'Close floating terminal' },
 
-						['<C-t>'] = { new_terminal_tab, 'New terminal' },
-						['<C-c>'] = { kill_current_terminal, 'Kill terminal process' },
-						['<Tab>'] = { terminal_map.cycle_next, 'Cycle next terminal' },
-						['<S-Tab>'] = { terminal_map.cycle_prev, 'Cycle next terminal' },
+					['<C-t>'] = { new_terminal_tab, 'New terminal' },
+					['<C-c>'] = { kill_current_terminal, 'Kill terminal process' },
+					['<Tab>'] = { terminal_map.cycle_next, 'Cycle next terminal' },
+					['<S-Tab>'] = { terminal_map.cycle_prev, 'Cycle next terminal' },
 
-						['<A-h>'] = { terminal_map.move { open_cmd = 'exe "topleft " . (&columns/4) . "vnew"' }, 'Move: left split' },
-						['<A-j>'] = { terminal_map.move { open_cmd = 'bot new | exe "resize " . (&lines/4)' }, 'Move: bottom split' },
-						['<A-k>'] = { terminal_map.move { open_cmd = 'top new | exe "resize " . (&lines/4)' }, 'Move: top split' },
-						['<A-l>'] = { terminal_map.move { open_cmd = 'exe "botright " . (&columns/4) . "vnew"' }, 'Move: right split' },
-						['<A-f>'] = { terminal_map.move(float_layout), 'Move: float' },
-					},
+					['<A-h>'] = { terminal_map.move { open_cmd = 'exe "topleft " . (&columns/4) . "vnew"' }, 'Move: left split' },
+					['<A-j>'] = { terminal_map.move { open_cmd = 'bot new | exe "resize " . (&lines/4)' }, 'Move: bottom split' },
+					['<A-k>'] = { terminal_map.move { open_cmd = 'top new | exe "resize " . (&lines/4)' }, 'Move: top split' },
+					['<A-l>'] = { terminal_map.move { open_cmd = 'exe "botright " . (&columns/4) . "vnew"' }, 'Move: right split' },
+					['<A-f>'] = { terminal_map.move(float_layout), 'Move: float' },
 				},
 			}
 		end)
