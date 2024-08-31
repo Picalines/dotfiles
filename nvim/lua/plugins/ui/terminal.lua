@@ -111,13 +111,7 @@ return {
 			}
 		end)
 
-		autocmd.on('WinLeave', 'term://*', function()
-			if is_float_win() then
-				close_float_term()
-			end
-		end)
-
-		autocmd.on({ 'TermOpen', 'TermEnter' }, '*', function(event)
+		autocmd.on({ 'TermOpen', 'BufEnter' }, 'term://*', function(event)
 			local win = vim.fn.bufwinid(event.buf)
 			if win == -1 then
 				return
