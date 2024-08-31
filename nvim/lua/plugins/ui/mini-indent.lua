@@ -50,6 +50,6 @@ return {
 			'noice',
 		}, disable_mini_indentscope)
 
-		autocmd.on({ 'TermOpen', 'TermEnter' }, '*', disable_mini_indentscope)
+		autocmd.on({ 'TermOpen', 'BufEnter' }, 'term://*', disable_mini_indentscope)
 	end,
 }
