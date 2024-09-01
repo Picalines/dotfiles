@@ -4,6 +4,7 @@ local M = {}
 
 ---@class autocmd_event
 ---@field buf integer
+---@field match string
 ---@field data any
 
 local on_group = vim.api.nvim_create_augroup('autocmd.on', { clear = true })
@@ -41,8 +42,7 @@ function M.on_filetype(filetypes, callback)
 	filetypes = array.copy(filetypes)
 
 	return M.on('FileType', '*', function(event)
-		local filetype = vim.api.nvim_get_option_value('filetype', { buf = event.buf })
-		if array.contains(filetypes, filetype) then
+		if array.contains(filetypes, event.match) then
 			callback(event)
 		end
 	end)
