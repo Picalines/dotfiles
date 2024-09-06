@@ -560,7 +560,7 @@ return {
 					omnisharp = '󰈸',
 					pyright = '󰌠',
 					tailwindcss = '󱏿',
-					tsserver = '',
+					ts_ls = '',
 				},
 			},
 
