@@ -9,9 +9,12 @@ return {
 
 	config = function(_, opts)
 		local hl = require 'util.highlight'
+		local autocmd = require 'util.autocmd'
 
 		require('mini.trailspace').setup(opts)
 
-		hl.link('MiniTrailspace', 'Visual')
+		autocmd.on_colorscheme('*', function()
+			hl.link('MiniTrailspace', 'Visual')
+		end)
 	end,
 }
