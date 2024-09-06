@@ -52,19 +52,25 @@ return {
 	},
 
 	config = function()
-		local keymap = require 'util.keymap'
 		local array = require 'util.array'
-		local tbl = require 'util.table'
 		local func = require 'util.func'
+		local keymap = require 'util.keymap'
 		local persist = require 'util.persist'
+		local signal = require 'util.signal'
+		local tbl = require 'util.table'
 
-		vim.lsp.inlay_hint.enable(persist.get_item('lsp_inlay_hints', false))
+		local lsp_inlay_enabled = signal.new(persist.get_item('lsp_inlay_hints', false))
 
-		local function toggle_inlay_hints()
-			---@diagnostic disable-next-line: missing-parameter
-			local is_enabled = not vim.lsp.inlay_hint.is_enabled()
+		signal.watch(function()
+			local is_enabled = lsp_inlay_enabled()
 			vim.lsp.inlay_hint.enable(is_enabled)
 			persist.save_item('lsp_inlay_hints', is_enabled)
+		end)
+
+		vim.lsp.inlay_hint.enable()
+
+		local function toggle_inlay_hints()
+			local is_enabled = lsp_inlay_enabled(not lsp_inlay_enabled())
 			print('Inlay hints: ' .. (is_enabled and 'on' or 'off'))
 		end
 
