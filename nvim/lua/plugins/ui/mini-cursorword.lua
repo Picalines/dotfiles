@@ -30,6 +30,6 @@ return {
 			'noice',
 		}, disable_mini_cursorword)
 
-		autocmd.on({ 'TermOpen', 'BufEnter' }, 'term://*', disable_mini_cursorword)
+		autocmd.on({ 'BufEnter' }, 'term://*', disable_mini_cursorword)
 	end,
 }
