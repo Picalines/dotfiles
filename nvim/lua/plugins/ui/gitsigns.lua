@@ -41,7 +41,7 @@ return {
 
 		on_attach = function(bufnr)
 			local keymap = require 'util.keymap'
-			local gitsigns = package.loaded.gitsigns
+			local gitsigns = require 'gitsigns'
 
 			keymap.declare {
 				[{ 'n', buffer = bufnr }] = {
