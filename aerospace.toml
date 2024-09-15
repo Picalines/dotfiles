@@ -34,6 +34,11 @@ alt-j = 'focus down'
 alt-k = 'focus up'
 alt-l = 'focus right'
 
+alt-shift-h = 'focus-monitor left'
+alt-shift-j = 'focus-monitor down'
+alt-shift-k = 'focus-monitor up'
+alt-shift-l = 'focus-monitor right'
+
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
