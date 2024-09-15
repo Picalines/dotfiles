@@ -55,16 +55,13 @@ return {
 		local array = require 'util.array'
 		local func = require 'util.func'
 		local keymap = require 'util.keymap'
-		local persist = require 'util.persist'
 		local signal = require 'util.signal'
 		local tbl = require 'util.table'
 
-		local lsp_inlay_enabled = signal.new(persist.get_item('lsp_inlay_hints', false))
-
+		local lsp_inlay_enabled = signal.new(false)
+		signal.persist(lsp_inlay_enabled, 'lsp_inlay_hints')
 		signal.watch(function()
-			local is_enabled = lsp_inlay_enabled()
-			vim.lsp.inlay_hint.enable(is_enabled)
-			persist.save_item('lsp_inlay_hints', is_enabled)
+			vim.lsp.inlay_hint.enable(lsp_inlay_enabled())
 		end)
 
 		vim.lsp.inlay_hint.enable()

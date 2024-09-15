@@ -1,5 +1,6 @@
 local array = require 'util.array'
 local func = require 'util.func'
+local persist = require 'util.persist'
 
 local M = {}
 
@@ -111,6 +112,22 @@ function M.watch(fn)
 			_notify = run,
 		},
 	})
+end
+
+---@generic T
+---@param signal fun(new_value_or_factory?: T | fun(): T): T
+---@param name string
+---@return T
+function M.persist(signal, name)
+	local value = persist.get_item(name, signal())
+
+	signal(value)
+
+	M.watch(function()
+		persist.save_item(name, signal())
+	end)
+
+	return value
 end
 
 return M
