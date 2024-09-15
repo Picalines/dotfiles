@@ -36,7 +36,12 @@ return {
 		end)
 
 		local function toggle_terminal()
-			if active_terminals:len() > 0 then
+			local term_count = active_terminals:len()
+			if term_count > 0 then
+				if last_terminal_index > term_count then
+					last_terminal_index = nil
+				end
+
 				terminal.toggle(last_terminal_index, float_layout)
 			else
 				terminal.run(shell_cmd)
