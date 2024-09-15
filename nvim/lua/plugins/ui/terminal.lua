@@ -38,7 +38,7 @@ return {
 		local function toggle_terminal()
 			local term_count = active_terminals:len()
 			if term_count > 0 then
-				if last_terminal_index > term_count then
+				if last_terminal_index and last_terminal_index > term_count then
 					last_terminal_index = nil
 				end
 
