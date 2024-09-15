@@ -6,12 +6,12 @@ keymap.declare {
 		['<leader>W'] = { '<Cmd>silent wa!<CR>', 'Write all' },
 		['<leader><leader>q'] = { '<Cmd>wa | qa!<CR>', 'Write all and quit' },
 
-		['<leader>s'] = { ':%s/', 'Substitute' },
+		['<leader>s'] = { ':%s//g<Left><Left>', 'Substitute' },
 		['<leader>g'] = { ':%g/', 'Global command' },
 	},
 
 	[{ 'v' }] = {
-		['<leader>s'] = { ':s/', 'Substitute' },
+		['<leader>s'] = { ':s//g/<Left><Left>', 'Substitute' },
 		['<leader>g'] = { ':g/', 'Global command' },
 
 		['<leader>o'] = { ':sort<CR>', 'Sort' },
