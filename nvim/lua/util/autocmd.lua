@@ -16,7 +16,7 @@ function M.on(event, pattern, callback)
 	vim.api.nvim_create_autocmd(event, {
 		group = on_group,
 		pattern = pattern,
-		callback = vim.schedule_wrap(callback),
+		callback = callback,
 	})
 end
 
@@ -28,7 +28,7 @@ function M.on_user(event, callback)
 	vim.api.nvim_create_autocmd('User', {
 		group = on_user_group,
 		pattern = event,
-		callback = vim.schedule_wrap(callback),
+		callback = callback,
 	})
 end
 
