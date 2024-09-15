@@ -10,38 +10,29 @@ enable-normalization-opposite-orientation-for-nested-containers = true
 default-root-container-layout = 'tiles'
 default-root-container-orientation = 'auto'
 
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focused-monitor-changed = 'move-mouse monitor-lazy-center'
 on-focus-changed = 'move-mouse window-lazy-center'
 
 accordion-padding = 30
 
 [gaps]
-inner.horizontal = 16
-inner.vertical =   16
-outer.left =       16
-outer.bottom =     16
-outer.top =        16
-outer.right =      16
+inner.horizontal = 10
+inner.vertical =   10
+outer.left =       10
+outer.bottom =     10
+outer.top =        10
+outer.right =      10
 
 [mode.main.binding]
 
-alt-slash = 'layout tiles horizontal vertical'
-alt-comma = 'layout accordion horizontal vertical'
+alt-shift-minus = 'resize smart -50'
+alt-shift-equal = 'resize smart +50'
+alt-shift-f = 'fullscreen'
 
 alt-h = 'focus left'
 alt-j = 'focus down'
 alt-k = 'focus up'
 alt-l = 'focus right'
-
-alt-shift-h = 'move left'
-alt-shift-j = 'move down'
-alt-shift-k = 'move up'
-alt-shift-l = 'move right'
-
-alt-shift-minus = 'resize smart -50'
-alt-shift-equal = 'resize smart +50'
-
-alt-shift-f = 'fullscreen'
 
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
@@ -53,28 +44,57 @@ alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
 
-alt-shift-1 = 'move-node-to-workspace 1'
-alt-shift-2 = 'move-node-to-workspace 2'
-alt-shift-3 = 'move-node-to-workspace 3'
-alt-shift-4 = 'move-node-to-workspace 4'
-alt-shift-5 = 'move-node-to-workspace 5'
-alt-shift-6 = 'move-node-to-workspace 6'
-alt-shift-7 = 'move-node-to-workspace 7'
-alt-shift-8 = 'move-node-to-workspace 8'
-alt-shift-9 = 'move-node-to-workspace 9'
-
 alt-tab = 'workspace-back-and-forth'
-alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
-alt-shift-semicolon = 'mode service'
+alt-shift-g = 'mode grab'
 
-[mode.service.binding]
+[mode.grab.binding]
+
 esc = ['reload-config', 'mode main']
-r = ['flatten-workspace-tree', 'mode main']
-f = ['layout floating tiling', 'mode main']
-backspace = ['close-all-windows-but-current', 'mode main']
 
-alt-shift-h = ['join-with left', 'mode main']
-alt-shift-j = ['join-with down', 'mode main']
-alt-shift-k = ['join-with up', 'mode main']
-alt-shift-l = ['join-with right', 'mode main']
+shift-minus = 'resize smart -50'
+shift-equal = 'resize smart +50'
+
+h = 'move left'
+j = 'move down'
+k = 'move up'
+l = 'move right'
+
+shift-h = 'join-with left'
+shift-j = 'join-with down'
+shift-k = 'join-with up'
+shift-l = 'join-with right'
+
+f = ['layout floating tiling', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']
+
+slash = 'layout tiles horizontal vertical'
+comma = 'layout accordion horizontal vertical'
+
+alt-1 = ['move-node-to-workspace 1', 'workspace 1']
+alt-2 = ['move-node-to-workspace 2', 'workspace 2']
+alt-3 = ['move-node-to-workspace 3', 'workspace 3']
+alt-4 = ['move-node-to-workspace 4', 'workspace 4']
+alt-5 = ['move-node-to-workspace 5', 'workspace 5']
+alt-6 = ['move-node-to-workspace 6', 'workspace 6']
+alt-7 = ['move-node-to-workspace 7', 'workspace 7']
+alt-8 = ['move-node-to-workspace 8', 'workspace 8']
+alt-9 = ['move-node-to-workspace 9', 'workspace 9']
+
+alt-tab = 'move-workspace-to-monitor --wrap-around next'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Preview'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'ru.yandex.desktop.disk2'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'us.zoom.xos'
+run = 'layout floating'
