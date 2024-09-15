@@ -1,6 +1,8 @@
 [window]
 padding = { x = 0, y = 0 }
 dynamic_padding = true
+opacity = 0.75
+blur = true
 
 [font]
 normal = { family = "Hack Nerd Font Mono", style = "Regular" }
