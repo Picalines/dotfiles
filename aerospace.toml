@@ -86,7 +86,10 @@ alt-7 = ['move-node-to-workspace 7', 'workspace 7']
 alt-8 = ['move-node-to-workspace 8', 'workspace 8']
 alt-9 = ['move-node-to-workspace 9', 'workspace 9']
 
-alt-tab = 'move-workspace-to-monitor --wrap-around next'
+alt-shift-h = ['move-node-to-monitor left', 'focus-monitor left']
+alt-shift-j = ['move-node-to-monitor down', 'focus-monitor down']
+alt-shift-k = ['move-node-to-monitor up', 'focus-monitor up']
+alt-shift-l = ['move-node-to-monitor right', 'focus-monitor right']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
