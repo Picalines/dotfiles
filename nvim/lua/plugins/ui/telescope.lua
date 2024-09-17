@@ -64,8 +64,12 @@ return {
 				layout_config = {
 					vertical = {
 						preview_height = 0.7,
+						prompt_position = 'top',
+						mirror = true,
 					},
 				},
+
+				sorting_strategy = 'ascending',
 			},
 
 			extensions = {
