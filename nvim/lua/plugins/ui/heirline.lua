@@ -45,9 +45,15 @@ return {
 			}
 		end
 
-		local Space = { provider = ' ', hl = { bg = 'NONE', fg = 'NONE' } }
+		---@param str string
+		---@param opts? table
+		local function Text(str, opts)
+			return tbl.override_deep({ provider = str }, opts or {})
+		end
 
-		local Align = { provider = '%=', hl = { bg = 'NONE', fg = 'NONE' } }
+		local Space = Text(' ', { bg = 'NONE', fg = 'NONE' })
+
+		local Align = Text('%=', { bg = 'NONE', fg = 'NONE' })
 
 		---@param component table
 		---@param child table
@@ -127,11 +133,10 @@ return {
 				end
 			end
 
-			return {
+			return Text('+', {
 				condition = condition,
-				provider = '+',
 				hl = { fg = 'diff_add' },
-			}
+			})
 		end
 
 		---@param line_type 'status' | 'tab'
@@ -148,11 +153,10 @@ return {
 				end
 			end
 
-			return {
+			return Text('', {
 				condition = condition,
-				provider = '',
 				hl = { fg = 'visual' },
-			}
+			})
 		end
 
 		local Buffer = {
@@ -280,7 +284,10 @@ return {
 			condition = function()
 				return #vim.api.nvim_list_tabpages() >= 2
 			end,
-			h_util.make_tablist(TabPage),
+			{
+				Text ' ',
+				h_util.make_tablist(TabPage),
+			},
 		}
 
 		local SidebarOffset = {
@@ -297,9 +304,12 @@ return {
 
 			{
 				provider = function(self)
-					local title = '  ' .. self.title
+					local title = ' ' .. self.title
 					local width = math.max(0, vim.api.nvim_win_get_width(self.winid) - 1)
-					return string_util.pad_centered(title, ' ', width):gsub('  ([^ ])', ' %1')
+					return string_util.center_chars(title, width, {
+						pad_char = ' ',
+						align_odd = 'left',
+					})
 				end,
 
 				hl = function(self)
@@ -307,10 +317,8 @@ return {
 					return { bold = is_focused, fg = is_focused and 'normal' or 'muted' }
 				end,
 			},
-			{
-				provider = '|',
-				hl = { fg = 'win_separator' },
-			},
+
+			Text('|', { hl = { fg = 'win_separator' } }),
 		}
 
 		local ViMode = {
@@ -369,7 +377,7 @@ return {
 			},
 
 			provider = function(self)
-				return '%2(' .. (self.mode_names[self.mode] or self.mode) .. '%)'
+				return self.mode_names[self.mode] or self.mode
 			end,
 
 			hl = function(self)
@@ -422,10 +430,10 @@ return {
 				hl = { bold = true },
 			},
 			{
+				provider = ' ',
 				condition = function(self)
 					return self.has_changes
 				end,
-				provider = ' ',
 			},
 			{
 				provider = function(self)
