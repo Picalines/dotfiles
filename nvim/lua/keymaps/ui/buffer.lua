@@ -39,7 +39,7 @@ keymap.declare {
 		['<C-b>r'] = { '<Cmd>e<CR>', 'Reload buffer' },
 		['<C-b>c'] = { close_buffer, 'Close buffer' },
 		['<C-b>C'] = { close_all_buffers, 'Close all buffers' },
-		[']b'] = { '<Cmd>bn<CR>', 'Next buffer' },
-		['[b'] = { '<Cmd>bp<CR>', 'Prev buffer' },
+		['<Tab>'] = { '<Cmd>bn<CR>', 'Next buffer' },
+		['<S-Tab>'] = { '<Cmd>bp<CR>', 'Prev buffer' },
 	},
 }
