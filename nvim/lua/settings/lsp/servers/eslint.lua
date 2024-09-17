@@ -3,7 +3,6 @@
 local lsp_util = require 'lspconfig.util'
 
 local root_file = {
-	'tsconfig.json', -- fix: we all love monorepos
 	'.eslintrc',
 	'.eslintrc.js',
 	'.eslintrc.cjs',
