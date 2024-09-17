@@ -91,6 +91,8 @@ alt-shift-j = ['move-node-to-monitor down', 'focus-monitor down']
 alt-shift-k = ['move-node-to-monitor up', 'focus-monitor up']
 alt-shift-l = ['move-node-to-monitor right', 'focus-monitor right']
 
+alt-shift-tab = ['move-workspace-to-monitor --wrap-around next']
+
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
 run = 'layout floating'
