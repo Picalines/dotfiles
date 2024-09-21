@@ -2,13 +2,6 @@ local keymap = require 'util.keymap'
 local func = require 'util.func'
 
 keymap.declare {
-	[{ 'n', 'v', silent = true, expr = true }] = {
-		['k'] = "v:count == 0 ? 'gk' : 'k'",
-		['j'] = "v:count == 0 ? 'gj' : 'j'",
-	},
-}
-
-keymap.declare {
 	[{ 'n', 'v' }] = {
 		['<Space>'] = '<Nop>',
 
@@ -18,9 +11,14 @@ keymap.declare {
 		['n'] = 'nzzzv',
 		['N'] = 'Nzzzv',
 
-		['gh'] = '^',
-		['gH'] = '0',
-		['gl'] = '$',
+		-- col('.') == 1 || col('.') > match(getline('.'), '\\S') + 1 ? '^' : '0'
+		['H'] = '^',
+		['L'] = "$",
+
+		[{ expr = true }] = {
+			['k'] = "v:count == 0 ? 'gk' : 'k'",
+			['j'] = "v:count == 0 ? 'gj' : 'j'",
+		},
 	},
 
 	[{ 'n', silent = true }] = {
