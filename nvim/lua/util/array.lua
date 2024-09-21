@@ -138,23 +138,23 @@ end
 
 ---@generic T, U
 ---@param array T[]
----@param map fun(item: T, index: integer): U
+---@param map fun(item: T, index: integer, array: T[]): U
 ---@return U[]
 function M.map(array, map)
 	local mapped = {}
 	for index, item in ipairs(array) do
-		mapped[#mapped + 1] = map(item, index)
+		mapped[#mapped + 1] = map(item, index, array)
 	end
 	return mapped
 end
 
 ---@generic T, U
----@param map fun(item: T, index: integer): U[]
+---@param map fun(item: T, index: integer, array: T[]): U[]
 ---@return U[]
 function M.flat_map(array, map)
 	local mapped = {}
 	for index, item in ipairs(array) do
-		for _, mapped_item in ipairs(map(item, index)) do
+		for _, mapped_item in ipairs(map(item, index, array)) do
 			mapped[#mapped + 1] = mapped_item
 		end
 	end

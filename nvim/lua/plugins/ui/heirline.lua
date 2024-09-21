@@ -273,7 +273,7 @@ return {
 
 		local TabPage = {
 			provider = function(self)
-				return string.format('%%%dT%s %%T', self.tabnr, self.tabpage)
+				return string.format(' %%%dT%s%%T', self.tabnr, self.tabpage)
 			end,
 			hl = function(self)
 				return { bold = self.is_active, fg = self.is_active and 'normal' or 'muted' }
@@ -285,7 +285,7 @@ return {
 				return #vim.api.nvim_list_tabpages() >= 2
 			end,
 			{
-				Text ' ',
+				Text '',
 				h_util.make_tablist(TabPage),
 			},
 		}
@@ -305,7 +305,7 @@ return {
 			{
 				provider = function(self)
 					local title = ' ' .. self.title
-					local width = math.max(0, vim.api.nvim_win_get_width(self.winid) - 1)
+					local width = math.max(0, vim.api.nvim_win_get_width(self.winid))
 					return string_util.center_chars(title, width, {
 						pad_char = ' ',
 						align_odd = 'left',
@@ -592,8 +592,8 @@ return {
 			WarningCount,
 			InfoCount,
 			HintCount,
-		}, function(component)
-			return Append(component, Space, 'left')
+		}, function(component, index)
+			return index > 1 and Append(component, Space, 'left') or component
 		end)
 
 		local RightStatusline = array.map({
@@ -601,8 +601,8 @@ return {
 			LSPActive,
 			Ruler,
 			ScrollBar,
-		}, function(component)
-			return Append(component, Space, 'right')
+		}, function(component, index, components)
+			return index < #components and Append(component, Space, 'right') or component
 		end)
 
 		heirline.setup {
@@ -614,7 +614,6 @@ return {
 			},
 			---@diagnostic disable-next-line: missing-fields
 			tabline = {
-				Space,
 				Append(SidebarOffset, Space, 'right'),
 				BufferLine,
 				Align,
@@ -624,8 +623,6 @@ return {
 				colors = setup_colors(),
 			},
 		}
-
-		vim.api.nvim_create_augroup('Heirline', { clear = true })
 
 		autocmd.on_colorscheme('*', function()
 			h_util.on_colorscheme(setup_colors())

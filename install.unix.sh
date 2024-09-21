@@ -11,13 +11,19 @@ then
     ln -snf $PWD/aerospace.toml ~/.config/aerospace/aerospace.toml
 fi
 
-if command -v starship &> /dev/null
-then
-    ln -snf $PWD/starship.toml ~/.config/starship.toml
-fi
-
 if command -v alacritty &> /dev/null
 then
     mkdir -p ~/.config/alacritty
     ln -snf $PWD/alacritty.toml ~/.config/alacritty/alacritty.toml
+fi
+
+if command -v neovide &> /dev/null
+then
+    mkdir -p ~/.config/neovide
+    ln -snf $PWD/neovide.toml ~/.config/neovide/config.toml
+fi
+
+if command -v starship &> /dev/null
+then
+    ln -snf $PWD/starship.toml ~/.config/starship.toml
 fi
