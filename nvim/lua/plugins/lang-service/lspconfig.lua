@@ -64,8 +64,6 @@ return {
 			vim.lsp.inlay_hint.enable(lsp_inlay_enabled())
 		end)
 
-		vim.lsp.inlay_hint.enable()
-
 		local function toggle_inlay_hints()
 			local is_enabled = lsp_inlay_enabled(not lsp_inlay_enabled())
 			print('Inlay hints: ' .. (is_enabled and 'on' or 'off'))
