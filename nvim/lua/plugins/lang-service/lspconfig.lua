@@ -86,6 +86,11 @@ return {
 				['<leader>lr'] = { '<Cmd>echo "Restarting LSP" | LspRestart<CR>', 'LSP: Restart' },
 				['<leader>ll'] = { '<Cmd>LspLog<CR>', 'LSP: See logs' },
 				['<leader>lh'] = { toggle_inlay_hints, 'LSP: Toggle inlay hints' },
+				['<leader>ls'] = { vim.lsp.buf.signature_help, 'LSP: show signature help' },
+			},
+
+			[{ 'i' }] = {
+				['<C-S>'] = { vim.lsp.buf.signature_help, 'LSP: show signature help' },
 			},
 		}
 
@@ -115,7 +120,6 @@ return {
 			local custom_on_attach = server_config.on_attach or func.noop
 
 			local function on_attach(client, bufnr)
-				-- declare_lsp_keymaps(client, bufnr)
 				pcall(custom_on_attach, client, bufnr)
 			end
 
