@@ -72,7 +72,7 @@ return {
 
 		keymap.declare {
 			[{ 'n' }] = {
-				['<leader>c'] = { toggle_terminal, 'Toggle terminal (cmd)' },
+				['<leader>t'] = { toggle_terminal, 'Toggle terminal' },
 			},
 
 			[{ 't' }] = {
