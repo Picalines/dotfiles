@@ -24,7 +24,10 @@ keymap.declare {
 	},
 
 	[{ 'n', silent = true }] = {
-		['[d'] = { func.curry(vim.diagnostic.jump, { count = -1, float = false }), 'Go to previous diagnostic' },
-		[']d'] = { func.curry(vim.diagnostic.jump, { count = 1, float = false }), 'Go to next diagnostic' },
+		-- nvim 0.11
+		-- ['[d'] = { func.curry(vim.diagnostic.jump, { count = -1, float = false }), 'Go to previous diagnostic' },
+		-- [']d'] = { func.curry(vim.diagnostic.jump, { count = 1, float = false }), 'Go to next diagnostic' },
+		[']d'] = { func.curry(vim.diagnostic.goto_next, { float = false }), 'Go to previous diagnostic' },
+		['[d'] = { func.curry(vim.diagnostic.goto_prev, { float = false }), 'Go to next diagnostic' },
 	},
 }
