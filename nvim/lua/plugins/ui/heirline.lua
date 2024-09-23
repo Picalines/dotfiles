@@ -381,16 +381,30 @@ return {
 			end,
 
 			hl = function(self)
-				local mode = self.mode:sub(1, 1) -- get only the first mode character
+				local mode = self.mode:sub(1, 1)
 				return { fg = self.mode_colors[mode], bold = true }
 			end,
 
 			update = {
 				'ModeChanged',
-				pattern = '*:*',
-				callback = vim.schedule_wrap(function()
-					vim.cmd 'redrawstatus'
-				end),
+				'MenuPopup',
+				callback = vim.schedule_wrap(func.cmd 'redrawstatus'),
+			},
+		}
+
+		local PendingMarker = {
+			condition = function()
+				return #vim.fn.state 'o' > 0
+			end,
+
+			provider = '',
+
+			hl = { fg = 'diag_warn', bold = true },
+
+			update = {
+				'MenuPopup',
+				'ModeChanged',
+				callback = vim.schedule_wrap(func.cmd 'redrawstatus'),
 			},
 		}
 
@@ -584,6 +598,7 @@ return {
 
 		local LeftStatusline = array.map({
 			ViMode,
+			PendingMarker,
 			MacroRec,
 			Git,
 			ModifiedFlag 'status',
