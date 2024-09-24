@@ -24,7 +24,7 @@ return {
 		leap.opts.special_keys.next_group = { '<Tab>' }
 		leap.opts.special_keys.prev_group = { '<S-Tab>' }
 
-		local unsafe_labels = { 'n', 'S' }
+		local unsafe_labels = { 'n' }
 
 		leap.opts.safe_labels = array.filter(leap.opts.safe_labels, function(label)
 			return not array.contains(unsafe_labels, label)
