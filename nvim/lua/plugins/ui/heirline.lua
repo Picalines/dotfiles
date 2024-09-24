@@ -375,7 +375,7 @@ return {
 					v = 'visual',
 					V = 'visual',
 					['\22'] = 'visual',
-					c = 'search',
+					c = 'diag_info',
 					s = 'visual',
 					S = 'visual',
 					['\19'] = 'visual',
