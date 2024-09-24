@@ -13,6 +13,7 @@ return {
 
 			detached = true,
 
+			---@diagnostic disable-next-line: missing-fields
 			preview_win_opts = {
 				cursorline = true,
 				number = true,
