@@ -10,14 +10,14 @@ return {
 
 		search_method = 'cover_or_next',
 
-		silent = false,
+		silent = true,
 
 		highlight_duration = 500,
 
 		mappings = {
-			add = 'yp',
-			delete = 'dp',
-			replace = 'cp',
+			add = 'gs',
+			delete = 'dgs',
+			replace = 'cgs',
 
 			find = '',
 			find_left = '',

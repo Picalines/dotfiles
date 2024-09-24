@@ -41,26 +41,20 @@ return {
 		end
 
 		keymap.declare {
-			[{ 'n', 'x', 'o' }] = {
+			[{ 'n', 'v', 'x', 'o' }] = {
 				['s'] = { '<Plug>(leap-forward)', 'Leap forward' },
 				['S'] = { '<Plug>(leap-backward)', 'Leap backward' },
-				['gs'] = { '<Plug>(leap-from-window)', 'Leap global' },
 			},
 
 			[{ 'x', 'o' }] = {
 				['an'] = { func.curry(select_node_clever, 'n'), 'Leap treesitter node' },
 			},
-
-			[{ 'v' }] = {
-				['x'] = '<Plug>(leap-forward)',
-				['X'] = '<Plug>(leap-backward)',
-			},
 		}
 
 		local function setup_highlights()
 			hl.clear('LeapBackdrop', 'all')
-			vim.api.nvim_set_hl(0, 'LeapMatch', { fg = hl.attr('Search', 'fg'), reverse = true })
-			vim.api.nvim_set_hl(0, 'LeapLabel', { fg = hl.attr('@diff.change', 'fg'), reverse = true })
+			hl.link('LeapMatch', 'CurSearch')
+			hl.link('LeapLabel', 'CurSearch')
 		end
 
 		setup_highlights()
