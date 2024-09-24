@@ -1,5 +1,3 @@
-local func = require 'util.func'
-
 local M = {}
 
 ---@generic T
@@ -24,10 +22,6 @@ function M.generate(length, gen)
 		array[i] = gen(i)
 	end
 	return array
-end
-
-function M.range(length)
-	return M.generate(length, func.noop)
 end
 
 ---@generic T

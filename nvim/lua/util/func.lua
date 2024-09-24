@@ -1,4 +1,5 @@
 local tbl = require 'util.table'
+local array = require 'util.array'
 
 local M = {}
 
@@ -38,17 +39,27 @@ end
 function M.curry(func, ...)
 	local curried = { ... }
 	return function(...)
-		return func(unpack(curried), ...)
+		local args = { ... }
+		return func(unpack(array.concat(curried, args)))
 	end
 end
 
----@generic O, R
----@param func fun(opts: O): R
----@param opts table
----@return fun(opts: O): R
-function M.curry_opts(func, opts)
-	return function(p_opts)
-		return func(tbl.override_deep(opts, p_opts or {}))
+---@generic Args, R
+---@param func fun(...: Args): R
+---@param ... Args
+---@return fun(...: Args): R
+function M.curry_only(func, ...)
+	local curried = { ... }
+	return function()
+		return func(unpack(curried))
+	end
+end
+
+---@param func fun(): any
+---@return fun()
+function M.ignore(func)
+	return function()
+		func()
 	end
 end
 
