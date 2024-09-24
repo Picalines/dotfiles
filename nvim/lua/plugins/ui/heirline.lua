@@ -17,6 +17,7 @@ return {
 		local hl = require 'util.highlight'
 		local string_util = require 'util.string'
 		local tbl = require 'util.table'
+		local signal = require 'util.signal'
 
 		local h_util = require 'heirline.utils'
 		local h_conditions = require 'heirline.conditions'
@@ -71,6 +72,15 @@ return {
 				update = update,
 				side == 'left' and { child, component } or { component, child },
 			}
+		end
+
+		---@param components table[]
+		---@param separator table
+		---@param side 'left' | 'right'
+		local function AppendAll(components, separator, side)
+			return array.map(components, function(c)
+				return Append(c, separator, side)
+			end)
 		end
 
 		local BufferIcon = {
@@ -163,6 +173,7 @@ return {
 			init = function(self)
 				self.filename = vim.api.nvim_buf_get_name(self.bufnr)
 			end,
+
 			on_click = {
 				callback = function(_, minwid)
 					vim.api.nvim_win_set_buf(0, minwid)
@@ -172,10 +183,8 @@ return {
 				end,
 				name = 'heirline_tabline_buffer_callback',
 			},
-			Append(BufferIcon, Space, 'right'),
-			Append(BufferName, Space, 'right'),
-			Append(ModifiedFlag 'tab', Space, 'right'),
-			Append(ReadonlyFlag 'tab', Space, 'right'),
+
+			AppendAll({ BufferIcon, BufferName, ModifiedFlag 'tab', ReadonlyFlag 'tab' }, Space, 'right'),
 		}
 
 		local function get_listed_buffers()
@@ -325,6 +334,7 @@ return {
 			init = function(self)
 				self.mode = vim.fn.mode(1)
 			end,
+
 			static = {
 				mode_names = {
 					n = 'normal',
@@ -376,34 +386,35 @@ return {
 				},
 			},
 
-			provider = function(self)
-				return self.mode_names[self.mode] or self.mode
-			end,
+			{
+				Text('', { hl = { fg = 'diff_add' } }),
 
-			hl = function(self)
-				local mode = self.mode:sub(1, 1)
-				return { fg = self.mode_colors[mode], bold = true }
-			end,
+				AppendAll({
+					{
+						condition = function()
+							return #vim.fn.state 'o' > 0
+						end,
 
-			update = {
-				'ModeChanged',
-				'MenuPopup',
-				callback = vim.schedule_wrap(func.cmd 'redrawstatus'),
+						Text '',
+
+						hl = { fg = 'diag_warn', bold = true },
+					},
+					{
+						provider = function(self)
+							return self.mode_names[self.mode] or self.mode
+						end,
+
+						hl = function(self)
+							local mode = self.mode:sub(1, 1)
+							return { fg = self.mode_colors[mode], bold = true }
+						end,
+					},
+				}, Space, 'left'),
 			},
-		}
-
-		local PendingMarker = {
-			condition = function()
-				return #vim.fn.state 'o' > 0
-			end,
-
-			provider = '',
-
-			hl = { fg = 'diag_warn', bold = true },
 
 			update = {
-				'MenuPopup',
 				'ModeChanged',
+				pattern = '*:*',
 				callback = vim.schedule_wrap(func.cmd 'redrawstatus'),
 			},
 		}
@@ -503,10 +514,29 @@ return {
 			}
 		end
 
-		local ErrorCount = DiagnisticCounter { severity = vim.diagnostic.severity.ERROR, fallback_icon = 'E', hl = 'diag_error' }
-		local WarningCount = DiagnisticCounter { severity = vim.diagnostic.severity.WARN, fallback_icon = 'W', hl = 'diag_warn' }
-		local InfoCount = DiagnisticCounter { severity = vim.diagnostic.severity.INFO, fallback_icon = 'I', hl = 'diag_info' }
-		local HintCount = DiagnisticCounter { severity = vim.diagnostic.severity.HINT, fallback_icon = 'H', hl = 'diag_hint' }
+		local severity = vim.diagnostic.severity
+		local ErrorCount = DiagnisticCounter { severity = severity.ERROR, fallback_icon = 'E', hl = 'diag_error' }
+		local WarningCount = DiagnisticCounter { severity = severity.WARN, fallback_icon = 'W', hl = 'diag_warn' }
+		local InfoCount = DiagnisticCounter { severity = severity.INFO, fallback_icon = 'I', hl = 'diag_info' }
+		local HintCount = DiagnisticCounter { severity = severity.HINT, fallback_icon = 'H', hl = 'diag_hint' }
+
+		local is_leaping = signal.new(false)
+
+		autocmd.on_user('LeapEnter', func.ignore(func.curry(is_leaping, true)))
+		autocmd.on_user('LeapLeave', func.ignore(func.curry(is_leaping, false)))
+
+		signal.watch(function()
+			is_leaping()
+			vim.cmd.doautocmd 'User HeirlineLeapUpdate'
+		end)
+
+		local LeapMarker = {
+			update = { 'User', pattern = 'HeirlineLeapUpdate' },
+			condition = func.curry_only(is_leaping),
+			Text('󰤇 leap', {
+				hl = { fg = 'diff_add', bold = true },
+			}),
+		}
 
 		local TerminalList = {
 			update = { 'TermOpen', 'TermClose', 'BufEnter' },
@@ -596,29 +626,25 @@ return {
 			hl = { fg = 'search', bold = true },
 		}
 
-		local LeftStatusline = array.map({
+		local LeftStatusline = AppendAll({
 			ViMode,
-			PendingMarker,
 			MacroRec,
-			Git,
+			LeapMarker,
 			ModifiedFlag 'status',
 			ReadonlyFlag 'status',
+			Git,
 			ErrorCount,
 			WarningCount,
 			InfoCount,
 			HintCount,
-		}, function(component, index)
-			return index > 1 and Append(component, Space, 'left') or component
-		end)
+		}, Space, 'right')
 
-		local RightStatusline = array.map({
+		local RightStatusline = AppendAll({
 			TerminalList,
 			LSPActive,
 			Ruler,
 			ScrollBar,
-		}, function(component, index, components)
-			return index < #components and Append(component, Space, 'right') or component
-		end)
+		}, Space, 'left')
 
 		heirline.setup {
 			---@diagnostic disable-next-line: missing-fields
