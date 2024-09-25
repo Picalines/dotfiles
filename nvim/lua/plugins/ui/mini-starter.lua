@@ -71,10 +71,6 @@ return {
 			content_hooks = {
 				starter.gen_hook.adding_bullet ' ',
 				starter.gen_hook.aligning('center', 'center'),
-				function(content)
-					print(vim.inspect(content))
-					return content
-				end,
 			},
 
 			header = table.concat({
