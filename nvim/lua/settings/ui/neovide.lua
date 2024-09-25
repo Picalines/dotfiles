@@ -9,6 +9,7 @@ vim.g.neovide_show_border = true
 
 vim.g.neovide_hide_mouse_when_typing = true
 
+vim.g.neovide_floating_shadow = false
 vim.g.neovide_floating_blur_amount_x = 0
 vim.g.neovide_floating_blur_amount_y = 0
 

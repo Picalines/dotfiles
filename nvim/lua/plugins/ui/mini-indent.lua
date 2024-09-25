@@ -42,6 +42,7 @@ return {
 		autocmd.on_filetype({
 			'help',
 			'lazy',
+			'messages',
 			'neo-tree',
 			'neo-tree-popup',
 			'neotest-output',

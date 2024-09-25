@@ -104,7 +104,6 @@ return {
 
 		safe_load_extension 'fzf'
 		safe_load_extension 'ui-select'
-		safe_load_extension 'noice'
 
 		local function exit_visual_mode()
 			vim.api.nvim_feedkeys(':', 'nx', false)

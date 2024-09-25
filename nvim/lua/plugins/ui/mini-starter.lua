@@ -12,16 +12,16 @@ return {
 		---@field [1] string name
 		---@field [2] string action
 
-		---@param section_name string
-		---@param child_items StarterItem[] | (fun(): StarterItem[] | nil)
-		local function new_section(section_name, child_items)
-			if type(child_items) == 'function' then
-				child_items = child_items() or {}
+		---@param name string
+		---@param items StarterItem[] | (fun(): StarterItem[] | nil)
+		local function section(name, items)
+			if type(items) == 'function' then
+				items = items() or {}
 			end
 
-			return array.map(child_items, function(item)
-				local name, action = item[1], item[2]
-				return { section = section_name, name = name, action = action }
+			return array.map(items, function(item)
+				local item_name, action = item[1], item[2]
+				return { section = name, name = item_name, action = action }
 			end)
 		end
 
@@ -30,19 +30,21 @@ return {
 
 			evaluate_single = true,
 
+			silent = true,
+
 			items = {
-				new_section('Files', {
+				section('Files', {
 					{ 'Explore Files', 'Neotree filesystem reveal' },
 					{ 'Recent Files', 'Telescope oldfiles' },
 					{ 'Find Files', 'Telescope find_files' },
 					{ 'Change Directory', string.format('Neotree filesystem current %s', app.os() == 'windows' and '/' or '~') },
 				}),
-				new_section('Editor', {
+				section('Editor', {
 					{ 'New Buffer', 'enew' },
 					{ 'Theme', 'PickColorScheme' },
 					{ 'Quit', 'wa | qa!' },
 				}),
-				new_section('Workspaces', function()
+				section('Workspaces', function()
 					local ok, workspaces = pcall(require, 'workspaces')
 					if not ok then
 						return
@@ -60,33 +62,33 @@ return {
 						end)
 					)
 				end),
-				new_section('Manage', {
+				section('Manage', {
 					{ 'Lazy', 'Lazy' },
 					{ 'Mason', 'Mason' },
 				}),
 			},
 
-			silent = false,
-
 			content_hooks = {
-				starter.gen_hook.adding_bullet ' ',
+				starter.gen_hook.adding_bullet ' ',
 				starter.gen_hook.aligning('center', 'center'),
+				function(content)
+					print(vim.inspect(content))
+					return content
+				end,
 			},
 
-			header = function()
-				return table.concat({
-					[[                                                     ]],
-					[[   ██ █        ██       ██       █         █       ██ █    ]],
-					[[  ███ █       ██     ██     █           █     ██ █    ]],
-					[[ ███ █      ██ █   █  █   █            ██   ██ █    ]],
-					[[███ █ ██ █ █    █ █      ██ █████]],
-					[[██ ██ █ █  █    █ ██ █   █ ██      █]],
-					[[    ███   █ █      █  █  ██ █  █   ██            █ ]],
-					[[    ███     █      ██   █  █     █           █  ]],
-					[[    ██       █          ██     ████       █         █   ]],
-					[[                                                         ]],
-				}, '\n')
-			end,
+			header = table.concat({
+				[[                                                     ]],
+				[[   ██ █        ██       ██       █         █       ██ █    ]],
+				[[  ███ █       ██     ██     █           █     ██ █    ]],
+				[[ ███ █      ██ █   █  █   █            ██   ██ █    ]],
+				[[███ █ ██ █ █    █ █      ██ █████]],
+				[[██ ██ █ █  █    █ ██ █   █ ██      █]],
+				[[    ███   █ █      █  █  ██ █  █   ██            █ ]],
+				[[    ███     █      ██   █  █     █           █  ]],
+				[[    ██       █          ██     ████       █         █   ]],
+				[[                                                         ]],
+			}, '\n'),
 
 			footer = '',
 		}

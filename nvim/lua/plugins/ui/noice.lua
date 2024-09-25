@@ -1,42 +1,110 @@
 return {
 	'folke/noice.nvim',
 
+	lazy = false,
+
 	dependencies = {
 		'MunifTanjim/nui.nvim',
-
-		{
-			'rcarriga/nvim-notify',
-			event = 'VeryLazy',
-			opts = {
-				render = 'wrapped-compact',
-				stages = 'slide',
-				timeout = 5000,
-				top_down = true,
-			},
-		},
 	},
+
+	config = function(_, opts)
+		local keymap = require 'util.keymap'
+
+		require('noice').setup(opts)
+
+		keymap.declare {
+			[{ 'n' }] = {
+				['<Esc>'] = { '<Cmd>NoiceDismiss<CR>', 'Dismiss notifications' },
+
+				['<leader><leader>m'] = { '<Cmd>messages<CR>', 'Open messages' },
+			},
+		}
+	end,
 
 	opts = {
 		presets = {
-			long_message_to_split = true,
+			long_message_to_split = false,
 		},
 
 		lsp = {
 			hover = {
 				silent = true,
 			},
-			-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+
 			override = {
 				['vim.lsp.util.convert_input_to_markdown_lines'] = true,
 				['vim.lsp.util.stylize_markdown'] = true,
 				['cmp.entry.get_documentation'] = true,
 			},
+
 			progress = {
-				enabled = false,
+				enabled = true,
+				view = 'notifications',
+			},
+		},
+
+		notify = {
+			enabled = true,
+			view = 'messages',
+		},
+
+		messages = {
+			enabled = true,
+			view = 'notifications',
+			view_error = 'notifications',
+			view_warn = 'notifications',
+			view_search = false,
+			view_history = 'messages',
+		},
+
+		routes = {
+			{
+				filter = { event = 'msg_show', min_height = 40 },
+				view = 'messages',
 			},
 		},
 
 		views = {
+			notifications = {
+				backend = 'mini',
+				relative = 'editor',
+				align = 'right',
+				zindex = 50,
+
+				position = { row = -2, col = -1 },
+				border = { style = 'rounded' },
+				focusable = false,
+				enter = false,
+
+				size = {
+					width = 'auto',
+					height = 'auto',
+				},
+
+				timeout = 5000,
+
+				format = { '{message}' },
+			},
+
+			messages = {
+				backend = 'split',
+				relative = 'editor',
+				position = 'right',
+				size = '45%',
+				close = {
+					keys = { 'q' },
+				},
+				enter = true,
+				win_options = {
+					winhighlight = { Normal = 'NoiceSplit' },
+					wrap = true,
+					signcolumn = 'no',
+				},
+				buf_options = {
+					filetype = 'messages',
+				},
+			},
+
 			cmdline_popup = {
 				relative = 'editor',
 				position = {
