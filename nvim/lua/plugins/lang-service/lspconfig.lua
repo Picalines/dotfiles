@@ -7,48 +7,7 @@ return {
 		'williamboman/mason.nvim',
 		'williamboman/mason-lspconfig.nvim',
 
-		{
-			'j-hui/fidget.nvim',
-
-			opts = {
-				progress = {
-					display = {
-						done_icon = '',
-					},
-				},
-				notification = {
-					window = {
-						x_padding = 2,
-						y_padding = 1,
-						relative = 'editor',
-						normal_hl = 'Visual',
-					},
-				},
-			},
-		},
-
 		{ 'folke/neodev.nvim', config = true },
-
-		{
-			'dgagn/diagflow.nvim',
-			event = 'LspAttach',
-			opts = {
-				enable = true,
-				severity_colors = {
-					error = 'DiagnosticError',
-					warning = 'DiagnosticWarn',
-					info = 'DiagnosticInfo',
-					hint = 'DiagnosticHint',
-				},
-				gap_size = 1,
-				scope = 'cursor',
-				toggle_event = { 'InsertEnter', 'InsertLeave' },
-				padding_top = 0,
-				padding_right = 0,
-				text_align = 'left',
-				placement = 'inline',
-			},
-		},
 	},
 
 	config = function()
