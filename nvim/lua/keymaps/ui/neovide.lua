@@ -31,11 +31,16 @@ vim.api.nvim_create_user_command('ZoomIn', func.curry(zoom, 0.1), {})
 vim.api.nvim_create_user_command('ZoomOut', func.curry(zoom, -0.1), {})
 
 keymap.declare {
-	[{ 'n', silent = true, nowait = true }] = {
+	[{ 'n', nowait = true }] = {
+		[{ os = 'macos' }] = {
+			['<D-w>'] = { '<Cmd>wa | qa!<CR>', 'Neovide: Write all and quit' },
+			['<D-n>'] = { '<Cmd>silent !open --new -b com.neovide.neovide<CR>', 'Neovide: New Window' },
+		},
+
 		['<C-+>'] = { '<Cmd>ZoomIn<CR>', 'Neovide: Increase font size' },
 		['<C-_>'] = { '<Cmd>ZoomOut<CR>', 'Neovide: Decrease font size' },
 
 		['<leader><leader>f'] = { toggle_fullscreen, 'Neovide: Toggle Fullscreen' },
-		['<leader><leader>t'] = { toggle_transparency, 'Neovide: toggle transparency' },
+		['<leader><leader>t'] = { toggle_transparency, 'Neovide: Toggle transparency' },
 	},
 }

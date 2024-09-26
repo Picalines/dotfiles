@@ -1,5 +1,6 @@
-local tbl = require 'util.table'
+local app = require 'util.app'
 local array = require 'util.array'
+local tbl = require 'util.table'
 
 local M = {}
 
@@ -48,7 +49,15 @@ function M.declare(decl_table, _info)
 			for s_key, s_value in pairs(key) do
 				if type(s_key) == 'number' then
 					group_modes[#group_modes + 1] = s_value
-				elseif type(s_key) == 'string' then
+				elseif s_key == 'client' then
+					if app.client() ~= s_value then
+						return
+					end
+				elseif s_key == 'os' then
+					if app.os() ~= s_value then
+						return
+					end
+				else
 					group_opts[s_key] = s_value
 				end
 			end
