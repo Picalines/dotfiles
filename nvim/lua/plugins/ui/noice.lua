@@ -59,7 +59,13 @@ return {
 
 		routes = {
 			{
-				filter = { event = 'msg_show', min_height = 40 },
+				filter = {
+					event = 'msg_show',
+					any = {
+						{ min_height = 25 },
+						{ min_width = 100 },
+					},
+				},
 				view = 'messages',
 			},
 		},
@@ -90,18 +96,21 @@ return {
 				backend = 'split',
 				relative = 'editor',
 				position = 'right',
-				size = '45%',
-				close = {
-					keys = { 'q' },
-				},
+				size = '33%',
+
 				enter = true,
 				win_options = {
 					winhighlight = { Normal = 'NoiceSplit' },
 					wrap = true,
 					signcolumn = 'no',
 				},
+
 				buf_options = {
 					filetype = 'messages',
+				},
+
+				close = {
+					keys = { 'q' },
 				},
 			},
 
