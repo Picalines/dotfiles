@@ -15,8 +15,7 @@ return {
 		keymap.declare {
 			[{ 'n' }] = {
 				['<Esc>'] = { '<Cmd>NoiceDismiss<CR>', 'Dismiss notifications' },
-
-				['<leader><leader>m'] = { '<Cmd>messages<CR>', 'Open messages' },
+				['<leader><leader>m'] = { '<Cmd>Noice all<CR>', 'Open messages' },
 			},
 		}
 	end,
@@ -45,7 +44,7 @@ return {
 
 		notify = {
 			enabled = true,
-			view = 'messages',
+			view = 'notifications',
 		},
 
 		messages = {
@@ -57,16 +56,16 @@ return {
 			view_history = 'messages',
 		},
 
-		routes = {
-			{
+		commands = {
+			all = {
+				view = 'messages',
+				opts = {
+					enter = true,
+					format = { '{date} ', '{kind} ', '{message}' },
+				},
 				filter = {
 					event = 'msg_show',
-					any = {
-						{ min_height = 25 },
-						{ min_width = 100 },
-					},
 				},
-				view = 'messages',
 			},
 		},
 
@@ -103,6 +102,8 @@ return {
 					winhighlight = { Normal = 'NoiceSplit' },
 					wrap = true,
 					signcolumn = 'no',
+					number = false,
+					relativenumber = false,
 				},
 
 				buf_options = {
