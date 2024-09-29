@@ -45,7 +45,7 @@ return {
 
 			keymap.declare {
 				[{ 'n', buffer = bufnr }] = {
-					['<leader>hp'] = { gitsigns.preview_hunk, 'Preview hunk' },
+					['<leader>hp'] = { gitsigns.preview_hunk_inline, 'Preview hunk' },
 					['<leader>ha'] = { gitsigns.stage_hunk, 'Stage hunk' },
 					['<leader>hu'] = { gitsigns.undo_stage_hunk, 'Undo stage hunk' },
 					['<leader>hr'] = { gitsigns.reset_hunk, 'Reset hunk' },
