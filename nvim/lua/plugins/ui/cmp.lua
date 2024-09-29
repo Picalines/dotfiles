@@ -18,7 +18,6 @@ return {
 	event = { 'InsertEnter', 'CmdlineEnter' },
 
 	config = function()
-		local keymap = require 'util.keymap'
 		local cmp = require 'cmp'
 		local luasnip = require 'luasnip'
 		local lspkind = require 'lspkind'
@@ -50,6 +49,16 @@ return {
 			end
 		end
 
+		local function complete_or(f)
+			return function()
+				if not cmp.visible() then
+					cmp.complete()
+				else
+					f()
+				end
+			end
+		end
+
 		cmp.setup {
 			sources = {
 				{ name = 'nvim_lsp' },
@@ -59,18 +68,33 @@ return {
 			},
 
 			mapping = {
-				['<C-Space>'] = cmp.mapping.complete(),
-				['<C-a>'] = cmp.mapping.complete(),
-
-				['<Tab>'] = cmp.mapping(select_next, { 'i', 's' }),
-				['<S-Tab>'] = cmp.mapping(select_prev, { 'i', 's' }),
+				['<C-n>'] = complete_or(select_next),
+				['<C-S-n>'] = complete_or(select_prev),
 
 				['<C-y>'] = cmp.mapping.confirm {
 					behavior = cmp.ConfirmBehavior.Insert,
 					select = true,
 				},
 
-				['<C-n>'] = cmp.mapping.abort(),
+				['<C-k>'] = function()
+					if luasnip.expand_or_jumpable() then
+						luasnip.expand_or_jump()
+					end
+				end,
+
+				['<C-j>'] = function()
+					if luasnip.jumpable(-1) then
+						luasnip.jump(-1)
+					end
+				end,
+
+				['<Esc>'] = function(fallback)
+					if cmp.visible() then
+						cmp.close()
+					else
+						fallback()
+					end
+				end,
 			},
 
 			---@diagnostic disable-next-line: missing-fields
@@ -90,21 +114,6 @@ return {
 
 			experimental = {
 				ghost_text = true,
-			},
-		}
-
-		keymap.declare {
-			[{ 'i', silent = true }] = {
-				['<C-k>'] = function()
-					if luasnip.expand_or_jumpable() then
-						luasnip.expand_or_jump()
-					end
-				end,
-				['<C-j>'] = function()
-					if luasnip.jumpable(-1) then
-						luasnip.jump(-1)
-					end
-				end,
 			},
 		}
 	end,
