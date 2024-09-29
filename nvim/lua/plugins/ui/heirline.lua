@@ -52,9 +52,9 @@ return {
 			return tbl.override_deep({ provider = str }, opts or {})
 		end
 
-		local Space = Text(' ', { bg = 'NONE', fg = 'NONE' })
+		local Space = Text(' ', { hl = { bg = 'NONE', fg = 'NONE' } })
 
-		local Align = Text('%=', { bg = 'NONE', fg = 'NONE' })
+		local Align = Text('%=', { hl = { bg = 'NONE', fg = 'NONE' } })
 
 		---@param component table
 		---@param child table
@@ -666,6 +666,7 @@ return {
 		}
 
 		autocmd.on_colorscheme('*', function()
+			hl.clear('StatusLine', 'all')
 			h_util.on_colorscheme(setup_colors())
 		end)
 
