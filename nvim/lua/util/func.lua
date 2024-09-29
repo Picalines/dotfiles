@@ -119,6 +119,14 @@ function M.const(x)
 	end
 end
 
+---@param key any
+---@return fun(x: table): any
+function M.field(key)
+	return function(x)
+		return x[key]
+	end
+end
+
 ---@param threshold number
 ---@return fun(x: number): boolean
 function M.greater_than(threshold)

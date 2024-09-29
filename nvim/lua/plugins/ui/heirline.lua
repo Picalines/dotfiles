@@ -14,7 +14,6 @@ return {
 		local array = require 'util.array'
 		local autocmd = require 'util.autocmd'
 		local func = require 'util.func'
-		local hl = require 'util.highlight'
 		local string_util = require 'util.string'
 		local tbl = require 'util.table'
 		local signal = require 'util.signal'
@@ -26,80 +25,80 @@ return {
 
 		vim.o.laststatus = 3 -- global statusline
 
-		local function setup_colors()
-			return {
-				attribute = hl.attr('@attribute', 'fg'),
-				diag_error = hl.attr('DiagnosticError', 'fg'),
-				diag_hint = hl.attr('DiagnosticHint', 'fg'),
-				diag_info = hl.attr('DiagnosticInfo', 'fg'),
-				diag_warn = hl.attr('DiagnosticWarn', 'fg'),
-				diff_add = hl.attr('@diff.plus', 'fg'),
-				diff_change = hl.attr('@diff.delta', 'fg'),
-				diff_del = hl.attr('@diff.minus', 'fg'),
-				float_border = hl.attr('FloatBorder', 'fg'),
-				keyword = hl.attr('@keyword', 'fg'),
-				muted = hl.attr('@comment', 'fg'),
-				normal = hl.attr('Normal', 'fg'),
-				search = hl.attr('Search', 'fg'),
-				visual = hl.attr('@comment', 'fg'),
-				win_separator = hl.attr('WinSeparator', 'fg'),
-			}
-		end
-
 		---@param str string
 		---@param opts? table
 		local function Text(str, opts)
 			return tbl.override_deep({ provider = str }, opts or {})
 		end
 
-		local Space = Text(' ', { hl = { bg = 'NONE', fg = 'NONE' } })
+		local Space = Text(' ', { hl = { fg = 'NONE' } })
 
-		local Align = Text('%=', { hl = { bg = 'NONE', fg = 'NONE' } })
+		local Align = Text('%=', { hl = { fg = 'NONE' } })
 
-		---@param component table
-		---@param child table
-		---@param side 'left' | 'right'
-		local function Append(component, child, side)
-			local condition = component.condition or func.const(true)
-			local update = component.update
+		---@param decorate fun(c: table): table
+		local function Decorated(decorate)
+			---@param component table
+			return function(component)
+				local condition = component.condition or func.const(true)
+				local update = component.update
 
-			component = tbl.copy_deep(component)
-			component.condition = nil
-			component.update = nil
+				component = tbl.copy_deep(component)
+				component.condition = nil
+				component.update = nil
 
-			return {
-				condition = condition,
-				update = update,
-				side == 'left' and { child, component } or { component, child },
-			}
+				return {
+					condition = condition,
+					update = update,
+					decorate(component),
+				}
+			end
 		end
 
-		---@param components table[]
+		local Bold = Decorated(function(component)
+			return { hl = { bold = true }, component }
+		end)
+
+		local Italic = Decorated(function(component)
+			return { hl = { italic = true }, component }
+		end)
+
+		---@param child table
+		---@param side 'left' | 'right'
+		local function Append(child, side)
+			return Decorated(function(component)
+				return side == 'left' and { child, component } or { component, child }
+			end)
+		end
+
 		---@param separator table
 		---@param side 'left' | 'right'
-		local function AppendAll(components, separator, side)
-			return array.map(components, function(c)
-				return Append(c, separator, side)
-			end)
+		local function AppendAll(separator, side)
+			local appender = Append(separator, side)
+			---@param components table[]
+			return function(components)
+				return array.map(components, appender)
+			end
 		end
 
 		local BufferIcon = {
 			init = function(self)
 				local icons_ok, icons = pcall(require, 'nvim-web-devicons')
+
 				if #self.filename > 0 and icons_ok then
 					local filename = self.filename
 					local extension = vim.fn.fnamemodify(filename, ':e')
-					self.icon, self.icon_color = icons.get_icon_color(filename, extension, { default = true })
-				else
-					self.icon, self.icon_color = nil, 'normal'
+					local color
+					self.icon, color = icons.get_icon_color(filename, extension, { default = true })
+					self.icon_hl = { fg = color }
 				end
+
+				self.icon = self.icon or ''
+				self.icon_hl = self.icon_hl or 'Normal'
 			end,
-			provider = function(self)
-				return self.icon or ''
-			end,
-			hl = function(self)
-				return { fg = self.icon_color }
-			end,
+
+			provider = func.field 'icon',
+
+			hl = func.field 'icon_hl',
 		}
 
 		local BufferName = {
@@ -107,7 +106,7 @@ return {
 				self.display_name = self.filename == '' and string.format('[%d]', self.bufnr) or vim.fn.fnamemodify(self.filename, ':t')
 			end,
 
-			{
+			Italic {
 				condition = function(self)
 					return self.buffer_prefixes and self.buffer_prefixes[self.bufnr]
 				end,
@@ -116,16 +115,22 @@ return {
 					return self.buffer_prefixes[self.bufnr] .. '/'
 				end,
 
-				hl = { fg = 'visual', italic = true },
+				hl = '@comment',
 			},
 			{
-				provider = function(self)
-					return self.is_active and self.display_name or vim.fn.fnamemodify(self.display_name, ':r')
+				hl = function(self)
+					return { bold = self.is_active }
 				end,
 
-				hl = function(self)
-					return { bold = self.is_active, fg = self.is_active and 'normal' or 'muted' }
-				end,
+				{
+					provider = function(self)
+						return self.is_active and self.display_name or vim.fn.fnamemodify(self.display_name, ':r')
+					end,
+
+					hl = function(self)
+						return self.is_active and 'Normal' or '@comment'
+					end,
+				},
 			},
 		}
 
@@ -145,7 +150,7 @@ return {
 
 			return Text('+', {
 				condition = condition,
-				hl = { fg = 'diff_add' },
+				hl = '@diff.plus',
 			})
 		end
 
@@ -165,7 +170,7 @@ return {
 
 			return Text('', {
 				condition = condition,
-				hl = { fg = 'visual' },
+				hl = '@comment',
 			})
 		end
 
@@ -175,16 +180,19 @@ return {
 			end,
 
 			on_click = {
+				minwid = func.field 'bufnr',
+				name = 'heirline_tabline_buffer_callback',
 				callback = function(_, minwid)
 					vim.api.nvim_win_set_buf(0, minwid)
 				end,
-				minwid = function(self)
-					return self.bufnr
-				end,
-				name = 'heirline_tabline_buffer_callback',
 			},
 
-			AppendAll({ BufferIcon, BufferName, ModifiedFlag 'tab', ReadonlyFlag 'tab' }, Space, 'right'),
+			AppendAll(Space, 'right') {
+				BufferIcon,
+				BufferName,
+				ModifiedFlag 'tab',
+				ReadonlyFlag 'tab',
+			},
 		}
 
 		local function get_listed_buffers()
@@ -270,23 +278,24 @@ return {
 			end
 		end)
 
-		local BufferLine = h_util.make_buflist(
-			Buffer,
-			{ provider = ' ', hl = { fg = 'win_separator' } },
-			{ provider = '', hl = { fg = 'win_separator' } },
-			function()
-				return buflist_cache
-			end,
-			false
-		)
+		local BufferLine = h_util.make_buflist(Buffer, Text(' ', { hl = 'WinSeparator' }), Text('', { hl = 'WinSeparator' }), function()
+			return buflist_cache
+		end, false)
 
 		local TabPage = {
-			provider = function(self)
-				return string.format(' %%%dT%s%%T', self.tabnr, self.tabpage)
-			end,
 			hl = function(self)
-				return { bold = self.is_active, fg = self.is_active and 'normal' or 'muted' }
+				return { bold = self.is_active }
 			end,
+
+			{
+				provider = function(self)
+					return string.format(' %%%dT%s%%T', self.tabnr, self.tabpage)
+				end,
+
+				hl = function(self)
+					return self.is_active and 'Normal' or '@comment'
+				end,
+			},
 		}
 
 		local TabPageList = {
@@ -311,6 +320,14 @@ return {
 				end
 			end,
 
+			init = function(self)
+				self.is_focused = vim.api.nvim_get_current_win() == self.winid
+			end,
+
+			hl = function(self)
+				return { bold = self.is_focused }
+			end,
+
 			{
 				provider = function(self)
 					local title = ' ' .. self.title
@@ -322,12 +339,11 @@ return {
 				end,
 
 				hl = function(self)
-					local is_focused = vim.api.nvim_get_current_win() == self.winid
-					return { bold = is_focused, fg = is_focused and 'normal' or 'muted' }
+					return self.is_focused and 'Normal' or '@comment'
 				end,
 			},
 
-			Text('|', { hl = { fg = 'win_separator' } }),
+			Text('|', { hl = 'WinSeparator' }),
 		}
 
 		local ViMode = {
@@ -369,27 +385,27 @@ return {
 					['!'] = 'shell',
 					t = 'terminal',
 				},
-				mode_colors = {
-					n = 'normal',
-					i = 'diff_add',
-					v = 'visual',
-					V = 'visual',
-					['\22'] = 'visual',
-					c = 'diag_info',
-					s = 'visual',
-					S = 'visual',
-					['\19'] = 'visual',
-					R = 'diff_change',
-					r = 'diff_change',
-					['!'] = 'red',
-					t = 'search',
+				mode_hls = {
+					n = 'Normal',
+					i = '@diff.plus',
+					v = '@comment',
+					V = '@comment',
+					['\22'] = '@comment',
+					c = 'DiagnosticInfo',
+					s = '@comment',
+					S = '@comment',
+					['\19'] = '@comment',
+					R = '@diff.change',
+					r = '@diff.change',
+					['!'] = '@diff.minus',
+					t = 'DiagnosticWarn',
 				},
 			},
 
-			{
-				Text('', { hl = { fg = 'diff_add' } }),
+			Bold {
+				Text('', { hl = '@diff.plus' }),
 
-				AppendAll({
+				AppendAll(Space, 'left') {
 					{
 						condition = function()
 							return #vim.fn.state 'o' > 0
@@ -397,7 +413,7 @@ return {
 
 						Text '',
 
-						hl = { fg = 'diag_warn', bold = true },
+						hl = 'DiagnosticWarn',
 					},
 					{
 						provider = function(self)
@@ -405,11 +421,10 @@ return {
 						end,
 
 						hl = function(self)
-							local mode = self.mode:sub(1, 1)
-							return { fg = self.mode_colors[mode], bold = true }
+							return self.mode_hls[self.mode:sub(1, 1)]
 						end,
 					},
-				}, Space, 'left'),
+				},
 			},
 
 			update = {
@@ -419,16 +434,16 @@ return {
 			},
 		}
 
-		local MacroRec = {
+		local MacroRec = Bold {
 			condition = function()
 				return vim.fn.reg_recording() ~= '' and vim.o.cmdheight == 0
 			end,
 
+			hl = '@keyword',
+
 			provider = function()
 				return ' ' .. vim.fn.reg_recording()
 			end,
-
-			hl = { fg = 'keyword', bold = true },
 
 			update = {
 				'RecordingEnter',
@@ -444,15 +459,14 @@ return {
 				self.has_changes = self.status_dict.added ~= 0 or self.status_dict.removed ~= 0 or self.status_dict.changed ~= 0
 			end,
 
-			hl = { fg = 'diff_change' },
+			hl = '@diff.delta',
 
-			{
+			Bold {
 				provider = function(self)
 					local branch = tostring(self.status_dict.head)
 					branch = branch:gsub('^users/[^/]+/', '')
 					return ' ' .. branch
 				end,
-				hl = { bold = true },
 			},
 			{
 				provider = ' ',
@@ -465,21 +479,21 @@ return {
 					local count = self.status_dict.added or 0
 					return count > 0 and ('+' .. count)
 				end,
-				hl = { fg = 'diff_add' },
+				hl = '@diff.plus',
 			},
 			{
 				provider = function(self)
 					local count = self.status_dict.removed or 0
 					return count > 0 and ('-' .. count)
 				end,
-				hl = { fg = 'diff_del' },
+				hl = '@diff.minus',
 			},
 			{
 				provider = function(self)
 					local count = self.status_dict.changed or 0
 					return count > 0 and ('~' .. count)
 				end,
-				hl = { fg = 'diff_change' },
+				hl = '@diff.delta',
 			},
 		}
 
@@ -510,15 +524,15 @@ return {
 					return string.format('%s %d', self.icon, self.diagnostic_count)
 				end,
 
-				hl = { fg = opts.hl },
+				hl = opts.hl,
 			}
 		end
 
 		local severity = vim.diagnostic.severity
-		local ErrorCount = DiagnisticCounter { severity = severity.ERROR, fallback_icon = 'E', hl = 'diag_error' }
-		local WarningCount = DiagnisticCounter { severity = severity.WARN, fallback_icon = 'W', hl = 'diag_warn' }
-		local InfoCount = DiagnisticCounter { severity = severity.INFO, fallback_icon = 'I', hl = 'diag_info' }
-		local HintCount = DiagnisticCounter { severity = severity.HINT, fallback_icon = 'H', hl = 'diag_hint' }
+		local ErrorCount = DiagnisticCounter { severity = severity.ERROR, fallback_icon = 'E', hl = 'DiagnosticError' }
+		local WarningCount = DiagnisticCounter { severity = severity.WARN, fallback_icon = 'W', hl = 'DiagnosticWarn' }
+		local InfoCount = DiagnisticCounter { severity = severity.INFO, fallback_icon = 'I', hl = 'DiagnosticInfo' }
+		local HintCount = DiagnisticCounter { severity = severity.HINT, fallback_icon = 'H', hl = 'DiagnosticHint' }
 
 		local is_leaping = signal.new(false)
 
@@ -530,12 +544,12 @@ return {
 			vim.cmd.doautocmd 'User HeirlineLeapUpdate'
 		end)
 
-		local LeapMarker = {
+		local LeapMarker = Bold {
 			update = { 'User', pattern = 'HeirlineLeapUpdate' },
+
 			condition = func.curry_only(is_leaping),
-			Text('󰤇 leap', {
-				hl = { fg = 'diff_add', bold = true },
-			}),
+
+			Text('󰤇 leap', { hl = '@diff.plus' }),
 		}
 
 		local TerminalList = {
@@ -570,7 +584,7 @@ return {
 				return string.format('%s %s', indicator, self.icon)
 			end,
 
-			hl = { fg = 'attribute' },
+			hl = '@attribute',
 		}
 
 		local Ruler = {
@@ -579,7 +593,7 @@ return {
 			-- %c = column number
 			-- %P = percentage through file of displayed window
 			provider = '%04l/%04L:%04c',
-			hl = { fg = 'muted' },
+			hl = '@comment',
 		}
 
 		local ScrollBar = {
@@ -594,7 +608,7 @@ return {
 				return self.sbar[i]
 			end,
 
-			hl = { fg = 'muted', bg = 'float_border' },
+			hl = '@comment',
 		}
 
 		local LSPActive = {
@@ -602,7 +616,7 @@ return {
 			update = { 'LspAttach', 'LspDetach', 'BufEnter' },
 
 			static = {
-				server_icons = {
+				client_icons = {
 					biome = '',
 					csharp_ls = '󰌛',
 					cssls = '',
@@ -616,17 +630,20 @@ return {
 				},
 			},
 
-			provider = function(self)
-				local names = array.map(vim.lsp.get_clients { bufnr = 0 }, function(server)
-					return self.server_icons[server.name] or server.name
+			init = function(self)
+				local client_names = array.map(vim.lsp.get_clients { bufnr = 0 }, function(client)
+					return self.client_icons[client.name] or client.name
 				end)
-				return table.concat(names, ' ')
+
+				self.active_clients = table.concat(client_names, ' ')
 			end,
 
-			hl = { fg = 'search', bold = true },
+			hl = '@comment',
+
+			provider = func.field 'active_clients',
 		}
 
-		local LeftStatusline = AppendAll({
+		local LeftStatusline = AppendAll(Space, 'right') {
 			ViMode,
 			MacroRec,
 			LeapMarker,
@@ -637,38 +654,32 @@ return {
 			WarningCount,
 			InfoCount,
 			HintCount,
-		}, Space, 'right')
+		}
 
-		local RightStatusline = AppendAll({
+		local RightStatusline = AppendAll(Space, 'left') {
 			TerminalList,
 			LSPActive,
 			Ruler,
 			ScrollBar,
-		}, Space, 'left')
+		}
 
 		heirline.setup {
 			---@diagnostic disable-next-line: missing-fields
 			statusline = {
+				hl = 'StatusLine',
 				LeftStatusline,
 				Align,
 				RightStatusline,
 			},
 			---@diagnostic disable-next-line: missing-fields
 			tabline = {
-				Append(SidebarOffset, Space, 'right'),
+				hl = 'TabLine',
+				Append(Space, 'right') { SidebarOffset },
 				BufferLine,
 				Align,
-				Append(TabPageList, Space, 'left'),
-			},
-			opts = {
-				colors = setup_colors(),
+				Append(Space, 'left') { TabPageList },
 			},
 		}
-
-		autocmd.on_colorscheme('*', function()
-			hl.clear('StatusLine', 'all')
-			h_util.on_colorscheme(setup_colors())
-		end)
 
 		-- https://github.com/rebelot/heirline.nvim/issues/203#issuecomment-2208395807
 		vim.cmd [[:au VimLeavePre * set stl=]]
