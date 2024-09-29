@@ -1,6 +1,8 @@
 return {
 	'folke/which-key.nvim',
 
+	event = 'UiEnter',
+
 	opts = {},
 
 	config = function(_, opts)

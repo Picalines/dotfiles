@@ -1,6 +1,8 @@
 return {
 	'stevearc/dressing.nvim',
-	lazy = false,
+
+	lazy = 'UiEnter',
+
 	opts = {
 		input = {
 			enabled = true,

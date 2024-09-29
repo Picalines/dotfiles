@@ -1,6 +1,8 @@
 return {
 	'hrsh7th/nvim-cmp',
 
+	event = { 'InsertEnter' },
+
 	commit = 'b356f2c',
 	pin = true,
 
@@ -14,8 +16,6 @@ return {
 
 		'L3MON4D3/LuaSnip',
 	},
-
-	event = { 'InsertEnter', 'CmdlineEnter' },
 
 	config = function()
 		local cmp = require 'cmp'
