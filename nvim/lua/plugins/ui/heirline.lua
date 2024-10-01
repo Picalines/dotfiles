@@ -241,7 +241,7 @@ return {
 			vim.schedule(function()
 				buflist_cache = get_listed_buffers()
 
-				if #buflist_cache > 1 then
+				if #buflist_cache >= 1 then
 					vim.o.showtabline = 2 -- always
 				elseif vim.o.showtabline ~= 1 then
 					vim.o.showtabline = 1 -- only when #tabpages > 1
@@ -268,9 +268,7 @@ return {
 			end)
 		end
 
-		vim.api.nvim_create_autocmd({ 'VimEnter', 'UIEnter', 'BufAdd', 'BufDelete' }, {
-			callback = update_buflist,
-		})
+		autocmd.on({ 'VimEnter', 'UIEnter', 'BufAdd', 'BufDelete' }, '*', update_buflist)
 
 		autocmd.on_user('LazyLoad', function(event)
 			if event.data == 'heirline.nvim' then
