@@ -10,6 +10,7 @@ return {
 	opts = {
 		indent = {
 			char = '┊',
+			tab_char = '┊',
 			highlight = { 'Whitespace' },
 		},
 

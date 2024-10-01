@@ -7,7 +7,7 @@ require 'settings.text-editing.indent'
 require 'settings.text-editing.pairs'
 require 'settings.text-editing.undo'
 
-require 'settings.ui.number-column'
+require 'settings.ui.chars'
 require 'settings.ui.search'
 require 'settings.ui.window'
 require 'settings.ui.wrapping'

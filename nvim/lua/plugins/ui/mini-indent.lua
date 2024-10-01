@@ -6,6 +6,7 @@ return {
 	opts = {
 		draw = {
 			delay = 1,
+			priority = 10,
 		},
 
 		mappings = {
