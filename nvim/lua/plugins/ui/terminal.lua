@@ -8,7 +8,6 @@ return {
 		local autocmd = require 'util.autocmd'
 		local func = require 'util.func'
 		local keymap = require 'util.keymap'
-		local tbl = require 'util.table'
 
 		local terminal = require 'terminal'
 		local active_terminals = require 'terminal.active_terminals'
@@ -16,17 +15,12 @@ return {
 
 		local shell_cmd = app.os() == 'windows' and 'powershell' or vim.o.shell
 
-		local float_layout = {
-			open_cmd = 'float',
-			width = 0.9,
-			height = 0.9,
-			border = 'rounded',
-		}
-
 		terminal.setup {
-			layout = float_layout,
 			cmd = shell_cmd,
 			autoclose = true,
+			layout = {
+				open_cmd = 'bot new | resize 16',
+			},
 		}
 
 		local last_terminal_index
@@ -42,7 +36,7 @@ return {
 					last_terminal_index = nil
 				end
 
-				terminal.toggle(last_terminal_index, float_layout)
+				terminal.open(last_terminal_index)
 			else
 				terminal.run(shell_cmd)
 				vim.schedule(func.cmd 'startinsert')
@@ -56,10 +50,8 @@ return {
 
 			local current_term = terminal.get_current_term()
 			if current_term then
-				local layout = tbl.copy_deep(current_term.layout)
-
 				current_term:close()
-				terminal.run(shell_cmd, { layout = layout })
+				terminal.run(shell_cmd)
 			end
 		end
 
@@ -76,8 +68,6 @@ return {
 			},
 
 			[{ 't' }] = {
-				['<C-t>'] = { new_terminal_tab, 'New terminal' },
-				['<C-Tab>'] = { terminal_map.cycle_next, 'Cycle next terminal' },
 				['<Esc>'] = { [[<C-\><C-n>]], 'Exit terminal mode' },
 				['<C-p>'] = { [[<C-\><C-n>pi]], 'Paste' },
 			},
@@ -85,33 +75,34 @@ return {
 
 		autocmd.on('TermOpen', '*', function(event)
 			keymap.declare {
-				[{ 'n', nowait = true, buffer = event.buf }] = {
-					['<Esc>'] = { terminal_map.toggle, 'Close floating terminal' },
-					['q'] = { terminal_map.toggle, 'Close floating terminal' },
+				[{ buffer = event.buf, nowait = true, remap = true }] = {
+					[{ 'n' }] = {
+						['<leader>t'] = { terminal_map.toggle, 'Close terminal' },
+						['q'] = { terminal_map.toggle, 'Close terminal' },
 
-					['<C-t>'] = { new_terminal_tab, 'New terminal' },
-					['<C-c>'] = { kill_current_terminal, 'Kill terminal process' },
-					['<Tab>'] = { terminal_map.cycle_next, 'Cycle next terminal' },
-					['<S-Tab>'] = { terminal_map.cycle_prev, 'Cycle next terminal' },
+						['o'] = { new_terminal_tab, 'New terminal' },
+						['}'] = { terminal_map.cycle_next, 'Cycle next terminal' },
+						['{'] = { terminal_map.cycle_prev, 'Cycle prev terminal' },
+						['<C-c>'] = { kill_current_terminal, 'Kill terminal process' },
 
-					['<A-h>'] = { terminal_map.move { open_cmd = 'exe "topleft " . (&columns/4) . "vnew"' }, 'Move: left split' },
-					['<A-j>'] = { terminal_map.move { open_cmd = 'bot new | exe "resize " . (&lines/4)' }, 'Move: bottom split' },
-					['<A-k>'] = { terminal_map.move { open_cmd = 'top new | exe "resize " . (&lines/4)' }, 'Move: top split' },
-					['<A-l>'] = { terminal_map.move { open_cmd = 'exe "botright " . (&columns/4) . "vnew"' }, 'Move: right split' },
-					['<A-f>'] = { terminal_map.move(float_layout), 'Move: float' },
+						['<C-o>'] = { '<C-w>p', 'Jump back' },
+						['<C-i>'] = '<Nop>',
+					},
+
+					[{ 't' }] = {
+						['<C-}>'] = { terminal_map.cycle_next, 'Cycle next terminal' },
+						['<C-{>'] = { terminal_map.cycle_prev, 'Cycle prev terminal' },
+					},
 				},
 			}
 		end)
 
 		autocmd.on({ 'TermOpen', 'BufEnter' }, 'term://*', function(event)
 			local win = vim.fn.bufwinid(event.buf)
-			if win == -1 then
-				return
-			end
-
-			vim.api.nvim_set_option_value('number', false, { win = win, scope = 'local' })
-			vim.api.nvim_set_option_value('relativenumber', false, { win = win, scope = 'local' })
-			vim.api.nvim_set_option_value('signcolumn', 'no', { win = win, scope = 'local' })
+			local opts = { win = win, scope = 'local' }
+			vim.api.nvim_set_option_value('number', false, opts)
+			vim.api.nvim_set_option_value('relativenumber', false, opts)
+			vim.api.nvim_set_option_value('signcolumn', 'no', opts)
 		end)
 	end,
 }
