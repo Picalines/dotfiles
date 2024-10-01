@@ -25,7 +25,7 @@ return {
 			try_as_border = true,
 		},
 
-		symbol = '│',
+		symbol = '┃',
 	},
 
 	config = function(_, opts)

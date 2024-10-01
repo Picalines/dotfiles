@@ -10,8 +10,9 @@ return {
 	opts = {
 		indent = {
 			char = '┊',
-			tab_char = '┊',
+			tab_char = '╎',
 			highlight = { 'Whitespace' },
+			smart_indent_cap = true,
 		},
 
 		scope = {
