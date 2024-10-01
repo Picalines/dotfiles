@@ -34,6 +34,14 @@ return {
 
 			event_handlers = {
 				{
+					event = 'neo_tree_window_after_open',
+					handler = function(event)
+						if event.position ~= 'current' then
+							vim.api.nvim_set_option_value('winfixbuf', true, { win = event.winid, scope = 'local' })
+						end
+					end,
+				},
+				{
 					event = 'file_open_requested',
 					handler = function()
 						require('neo-tree.command').execute { action = 'close' }
