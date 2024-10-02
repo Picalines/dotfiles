@@ -447,19 +447,24 @@ return {
 			},
 		}
 
+		local search_shown = signal.new(false)
+
+		autocmd.on('CmdlineEnter', { '/', '?' }, func.curry(search_shown, true))
+		autocmd.on_user('Dismiss', func.curry(search_shown, false))
+
+		signal.on(search_shown, vim.schedule_wrap(vim.cmd.redrawstatus))
+
 		local SearchCount = {
-			condition = function()
-				return vim.v.hlsearch ~= 0
-			end,
+			condition = func.curry_only(search_shown),
 
 			init = function(self)
+				self.current = 0
+				self.total = 0
+				self.exceeded = false
+
 				local maxcount = 99
 				local ok, count = pcall(vim.fn.searchcount, { maxcount = maxcount, timeout = 500 })
-				if not ok or not next(count) then
-					self.current = 0
-					self.total = 0
-					self.exceeded = false
-				else
+				if ok and next(count) then
 					self.current = count.current
 					self.total = math.min(count.total, count.maxcount)
 					self.exceeded = count.total == maxcount + 1
@@ -560,12 +565,11 @@ return {
 
 		local is_leaping = signal.new(false)
 
-		autocmd.on_user('LeapEnter', func.ignore(func.curry(is_leaping, true)))
-		autocmd.on_user('LeapLeave', func.ignore(func.curry(is_leaping, false)))
+		autocmd.on_user('LeapEnter', func.curry(is_leaping, true))
+		autocmd.on_user('LeapLeave', func.curry(is_leaping, false))
 
-		signal.watch(function()
-			is_leaping()
-			vim.cmd.doautocmd 'User HeirlineLeapUpdate'
+		signal.on(is_leaping, function()
+			vim.api.nvim_exec_autocmds('User', { pattern = 'HeirlineLeapUpdate' })
 		end)
 
 		local LeapMarker = Bold {
