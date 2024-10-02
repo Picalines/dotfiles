@@ -238,37 +238,35 @@ return {
 		local buflist_cache = {}
 
 		local function update_buflist()
-			vim.schedule(function()
-				buflist_cache = get_listed_buffers()
+			buflist_cache = get_listed_buffers()
 
-				if #buflist_cache >= 1 then
-					vim.o.showtabline = 2 -- always
-				elseif vim.o.showtabline ~= 1 then
-					vim.o.showtabline = 1 -- only when #tabpages > 1
-				end
+			if #buflist_cache >= 1 then
+				vim.o.showtabline = 2 -- always
+			elseif vim.o.showtabline ~= 1 then
+				vim.o.showtabline = 1 -- only when #tabpages > 1
+			end
 
-				local bufnr_to_name = tbl.map(buflist_cache, function(_, bufnr)
-					return bufnr, vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ':t')
-				end)
+			local bufnr_to_name = tbl.map(buflist_cache, function(_, bufnr)
+				return bufnr, vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ':t')
+			end)
 
-				local name_to_bufnr = tbl.inverse(bufnr_to_name)
+			local name_to_bufnr = tbl.inverse(bufnr_to_name)
 
-				local buffer_prefixes = {}
-				for bufname, bufnrs in pairs(name_to_bufnr) do
-					if #bufname > 0 and #bufnrs > 1 then
-						local prefixes = compute_unique_prefixes(bufnrs)
-						for i, prefix in pairs(prefixes) do
-							buffer_prefixes[bufnrs[i]] = prefix
-						end
+			local buffer_prefixes = {}
+			for bufname, bufnrs in pairs(name_to_bufnr) do
+				if #bufname > 0 and #bufnrs > 1 then
+					local prefixes = compute_unique_prefixes(bufnrs)
+					for i, prefix in pairs(prefixes) do
+						buffer_prefixes[bufnrs[i]] = prefix
 					end
 				end
+			end
 
-				---@diagnostic disable-next-line: inject-field
-				heirline.tabline.buffer_prefixes = buffer_prefixes
-			end)
+			---@diagnostic disable-next-line: inject-field
+			heirline.tabline.buffer_prefixes = buffer_prefixes
 		end
 
-		autocmd.on({ 'VimEnter', 'UIEnter', 'BufAdd', 'BufDelete' }, '*', update_buflist)
+		autocmd.on({ 'VimEnter', 'UIEnter', 'BufAdd', 'BufDelete' }, '*', vim.schedule_wrap(update_buflist))
 
 		autocmd.on_user('LazyLoad', function(event)
 			if event.data == 'heirline.nvim' then
