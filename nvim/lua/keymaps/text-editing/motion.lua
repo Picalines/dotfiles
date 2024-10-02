@@ -13,7 +13,7 @@ keymap.declare {
 
 		-- col('.') == 1 || col('.') > match(getline('.'), '\\S') + 1 ? '^' : '0'
 		['H'] = '^',
-		['L'] = "$",
+		['L'] = '$',
 
 		[{ expr = true }] = {
 			['k'] = "v:count == 0 ? 'gk' : 'k'",

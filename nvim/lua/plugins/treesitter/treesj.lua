@@ -17,7 +17,7 @@ return {
 
 		keymap.declare {
 			[{ 'n' }] = {
-				['<leader>j'] = { treesj.toggle, 'Join Treesitter nodes' },
+				['gj'] = { treesj.toggle, 'Join Treesitter nodes' },
 			},
 		}
 	end,
