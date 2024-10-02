@@ -45,8 +45,14 @@ local function resize_smart(count)
 	vim.cmd.wincmd(cmd)
 end
 
+local function trigger_dismiss()
+	vim.api.nvim_exec_autocmds('User', { pattern = 'Dismiss' })
+end
+
 keymap.declare {
 	[{ 'n', silent = true }] = {
+		['<Esc>'] = { trigger_dismiss, 'Dismiss notifications' },
+
 		['<C-j>'] = { '<C-W>j', 'Move to bottom window' },
 		['<C-k>'] = { '<C-W>k', 'Move to upper window' },
 		['<C-h>'] = { '<C-W>h', 'Move to left window' },

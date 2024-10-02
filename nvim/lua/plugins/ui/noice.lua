@@ -8,16 +8,18 @@ return {
 	},
 
 	config = function(_, opts)
+		local autocmd = require 'util.autocmd'
 		local keymap = require 'util.keymap'
 
 		require('noice').setup(opts)
 
 		keymap.declare {
 			[{ 'n' }] = {
-				['<Esc>'] = { '<Cmd>NoiceDismiss<CR>', 'Dismiss notifications' },
 				['<leader><leader>m'] = { '<Cmd>Noice all<CR>', 'Open messages' },
 			},
 		}
+
+		autocmd.on_user('Dismiss', 'NoiceDismiss')
 	end,
 
 	opts = {
