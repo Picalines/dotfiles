@@ -73,11 +73,6 @@ end
 ---@param colorscheme string | string[]
 ---@param callback fun(event: autocmd_event)
 function M.on_colorscheme(colorscheme, callback)
-	vim.api.nvim_create_autocmd('ColorScheme', {
-		pattern = colorscheme,
-		callback = callback,
-	})
-
 	return M.on('ColorScheme', colorscheme, callback)
 end
 
