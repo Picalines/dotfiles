@@ -76,13 +76,8 @@ function M.new(value_or_factory)
 	end
 
 	local function on_called(_, ...)
-		local args = { ... }
-		if #args > 1 then
-			error 'signal expects 0 or 1 arguments'
-		end
-
-		if #args == 1 then
-			return write(args[1])
+		if select('#', ...) >= 1 then
+			return write(select(1, ...))
 		end
 
 		return read()
@@ -112,6 +107,23 @@ function M.watch(fn)
 			_notify = run,
 		},
 	})
+end
+
+---@param signals (fun(): any) | (fun(): any)[]
+---@param fn fun()
+function M.on(signals, fn)
+	if #signals == 0 then
+		signals = { signals }
+	end
+
+	return M.watch(function()
+		---@diagnostic disable-next-line: param-type-mismatch
+		for _, signal in ipairs(signals) do
+			signal()
+		end
+
+		fn()
+	end)
 end
 
 ---@generic T
