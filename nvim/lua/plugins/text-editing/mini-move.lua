@@ -18,22 +18,14 @@ return {
 
 		mini_move.setup(opts)
 
-		local move_line = mini_move.move_line
 		local move_selection = mini_move.move_selection
 
 		keymap.declare {
-			[{ 'n' }] = {
-				['<C-S-h>'] = { func.curry(move_line, 'left'), 'Unindent line' },
-				['<C-S-j>'] = { func.curry(move_line, 'down'), 'Move line down' },
-				['<C-S-k>'] = { func.curry(move_line, 'up'), 'Move line up' },
-				['<C-S-l>'] = { func.curry(move_line, 'right'), 'Indent line' },
-			},
-
 			[{ 'v' }] = {
-				['<C-S-h>'] = { func.curry(move_selection, 'left'), 'Move selection left' },
-				['<C-S-j>'] = { func.curry(move_selection, 'down'), 'Move selection down' },
-				['<C-S-k>'] = { func.curry(move_selection, 'up'), 'Move selection up' },
-				['<C-S-l>'] = { func.curry(move_selection, 'right'), 'Move selection right' },
+				['H'] = { func.curry(move_selection, 'left'), 'Move selection left' },
+				['J'] = { func.curry(move_selection, 'down'), 'Move selection down' },
+				['K'] = { func.curry(move_selection, 'up'), 'Move selection up' },
+				['L'] = { func.curry(move_selection, 'right'), 'Move selection right' },
 			},
 		}
 	end,
