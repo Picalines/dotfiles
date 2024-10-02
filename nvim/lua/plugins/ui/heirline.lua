@@ -449,6 +449,34 @@ return {
 			},
 		}
 
+		local SearchCount = {
+			condition = function()
+				return vim.v.hlsearch ~= 0
+			end,
+
+			init = function(self)
+				local maxcount = 99
+				local ok, count = pcall(vim.fn.searchcount, { maxcount = maxcount, timeout = 500 })
+				if not ok or not next(count) then
+					self.current = 0
+					self.total = 0
+					self.exceeded = false
+				else
+					self.current = count.current
+					self.total = math.min(count.total, count.maxcount)
+					self.exceeded = count.total == maxcount + 1
+				end
+			end,
+
+			provider = function(self)
+				if self.current > 0 or self.total > 0 then
+					return string.format(' %d/%d', self.current, self.total) .. (self.exceeded and '+' or '')
+				end
+			end,
+
+			hl = 'DiagnosticInfo',
+		}
+
 		local Git = {
 			condition = h_conditions.is_git_repo,
 
@@ -643,15 +671,16 @@ return {
 
 		local LeftStatusline = AppendAll(Space, 'right') {
 			ViMode,
-			MacroRec,
-			LeapMarker,
-			ModifiedFlag 'status',
 			ReadonlyFlag 'status',
 			Git,
 			ErrorCount,
 			WarningCount,
 			InfoCount,
 			HintCount,
+			ModifiedFlag 'status',
+			MacroRec,
+			SearchCount,
+			LeapMarker,
 		}
 
 		local RightStatusline = AppendAll(Space, 'left') {
