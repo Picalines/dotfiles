@@ -2,6 +2,8 @@ local array = require 'util.array'
 
 local M = {}
 
+M.UNSUB = {} -- return this in a callback to delete autocmd
+
 ---@class autocmd_event
 ---@field buf integer
 ---@field match string
@@ -15,7 +17,10 @@ local function parse_callback_or_cmd(callback_or_cmd)
 	local callback, cmd
 
 	if type(callback_or_cmd) == 'function' then
-		callback = callback_or_cmd
+		callback = function(...)
+			return callback_or_cmd(...) == M.UNSUB
+		end
+
 		cmd = nil
 	else
 		callback = nil
@@ -55,8 +60,10 @@ function M.on_user(event, callback_or_cmd)
 end
 
 ---@param filetypes string | string[]
----@param callback fun(event: autocmd_event)
-function M.on_filetype(filetypes, callback)
+---@param callback_or_cmd fun(event: autocmd_event) | string
+function M.on_filetype(filetypes, callback_or_cmd)
+	local callback, cmd = parse_callback_or_cmd(callback_or_cmd)
+
 	if type(filetypes) ~= 'table' then
 		filetypes = { filetypes }
 	end
@@ -64,8 +71,14 @@ function M.on_filetype(filetypes, callback)
 	filetypes = array.copy(filetypes)
 
 	return M.on('FileType', '*', function(event)
-		if array.contains(filetypes, event.match) then
-			callback(event)
+		if not array.contains(filetypes, event.match) then
+			return
+		end
+
+		if callback then
+			return callback(event)
+		else
+			vim.cmd(cmd)
 		end
 	end)
 end
