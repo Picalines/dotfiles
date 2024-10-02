@@ -25,11 +25,14 @@ signal.watch(function()
 	end
 
 	vim.g.background = background()
-
-	patch_colorscheme()
 end)
 
-autocmd.on_colorscheme('*', function()
+local function on_colorscheme()
 	colorscheme(vim.g.colors_name)
 	background(vim.o.background)
-end)
+	patch_colorscheme()
+end
+
+autocmd.on_colorscheme('*', on_colorscheme)
+
+on_colorscheme()
