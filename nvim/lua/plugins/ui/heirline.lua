@@ -326,7 +326,8 @@ return {
 
 			{
 				provider = function(self)
-					local title = ' ' .. self.title
+					local icon = self.is_focused and '' or ''
+					local title = string.format('%s %s', icon, self.title)
 					local width = math.max(0, vim.api.nvim_win_get_width(self.winid))
 					return string_util.center_chars(title, width, {
 						pad_char = ' ',
