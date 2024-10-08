@@ -658,6 +658,7 @@ return {
 					svelte = '',
 					tailwindcss = '󱏿',
 					ts_ls = '',
+					vimls = '',
 				},
 			},
 
