@@ -45,34 +45,36 @@ alt-shift-j = 'focus-monitor down'
 alt-shift-k = 'focus-monitor up'
 alt-shift-l = 'focus-monitor right'
 
-alt-o = 'workspace-back-and-forth'
 alt-g = 'mode grab'
 alt-shift-g = 'mode w-grab'
 
-alt-1 = 'workspace 1'
-alt-2 = 'workspace 2'
-alt-3 = 'workspace 3'
-alt-4 = 'workspace 4'
-alt-5 = 'workspace 5'
-alt-6 = 'workspace 6'
-alt-7 = 'workspace 7'
-alt-8 = 'workspace 8'
-alt-9 = 'workspace 9'
-alt-q = 'workspace Q'
-alt-w = 'workspace W'
-alt-e = 'workspace E'
-alt-r = 'workspace R'
-alt-t = 'workspace T'
-alt-y = 'workspace Y'
-alt-a = 'workspace A'
-alt-s = 'workspace S'
-alt-d = 'workspace D'
-alt-f = 'workspace F'
-alt-z = 'workspace Z'
-alt-x = 'workspace X'
-alt-c = 'workspace C'
-alt-v = 'workspace V'
-alt-b = 'workspace B'
+alt-o = "exec-and-forget aerospace list-workspaces --monitor focused --empty no | aerospace workspace next --wrap-around"
+alt-i = "exec-and-forget aerospace list-workspaces --monitor focused --empty no | aerospace workspace prev --wrap-around"
+
+alt-1 = 'workspace 1 --auto-back-and-forth'
+alt-2 = 'workspace 2 --auto-back-and-forth'
+alt-3 = 'workspace 3 --auto-back-and-forth'
+alt-4 = 'workspace 4 --auto-back-and-forth'
+alt-5 = 'workspace 5 --auto-back-and-forth'
+alt-6 = 'workspace 6 --auto-back-and-forth'
+alt-7 = 'workspace 7 --auto-back-and-forth'
+alt-8 = 'workspace 8 --auto-back-and-forth'
+alt-9 = 'workspace 9 --auto-back-and-forth'
+alt-q = 'workspace Q --auto-back-and-forth'
+alt-w = 'workspace W --auto-back-and-forth'
+alt-e = 'workspace E --auto-back-and-forth'
+alt-r = 'workspace R --auto-back-and-forth'
+alt-t = 'workspace T --auto-back-and-forth'
+alt-y = 'workspace Y --auto-back-and-forth'
+alt-a = 'workspace A --auto-back-and-forth'
+alt-s = 'workspace S --auto-back-and-forth'
+alt-d = 'workspace D --auto-back-and-forth'
+alt-f = 'workspace F --auto-back-and-forth'
+alt-z = 'workspace Z --auto-back-and-forth'
+alt-x = 'workspace X --auto-back-and-forth'
+alt-c = 'workspace C --auto-back-and-forth'
+alt-v = 'workspace V --auto-back-and-forth'
+alt-b = 'workspace B --auto-back-and-forth'
 
 [mode.grab.binding]
 
@@ -93,8 +95,8 @@ shift-l = 'join-with right'
 
 f = ['layout floating tiling', 'mode main']
 
-slash = 'layout tiles horizontal vertical'
-comma = 'layout accordion horizontal vertical'
+s = 'layout tiles horizontal vertical'
+a = 'layout accordion horizontal vertical'
 
 alt-1 = ['move-node-to-workspace 1', 'workspace 1']
 alt-2 = ['move-node-to-workspace 2', 'workspace 2']
