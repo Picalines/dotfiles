@@ -16,7 +16,7 @@ return {
 		hl.link('MiniCursorword', 'CursorLine')
 
 		local function disable_mini_cursorword(event)
-			vim.b[event.buf].minicursorword_disable = true
+			vim.api.nvim_buf_set_var(event.buf, 'minicursorword_disable', true)
 		end
 
 		autocmd.on_filetype({
@@ -30,6 +30,6 @@ return {
 			'noice',
 		}, disable_mini_cursorword)
 
-		autocmd.on({ 'BufEnter' }, 'term://*', disable_mini_cursorword)
+		autocmd.on({ 'BufEnter', 'TermOpen' }, 'term://*', disable_mini_cursorword)
 	end,
 }

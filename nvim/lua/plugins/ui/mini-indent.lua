@@ -37,7 +37,7 @@ return {
 		hl.link('MiniIndentscopeSymbol', 'Whitespace')
 
 		local function disable_mini_indentscope(event)
-			vim.b[event.buf].miniindentscope_disable = true
+			vim.api.nvim_buf_set_var(event.buf, 'miniindentscope_disable', true)
 		end
 
 		autocmd.on_filetype({
@@ -52,6 +52,6 @@ return {
 			'noice',
 		}, disable_mini_indentscope)
 
-		autocmd.on({ 'BufEnter' }, 'term://*', disable_mini_indentscope)
+		autocmd.on({ 'BufEnter', 'TermOpen' }, 'term://*', disable_mini_indentscope)
 	end,
 }
