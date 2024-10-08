@@ -25,6 +25,7 @@ return {
 				'biome',
 				'graphql-language-service-cli',
 				'prettierd',
+				'svelte-language-server',
 				'tailwindcss-language-server',
 				'typescript-language-server',
 				{ 'eslint-lsp', version = '4.8.0' },

@@ -655,6 +655,7 @@ return {
 					lua_ls = '',
 					omnisharp = '󰈸',
 					pyright = '󰌠',
+					svelte = '',
 					tailwindcss = '󱏿',
 					ts_ls = '',
 				},

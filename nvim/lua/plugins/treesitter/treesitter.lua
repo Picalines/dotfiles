@@ -43,6 +43,7 @@ return {
 			'markdown',
 			'python',
 			'rust',
+			'svelte',
 			'toml',
 			'tsx',
 			'typescript',
