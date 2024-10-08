@@ -668,7 +668,7 @@ return {
 				self.active_clients = table.concat(client_names, ' ')
 			end,
 
-			hl = '@comment',
+			hl = '@tag',
 
 			provider = func.field 'active_clients',
 		}
