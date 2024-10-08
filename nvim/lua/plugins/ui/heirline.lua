@@ -650,6 +650,7 @@ return {
 					csharp_ls = '󰌛',
 					cssls = '',
 					eslint = '󰱺',
+					graphql = '󰡷',
 					jsonls = '',
 					lua_ls = '',
 					omnisharp = '󰈸',
