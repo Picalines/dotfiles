@@ -274,7 +274,7 @@ return {
 			end
 		end)
 
-		local BufferLine = h_util.make_buflist(Buffer, Text('', { hl = 'WinSeparator' }), Text('', { hl = 'WinSeparator' }), function()
+		local BufferLine = h_util.make_buflist(Buffer, Text(' ', { hl = 'WinSeparator' }), Text('', { hl = 'WinSeparator' }), function()
 			return buflist_cache
 		end, false)
 
