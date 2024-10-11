@@ -274,7 +274,7 @@ return {
 			end
 		end)
 
-		local BufferLine = h_util.make_buflist(Buffer, Text(' ', { hl = 'WinSeparator' }), Text('', { hl = 'WinSeparator' }), function()
+		local BufferLine = h_util.make_buflist(Buffer, Text(' ', { hl = '@comment' }), Text('', { hl = '@comment' }), function()
 			return buflist_cache
 		end, false)
 
@@ -299,7 +299,7 @@ return {
 				return #vim.api.nvim_list_tabpages() >= 2
 			end,
 			{
-				Text '',
+				Text('', { hl = '@comment' }),
 				h_util.make_tablist(TabPage),
 			},
 		}
@@ -335,7 +335,7 @@ return {
 				end,
 
 				hl = function(self)
-					return self.is_focused and 'Normal' or '@comment'
+					return self.is_focused and 'Directory' or '@comment'
 				end,
 			},
 
