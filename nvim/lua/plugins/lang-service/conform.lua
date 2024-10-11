@@ -26,10 +26,6 @@ return {
 				['<leader>F'] = { '<Cmd>Format<CR>', 'Format buffer' },
 				['<leader><leader>F'] = { toggle_autoformat, 'Toggle auto format' },
 			},
-
-			[{ 'v', silent = true }] = {
-				['<leader>F'] = { '<Cmd>Format<CR>', 'Format selection' },
-			},
 		}
 
 		-- local function is_formatter_available(formatter, bufnr)
@@ -44,6 +40,13 @@ return {
 
 		conform.setup {
 			notify_on_error = true,
+			notify_no_formatters = true,
+
+			default_format_opts = {
+				lsp_format = 'fallback',
+				timeout_ms = 3000,
+				stop_after_first = false,
+			},
 
 			formatters_by_ft = {
 				lua = { 'stylua' },
@@ -82,31 +85,16 @@ return {
 			},
 		}
 
-		---@type conform.FormatOpts
-		local format_opts = {
-			async = true,
-			lsp_fallback = true,
-		}
+		vim.api.nvim_create_user_command('Format', function()
+			conform.format { async = vim.fn.reg_executing() == '' }
+		end, {})
 
-		vim.api.nvim_create_user_command('Format', function(args)
-			local range = nil
-
-			if args.count ~= -1 then
-				local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
-				range = {
-					['start'] = { args.line1, 0 },
-					['end'] = { args.line2, end_line:len() },
-				}
-			end
-
-			conform.format(tbl.override_deep(format_opts, {
-				range = range,
-			}))
-		end, { range = true })
-
-		autocmd.on('BufWritePre', '*', function()
+		autocmd.on('BufWritePre', '*', function(event)
 			if format_before_write() then
-				conform.format(tbl.override_deep(format_opts, { async = false }))
+				conform.format {
+					async = false,
+					bufnr = event.buf,
+				}
 			end
 		end)
 	end,
