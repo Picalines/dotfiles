@@ -22,7 +22,7 @@ return {
 
 		local packages_by_executables = {
 			[{ 'npm' }] = {
-				'biome',
+				{ 'biome', version = '1.8.3' },
 				'graphql-language-service-cli',
 				'prettierd',
 				'svelte-language-server',
