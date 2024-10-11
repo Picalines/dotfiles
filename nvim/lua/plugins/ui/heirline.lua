@@ -266,7 +266,7 @@ return {
 			heirline.tabline.buffer_prefixes = buffer_prefixes
 		end
 
-		autocmd.on({ 'VimEnter', 'UIEnter', 'BufAdd', 'BufDelete' }, '*', vim.schedule_wrap(update_buflist))
+		autocmd.on({ 'VimEnter', 'UIEnter', 'TabEnter', 'BufAdd', 'BufDelete' }, '*', vim.schedule_wrap(update_buflist))
 
 		autocmd.on_user('LazyLoad', function(event)
 			if event.data == 'heirline.nvim' then
@@ -274,7 +274,7 @@ return {
 			end
 		end)
 
-		local BufferLine = h_util.make_buflist(Buffer, Text(' ', { hl = 'WinSeparator' }), Text('', { hl = 'WinSeparator' }), function()
+		local BufferLine = h_util.make_buflist(Buffer, Text('', { hl = 'WinSeparator' }), Text('', { hl = 'WinSeparator' }), function()
 			return buflist_cache
 		end, false)
 
@@ -310,14 +310,15 @@ return {
 				local bufnr = vim.api.nvim_win_get_buf(win)
 				self.winid = win
 
-				if vim.bo[bufnr].filetype == 'neo-tree' then
-					self.title = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
-					return true
-				end
+				return vim.bo[bufnr].filetype == 'neo-tree'
 			end,
 
 			init = function(self)
 				self.is_focused = vim.api.nvim_get_current_win() == self.winid
+
+				local icon = self.is_focused and '' or ''
+				local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+				self.title = string.format('%s %s', icon, cwd)
 			end,
 
 			hl = function(self)
@@ -326,10 +327,8 @@ return {
 
 			{
 				provider = function(self)
-					local icon = self.is_focused and '' or ''
-					local title = string.format('%s %s', icon, self.title)
 					local width = math.max(0, vim.api.nvim_win_get_width(self.winid))
-					return string_util.center_chars(title, width, {
+					return string_util.center_chars(self.title, width, {
 						pad_char = ' ',
 						align_odd = 'left',
 					})
@@ -341,6 +340,7 @@ return {
 			},
 
 			Text('|', { hl = 'WinSeparator' }),
+			Space,
 		}
 
 		local ViMode = {
@@ -707,7 +707,7 @@ return {
 			---@diagnostic disable-next-line: missing-fields
 			tabline = {
 				hl = 'TabLine',
-				Append(Space, 'right') { SidebarOffset },
+				SidebarOffset,
 				BufferLine,
 				Align,
 				Append(Space, 'left') { TabPageList },
