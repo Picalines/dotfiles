@@ -63,7 +63,7 @@ return {
 				},
 
 				biome = {
-					cwd = conform_util.root_file { 'biome.json' },
+					cwd = conform_util.root_file { 'biome.json', 'biome.jsonc' },
 					require_cwd = true,
 				},
 			},
