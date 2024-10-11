@@ -1,47 +1,71 @@
-local func_util = require 'util.func'
-
-local default_opts = func_util.default_opts
+local func = require 'util.func'
+local tbl = require 'util.table'
 
 local M = {}
 
----@class hl_attr_opts
+---@class get_opts
+---@field ns_id? integer
 ---@field follow_link? boolean
 ---@field fallback_hl? string
----@field default_value? string
----@field _rec_depth? number
 
 ---@param hl_name string
----@param attribute 'fg' | 'bg'
----@param opts? hl_attr_opts
-function M.attr(hl_name, attribute, opts)
-	opts = default_opts(opts, {
-		_rec_depth = 0,
+---@param opts get_opts
+function M.get(hl_name, opts)
+	opts = func.default_opts(opts, {
+		ns_id = 0,
 		follow_link = true,
-		fallback_hl = 'Normal',
-		default_value = nil,
+		fallback_hl = nil,
 	})
 
-	opts._rec_depth = opts._rec_depth + 1
-
-	local hl = vim.api.nvim_get_hl(0, {
+	local hl = vim.api.nvim_get_hl(opts.ns_id, {
 		name = hl_name,
 		link = opts.follow_link,
 		create = false,
 	})
 
 	if hl.link then
-		return M.attr(hl.link, attribute, opts)
+		return M.get(hl.link, opts)
 	end
 
-	if hl[attribute] then
+	if not next(hl) then
+		if opts.fallback_hl and hl_name ~= opts.fallback_hl then
+			return M.get(opts.fallback_hl, opts)
+		else
+			return nil
+		end
+	end
+
+	return hl
+end
+
+---@class attr_opts
+---@field ns_id? integer
+---@field follow_link? boolean
+---@field fallback_hl? string
+---@field default_value? string
+
+---@param hl_name string
+---@param attribute 'fg' | 'bg'
+---@param opts? attr_opts
+function M.attr(hl_name, attribute, opts)
+	opts = func.default_opts(opts, {
+		ns_id = 0,
+		follow_link = true,
+		fallback_hl = 'Normal',
+		default_value = nil,
+	})
+
+	local hl = M.get(hl_name, {
+		ns_id = opts.ns_id,
+		follow_link = opts.follow_link,
+		fallback_hl = opts.fallback_hl,
+	})
+
+	if hl and hl[attribute] then
 		return hl[attribute]
 	end
 
-	local fallback_hl = opts.fallback_hl --[[@as string]]
-
-	if hl_name ~= fallback_hl then
-		return M.attr(fallback_hl, attribute, opts)
-	elseif opts.default_value ~= nil then
+	if opts.default_value ~= nil then
 		return opts.default_value
 	elseif vim.o.background == 'dark' then
 		return attribute == 'fg' and 'white' or 'NONE'
@@ -57,7 +81,7 @@ end
 ---@param source_hl string
 ---@param opts? link_opts
 function M.link(target_hl, source_hl, opts)
-	opts = default_opts(opts, {
+	opts = func.default_opts(opts, {
 		ns_id = 0,
 	})
 
@@ -71,20 +95,20 @@ end
 ---@param attrs? 'bg' | 'fg' | 'all'
 ---@param opts? clear_opts
 function M.clear(target_hl, attrs, opts)
-	opts = default_opts(opts, {
+	opts = func.default_opts(opts, {
 		ns_id = 0,
 	})
 
-	local new_attrs
+	local new_attrs = {}
 	if attrs == 'fg' then
 		new_attrs = { fg = 'NONE' }
 	elseif attrs == 'bg' then
 		new_attrs = { bg = 'NONE' }
-	else
-		new_attrs = {}
 	end
 
-	vim.api.nvim_set_hl(opts.ns_id, target_hl, new_attrs)
+	local hl = M.get(target_hl, { ns_id = opts.ns_id, follow_link = true }) or {}
+
+	vim.api.nvim_set_hl(opts.ns_id, target_hl, tbl.override_deep(hl, new_attrs))
 end
 
 return M
