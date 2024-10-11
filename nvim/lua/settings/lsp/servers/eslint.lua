@@ -9,6 +9,7 @@ local root_file = {
 	'.eslintrc.yaml',
 	'.eslintrc.yml',
 	'.eslintrc.json',
+	'.eslintrc.jsonc',
 	'eslint.config.js',
 	'eslint.config.mjs',
 	'eslint.config.cjs',
