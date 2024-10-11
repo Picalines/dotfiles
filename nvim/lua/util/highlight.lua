@@ -99,11 +99,13 @@ function M.clear(target_hl, attrs, opts)
 		ns_id = 0,
 	})
 
-	local new_attrs = {}
+	local new_attrs
 	if attrs == 'fg' then
 		new_attrs = { fg = 'NONE' }
 	elseif attrs == 'bg' then
 		new_attrs = { bg = 'NONE' }
+	else
+		new_attrs = { fg = 'NONE', bg = 'NONE' }
 	end
 
 	local hl = M.get(target_hl, { ns_id = opts.ns_id, follow_link = true }) or {}
