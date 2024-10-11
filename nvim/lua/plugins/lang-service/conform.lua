@@ -4,14 +4,27 @@ return {
 	event = { 'BufReadPre', 'BufNewFile' },
 
 	config = function()
-		local keymap = require 'util.keymap'
-		local tbl = require 'util.table'
+		local autocmd = require 'util.autocmd'
 		local conform = require 'conform'
 		local conform_util = require 'conform.util'
+		local keymap = require 'util.keymap'
+		local signal = require 'util.signal'
+		local tbl = require 'util.table'
+
+		vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+
+		local format_before_write = signal.new(false)
+		signal.persist(format_before_write, 'format_before_write')
+
+		local function toggle_autoformat()
+			local is_enabled = format_before_write(not format_before_write())
+			print('Auto format: ' .. (is_enabled and 'on' or 'off'))
+		end
 
 		keymap.declare {
 			[{ 'n', silent = true }] = {
 				['<leader>F'] = { '<Cmd>Format<CR>', 'Format buffer' },
+				['<leader><leader>F'] = { toggle_autoformat, 'Toggle auto format' },
 			},
 
 			[{ 'v', silent = true }] = {
@@ -30,6 +43,8 @@ return {
 		local biome_or_prettier = only_first { 'biome', 'prettierd', 'prettier' }
 
 		conform.setup {
+			notify_on_error = true,
+
 			formatters_by_ft = {
 				lua = { 'stylua' },
 				python = { 'isort', 'black' },
@@ -49,8 +64,6 @@ return {
 				cs = { 'csharpier' },
 			},
 
-			notify_on_error = true,
-
 			formatters = {
 				isort = {
 					command = 'isort',
@@ -69,6 +82,12 @@ return {
 			},
 		}
 
+		---@type conform.FormatOpts
+		local format_opts = {
+			async = true,
+			lsp_fallback = true,
+		}
+
 		vim.api.nvim_create_user_command('Format', function(args)
 			local range = nil
 
@@ -80,13 +99,15 @@ return {
 				}
 			end
 
-			conform.format {
-				async = true,
-				lsp_fallback = true,
+			conform.format(tbl.override_deep(format_opts, {
 				range = range,
-			}
+			}))
 		end, { range = true })
 
-		vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+		autocmd.on('BufWritePre', '*', function()
+			if format_before_write() then
+				conform.format(tbl.override_deep(format_opts, { async = false }))
+			end
+		end)
 	end,
 }
