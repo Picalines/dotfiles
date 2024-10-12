@@ -42,6 +42,7 @@ return {
 			'lua',
 			'markdown',
 			'python',
+			'regex',
 			'rust',
 			'svelte',
 			'toml',
