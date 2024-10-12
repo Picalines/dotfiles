@@ -16,12 +16,28 @@ return {
 		local hl = require 'util.highlight'
 		local keymap = require 'util.keymap'
 		local nt_fs = require 'neo-tree.sources.filesystem.commands'
+		local signal = require 'util.signal'
 
 		keymap.declare {
 			[{ 'n', silent = true }] = {
 				['<leader>e'] = { '<Cmd>Neotree focus filesystem<CR>', 'File explorer' },
 			},
 		}
+
+		local sidebar_width = signal.new(40)
+		signal.persist(sidebar_width, 'neo-tree.sidebar_width')
+
+		autocmd.on('WinResized', '*', function(event)
+			local filetype = vim.api.nvim_buf_get_option(event.buf, 'filetype')
+			local winid = tonumber(event.match)
+			if filetype == 'neo-tree' and winid and #vim.api.nvim_list_wins() > 1 then
+				sidebar_width(vim.api.nvim_win_get_width(winid))
+			end
+		end)
+
+		autocmd.on_colorscheme('*', function()
+			vim.api.nvim_set_hl(0, 'NeoTreeModified', { fg = hl.attr('@diff.plus', 'fg'), bg = 'NONE' })
+		end)
 
 		require('neo-tree').setup {
 			sources = { 'filesystem' },
@@ -113,7 +129,9 @@ return {
 
 			window = {
 				position = 'left',
-				width = 40,
+
+				width = func.curry_only(sidebar_width),
+
 				mapping_options = {
 					noremap = true,
 					nowait = true,
@@ -242,9 +260,5 @@ return {
 				},
 			},
 		}
-
-		autocmd.on_colorscheme('*', function()
-			vim.api.nvim_set_hl(0, 'NeoTreeModified', { fg = hl.attr('@diff.plus', 'fg'), bg = 'NONE' })
-		end)
 	end,
 }
