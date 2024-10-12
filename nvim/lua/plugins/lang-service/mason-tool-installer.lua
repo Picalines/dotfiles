@@ -4,7 +4,6 @@ return {
 	event = 'UiEnter',
 
 	opts = {
-		run_on_start = true,
 		auto_update = true,
 		debounce_hours = 6,
 
@@ -19,6 +18,7 @@ return {
 	config = function(_, base_opts)
 		local tbl = require 'util.table'
 		local array = require 'util.array'
+		local installer = require 'mason-tool-installer'
 
 		local packages_by_executables = {
 			[{ 'npm' }] = {
@@ -65,7 +65,12 @@ return {
 
 		local opts = tbl.copy_deep(base_opts)
 		opts.ensure_installed = ensure_installed
+		opts.run_on_start = true
 
-		require('mason-tool-installer').setup(opts)
+		installer.setup(opts)
+
+		-- NOTE: doesn't called automatically because of lazy loading
+		-- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim/issues/39
+		installer.run_on_start()
 	end,
 }
