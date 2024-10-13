@@ -29,7 +29,15 @@ return {
 		local builtin = require 'telescope.builtin'
 
 		local ignore_files = { '.gitignore', '.arcignore' }
-		local always_exclude = { '.git', 'node_modules', '{package,pnpm}-lock.json', '{dist,build}', '*.bundle.js', '.geodata' }
+		local always_exclude = {
+			'.git',
+			'node_modules',
+			'{package,pnpm}-lock.json',
+			'{dist,build}',
+			'{dist,build}-*',
+			'*.bundle.js',
+			'.geodata',
+		}
 
 		local rg_args = array.concat(
 			{ '--hidden' },
@@ -51,11 +59,12 @@ return {
 
 				mappings = {
 					i = {
-						['<C-n>'] = false,
 						['<C-p>'] = false,
 
-						['<C-k>'] = actions.move_selection_previous,
+						['<C-n>'] = actions.move_selection_next,
+						['<C-S-n>'] = actions.move_selection_previous,
 						['<C-j>'] = actions.move_selection_next,
+						['<C-k>'] = actions.move_selection_previous,
 					},
 				},
 
