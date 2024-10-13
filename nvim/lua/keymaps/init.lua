@@ -11,6 +11,7 @@ else
 	require 'keymaps.ui.colorscheme'
 	require 'keymaps.ui.number'
 	require 'keymaps.ui.quickfix'
+	require 'keymaps.ui.quit'
 	require 'keymaps.ui.tab'
 	require 'keymaps.ui.window'
 
