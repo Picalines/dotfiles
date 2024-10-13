@@ -8,6 +8,7 @@ return {
 		local autocmd = require 'util.autocmd'
 		local func = require 'util.func'
 		local keymap = require 'util.keymap'
+		local signal = require 'util.signal'
 
 		local terminal = require 'terminal'
 		local active_terminals = require 'terminal.active_terminals'
@@ -18,15 +19,19 @@ return {
 		terminal.setup {
 			cmd = shell_cmd,
 			autoclose = true,
-			layout = {
-				open_cmd = 'bot new | resize 16',
-			},
 		}
 
 		local last_terminal_index
 
 		autocmd.on('BufEnter', 'term://*', function()
 			last_terminal_index = terminal.current_term_index()
+		end)
+
+		local panel_height = signal.new(60)
+		signal.persist(panel_height, 'plugin.terminal.panel_height')
+
+		local term_layout = signal.derive(function()
+			return { open_cmd = string.format('bot new | resize %d', panel_height()) }
 		end)
 
 		local function toggle_terminal()
@@ -36,9 +41,10 @@ return {
 					last_terminal_index = nil
 				end
 
-				terminal.open(last_terminal_index)
+				terminal.open(last_terminal_index, term_layout())
 			else
-				terminal.run(shell_cmd)
+				terminal.run(shell_cmd, { layout = term_layout() })
+
 				vim.schedule(func.cmd 'startinsert')
 			end
 		end
@@ -51,7 +57,7 @@ return {
 			local current_term = terminal.get_current_term()
 			if current_term then
 				current_term:close()
-				terminal.run(shell_cmd)
+				terminal.run(shell_cmd, { layout = term_layout() })
 			end
 		end
 
@@ -77,8 +83,8 @@ return {
 			keymap.declare {
 				[{ buffer = event.buf, nowait = true, remap = true }] = {
 					[{ 'n' }] = {
-						['<leader>t'] = { terminal_map.toggle, 'Close terminal' },
-						['q'] = { terminal_map.toggle, 'Close terminal' },
+						['<leader>t'] = { terminal_map.close, 'Close terminal' },
+						['q'] = { terminal_map.close, 'Close terminal' },
 
 						['o'] = { new_terminal_tab, 'New terminal' },
 						['}'] = { terminal_map.cycle_next, 'Cycle next terminal' },
@@ -103,6 +109,17 @@ return {
 			vim.api.nvim_set_option_value('number', false, opts)
 			vim.api.nvim_set_option_value('relativenumber', false, opts)
 			vim.api.nvim_set_option_value('signcolumn', 'no', opts)
+		end)
+
+		autocmd.on('WinResized', '*', function()
+			for _, win in ipairs(vim.v.event.windows) do
+				local buf = vim.api.nvim_win_get_buf(win)
+				local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')
+
+				if buftype == 'terminal' then
+					panel_height(vim.api.nvim_win_get_height(win))
+				end
+			end
 		end)
 	end,
 }
