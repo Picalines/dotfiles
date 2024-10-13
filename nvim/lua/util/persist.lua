@@ -15,24 +15,25 @@ function M.load()
 		return
 	end
 
-	M._storage = vim.json.decode(file:read '*a')
+	local stored_json = file:read '*a'
 	file:close()
+
+	M._storage = vim.json.decode(stored_json)
 end
 
 M.save = func.debounce(500, function()
+	local json_to_store = vim.json.encode(M._storage)
+	if json_to_store == '[]' then
+		json_to_store = '{}'
+	end
+
 	local file = io.open(PERSIST_PATH, 'w+')
 	if not file then
 		print(PERSIST_PATH .. ': failed to write')
-		return
+	else
+		file:write(json_to_store)
+		file:close()
 	end
-
-	local jsons = vim.json.encode(M._storage)
-	if jsons == '[]' then
-		jsons = '{}'
-	end
-
-	file:write(jsons)
-	file:close()
 end)
 
 ---@generic T
