@@ -1,5 +1,4 @@
 local array = require 'util.array'
-local func = require 'util.func'
 local persist = require 'util.persist'
 
 local M = {}
@@ -14,30 +13,66 @@ local function observe(x, fn)
 end
 
 ---@generic T
----@param value_or_factory T | fun(): T
----@return fun(new_value_or_factory?: T | fun(): T): T
-function M.new(value_or_factory)
-	local _self = {}
-
-	local _is_computed = false
-	local _value, _factory
+---@param initial_value T
+---@return fun(new_value?: T): T
+function M.new(initial_value)
+	local _value = initial_value
 	local _subscribers = {}
 
-	if type(value_or_factory) == 'function' then
-		_factory = value_or_factory
-	else
-		_factory = func.const(value_or_factory)
-		_value = value_or_factory
-		_is_computed = true
+	local function read()
+		local observer = observer_stack[#observer_stack]
+		if observer and not array.contains(_subscribers, observer) then
+			_subscribers[#_subscribers + 1] = observer
+		end
+
+		return _value
 	end
+
+	local function write(new_value)
+		local changed = _value ~= new_value
+
+		_value = new_value
+
+		if changed then
+			for _, subscriber in ipairs(_subscribers) do
+				subscriber._notify()
+			end
+		end
+
+		return _value
+	end
+
+	return function(...)
+		if select('#', ...) >= 1 then
+			return write(select(1, ...))
+		end
+
+		return read()
+	end
+end
+
+---@generic T
+---@param factory fun(): T
+---@return fun(): T
+function M.derive(factory)
+	local _self = {}
+
+	local _value = nil
+	local _is_computed = false
+	local _subscribers = {}
 
 	local function make_dirty()
 		_is_computed = false
+		_value = nil
+
+		for _, subscriber in ipairs(_subscribers) do
+			subscriber._notify()
+		end
 	end
 
 	local function read()
 		if not _is_computed then
-			_value = observe(_self, _factory)
+			_value = observe(_self, factory)
 			_is_computed = true
 		end
 
@@ -53,31 +88,9 @@ function M.new(value_or_factory)
 		return _value
 	end
 
-	local function write(new_value_or_factory)
-		local needs_update
-
-		if type(new_value_or_factory) == 'function' then
-			needs_update = true
-			_factory = new_value_or_factory
-			_is_computed = false
-		else
-			needs_update = _value ~= new_value_or_factory
-			_value = new_value_or_factory
-			_is_computed = true
-		end
-
-		if needs_update then
-			for _, subscriber in ipairs(_subscribers) do
-				subscriber._notify()
-			end
-		end
-
-		return _value
-	end
-
 	local function on_called(_, ...)
-		if select('#', ...) >= 1 then
-			return write(select(1, ...))
+		if select('#', ...) > 0 then
+			error 'cannot write to a derived signal'
 		end
 
 		return read()
@@ -109,15 +122,14 @@ function M.watch(fn)
 	})
 end
 
----@param signals (fun(): any) | (fun(): any)[]
+---@param signals (fun()) | (fun()[])
 ---@param fn fun()
 function M.on(signals, fn)
-	if #signals == 0 then
+	if type(signals) ~= 'table' then
 		signals = { signals }
 	end
 
 	return M.watch(function()
-		---@diagnostic disable-next-line: param-type-mismatch
 		for _, signal in ipairs(signals) do
 			signal()
 		end
