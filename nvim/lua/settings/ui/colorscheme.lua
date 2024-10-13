@@ -7,8 +7,8 @@ local signal = require 'util.signal'
 local colorscheme = signal.new 'default'
 local background = signal.new 'dark'
 
-signal.persist(colorscheme, 'colorscheme')
-signal.persist(background, 'background')
+signal.persist(colorscheme, 'vim.colorscheme')
+signal.persist(background, 'vim.background')
 
 vim.cmd.highlight 'clear'
 vim.cmd.syntax 'reset'

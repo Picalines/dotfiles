@@ -25,7 +25,7 @@ return {
 		}
 
 		local sidebar_width = signal.new(40)
-		signal.persist(sidebar_width, 'neo-tree.sidebar_width')
+		signal.persist(sidebar_width, 'plugin.neo-tree.sidebar_width')
 
 		autocmd.on('WinResized', '*', function(event)
 			local filetype = vim.api.nvim_buf_get_option(event.buf, 'filetype')

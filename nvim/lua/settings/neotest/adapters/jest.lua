@@ -1,10 +1,11 @@
 local func = require 'util.func'
-local persist = require 'util.persist'
+local signal = require 'util.signal'
+local tbl = require 'util.table'
 
 local jest_util = require 'neotest-jest.jest-util'
 
----@type table<string, string>
-local config_file_lookup = persist.get_item('neotest.jest.configs', {})
+local config_file_lookup = signal.new {}
+signal.persist(config_file_lookup, 'plugin.neotest.jest.configs')
 
 ---@type string[]
 local suites_without_config = {}
@@ -21,8 +22,9 @@ local function lookup_jest_config(suite_path)
 	local cwd = vim.fn.getcwd()
 
 	while #current_path >= #cwd and current_path ~= '.' do
-		if config_file_lookup[current_path] then
-			return config_file_lookup[current_path]
+		local known_config = config_file_lookup()[current_path]
+		if known_config then
+			return known_config
 		end
 		current_path = vim.fn.fnamemodify(current_path, ':h')
 	end
@@ -44,10 +46,11 @@ local function decide_config_base_path(suite_path)
 	return suite_path
 end
 
-local function persist_jest_config_path(suite_path, config_path)
+local function save_jest_config_path(suite_path, config_path)
 	local config_base_path = decide_config_base_path(suite_path)
-	config_file_lookup[config_base_path] = config_path
-	persist.save_item('neotest.jest.configs', config_file_lookup)
+	config_file_lookup(tbl.override(config_file_lookup(), {
+		[config_base_path] = config_path,
+	}))
 end
 
 local function prompt_config_path(suite_path, on_selected)
@@ -91,7 +94,7 @@ local function ask_for_missing_configs()
 	end
 
 	local function on_config_selected(config_path)
-		persist_jest_config_path(suite_path, config_path)
+		save_jest_config_path(suite_path, config_path)
 		ask_for_missing_configs()
 	end
 
@@ -138,12 +141,10 @@ vim.api.nvim_create_user_command('NeotestJestConfigPaths', function(opts)
 	local action = opts.fargs[1]
 
 	if action == 'show' then
-		print(vim.inspect(config_file_lookup))
+		print(vim.inspect(config_file_lookup()))
 	elseif action == 'clear' then
-		config_file_lookup = {}
+		config_file_lookup {}
 	end
-
-	persist.save_item('neotest.jest.configs', config_file_lookup)
 end, {
 	nargs = '?',
 	complete = function()

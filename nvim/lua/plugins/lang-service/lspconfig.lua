@@ -18,7 +18,7 @@ return {
 		local tbl = require 'util.table'
 
 		local lsp_inlay_enabled = signal.new(false)
-		signal.persist(lsp_inlay_enabled, 'lsp_inlay_hints')
+		signal.persist(lsp_inlay_enabled, 'lsp.inlay_hints')
 		signal.watch(function()
 			vim.lsp.inlay_hint.enable(lsp_inlay_enabled())
 		end)

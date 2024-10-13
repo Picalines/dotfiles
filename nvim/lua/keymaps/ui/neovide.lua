@@ -3,13 +3,13 @@ local keymap = require 'util.keymap'
 local signal = require 'util.signal'
 
 local neovide_scale_factor = signal.new(1)
-signal.persist(neovide_scale_factor, 'neovide_scale_factor')
+signal.persist(neovide_scale_factor, 'neovide.scale_factor')
 signal.watch(function()
 	vim.g.neovide_scale_factor = neovide_scale_factor()
 end)
 
 local neovide_transparency = signal.new(1)
-signal.persist(neovide_transparency, 'neovide_transparency')
+signal.persist(neovide_transparency, 'neovide.transparency')
 signal.watch(function()
 	vim.g.neovide_transparency = neovide_transparency()
 	vim.g.neovide_window_blurred = true

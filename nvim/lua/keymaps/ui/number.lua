@@ -4,7 +4,7 @@ local signal = require 'util.signal'
 
 local relativenumber = signal.new(true)
 
-signal.persist(relativenumber, 'relativenumber')
+signal.persist(relativenumber, 'vim.relativenumber')
 
 local function update_relativenumber(win)
 	local opts = { win = win, scope = 'local' }
