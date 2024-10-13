@@ -2,7 +2,7 @@ return {
 	'rebelot/heirline.nvim',
 
 	dependencies = {
-		'kyazdani42/nvim-web-devicons',
+		'nvim-tree/nvim-web-devicons',
 
 		{ 'tiagovla/scope.nvim', opts = {} },
 	},
@@ -82,18 +82,18 @@ return {
 
 		local BufferIcon = {
 			init = function(self)
+				self.icon = ''
+				self.icon_hl = 'Normal'
+
 				local icons_ok, icons = pcall(require, 'nvim-web-devicons')
 
 				if #self.filename > 0 and icons_ok then
-					local filename = self.filename
-					local extension = vim.fn.fnamemodify(filename, ':e')
+					local filename = vim.fn.fnamemodify(self.filename, ':t')
+					local extension = vim.fn.fnamemodify(filename, ':e:e:e')
 					local color
 					self.icon, color = icons.get_icon_color(filename, extension, { default = true })
 					self.icon_hl = { fg = color }
 				end
-
-				self.icon = self.icon or ''
-				self.icon_hl = self.icon_hl or 'Normal'
 			end,
 
 			provider = func.field 'icon',
@@ -124,7 +124,7 @@ return {
 
 				{
 					provider = function(self)
-						return self.is_active and self.display_name or vim.fn.fnamemodify(self.display_name, ':r')
+						return self.is_active and self.display_name or vim.fn.fnamemodify(self.display_name, ':r:r:r')
 					end,
 
 					hl = function(self)
