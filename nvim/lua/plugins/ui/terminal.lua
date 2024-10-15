@@ -113,14 +113,10 @@ return {
 			vim.api.nvim_set_option_value('signcolumn', 'no', opts)
 		end)
 
-		augroup:on('WinResized', '*', function()
-			for _, win in ipairs(vim.v.event.windows) do
-				local buf = vim.api.nvim_win_get_buf(win)
-				local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')
-
-				if buftype == 'terminal' then
-					panel_height(vim.api.nvim_win_get_height(win))
-				end
+		augroup:on_winresized(function(event)
+			local buftype = vim.api.nvim_buf_get_option(event.buf, 'buftype')
+			if buftype == 'terminal' then
+				panel_height(vim.api.nvim_win_get_height(event.win))
 			end
 		end)
 	end,

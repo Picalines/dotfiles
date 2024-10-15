@@ -29,17 +29,14 @@ return {
 
 		local augroup = autocmd.group 'neo-tree'
 
-		augroup:on('WinResized', '*', function()
+		augroup:on_winresized(function(event)
 			if #vim.v.event.windows <= 1 then
 				return
 			end
 
-			for _, win in ipairs(vim.v.event.windows) do
-				local buf = vim.api.nvim_win_get_buf(win)
-				local filetype = vim.api.nvim_buf_get_option(buf, 'filetype')
-				if filetype == 'neo-tree' then
-					sidebar_width(vim.api.nvim_win_get_width(win))
-				end
+			local filetype = vim.api.nvim_buf_get_option(event.buf, 'filetype')
+			if filetype == 'neo-tree' then
+				sidebar_width(vim.api.nvim_win_get_width(event.win))
 			end
 		end)
 
