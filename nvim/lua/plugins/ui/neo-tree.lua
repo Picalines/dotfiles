@@ -255,13 +255,9 @@ return {
 						vim.api.nvim_input(':! ' .. path .. '<Home><Right>')
 					end,
 					system_open = function(state)
-						if app.os() == 'linux' then
-							error 'not implemented'
-						end
-						local cmd = app.os() == 'macos' and 'open' or 'explorer.exe'
 						local node = state.tree:get_node()
 						local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
-						vim.api.nvim_input(string.format('<Cmd>!%s %s<CR>', cmd, path))
+						vim.ui.open(path)
 					end,
 				},
 			},
