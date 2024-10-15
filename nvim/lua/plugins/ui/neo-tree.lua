@@ -27,11 +27,17 @@ return {
 		local sidebar_width = signal.new(40)
 		signal.persist(sidebar_width, 'plugin.neo-tree.sidebar_width')
 
-		autocmd.on('WinResized', '*', function(event)
-			local filetype = vim.api.nvim_buf_get_option(event.buf, 'filetype')
-			local winid = tonumber(event.match)
-			if filetype == 'neo-tree' and winid and #vim.api.nvim_list_wins() > 1 then
-				sidebar_width(vim.api.nvim_win_get_width(winid))
+		autocmd.on('WinResized', '*', function()
+			if #vim.v.event.windows <= 1 then
+				return
+			end
+
+			for _, win in ipairs(vim.v.event.windows) do
+				local buf = vim.api.nvim_win_get_buf(win)
+				local filetype = vim.api.nvim_buf_get_option(buf, 'filetype')
+				if filetype == 'neo-tree' then
+					sidebar_width(vim.api.nvim_win_get_width(win))
+				end
 			end
 		end)
 
