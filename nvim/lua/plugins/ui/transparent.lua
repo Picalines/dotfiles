@@ -32,7 +32,7 @@ return {
 
 		clear_all_bgs()
 
-		autocmd.on_colorscheme('*', clear_all_bgs)
+		autocmd.on('ColorScheme', '*', clear_all_bgs)
 
 		keymap.declare {
 			[{ 'n' }] = {

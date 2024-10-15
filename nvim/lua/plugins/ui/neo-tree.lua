@@ -41,7 +41,7 @@ return {
 			end
 		end)
 
-		autocmd.on_colorscheme('*', function()
+		autocmd.on('ColorScheme', '*', function()
 			vim.api.nvim_set_hl(0, 'NeoTreeModified', { fg = hl.attr('@diff.plus', 'fg'), bg = 'NONE' })
 		end)
 

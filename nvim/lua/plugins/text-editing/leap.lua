@@ -67,6 +67,6 @@ return {
 
 		setup_highlights()
 
-		autocmd.on_colorscheme('*', setup_highlights)
+		autocmd.on('ColorScheme', '*', setup_highlights)
 	end,
 }

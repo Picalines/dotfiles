@@ -30,7 +30,7 @@ return {
 
 		require('evergarden').setup(opts)
 
-		autocmd.on_colorscheme('evergarden', function()
+		autocmd.on('ColorScheme', 'evergarden', function()
 			vim.cmd 'hi NoiceCursor gui=inverse'
 			vim.o.background = 'dark'
 			hl.link('NormalFloat', 'Normal')

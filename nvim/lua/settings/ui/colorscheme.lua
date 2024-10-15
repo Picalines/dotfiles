@@ -40,6 +40,6 @@ local function on_colorscheme()
 	patch_colorscheme()
 end
 
-autocmd.on_colorscheme('*', on_colorscheme)
+autocmd.on('ColorScheme', '*', on_colorscheme)
 
 on_colorscheme()

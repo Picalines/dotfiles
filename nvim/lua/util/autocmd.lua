@@ -83,10 +83,4 @@ function M.on_filetype(filetypes, callback_or_cmd)
 	end)
 end
 
----@param colorscheme string | string[]
----@param callback fun(event: autocmd_event)
-function M.on_colorscheme(colorscheme, callback)
-	return M.on('ColorScheme', colorscheme, callback)
-end
-
 return M
