@@ -24,11 +24,16 @@ return {
 		leap.opts.special_keys.next_group = { '<Tab>' }
 		leap.opts.special_keys.prev_group = { '<S-Tab>' }
 
-		local unsafe_labels = { 'n' }
+		local function exclude(iarray, excluded_items)
+			return array.filter(iarray, function(item)
+				return not array.contains(excluded_items, item)
+			end)
+		end
 
-		leap.opts.safe_labels = array.filter(leap.opts.safe_labels, function(label)
-			return not array.contains(unsafe_labels, label)
-		end)
+		local unsafe_labels = { ',', '.', '/', ':', '?', 'N', 'n' }
+
+		leap.opts.labels = exclude(leap.opts.labels, unsafe_labels)
+		leap.opts.safe_labels = exclude(leap.opts.safe_labels, unsafe_labels)
 
 		local function select_node_clever(forward_key)
 			local special_keys = tbl.copy_deep(leap.opts.special_keys)
@@ -36,7 +41,10 @@ return {
 			special_keys.prev_target = array.concat({ string.upper(forward_key) }, special_keys.prev_target)
 
 			leap_treesitter.select {
-				opts = { special_keys = special_keys },
+				opts = {
+					special_keys = special_keys,
+					labels = leap.opts.safe_labels,
+				},
 			}
 		end
 
