@@ -1,15 +1,11 @@
 local array = require 'util.array'
+local func = require 'util.func'
 
 local M = {}
 
+local SAFE_GROUP_FORMAT = 'config(%s)'
+
 M.UNSUB = {} -- return this in a callback to delete autocmd
-
----@class autocmd_event
----@field buf integer
----@field match string
----@field data any
-
-local on_group = vim.api.nvim_create_augroup('autocmd.on', { clear = true })
 
 ---@param callback_or_cmd fun(event: autocmd_event) | string
 ---@return fun(event: autocmd_event) | nil, string | nil
@@ -30,29 +26,34 @@ local function parse_callback_or_cmd(callback_or_cmd)
 	return callback, cmd
 end
 
+---@class Group
+---@field private _group_id number
+local Group = {}
+
+---@class autocmd_event
+---@field buf integer
+---@field match string
+---@field data any
+
 ---@param event string | string[]
 ---@param pattern string | string[]
 ---@param callback_or_cmd fun(event: autocmd_event) | string
-function M.on(event, pattern, callback_or_cmd)
+function Group:on(event, pattern, callback_or_cmd)
 	local callback, cmd = parse_callback_or_cmd(callback_or_cmd)
 
 	vim.api.nvim_create_autocmd(event, {
-		group = on_group,
+		group = self._group_id,
 		pattern = pattern,
 		callback = callback,
 		command = cmd,
 	})
 end
 
-local on_user_group = vim.api.nvim_create_augroup('autocmd.on_user', { clear = true })
-
----@param event string | string[]
----@param callback_or_cmd fun(event: autocmd_event) | string
-function M.on_user(event, callback_or_cmd)
+function Group:on_user(event, callback_or_cmd)
 	local callback, cmd = parse_callback_or_cmd(callback_or_cmd)
 
 	vim.api.nvim_create_autocmd('User', {
-		group = on_user_group,
+		group = self._group_id,
 		pattern = event,
 		callback = callback,
 		command = cmd,
@@ -61,7 +62,7 @@ end
 
 ---@param filetypes string | string[]
 ---@param callback_or_cmd fun(event: autocmd_event) | string
-function M.on_filetype(filetypes, callback_or_cmd)
+function Group:on_filetype(filetypes, callback_or_cmd)
 	local callback, cmd = parse_callback_or_cmd(callback_or_cmd)
 
 	if type(filetypes) ~= 'table' then
@@ -70,7 +71,7 @@ function M.on_filetype(filetypes, callback_or_cmd)
 
 	filetypes = array.copy(filetypes)
 
-	return M.on('FileType', '*', function(event)
+	return self:on('FileType', '*', function(event)
 		if not array.contains(filetypes, event.match) then
 			return
 		end
@@ -81,6 +82,28 @@ function M.on_filetype(filetypes, callback_or_cmd)
 			vim.cmd(cmd)
 		end
 	end)
+end
+
+---@class group_opts
+---@field clear? boolean
+
+---@param name string
+---@param opts? group_opts
+---@return Group
+function M.group(name, opts)
+	opts = func.default_opts(opts, {
+		clear = true,
+	})
+
+	name = string.format(SAFE_GROUP_FORMAT, name)
+
+	return setmetatable({
+		_group_id = vim.api.nvim_create_augroup(name, {
+			clear = opts.clear,
+		}),
+	}, {
+		__index = Group,
+	})
 end
 
 return M

@@ -67,6 +67,8 @@ return {
 
 		setup_highlights()
 
-		autocmd.on('ColorScheme', '*', setup_highlights)
+		local augroup = autocmd.group 'leap'
+
+		augroup:on('ColorScheme', '*', setup_highlights)
 	end,
 }

@@ -23,6 +23,8 @@ return {
 
 		local heirline = require 'heirline'
 
+		local augroup = autocmd.group 'heirline'
+
 		vim.o.laststatus = 3 -- global statusline
 
 		---@param str string
@@ -266,9 +268,9 @@ return {
 			heirline.tabline.buffer_prefixes = buffer_prefixes
 		end
 
-		autocmd.on({ 'VimEnter', 'UIEnter', 'TabEnter', 'BufAdd', 'BufDelete' }, '*', vim.schedule_wrap(update_buflist))
+		augroup:on({ 'VimEnter', 'UIEnter', 'TabEnter', 'BufAdd', 'BufDelete' }, '*', vim.schedule_wrap(update_buflist))
 
-		autocmd.on_user('LazyLoad', function(event)
+		augroup:on_user('LazyLoad', function(event)
 			if event.data == 'heirline.nvim' then
 				update_buflist()
 			end
@@ -451,8 +453,8 @@ return {
 
 		local search_shown = signal.new(false)
 
-		autocmd.on('CmdlineEnter', { '/', '?' }, func.curry(search_shown, true))
-		autocmd.on_user('Dismiss', func.curry(search_shown, false))
+		augroup:on('CmdlineEnter', { '/', '?' }, func.curry(search_shown, true))
+		augroup:on_user('Dismiss', func.curry(search_shown, false))
 
 		signal.on(search_shown, vim.schedule_wrap(vim.cmd.redrawstatus))
 
@@ -567,8 +569,8 @@ return {
 
 		local is_leaping = signal.new(false)
 
-		autocmd.on_user('LeapEnter', func.curry(is_leaping, true))
-		autocmd.on_user('LeapLeave', func.curry(is_leaping, false))
+		augroup:on_user('LeapEnter', func.curry(is_leaping, true))
+		augroup:on_user('LeapLeave', func.curry(is_leaping, false))
 
 		signal.on(is_leaping, function()
 			vim.api.nvim_exec_autocmds('User', { pattern = 'HeirlineLeapUpdate' })
@@ -715,7 +717,7 @@ return {
 			},
 		}
 
-		autocmd.on('ColorScheme', '*', func.curry(h_util.on_colorscheme, {}))
+		augroup:on('ColorScheme', '*', func.curry(h_util.on_colorscheme, {}))
 
 		-- https://github.com/rebelot/heirline.nvim/issues/203#issuecomment-2208395807
 		vim.cmd [[:au VimLeavePre * set stl=]]

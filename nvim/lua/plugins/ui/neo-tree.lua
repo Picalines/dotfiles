@@ -27,7 +27,9 @@ return {
 		local sidebar_width = signal.new(40)
 		signal.persist(sidebar_width, 'plugin.neo-tree.sidebar_width')
 
-		autocmd.on('WinResized', '*', function()
+		local augroup = autocmd.group 'neo-tree'
+
+		augroup:on('WinResized', '*', function()
 			if #vim.v.event.windows <= 1 then
 				return
 			end
@@ -41,7 +43,7 @@ return {
 			end
 		end)
 
-		autocmd.on('ColorScheme', '*', function()
+		augroup:on('ColorScheme', '*', function()
 			vim.api.nvim_set_hl(0, 'NeoTreeModified', { fg = hl.attr('@diff.plus', 'fg'), bg = 'NONE' })
 		end)
 

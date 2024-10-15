@@ -89,7 +89,9 @@ return {
 			conform.format { async = vim.fn.reg_executing() == '' }
 		end, {})
 
-		autocmd.on('BufWritePre', '*', function(event)
+		local augroup = autocmd.group 'conform'
+
+		augroup:on('BufWritePre', '*', function(event)
 			if format_before_write() then
 				conform.format {
 					async = false,

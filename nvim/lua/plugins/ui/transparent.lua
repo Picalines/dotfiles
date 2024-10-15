@@ -32,7 +32,9 @@ return {
 
 		clear_all_bgs()
 
-		autocmd.on('ColorScheme', '*', clear_all_bgs)
+		local augroup = autocmd.group 'transparent'
+
+		augroup:on('ColorScheme', '*', clear_all_bgs)
 
 		keymap.declare {
 			[{ 'n' }] = {

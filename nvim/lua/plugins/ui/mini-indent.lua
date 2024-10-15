@@ -40,7 +40,9 @@ return {
 			vim.api.nvim_buf_set_var(event.buf, 'miniindentscope_disable', true)
 		end
 
-		autocmd.on_filetype({
+		local augroup = autocmd.group 'mini-indent'
+
+		augroup:on_filetype({
 			'help',
 			'lazy',
 			'messages',
@@ -52,6 +54,6 @@ return {
 			'noice',
 		}, disable_mini_indentscope)
 
-		autocmd.on({ 'BufEnter', 'TermOpen' }, 'term://*', disable_mini_indentscope)
+		augroup:on({ 'BufEnter', 'TermOpen' }, 'term://*', disable_mini_indentscope)
 	end,
 }

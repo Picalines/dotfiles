@@ -40,6 +40,8 @@ local function on_colorscheme()
 	patch_colorscheme()
 end
 
-autocmd.on('ColorScheme', '*', on_colorscheme)
+local augroup = autocmd.group 'colorscheme'
+
+augroup:on('ColorScheme', '*', on_colorscheme)
 
 on_colorscheme()

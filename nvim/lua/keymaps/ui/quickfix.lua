@@ -13,7 +13,9 @@ keymap.declare {
 	},
 }
 
-autocmd.on_filetype('qf', function(event)
+local augroup = autocmd.group 'quickfix'
+
+augroup:on_filetype('qf', function(event)
 	keymap.declare {
 		[{ 'n', remap = true, silent = true, buffer = event.buf }] = {
 			['q'] = { '<Cmd>cclose<CR>', 'Close quickfix list' },

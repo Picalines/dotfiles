@@ -19,7 +19,9 @@ return {
 			vim.api.nvim_buf_set_var(event.buf, 'minicursorword_disable', true)
 		end
 
-		autocmd.on_filetype({
+		local augroup = autocmd.group 'mini-cursorword'
+
+		augroup:on_filetype({
 			'help',
 			'lazy',
 			'neo-tree',
@@ -30,6 +32,6 @@ return {
 			'noice',
 		}, disable_mini_cursorword)
 
-		autocmd.on({ 'BufEnter', 'TermOpen' }, 'term://*', disable_mini_cursorword)
+		augroup:on({ 'BufEnter', 'TermOpen' }, 'term://*', disable_mini_cursorword)
 	end,
 }

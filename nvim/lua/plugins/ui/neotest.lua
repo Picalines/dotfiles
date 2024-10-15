@@ -91,7 +91,9 @@ return {
 			},
 		}
 
-		autocmd.on_filetype('neotest-summary', function(event)
+		local augroup = autocmd.group 'neotest'
+
+		augroup:on_filetype('neotest-summary', function(event)
 			keymap.declare {
 				[{ 'n', buffer = event.buf }] = {
 					['q'] = { neotest.summary.close, 'Close panel' },
@@ -100,7 +102,7 @@ return {
 			}
 		end)
 
-		autocmd.on_filetype('neotest-output-panel', function(event)
+		augroup:on_filetype('neotest-output-panel', function(event)
 			keymap.declare {
 				[{ 'n', buffer = event.buf }] = {
 					['q'] = { neotest.output_panel.close, 'Close panel' },

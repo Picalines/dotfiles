@@ -14,6 +14,8 @@ return {
 		local active_terminals = require 'terminal.active_terminals'
 		local terminal_map = require 'terminal.mappings'
 
+		local augroup = autocmd.group 'terminal'
+
 		local shell_cmd = app.os() == 'windows' and 'powershell' or vim.o.shell
 
 		terminal.setup {
@@ -23,7 +25,7 @@ return {
 
 		local last_terminal_index
 
-		autocmd.on('BufEnter', 'term://*', function()
+		augroup:on('BufEnter', 'term://*', function()
 			last_terminal_index = terminal.current_term_index()
 		end)
 
@@ -79,7 +81,7 @@ return {
 			},
 		}
 
-		autocmd.on('TermOpen', '*', function(event)
+		augroup:on('TermOpen', '*', function(event)
 			keymap.declare {
 				[{ buffer = event.buf, nowait = true, remap = true }] = {
 					[{ 'n' }] = {
@@ -103,7 +105,7 @@ return {
 			}
 		end)
 
-		autocmd.on({ 'TermOpen', 'BufEnter' }, 'term://*', function(event)
+		augroup:on({ 'TermOpen', 'BufEnter' }, 'term://*', function(event)
 			local win = vim.fn.bufwinid(event.buf)
 			local opts = { win = win, scope = 'local' }
 			vim.api.nvim_set_option_value('number', false, opts)
@@ -111,7 +113,7 @@ return {
 			vim.api.nvim_set_option_value('signcolumn', 'no', opts)
 		end)
 
-		autocmd.on('WinResized', '*', function()
+		augroup:on('WinResized', '*', function()
 			for _, win in ipairs(vim.v.event.windows) do
 				local buf = vim.api.nvim_win_get_buf(win)
 				local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')

@@ -19,7 +19,9 @@ return {
 			},
 		}
 
-		autocmd.on_user('Dismiss', 'NoiceDismiss')
+		local augroup = autocmd.group 'noice'
+
+		augroup:on_user('Dismiss', 'NoiceDismiss')
 	end,
 
 	opts = {

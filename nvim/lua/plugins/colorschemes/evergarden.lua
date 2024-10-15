@@ -30,7 +30,9 @@ return {
 
 		require('evergarden').setup(opts)
 
-		autocmd.on('ColorScheme', 'evergarden', function()
+		local augroup = autocmd.group 'evergarden'
+
+		augroup:on('ColorScheme', 'evergarden', function()
 			vim.cmd 'hi NoiceCursor gui=inverse'
 			vim.o.background = 'dark'
 			hl.link('NormalFloat', 'Normal')

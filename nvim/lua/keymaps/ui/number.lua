@@ -21,7 +21,9 @@ signal.watch(function()
 	end
 end)
 
-autocmd.on('WinEnter', '*', function()
+local augroup = autocmd.group 'number'
+
+augroup:on('WinEnter', '*', function()
 	update_relativenumber(vim.api.nvim_get_current_win())
 end)
 
