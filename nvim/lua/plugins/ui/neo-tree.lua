@@ -36,7 +36,7 @@ return {
 
 			local filetype = vim.api.nvim_buf_get_option(event.buf, 'filetype')
 			if filetype == 'neo-tree' then
-				sidebar_width(vim.api.nvim_win_get_width(event.win))
+				sidebar_width(math.min(vim.api.nvim_win_get_width(event.win), vim.go.columns - 20))
 			end
 		end)
 

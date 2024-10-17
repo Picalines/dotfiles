@@ -116,7 +116,7 @@ return {
 		augroup:on_winresized(function(event)
 			local buftype = vim.api.nvim_buf_get_option(event.buf, 'buftype')
 			if buftype == 'terminal' then
-				panel_height(vim.api.nvim_win_get_height(event.win))
+				panel_height(math.min(vim.api.nvim_win_get_height(event.win), vim.go.lines - 10))
 			end
 		end)
 	end,
