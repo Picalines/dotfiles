@@ -51,7 +51,7 @@ end
 
 keymap.declare {
 	[{ 'n', silent = true }] = {
-		['<Esc>'] = { trigger_dismiss, 'Dismiss notifications' },
+		['<Esc>'] = { trigger_dismiss, 'Dismiss' },
 
 		['<C-j>'] = { '<C-W>j', 'Move to bottom window' },
 		['<C-k>'] = { '<C-W>k', 'Move to upper window' },
@@ -65,5 +65,8 @@ keymap.declare {
 
 		['+'] = { func.curry(resize_smart, 5), 'Increase window size' },
 		['_'] = { func.curry(resize_smart, -5), 'Decrease window size' },
+	},
+	[{ 'i' }] = {
+		['<C-d>'] = { trigger_dismiss, 'Dissmiss' },
 	},
 }

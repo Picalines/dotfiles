@@ -18,9 +18,10 @@ return {
 	},
 
 	config = function()
+		local autocmd = require 'util.autocmd'
 		local cmp = require 'cmp'
-		local luasnip = require 'luasnip'
 		local lspkind = require 'lspkind'
+		local luasnip = require 'luasnip'
 
 		local function has_words_before()
 			local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
@@ -87,14 +88,6 @@ return {
 						luasnip.jump(-1)
 					end
 				end,
-
-				['<Esc>'] = function(fallback)
-					if cmp.visible() then
-						cmp.close()
-					else
-						fallback()
-					end
-				end,
 			},
 
 			---@diagnostic disable-next-line: missing-fields
@@ -116,5 +109,11 @@ return {
 				ghost_text = true,
 			},
 		}
+
+		local augroup = autocmd.group 'cmp'
+
+		augroup:on_user('Dismiss', function()
+			cmp.close()
+		end)
 	end,
 }
