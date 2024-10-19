@@ -329,7 +329,7 @@ return {
 			{
 				provider = function(self)
 					local width = math.max(0, vim.api.nvim_win_get_width(self.winid))
-					return string_util.center_chars(self.title, width, {
+					return string_util.pad_center(self.title, width, {
 						pad_char = ' ',
 						align_odd = 'left',
 					})

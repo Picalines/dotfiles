@@ -38,30 +38,13 @@ return {
 					{ 'Recent Files', 'Telescope oldfiles' },
 					{ 'Find Files', 'Telescope find_files' },
 					{ 'Change Directory', string.format('Neotree filesystem current %s', app.os() == 'windows' and '/' or '~') },
+					{ 'Open Workspace', 'WorkspacesOpen' },
 				}),
 				section('Editor', {
 					{ 'New Buffer', 'enew' },
 					{ 'Theme', 'PickColorScheme' },
 					{ 'Quit', 'wa | qa!' },
 				}),
-				section('Workspaces', function()
-					local ok, workspaces = pcall(require, 'workspaces')
-					if not ok then
-						return
-					end
-
-					return array.concat(
-						{
-							{ 'Open Workspace', 'WorkspacesOpen' },
-						},
-						array.map(array.take(workspaces.get(), 5), function(ws, index)
-							return {
-								string.format('%d. %s', index, ws.name),
-								string.format('WorkspacesOpen %s', ws.name),
-							}
-						end)
-					)
-				end),
 				section('Manage', {
 					{ 'Lazy', 'Lazy' },
 					{ 'Mason', 'Mason' },
@@ -84,6 +67,8 @@ return {
 				[[    ███     █      ██   █  █     █           █  ]],
 				[[    ██       █          ██     ████       █         █   ]],
 				[[                                                         ]],
+				'',
+				string.format('v%s', vim.version()),
 			}, '\n'),
 
 			footer = '',

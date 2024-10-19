@@ -1,13 +1,51 @@
 local M = {}
 
----@class pad_centered_opts
+---@param s string
+---@param len integer
+---@param char? string
+function M.pad_left(s, len, char)
+	char = char or ' '
+
+	if vim.fn.strlen(char) ~= 1 then
+		error 'pad_left received non single character'
+	end
+
+	local s_len = vim.fn.strcharlen(s)
+
+	if s_len >= len then
+		return s
+	end
+
+	return string.rep(char, len - s_len) .. s
+end
+
+---@param s string
+---@param len integer
+---@param char? string
+function M.pad_right(s, len, char)
+	char = char or ' '
+
+	if vim.fn.strlen(char) ~= 1 then
+		error 'pad_right received non single character'
+	end
+
+	local s_len = vim.fn.strcharlen(s)
+
+	if s_len >= len then
+		return s
+	end
+
+	return s .. string.rep(char, len - s_len)
+end
+
+---@class pad_center_opts
 ---@field pad_char? string
 ---@field align_odd? 'left' | 'right'
 
 ---@param s string
 ---@param len integer
----@param opts? pad_centered_opts
-function M.center_chars(s, len, opts)
+---@param opts? pad_center_opts
+function M.pad_center(s, len, opts)
 	local s_len = vim.fn.strcharlen(s)
 
 	if s_len >= len then
@@ -18,7 +56,7 @@ function M.center_chars(s, len, opts)
 	local pad_char = opts.pad_char or ' '
 
 	if vim.fn.strcharlen(pad_char) ~= 1 then
-		error 'pad_char received non single character'
+		error 'center_chars received non single character'
 	end
 
 	local pad_side_len = math.floor((len - s_len) / 2)
