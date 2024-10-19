@@ -15,8 +15,11 @@ vim.g.neovide_floating_blur_amount_y = 0
 
 vim.o.guifont = 'Hack Nerd Font Mono'
 
-vim.g.neovide_cursor_animation_length = 0.03
-vim.g.neovide_scroll_animation_length = 0.1
-vim.g.neovide_position_animation_length = 0.1
+vim.g.neovide_cursor_animation_length = 0.015
+vim.g.neovide_scroll_animation_length = 0.05
+vim.g.neovide_position_animation_length = 0.05
 
 vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
+
+vim.g.neovide_cursor_animate_in_insert_mode = false
+vim.g.neovide_cursor_smooth_blink = true

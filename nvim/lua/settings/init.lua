@@ -15,6 +15,7 @@ require 'settings.ui.wrapping'
 if app.client() ~= 'vscode' then
 	require 'settings.ui.buflisted'
 	require 'settings.ui.colorscheme'
+	require 'settings.ui.guicursor'
 	require 'settings.ui.lsp'
 	require 'settings.ui.yank-highlight'
 end
