@@ -308,9 +308,8 @@ return {
 			init = function(self)
 				self.is_focused = vim.api.nvim_get_current_win() == self.winid
 
-				local icon = self.is_focused and '' or ''
 				local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
-				self.title = string.format('%s %s', icon, cwd)
+				self.title = string.format(' %s', cwd)
 			end,
 
 			hl = function(self)
