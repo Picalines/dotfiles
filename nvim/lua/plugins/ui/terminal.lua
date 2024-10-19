@@ -9,6 +9,7 @@ return {
 		local func = require 'util.func'
 		local keymap = require 'util.keymap'
 		local signal = require 'util.signal'
+		local win = require 'util.window'
 
 		local terminal = require 'terminal'
 		local active_terminals = require 'terminal.active_terminals'
@@ -115,7 +116,7 @@ return {
 
 		augroup:on_winresized(function(event)
 			local buftype = vim.api.nvim_buf_get_option(event.buf, 'buftype')
-			if buftype == 'terminal' then
+			if buftype == 'terminal' and win.layout_type(event.win) == 'col' then
 				panel_height(math.min(vim.api.nvim_win_get_height(event.win), vim.go.lines - 10))
 			end
 		end)

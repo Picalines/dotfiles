@@ -8,8 +8,6 @@ return {
 	},
 
 	config = function()
-		-- FIXME: there's a bug when you use the :cd command without anything else
-
 		local app = require 'util.app'
 		local autocmd = require 'util.autocmd'
 		local func = require 'util.func'
@@ -17,6 +15,7 @@ return {
 		local keymap = require 'util.keymap'
 		local nt_fs = require 'neo-tree.sources.filesystem.commands'
 		local signal = require 'util.signal'
+		local win = require 'util.window'
 
 		keymap.declare {
 			[{ 'n', silent = true }] = {
@@ -35,7 +34,7 @@ return {
 			end
 
 			local filetype = vim.api.nvim_buf_get_option(event.buf, 'filetype')
-			if filetype == 'neo-tree' then
+			if filetype == 'neo-tree' and win.layout_type(event.win) == 'row' then
 				sidebar_width(math.min(vim.api.nvim_win_get_width(event.win), vim.go.columns - 20))
 			end
 		end)
