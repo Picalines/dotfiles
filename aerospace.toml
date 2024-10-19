@@ -13,7 +13,7 @@ default-root-container-orientation = 'horizontal'
 on-focused-monitor-changed = 'move-mouse monitor-lazy-center'
 on-focus-changed = 'move-mouse window-lazy-center'
 
-accordion-padding = 15
+accordion-padding = 60
 
 [workspace-to-monitor-force-assignment]
 1 = 'main'
@@ -95,7 +95,7 @@ shift-l = 'join-with right'
 
 f = ['layout floating tiling', 'mode main']
 
-s = 'layout tiles horizontal vertical'
+t = 'layout tiles horizontal vertical'
 a = 'layout accordion horizontal vertical'
 
 alt-1 = ['move-node-to-workspace 1', 'workspace 1']
@@ -153,3 +153,7 @@ run = 'layout floating'
 [[on-window-detected]]
 if.app-id = 'us.zoom.xos'
 run = ['layout floating', 'move-node-to-workspace Z']
+
+[[on-window-detected]]
+if.app-id = 'ru.keepcoder.Telegram'
+run = ['move-node-to-workspace T']
