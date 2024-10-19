@@ -18,6 +18,7 @@ return {
 		local tbl = require 'util.table'
 		local signal = require 'util.signal'
 
+		local devicons = require 'nvim-web-devicons'
 		local h_util = require 'heirline.utils'
 		local h_conditions = require 'heirline.conditions'
 
@@ -87,13 +88,11 @@ return {
 				self.icon = ''
 				self.icon_hl = 'Normal'
 
-				local icons_ok, icons = pcall(require, 'nvim-web-devicons')
-
-				if #self.filename > 0 and icons_ok then
+				if #self.filename > 0 then
 					local filename = vim.fn.fnamemodify(self.filename, ':t')
 					local extension = vim.fn.fnamemodify(filename, ':e:e:e')
 					local color
-					self.icon, color = icons.get_icon_color(filename, extension, { default = true })
+					self.icon, color = devicons.get_icon_color(filename, extension, { default = true })
 					self.icon_hl = { fg = color }
 				end
 			end,
