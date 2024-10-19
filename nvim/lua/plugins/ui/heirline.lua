@@ -85,7 +85,7 @@ return {
 
 		local BufferIcon = {
 			init = function(self)
-				self.icon, self.hl = devicons.get_icon(self.filename, nil, { default = true })
+				self.icon, self.hl = devicons.get_icon(vim.fn.fnamemodify(self.filename, ':t'))
 			end,
 
 			provider = func.field 'icon',
