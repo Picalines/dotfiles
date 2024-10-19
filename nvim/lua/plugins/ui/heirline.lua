@@ -85,21 +85,12 @@ return {
 
 		local BufferIcon = {
 			init = function(self)
-				self.icon = ''
-				self.icon_hl = 'Normal'
-
-				if #self.filename > 0 then
-					local filename = vim.fn.fnamemodify(self.filename, ':t')
-					local extension = vim.fn.fnamemodify(filename, ':e:e:e')
-					local color
-					self.icon, color = devicons.get_icon_color(filename, extension, { default = true })
-					self.icon_hl = { fg = color }
-				end
+				self.icon, self.hl = devicons.get_icon(self.filename, nil, { default = true })
 			end,
 
 			provider = func.field 'icon',
 
-			hl = func.field 'icon_hl',
+			hl = func.field 'hl',
 		}
 
 		local BufferName = {
