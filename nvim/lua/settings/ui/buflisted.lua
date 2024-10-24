@@ -14,7 +14,7 @@ local unlisted_buftypes = {
 	'terminal',
 }
 
-augroup:on({ 'BufNew', 'BufAdd', 'TermOpen' }, '*', function(event)
+augroup:on({ 'BufNew', 'BufAdd', 'BufWinEnter', 'TermOpen' }, '*', function(event)
 	local buftype = vim.api.nvim_get_option_value('buftype', { buf = event.buf })
 	if array.contains(unlisted_buftypes, buftype) then
 		disable_buflisted(event)
