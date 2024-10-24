@@ -72,6 +72,10 @@ return {
 			end
 		end
 
+		local function go_to_file()
+			return str.fmt('<C-w>c<Cmd>e ', vim.fn.expand '<cWORD>', '<CR>')
+		end
+
 		keymap.declare {
 			[{ 'n' }] = {
 				['<leader>t'] = { toggle_terminal, 'Toggle terminal' },
@@ -85,7 +89,7 @@ return {
 
 		augroup:on('TermOpen', '*', function(event)
 			keymap.declare {
-				[{ buffer = event.buf, nowait = true, remap = true }] = {
+				[{ buffer = event.buf, nowait = true }] = {
 					[{ 'n' }] = {
 						['<leader>t'] = { terminal_map.close, 'Close terminal' },
 						['q'] = { terminal_map.close, 'Close terminal' },
@@ -97,6 +101,8 @@ return {
 
 						['<C-o>'] = { '<C-w>p', 'Jump back' },
 						['<C-i>'] = '<Nop>',
+
+						['gf'] = { go_to_file, 'Open file under cursor', expr = true },
 					},
 
 					[{ 't' }] = {
