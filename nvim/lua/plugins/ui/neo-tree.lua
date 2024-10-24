@@ -15,6 +15,7 @@ return {
 		local keymap = require 'util.keymap'
 		local nt_fs = require 'neo-tree.sources.filesystem.commands'
 		local signal = require 'util.signal'
+		local str = require 'util.string'
 		local win = require 'util.window'
 
 		keymap.declare {
@@ -24,7 +25,7 @@ return {
 		}
 
 		local sidebar_width = signal.new(40)
-		signal.persist(sidebar_width, 'plugin.neo-tree.sidebar_width')
+		signal.persist(sidebar_width, str.fmt(app.client(), '.plugin.neo-tree.sidebar_width'))
 
 		local augroup = autocmd.group 'neo-tree'
 
@@ -143,6 +144,7 @@ return {
 				mappings = {
 					['<leader>e'] = func.cmd 'Neotree close filesystem',
 					['<C-o>'] = func.cmd 'wincmd p',
+					['<C-w>c'] = func.cmd 'Neotree close filesystem',
 
 					['<esc>'] = 'cancel',
 

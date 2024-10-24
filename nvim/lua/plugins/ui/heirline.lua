@@ -14,9 +14,9 @@ return {
 		local array = require 'util.array'
 		local autocmd = require 'util.autocmd'
 		local func = require 'util.func'
-		local string_util = require 'util.string'
-		local tbl = require 'util.table'
 		local signal = require 'util.signal'
+		local str = require 'util.string'
+		local tbl = require 'util.table'
 
 		local devicons = require 'nvim-web-devicons'
 		local h_util = require 'heirline.utils'
@@ -28,10 +28,10 @@ return {
 
 		vim.o.laststatus = 3 -- global statusline
 
-		---@param str string
+		---@param text string
 		---@param opts? table
-		local function Text(str, opts)
-			return tbl.override_deep({ provider = str }, opts or {})
+		local function Text(text, opts)
+			return tbl.override_deep({ provider = text }, opts or {})
 		end
 
 		local Space = Text(' ', { hl = { fg = 'NONE' } })
@@ -319,7 +319,7 @@ return {
 			{
 				provider = function(self)
 					local width = math.max(0, vim.api.nvim_win_get_width(self.winid))
-					return string_util.pad_center(self.title, width, {
+					return str.pad_center(self.title, width, {
 						pad_char = ' ',
 						align_odd = 'left',
 					})

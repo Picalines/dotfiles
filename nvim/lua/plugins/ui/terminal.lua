@@ -9,6 +9,7 @@ return {
 		local func = require 'util.func'
 		local keymap = require 'util.keymap'
 		local signal = require 'util.signal'
+		local str = require 'util.string'
 		local win = require 'util.window'
 
 		local terminal = require 'terminal'
@@ -34,7 +35,7 @@ return {
 		signal.persist(panel_height, 'plugin.terminal.panel_height')
 
 		local term_layout = signal.derive(function()
-			return { open_cmd = string.format('bot new | resize %d', panel_height()) }
+			return { open_cmd = str.fmt('bot new | resize ', panel_height()) }
 		end)
 
 		local function toggle_terminal()
@@ -107,8 +108,8 @@ return {
 		end)
 
 		augroup:on({ 'TermOpen', 'BufEnter' }, 'term://*', function(event)
-			local win = vim.fn.bufwinid(event.buf)
-			local opts = { win = win, scope = 'local' }
+			local winid = vim.fn.bufwinid(event.buf)
+			local opts = { win = winid, scope = 'local' }
 			vim.api.nvim_set_option_value('number', false, opts)
 			vim.api.nvim_set_option_value('relativenumber', false, opts)
 			vim.api.nvim_set_option_value('signcolumn', 'no', opts)
