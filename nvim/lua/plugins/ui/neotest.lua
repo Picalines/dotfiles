@@ -42,7 +42,7 @@ return {
 					expand = 'l',
 					expand_all = 'L',
 					output = 'o',
-					jumpto = '<Cr>',
+					jumpto = '<CR>',
 					stop = 's',
 					next_failed = ']f',
 					prev_failed = '[f',
