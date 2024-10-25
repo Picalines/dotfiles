@@ -1,6 +1,8 @@
 return {
 	'natecraddock/workspaces.nvim',
 
+	lazy = false,
+
 	opts = {
 		path = vim.fn.stdpath 'data' .. '/workspaces',
 
@@ -29,5 +31,7 @@ return {
 				workspaces.add_dir(default_repos_dir)
 			end
 		end
+
+		workspaces.sync_dirs()
 	end,
 }
