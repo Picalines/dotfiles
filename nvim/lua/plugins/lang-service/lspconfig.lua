@@ -8,10 +8,11 @@ return {
 		'williamboman/mason-lspconfig.nvim',
 
 		{ 'folke/neodev.nvim', config = true },
+
+		'davidosomething/format-ts-errors.nvim',
 	},
 
 	config = function()
-		local array = require 'util.array'
 		local func = require 'util.func'
 		local keymap = require 'util.keymap'
 		local signal = require 'util.signal'
@@ -61,15 +62,7 @@ return {
 		local default_capabilities = vim.lsp.protocol.make_client_capabilities()
 		default_capabilities = require('cmp_nvim_lsp').default_capabilities(default_capabilities)
 
-		local ignored_servers = {}
-
-		local default_handlers = {}
-
 		local function setup_server(server_name)
-			if array.contains(ignored_servers, server_name) then
-				return
-			end
-
 			local server_config_ok, server_config = pcall(require, 'settings.lsp.servers.' .. server_name)
 
 			if not server_config_ok then
@@ -90,8 +83,6 @@ return {
 						},
 					},
 				}),
-
-				handlers = default_handlers,
 			}
 
 			lspconfig[server_name].setup(tbl.override_deep(default_server_config, server_config, { on_attach = on_attach }))
