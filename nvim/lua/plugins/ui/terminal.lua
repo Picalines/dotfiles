@@ -73,7 +73,20 @@ return {
 		end
 
 		local function go_to_file()
-			return str.fmt('<C-w>c<Cmd>e ', vim.fn.expand '<cWORD>', '<CR>')
+			local cword = vim.fn.expand '<cWORD>'
+			local file, line, column
+
+			file, line, column = string.match(cword, '(.+):(%d+):(%d+)$')
+			if file and column and line then
+				return str.fmt('<C-w>c<Cmd>e ', file, '<CR>', line, 'G', column, '|')
+			end
+
+			file, line = string.match(cword, '(.+):(%d+)$')
+			if file and line then
+				return str.fmt('<C-w>c<Cmd>e ', file, '<CR>', line, 'G')
+			end
+
+			return str.fmt('<C-w>c<Cmd>e ', cword, '<CR>')
 		end
 
 		keymap.declare {
