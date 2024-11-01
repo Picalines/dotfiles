@@ -11,7 +11,6 @@ return {
 		local app = require 'util.app'
 		local autocmd = require 'util.autocmd'
 		local func = require 'util.func'
-		local hl = require 'util.highlight'
 		local keymap = require 'util.keymap'
 		local nt_fs = require 'neo-tree.sources.filesystem.commands'
 		local signal = require 'util.signal'
@@ -38,10 +37,6 @@ return {
 			if filetype == 'neo-tree' and win.layout_type(event.win) == 'row' then
 				sidebar_width(math.min(vim.api.nvim_win_get_width(event.win), vim.go.columns - 20))
 			end
-		end)
-
-		augroup:on('ColorScheme', '*', function()
-			vim.api.nvim_set_hl(0, 'NeoTreeModified', { fg = hl.attr('@diff.plus', 'fg'), bg = 'NONE' })
 		end)
 
 		require('neo-tree').setup {
@@ -92,7 +87,7 @@ return {
 				},
 				modified = {
 					symbol = '+',
-					highlight = 'NeoTreeModified',
+					highlight = 'DiffAdd',
 				},
 				name = {
 					trailing_slash = false,
