@@ -194,6 +194,23 @@ function M.take(array, max_length)
 	return array_part
 end
 
+---@generic T
+---@param array T[]
+---@return T[]
+function M.unique(array)
+	local found_values = {}
+	local unique_values = {}
+
+	for _, value in ipairs(array) do
+		if not found_values[value] then
+			found_values[value] = true
+			table.insert(unique_values, value)
+		end
+	end
+
+	return unique_values
+end
+
 ---@generic T, S
 ---@param array T[]
 ---@param separator S

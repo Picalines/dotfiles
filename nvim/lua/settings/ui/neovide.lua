@@ -13,8 +13,6 @@ vim.g.neovide_floating_shadow = false
 vim.g.neovide_floating_blur_amount_x = 0
 vim.g.neovide_floating_blur_amount_y = 0
 
-vim.o.guifont = 'Hack Nerd Font Mono'
-
 vim.g.neovide_cursor_animation_length = 0.015
 vim.g.neovide_scroll_animation_length = 0.05
 vim.g.neovide_position_animation_length = 0.05

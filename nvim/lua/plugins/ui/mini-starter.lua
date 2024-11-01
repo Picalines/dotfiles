@@ -35,14 +35,13 @@ return {
 			items = {
 				section('Files', {
 					{ 'Explore Files', 'Neotree filesystem reveal' },
-					{ 'Recent Files', 'Telescope oldfiles' },
-					{ 'Find Files', 'Telescope find_files' },
 					{ 'Change Directory', string.format('Neotree filesystem current %s', app.os() == 'windows' and '/' or '~') },
 					{ 'Open Workspace', 'WorkspacesOpen' },
 				}),
 				section('Editor', {
 					{ 'New Buffer', 'enew' },
 					{ 'Theme', 'PickColorScheme' },
+					{ 'Font', 'PickGuiFont' },
 					{ 'Quit', 'wa | qa!' },
 				}),
 				section('Manage', {

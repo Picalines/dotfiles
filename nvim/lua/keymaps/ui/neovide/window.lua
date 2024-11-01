@@ -8,17 +8,12 @@ signal.watch(function()
 	vim.g.neovide_window_blurred = true
 end)
 
-local function toggle_fullscreen()
-	vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
-end
-
 local function toggle_transparency()
 	neovide_transparency(neovide_transparency() == 1 and 0.75 or 1)
 end
 
 keymap.declare {
 	[{ 'n', nowait = true }] = {
-		['<leader><leader>f'] = { toggle_fullscreen, 'Neovide: Toggle Fullscreen' },
 		['<leader><leader>t'] = { toggle_transparency, 'Neovide: Toggle transparency' },
 	},
 }

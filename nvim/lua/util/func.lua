@@ -55,6 +55,27 @@ function M.curry_only(func, ...)
 	end
 end
 
+---@generic Args, R
+---@param func fun(...: Args): R
+---@return fun(...: Args): R
+function M.memo(func)
+	local hashes_map = {}
+	local cached_values = {}
+	return function(...)
+		local args_hash = vim.inspect { ... }
+		if hashes_map[args_hash] then
+			return table.unpack(cached_values[args_hash])
+		end
+
+		local values = table.pack(func(...))
+
+		hashes_map[args_hash] = true
+		cached_values[args_hash] = values
+
+		return table.unpack(values)
+	end
+end
+
 ---@param func fun(): any
 ---@return fun()
 function M.ignore(func)

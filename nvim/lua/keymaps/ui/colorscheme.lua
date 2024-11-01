@@ -31,14 +31,10 @@ local function open_colorscheme_picker()
 
 		attach_mappings = function(prompt_bufnr)
 			---@diagnostic disable-next-line: undefined-field
-			actions.close:enhance {
-				post = reset_colorscheme,
-			}
+			actions.close:enhance { post = reset_colorscheme }
 
 			---@diagnostic disable-next-line: undefined-field
-			actions_set.shift_selection:enhance {
-				post = update_colorscheme,
-			}
+			actions_set.shift_selection:enhance { post = update_colorscheme }
 
 			actions.select_default:replace(function()
 				actions.close(prompt_bufnr)
