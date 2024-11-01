@@ -349,7 +349,7 @@ return {
 				end,
 			},
 
-			Text('|%<', { hl = 'WinSeparator' }),
+			Text('│%<', { hl = 'WinSeparator' }),
 
 			Space,
 		}
