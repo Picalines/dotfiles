@@ -14,15 +14,17 @@ vim.cmd.highlight 'clear'
 vim.cmd.syntax 'reset'
 
 local function patch_colorscheme()
-	hl.clear('TabLine', 'bg')
-	hl.clear('StatusLine', 'bg')
-	hl.clear('WinSeparator', 'bg')
-	hl.clear('NonText', 'bg')
-	hl.clear('EndOfBuffer', 'bg')
-	hl.clear('DiffAdd', 'bg')
-	hl.clear('DiffText', 'bg')
-	hl.clear('DiffChange', 'bg')
-	hl.clear('DiffDelete', 'bg')
+	local attrs = { 'bg', 'reverse' }
+	hl.clear('TabLine', attrs)
+	hl.clear('StatusLine', attrs)
+	hl.clear('WinSeparator', attrs)
+	hl.clear('NormalFloat', attrs)
+	hl.clear('NonText', attrs)
+	hl.clear('EndOfBuffer', attrs)
+	hl.clear('DiffAdd', attrs)
+	hl.clear('DiffText', attrs)
+	hl.clear('DiffChange', attrs)
+	hl.clear('DiffDelete', attrs)
 end
 
 signal.watch(function()

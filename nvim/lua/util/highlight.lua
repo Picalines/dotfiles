@@ -91,22 +91,40 @@ end
 ---@class clear_opts
 ---@field ns_id? integer
 
+local clear_map = {
+	fg = 'NONE',
+	bg = 'NONE',
+	sp = 'NONE',
+	blend = 0,
+	bold = false,
+	standout = false,
+	underline = false,
+	underdouble = false,
+	underdotted = false,
+	underdashed = false,
+	strikethrough = false,
+	italic = false,
+	reverse = false,
+	nocombine = false,
+}
+
 ---@param target_hl string
----@param attrs? 'bg' | 'fg' | 'all'
+---@param attrs? string | string[]
 ---@param opts? clear_opts
 function M.clear(target_hl, attrs, opts)
-	opts = func.default_opts(opts, {
-		ns_id = 0,
-	})
+	opts = func.default_opts(opts, { ns_id = 0 })
 
-	local new_attrs
-	if attrs == 'fg' then
-		new_attrs = { fg = 'NONE' }
-	elseif attrs == 'bg' then
-		new_attrs = { bg = 'NONE' }
-	else
-		new_attrs = { fg = 'NONE', bg = 'NONE' }
+	if not attrs or attrs == '*' then
+		attrs = tbl.keys(clear_map)
 	end
+
+	if type(attrs) ~= 'table' then
+		attrs = { attrs }
+	end
+
+	local new_attrs = tbl.map(attrs, function(_, attr)
+		return attr, clear_map[attr]
+	end)
 
 	local hl = M.get(target_hl, { ns_id = opts.ns_id, follow_link = true }) or {}
 
