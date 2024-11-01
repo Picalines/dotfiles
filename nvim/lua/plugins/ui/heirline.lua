@@ -28,6 +28,19 @@ return {
 
 		vim.o.laststatus = 3 -- global statusline
 
+		augroup:on({ 'TabNew', 'WinNew', 'WinClosed', 'BufWinEnter' }, '*', function()
+			local winids = vim.api.nvim_tabpage_list_wins(0)
+
+			local has_normal_bufs = array.some(winids, function(winid)
+				local buf = vim.api.nvim_win_get_buf(winid)
+				local buftype = vim.api.nvim_get_option_value('buftype', { buf = buf })
+				local config = vim.api.nvim_win_get_config(winid)
+				return buftype == '' and config.relative == ''
+			end)
+
+			vim.o.showtabline = has_normal_bufs and 2 or 1 -- always OR only when #tabpages > 1
+		end)
+
 		---@param text string
 		---@param opts? table
 		local function Text(text, opts)
@@ -243,12 +256,6 @@ return {
 
 		local function update_buflist()
 			buflist_cache = get_listed_buffers()
-
-			if #buflist_cache >= 1 then
-				vim.o.showtabline = 2 -- always
-			elseif vim.o.showtabline ~= 1 then
-				vim.o.showtabline = 1 -- only when #tabpages > 1
-			end
 
 			local bufnr_to_name = tbl.map(buflist_cache, function(_, bufnr)
 				return bufnr, vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ':t')
