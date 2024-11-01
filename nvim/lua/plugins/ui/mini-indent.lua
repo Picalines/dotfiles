@@ -42,18 +42,11 @@ return {
 
 		local augroup = autocmd.group 'mini-indent'
 
-		augroup:on_filetype({
-			'help',
-			'lazy',
-			'messages',
-			'neo-tree',
-			'neo-tree-popup',
-			'neotest-output',
-			'neotest-output-panel',
-			'neotest-summary',
-			'noice',
-		}, disable_mini_indentscope)
-
-		augroup:on({ 'BufEnter', 'TermOpen' }, 'term://*', disable_mini_indentscope)
+		augroup:on({ 'BufEnter', 'TermOpen' }, '*', function(event)
+			local buftype = vim.api.nvim_get_option_value('buftype', { buf = event.buf })
+			if buftype ~= '' then
+				disable_mini_indentscope(event)
+			end
+		end)
 	end,
 }
