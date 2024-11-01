@@ -15,7 +15,17 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local persist = require 'util.persist'
+local autocmd = require 'util.autocmd'
+
 pcall(persist.load)
+
+local augroup = autocmd.group 'init'
+augroup:on('ColorScheme', '*', 'PatchColorScheme')
+
+pcall(function()
+	vim.cmd.highlight 'clear'
+	vim.cmd.syntax 'reset'
+end)
 
 pcall(require, 'plugins')
 pcall(require, 'settings')
