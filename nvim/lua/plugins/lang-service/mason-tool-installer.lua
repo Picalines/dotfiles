@@ -31,24 +31,17 @@ return {
 				{ 'eslint-lsp', version = '4.8.0' },
 			},
 
-			[{ 'python', 'python3' }] = {
-				'black',
-				'isort',
-				'pyright',
-			},
+			[{ 'python', 'python3' }] = { 'black', 'isort', 'pyright' },
 
-			[{ 'dotnet' }] = {
-				'csharpier',
-			},
+			[{ 'dotnet' }] = { 'csharpier' },
 
-			[{ 'docker' }] = {
-				'docker-compose-language-service',
-				'dockerfile-language-server',
-			},
+			[{ 'docker' }] = { 'docker-compose-language-service', 'dockerfile-language-server' },
 
-			[{ 'go' }] = {
-				'gopls',
-			},
+			[{ 'go' }] = { 'gopls' },
+
+			[{ 'kotlin' }] = { 'kotlin-language-server', 'ktfmt', 'ktlint' },
+
+			[{ 'gradle' }] = { 'gradle-language-server' },
 		}
 
 		local ensure_installed = base_opts.ensure_installed or {}

@@ -663,6 +663,7 @@ return {
 					eslint = '󰱺',
 					graphql = '󰡷',
 					jsonls = '',
+					kotlin_language_server = '󱈙',
 					lua_ls = '',
 					omnisharp = '󰈸',
 					pyright = '󰌠',
@@ -675,7 +676,9 @@ return {
 
 			init = function(self)
 				local client_names = array.map(vim.lsp.get_clients { bufnr = 0 }, function(client)
-					return self.client_icons[client.name] or client.name
+					local s = self.client_icons[client.name] or client.name
+					s = s:gsub('_language_server$', ''):gsub('_ls$', '')
+					return s
 				end)
 
 				self.active_clients = table.concat(client_names, ' ')

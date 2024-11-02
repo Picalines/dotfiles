@@ -65,6 +65,8 @@ return {
 
 				go = { 'gofmt' },
 				cs = { 'csharpier' },
+
+				kotlin = { 'ktlint' },
 			},
 
 			formatters = {
