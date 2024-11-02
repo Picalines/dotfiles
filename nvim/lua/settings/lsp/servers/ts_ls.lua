@@ -1,4 +1,3 @@
-local array = require 'util.array'
 local func = require 'util.func'
 
 return {
@@ -17,10 +16,10 @@ return {
 			local formatTsErrors = require 'format-ts-errors'
 
 			-- codes: https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json
-			local ignored_codes = { 80001 }
+			local ignored_codes = { [80001] = true }
 
 			for _, entry in pairs(result.diagnostics) do
-				if not array.contains(ignored_codes, entry.code) then
+				if not ignored_codes[entry.code] then
 					local formatter = formatTsErrors[entry.code] or func.const(entry.message)
 					local ok, new_message = pcall(formatter, entry.message)
 					if ok then

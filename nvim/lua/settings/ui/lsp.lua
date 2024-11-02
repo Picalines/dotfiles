@@ -1,3 +1,5 @@
+local func = require 'util.func'
+
 vim.diagnostic.config {
 	update_in_insert = true,
 
@@ -39,3 +41,14 @@ vim.diagnostic.config {
 		end,
 	},
 }
+
+local builtin_open_float = vim.diagnostic.open_float
+
+---@diagnostic disable-next-line: duplicate-set-field
+vim.diagnostic.open_float = function(...)
+	local bufnr, winid = builtin_open_float(...)
+
+	vim.api.nvim_set_option_value('filetype', 'markdown', { buf = bufnr })
+
+	return bufnr, winid
+end

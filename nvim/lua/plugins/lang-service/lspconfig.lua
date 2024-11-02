@@ -9,7 +9,12 @@ return {
 
 		{ 'folke/neodev.nvim', config = true },
 
-		'davidosomething/format-ts-errors.nvim',
+		{
+			'davidosomething/format-ts-errors.nvim',
+			opts = {
+				add_markdown = true,
+			},
+		},
 	},
 
 	config = function()
