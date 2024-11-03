@@ -13,6 +13,10 @@ return {
 			enabled = false,
 		},
 
+		indent = {
+			enabled = false,
+		},
+
 		bullet = {
 			icons = { '', '' },
 		},
