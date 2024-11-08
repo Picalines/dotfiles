@@ -9,6 +9,7 @@ if app.client() == 'vscode' then
 else
 	require 'keymaps.ui.buffer'
 	require 'keymaps.ui.colorscheme'
+	require 'keymaps.ui.lsp'
 	require 'keymaps.ui.number'
 	require 'keymaps.ui.quickfix'
 	require 'keymaps.ui.quit'
