@@ -17,6 +17,7 @@ return {
 		},
 
 		'nvim-telescope/telescope-ui-select.nvim',
+		'gbrlsnchs/telescope-lsp-handlers.nvim',
 	},
 
 	config = function()
@@ -113,6 +114,7 @@ return {
 
 		safe_load_extension 'fzf'
 		safe_load_extension 'ui-select'
+		safe_load_extension 'lsp_handlers'
 
 		local function exit_visual_mode()
 			vim.api.nvim_feedkeys(':', 'nx', false)

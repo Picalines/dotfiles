@@ -19,10 +19,10 @@ keymap.declare {
 		['<leader>r'] = { vim.lsp.buf.rename, 'LSP: Rename' },
 		['<leader>a'] = { vim.lsp.buf.code_action, 'LSP: Code action' },
 
-		['gD'] = { '<Cmd>Glance definitions<CR>', 'LSP: Go to definition' },
-		['gR'] = { '<Cmd>Glance references<CR>', 'LSP: Go to references' },
-		['gI'] = { '<Cmd>Glance implementations<CR>', 'LSP: Go to implementation' },
-		['gT'] = { '<Cmd>Glance type_definitions<CR>', 'LSP: Go to type definition' },
+		['gD'] = { vim.lsp.buf.definition, 'LSP: Go to definition' },
+		['gR'] = { vim.lsp.buf.references, 'LSP: Go to references' },
+		['gI'] = { vim.lsp.buf.implementation, 'LSP: Go to implementation' },
+		['gT'] = { vim.lsp.buf.type_definition, 'LSP: Go to type definition' },
 		['gC'] = { vim.lsp.buf.declaration, 'LSP: Go to to Declaration' },
 
 		['<leader>li'] = { '<Cmd>LspInfo<CR>', 'LSP: See info' },
