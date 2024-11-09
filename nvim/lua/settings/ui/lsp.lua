@@ -36,16 +36,20 @@ vim.diagnostic.config {
 	},
 }
 
-local builtin_open_float = vim.diagnostic.open_float
+if not _LSP_FLOAT_PATCHED then
+	local builtin_open_float = vim.diagnostic.open_float
 
----@diagnostic disable-next-line: duplicate-set-field
-vim.diagnostic.open_float = function(...)
-	local bufnr, winid = builtin_open_float(...)
+	---@diagnostic disable-next-line: duplicate-set-field
+	vim.diagnostic.open_float = function(...)
+		local bufnr, winid = builtin_open_float(...)
 
-	if bufnr and winid then
-		vim.api.nvim_buf_clear_namespace(bufnr, -1, 0, -1)
-		vim.api.nvim_set_option_value('filetype', 'markdown', { buf = bufnr })
+		if bufnr and winid then
+			vim.api.nvim_buf_clear_namespace(bufnr, -1, 0, -1)
+			vim.api.nvim_set_option_value('filetype', 'markdown', { buf = bufnr })
+		end
+
+		return bufnr, winid
 	end
 
-	return bufnr, winid
+	_LSP_FLOAT_PATCHED = true
 end
