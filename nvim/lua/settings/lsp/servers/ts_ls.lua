@@ -1,10 +1,25 @@
 local func = require 'util.func'
 
+local language_opts = {
+	inlayHints = {
+		includeInlayParameterNameHints = 'all',
+		includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+		includeInlayFunctionParameterTypeHints = false,
+		includeInlayVariableTypeHints = false,
+		includeInlayPropertyDeclarationTypeHints = false,
+		includeInlayFunctionLikeReturnTypeHints = false,
+		includeInlayEnumMemberValueHints = true,
+	},
+}
+
 return {
 	settings = {
 		completions = {
 			completeFunctionCalls = true,
 		},
+
+		typescript = language_opts,
+		javascript = language_opts,
 	},
 
 	handlers = {
