@@ -74,10 +74,6 @@ return {
 			return { hl = { bold = true }, component }
 		end)
 
-		local Italic = Decorated(function(component)
-			return { hl = { italic = true }, component }
-		end)
-
 		---@param child table
 		---@param side 'left' | 'right'
 		local function Append(child, side)
@@ -112,7 +108,11 @@ return {
 				self.display_name = self.filename == '' and string.format('[%d]', self.bufnr) or vim.fn.fnamemodify(self.filename, ':t')
 			end,
 
-			Italic {
+			hl = function(self)
+				return self.is_active and 'Normal' or '@comment'
+			end,
+
+			{
 				condition = function(self)
 					return self.buffer_prefixes and self.buffer_prefixes[self.bufnr]
 				end,
@@ -120,8 +120,6 @@ return {
 				provider = function(self)
 					return self.buffer_prefixes[self.bufnr] .. '/'
 				end,
-
-				hl = '@comment',
 			},
 			{
 				hl = function(self)
@@ -131,10 +129,6 @@ return {
 				{
 					provider = function(self)
 						return self.is_active and self.display_name or vim.fn.fnamemodify(self.display_name, ':r:r:r')
-					end,
-
-					hl = function(self)
-						return self.is_active and 'Normal' or '@comment'
 					end,
 				},
 			},
