@@ -36,7 +36,13 @@ function M.declare(decl_table, _info)
 				modes = { 'n' }
 			end
 
+			local group_desc = _info.opts.desc
 			local opts = tbl.override_deep(_info.opts, local_opts)
+
+			if type(group_desc) == 'string' and local_opts.desc then
+				---@diagnostic disable-next-line: inject-field
+				opts.desc = string.format(group_desc, local_opts.desc)
+			end
 
 			local ok = pcall(vim.keymap.set, modes, lhs, rhs, opts)
 			if not ok then

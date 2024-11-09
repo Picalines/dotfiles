@@ -13,26 +13,26 @@ local function toggle_inlay_hints()
 end
 
 keymap.declare {
-	[{ 'n', silent = true }] = {
-		['K'] = { vim.lsp.buf.hover, 'LSP: Hover' },
+	[{ 'n', silent = true, desc = 'LSP: %s' }] = {
+		['K'] = { vim.lsp.buf.hover, 'Hover' },
 
-		['<leader>r'] = { vim.lsp.buf.rename, 'LSP: Rename' },
-		['<leader>a'] = { vim.lsp.buf.code_action, 'LSP: Code action' },
+		['<leader>r'] = { vim.lsp.buf.rename, 'Rename' },
+		['<leader>a'] = { vim.lsp.buf.code_action, 'Code action' },
 
-		['gD'] = { vim.lsp.buf.definition, 'LSP: Go to definition' },
-		['gR'] = { vim.lsp.buf.references, 'LSP: Go to references' },
-		['gI'] = { vim.lsp.buf.implementation, 'LSP: Go to implementation' },
-		['gT'] = { vim.lsp.buf.type_definition, 'LSP: Go to type definition' },
-		['gC'] = { vim.lsp.buf.declaration, 'LSP: Go to to Declaration' },
+		['gD'] = { vim.lsp.buf.definition, 'Go to definition' },
+		['gR'] = { vim.lsp.buf.references, 'Go to references' },
+		['gI'] = { vim.lsp.buf.implementation, 'Go to implementation' },
+		['gT'] = { vim.lsp.buf.type_definition, 'Go to type definition' },
+		['gC'] = { vim.lsp.buf.declaration, 'Go to to Declaration' },
 
-		['<leader>li'] = { '<Cmd>LspInfo<CR>', 'LSP: See info' },
-		['<leader>lr'] = { '<Cmd>echo "Restarting LSP" | LspRestart<CR>', 'LSP: Restart' },
-		['<leader>ll'] = { '<Cmd>LspLog<CR>', 'LSP: See logs' },
-		['<leader>lh'] = { toggle_inlay_hints, 'LSP: Toggle inlay hints' },
-		['<leader>ls'] = { ':LspStart ', 'LSP: Start server' },
+		['<leader>li'] = { '<Cmd>LspInfo<CR>', 'See info' },
+		['<leader>lr'] = { '<Cmd>echo "Restarting LSP" | LspRestart<CR>', 'Restart' },
+		['<leader>ll'] = { '<Cmd>LspLog<CR>', 'See logs' },
+		['<leader>lh'] = { toggle_inlay_hints, 'Toggle inlay hints' },
+		['<leader>ls'] = { ':LspStart ', 'Start server' },
 	},
 
-	[{ 'i' }] = {
-		['<C-S>'] = { vim.lsp.buf.signature_help, 'LSP: show signature help' },
+	[{ 'i', desc = 'LSP: %s' }] = {
+		['<C-S>'] = { vim.lsp.buf.signature_help, 'Signature help' },
 	},
 }
