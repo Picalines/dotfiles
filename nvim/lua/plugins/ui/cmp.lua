@@ -3,9 +3,6 @@ return {
 
 	event = { 'InsertEnter' },
 
-	commit = 'b356f2c',
-	pin = true,
-
 	dependencies = {
 		'hrsh7th/cmp-nvim-lsp',
 		'hrsh7th/cmp-buffer',
