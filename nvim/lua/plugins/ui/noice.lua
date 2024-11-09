@@ -29,6 +29,13 @@ return {
 			long_message_to_split = false,
 		},
 
+		routes = {
+			{
+				filter = { event = 'notify', find = 'No information available' },
+				opts = { skip = true },
+			},
+		},
+
 		lsp = {
 			hover = {
 				silent = true,
