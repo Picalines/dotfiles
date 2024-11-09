@@ -15,6 +15,7 @@ end
 keymap.declare {
 	[{ 'n', silent = true, desc = 'LSP: %s' }] = {
 		['K'] = { vim.lsp.buf.hover, 'Hover' },
+		['<C-S>'] = { vim.lsp.buf.signature_help, 'Signature help' },
 
 		['<leader>r'] = { vim.lsp.buf.rename, 'Rename' },
 		['<leader>a'] = { vim.lsp.buf.code_action, 'Code action' },
