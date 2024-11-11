@@ -38,7 +38,7 @@ return {
 			return { open_cmd = str.fmt('bot new | resize ', panel_height()) }
 		end)
 
-		local function toggle_terminal()
+		local function open_terminal()
 			local term_count = active_terminals:len()
 			if term_count > 0 then
 				if last_terminal_index and last_terminal_index > term_count then
@@ -54,7 +54,8 @@ return {
 		end
 
 		local function new_terminal_tab()
-			if vim.bo.buftype ~= 'terminal' then
+			local buftype = vim.api.nvim_get_option_value('buftype', { buf = 0 })
+			if buftype ~= 'terminal' then
 				return
 			end
 
@@ -91,7 +92,7 @@ return {
 
 		keymap.declare {
 			[{ 'n' }] = {
-				['<leader>t'] = { toggle_terminal, 'Toggle terminal' },
+				['<leader>t'] = { open_terminal, 'Toggle terminal' },
 			},
 
 			[{ 't' }] = {
@@ -104,8 +105,8 @@ return {
 			keymap.declare {
 				[{ buffer = event.buf, nowait = true }] = {
 					[{ 'n' }] = {
-						['<leader>t'] = { terminal_map.close, 'Close terminal' },
-						['q'] = { terminal_map.close, 'Close terminal' },
+						['<leader>t'] = { '<C-w>c<C-w>p', 'Close terminal' },
+						['q'] = { '<C-w>c<C-w>p', 'Close terminal' },
 
 						['o'] = { new_terminal_tab, 'New terminal' },
 						['}'] = { terminal_map.cycle_next, 'Cycle next terminal' },
