@@ -28,7 +28,7 @@ return {
 
 		vim.o.laststatus = 3 -- global statusline
 
-		augroup:on({ 'TabNew', 'WinNew', 'WinEnter', 'BufWinEnter' }, '*', function()
+		augroup:on({ 'TabNew', 'WinNew', 'WinEnter', 'BufWinEnter', 'TermOpen' }, '*', function()
 			local winids = vim.api.nvim_tabpage_list_wins(0)
 
 			local has_normal_bufs = array.some(winids, function(winid)
