@@ -73,21 +73,23 @@ return {
 			end
 		end
 
+		local close_terminal_map = '<C-w>c<C-w>p'
+
 		local function go_to_file()
 			local cword = vim.fn.expand '<cWORD>'
 			local file, line, column
 
 			file, line, column = string.match(cword, '(.+):(%d+):(%d+)$')
 			if file and column and line then
-				return str.fmt('<C-w>c<Cmd>e ', file, '<CR>', line, 'G', column, '|')
+				return str.fmt(close_terminal_map, '<Cmd>e ', file, '<CR>', line, 'G', column, '|')
 			end
 
 			file, line = string.match(cword, '(.+):(%d+)$')
 			if file and line then
-				return str.fmt('<C-w>c<Cmd>e ', file, '<CR>', line, 'G')
+				return str.fmt(close_terminal_map, '<Cmd>e ', file, '<CR>', line, 'G')
 			end
 
-			return str.fmt('<C-w>c<Cmd>e ', cword, '<CR>')
+			return str.fmt(close_terminal_map, '<Cmd>e ', cword, '<CR>')
 		end
 
 		keymap.declare {
@@ -105,8 +107,8 @@ return {
 			keymap.declare {
 				[{ buffer = event.buf, nowait = true }] = {
 					[{ 'n' }] = {
-						['<leader>t'] = { '<C-w>c<C-w>p', 'Close terminal' },
-						['q'] = { '<C-w>c<C-w>p', 'Close terminal' },
+						['<leader>t'] = { close_terminal_map, 'Close terminal' },
+						['q'] = { close_terminal_map, 'Close terminal' },
 
 						['o'] = { new_terminal_tab, 'New terminal' },
 						['}'] = { terminal_map.cycle_next, 'Cycle next terminal' },
