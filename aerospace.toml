@@ -15,10 +15,6 @@ on-focus-changed = 'move-mouse window-lazy-center'
 
 accordion-padding = 60
 
-[workspace-to-monitor-force-assignment]
-1 = 'main'
-2 = 'secondary'
-
 [gaps]
 inner.horizontal = 10
 inner.vertical =   10
@@ -33,7 +29,7 @@ alt-enter = 'exec-and-forget alacritty msg create-window || alacritty || open -a
 
 alt-minus = 'resize smart -50'
 alt-equal = 'resize smart +50'
-alt-shift-f = 'fullscreen'
+alt-o = 'fullscreen'
 
 alt-h = 'focus left'
 alt-j = 'focus down'
@@ -45,11 +41,10 @@ alt-shift-j = 'focus-monitor down'
 alt-shift-k = 'focus-monitor up'
 alt-shift-l = 'focus-monitor right'
 
-alt-g = 'mode grab'
-alt-shift-g = 'mode w-grab'
+alt-ctrl-h = 'move-workspace-to-monitor prev'
+alt-ctrl-l = 'move-workspace-to-monitor next'
 
-alt-o = "exec-and-forget aerospace list-workspaces --monitor focused --empty no | aerospace workspace next --wrap-around"
-alt-i = "exec-and-forget aerospace list-workspaces --monitor focused --empty no | aerospace workspace prev --wrap-around"
+alt-g = 'mode grab'
 
 alt-1 = 'workspace 1 --auto-back-and-forth'
 alt-2 = 'workspace 2 --auto-back-and-forth'
@@ -76,12 +71,35 @@ alt-c = 'workspace C --auto-back-and-forth'
 alt-v = 'workspace V --auto-back-and-forth'
 alt-b = 'workspace B --auto-back-and-forth'
 
+alt-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
+alt-shift-2 = ['move-node-to-workspace 2', 'workspace 2']
+alt-shift-3 = ['move-node-to-workspace 3', 'workspace 3']
+alt-shift-4 = ['move-node-to-workspace 4', 'workspace 4']
+alt-shift-5 = ['move-node-to-workspace 5', 'workspace 5']
+alt-shift-6 = ['move-node-to-workspace 6', 'workspace 6']
+alt-shift-7 = ['move-node-to-workspace 7', 'workspace 7']
+alt-shift-8 = ['move-node-to-workspace 8', 'workspace 8']
+alt-shift-9 = ['move-node-to-workspace 9', 'workspace 9']
+alt-shift-q = ['move-node-to-workspace Q', 'workspace Q']
+alt-shift-w = ['move-node-to-workspace W', 'workspace W']
+alt-shift-e = ['move-node-to-workspace E', 'workspace E']
+alt-shift-r = ['move-node-to-workspace R', 'workspace R']
+alt-shift-t = ['move-node-to-workspace T', 'workspace T']
+alt-shift-y = ['move-node-to-workspace Y', 'workspace Y']
+alt-shift-a = ['move-node-to-workspace A', 'workspace A']
+alt-shift-s = ['move-node-to-workspace S', 'workspace S']
+alt-shift-d = ['move-node-to-workspace D', 'workspace D']
+alt-shift-f = ['move-node-to-workspace F', 'workspace F']
+alt-shift-g = ['move-node-to-workspace G', 'workspace G']
+alt-shift-z = ['move-node-to-workspace Z', 'workspace Z']
+alt-shift-x = ['move-node-to-workspace X', 'workspace X']
+alt-shift-c = ['move-node-to-workspace C', 'workspace C']
+alt-shift-v = ['move-node-to-workspace V', 'workspace V']
+alt-shift-b = ['move-node-to-workspace B', 'workspace B']
+
 [mode.grab.binding]
 
 esc = ['reload-config', 'mode main']
-
-minus = 'resize smart -50'
-equal = 'resize smart +50'
 
 h = 'move left'
 j = 'move down'
@@ -97,46 +115,6 @@ f = ['layout floating tiling', 'mode main']
 
 t = 'layout tiles horizontal vertical'
 a = 'layout accordion horizontal vertical'
-
-alt-1 = ['move-node-to-workspace 1', 'workspace 1']
-alt-2 = ['move-node-to-workspace 2', 'workspace 2']
-alt-3 = ['move-node-to-workspace 3', 'workspace 3']
-alt-4 = ['move-node-to-workspace 4', 'workspace 4']
-alt-5 = ['move-node-to-workspace 5', 'workspace 5']
-alt-6 = ['move-node-to-workspace 6', 'workspace 6']
-alt-7 = ['move-node-to-workspace 7', 'workspace 7']
-alt-8 = ['move-node-to-workspace 8', 'workspace 8']
-alt-9 = ['move-node-to-workspace 9', 'workspace 9']
-alt-q = ['move-node-to-workspace Q', 'workspace Q']
-alt-w = ['move-node-to-workspace W', 'workspace W']
-alt-e = ['move-node-to-workspace E', 'workspace E']
-alt-r = ['move-node-to-workspace R', 'workspace R']
-alt-t = ['move-node-to-workspace T', 'workspace T']
-alt-y = ['move-node-to-workspace Y', 'workspace Y']
-alt-a = ['move-node-to-workspace A', 'workspace A']
-alt-s = ['move-node-to-workspace S', 'workspace S']
-alt-d = ['move-node-to-workspace D', 'workspace D']
-alt-f = ['move-node-to-workspace F', 'workspace F']
-alt-g = ['move-node-to-workspace G', 'workspace G']
-alt-z = ['move-node-to-workspace Z', 'workspace Z']
-alt-x = ['move-node-to-workspace X', 'workspace X']
-alt-c = ['move-node-to-workspace C', 'workspace C']
-alt-v = ['move-node-to-workspace V', 'workspace V']
-alt-b = ['move-node-to-workspace B', 'workspace B']
-
-alt-shift-h = ['move-node-to-monitor left', 'focus-monitor left']
-alt-shift-j = ['move-node-to-monitor down', 'focus-monitor down']
-alt-shift-k = ['move-node-to-monitor up', 'focus-monitor up']
-alt-shift-l = ['move-node-to-monitor right', 'focus-monitor right']
-
-[mode.w-grab.binding]
-
-esc = 'mode main'
-
-r = ['flatten-workspace-tree', 'mode main']
-
-h = 'move-workspace-to-monitor prev'
-l = 'move-workspace-to-monitor next'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
