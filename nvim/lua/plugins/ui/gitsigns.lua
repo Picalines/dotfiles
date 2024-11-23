@@ -1,10 +1,9 @@
-local app = require 'util.app'
-
-local is_arc = app.os() ~= 'windows' and vim.fn.executable 'arc' == 1
+local arc_plugin_path = vim.fn.expand '~/Arcadia/junk/a-matveev9/gitsigns.arc.nvim'
+local arc_plugin_exists = vim.fn.isdirectory(arc_plugin_path) == 1
 
 return {
-	not is_arc and 'lewis6991/gitsigns.nvim',
-	dir = is_arc and '~/Arcadia/junk/a-matveev9/gitsigns.arc.nvim' or nil,
+	not arc_plugin_exists and 'lewis6991/gitsigns.nvim' or nil,
+	dir = arc_plugin_exists and arc_plugin_path or nil,
 
 	event = { 'BufReadPre', 'BufNewFile' },
 
