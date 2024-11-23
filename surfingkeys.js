@@ -1,3 +1,5 @@
+settings.blacklistPattern = /colab\.research\.google/i;
+
 api.Hints.style(`
     text-align: center;
     vertical-align: middle;
