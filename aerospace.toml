@@ -66,6 +66,7 @@ alt-shift-m = ['move-node-to-workspace M', 'workspace M']
 [mode.win.binding]
 
 esc = ['reload-config', 'mode main']
+enter = ['reload-config', 'mode main']
 
 h = 'move left'
 j = 'move down'
@@ -93,15 +94,23 @@ c = ['exec-and-forget open -a Neovide', 'mode main']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
-run = 'layout floating'
+run = ['layout floating']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Preview'
-run = 'layout floating'
+run = ['layout floating']
 
 [[on-window-detected]]
 if.app-id = 'ru.yandex.desktop.disk2'
-run = 'layout floating'
+run = ['layout floating']
+
+[[on-window-detected]]
+if.app-id = 'com.neovide.neovide'
+run = ['layout tiling', 'move-node-to-workspace C']
+
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.Browser'
+run = ['layout tiling', 'move-node-to-workspace B']
 
 [[on-window-detected]]
 if.app-id = 'us.zoom.xos'
@@ -109,4 +118,4 @@ run = ['layout floating', 'move-node-to-workspace Z']
 
 [[on-window-detected]]
 if.app-id = 'ru.keepcoder.Telegram'
-run = ['move-node-to-workspace M']
+run = ['layout tiling', 'move-node-to-workspace M']
