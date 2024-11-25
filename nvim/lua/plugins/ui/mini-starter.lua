@@ -47,6 +47,7 @@ return {
 				section('Manage', {
 					{ 'Lazy', 'Lazy' },
 					{ 'Mason', 'Mason' },
+					{ 'Health', 'checkhealth' },
 				}),
 			},
 
