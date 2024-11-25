@@ -9,7 +9,7 @@ keymap.declare {
 return {
 	'nvim-neo-tree/neo-tree.nvim',
 
-	lazy = true,
+	lazy = vim.fn.argc() == 0,
 	cmd = 'Neotree',
 
 	dependencies = {
@@ -185,7 +185,7 @@ return {
 
 			filesystem = {
 				group_empty_dirs = false,
-				hijack_netrw_behavior = 'open_default',
+				hijack_netrw_behavior = 'open_current',
 
 				-- temp fix, see https://github.com/nvim-neo-tree/neo-tree.nvim/issues/914
 				use_libuv_file_watcher = app.os() ~= 'windows',
