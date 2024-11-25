@@ -1,13 +1,21 @@
+local keymap = require 'util.keymap'
+
+keymap.declare {
+	[{ 'n' }] = {
+		['<leader>t'] = { '<Cmd>OpenTerminal<CR>', 'Toggle terminal' },
+	},
+}
+
 return {
 	'rebelot/terminal.nvim',
 
-	event = 'VeryLazy',
+	lazy = true,
+	cmd = 'OpenTerminal',
 
 	config = function()
 		local app = require 'util.app'
 		local autocmd = require 'util.autocmd'
 		local func = require 'util.func'
-		local keymap = require 'util.keymap'
 		local signal = require 'util.signal'
 		local str = require 'util.string'
 		local win = require 'util.window'
@@ -53,6 +61,8 @@ return {
 			end
 		end
 
+		vim.api.nvim_create_user_command('OpenTerminal', open_terminal, {})
+
 		local function new_terminal_tab()
 			local buftype = vim.api.nvim_get_option_value('buftype', { buf = 0 })
 			if buftype ~= 'terminal' then
@@ -75,34 +85,6 @@ return {
 
 		local close_terminal_map = '<C-w>c<C-w>p'
 
-		local function go_to_file()
-			local cword = vim.fn.expand '<cWORD>'
-			local file, line, column
-
-			file, line, column = string.match(cword, '(.+):(%d+):(%d+)$')
-			if file and column and line then
-				return str.fmt(close_terminal_map, '<Cmd>e ', file, '<CR>', line, 'G', column, '|')
-			end
-
-			file, line = string.match(cword, '(.+):(%d+)$')
-			if file and line then
-				return str.fmt(close_terminal_map, '<Cmd>e ', file, '<CR>', line, 'G')
-			end
-
-			return str.fmt(close_terminal_map, '<Cmd>e ', cword, '<CR>')
-		end
-
-		keymap.declare {
-			[{ 'n' }] = {
-				['<leader>t'] = { open_terminal, 'Toggle terminal' },
-			},
-
-			[{ 't' }] = {
-				['<Esc>'] = { [[<C-\><C-n>]], 'Exit terminal mode' },
-				['<C-p>'] = { [[<C-\><C-n>pi]], 'Paste' },
-			},
-		}
-
 		augroup:on('TermOpen', '*', function(event)
 			keymap.declare {
 				[{ buffer = event.buf, nowait = true }] = {
@@ -118,7 +100,8 @@ return {
 						['<C-o>'] = { '<C-w>p', 'Jump back' },
 						['<C-i>'] = '<Nop>',
 
-						['gf'] = { go_to_file, 'Open file under cursor', expr = true },
+						['gf'] = { '<Cmd>norm! gf<CR>mF' .. close_terminal_map .. '`F' },
+						['gF'] = { '<Cmd>norm! gF<CR>mF' .. close_terminal_map .. '`F' },
 					},
 
 					[{ 't' }] = {
