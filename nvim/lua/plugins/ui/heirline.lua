@@ -7,7 +7,7 @@ return {
 		{ 'tiagovla/scope.nvim', opts = {} },
 	},
 
-	event = 'UiEnter',
+	event = 'VeryLazy',
 
 	config = function()
 		local app = require 'util.app'

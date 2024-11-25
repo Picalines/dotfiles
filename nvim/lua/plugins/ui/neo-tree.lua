@@ -1,5 +1,16 @@
+local keymap = require 'util.keymap'
+
+keymap.declare {
+	[{ 'n', silent = true }] = {
+		['<leader>e'] = { '<Cmd>Neotree focus filesystem<CR>', 'File explorer' },
+	},
+}
+
 return {
 	'nvim-neo-tree/neo-tree.nvim',
+
+	lazy = true,
+	cmd = 'Neotree',
 
 	dependencies = {
 		'nvim-lua/plenary.nvim',
@@ -11,17 +22,10 @@ return {
 		local app = require 'util.app'
 		local autocmd = require 'util.autocmd'
 		local func = require 'util.func'
-		local keymap = require 'util.keymap'
 		local nt_fs = require 'neo-tree.sources.filesystem.commands'
 		local signal = require 'util.signal'
 		local str = require 'util.string'
 		local win = require 'util.window'
-
-		keymap.declare {
-			[{ 'n', silent = true }] = {
-				['<leader>e'] = { '<Cmd>Neotree focus filesystem<CR>', 'File explorer' },
-			},
-		}
 
 		local sidebar_width = signal.new(40)
 		signal.persist(sidebar_width, str.fmt(app.client(), '.plugin.neo-tree.sidebar_width'))
