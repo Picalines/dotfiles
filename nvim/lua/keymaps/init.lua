@@ -14,6 +14,7 @@ else
 	require 'keymaps.ui.quickfix'
 	require 'keymaps.ui.quit'
 	require 'keymaps.ui.tab'
+	require 'keymaps.ui.terminal'
 	require 'keymaps.ui.window'
 
 	if app.client() == 'neovide' then
