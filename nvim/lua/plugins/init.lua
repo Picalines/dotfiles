@@ -31,6 +31,23 @@ else
 	end
 end
 
-lazy.setup(array.map(lazy_modules, function(module)
+local lazy_spec = array.map(lazy_modules, function(module)
 	return { import = 'plugins.' .. module }
-end))
+end)
+
+lazy.setup(lazy_spec, {
+	performance = {
+		rtp = {
+			disabled_plugins = {
+				'gzip',
+				-- 'matchit',
+				-- 'matchparen',
+				'netrwPlugin',
+				'tarPlugin',
+				'tohtml',
+				'tutor',
+				'zipPlugin',
+			},
+		},
+	},
+})
