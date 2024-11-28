@@ -34,7 +34,6 @@ return {
 			'*.bundle.js',
 			'*.cert',
 			'*.tsbuildinfo',
-			'.geodata',
 			'.git',
 			'node_modules',
 			'{dist,build}',
@@ -43,7 +42,7 @@ return {
 		}
 
 		local rg_args = array.concat(
-			{ '--hidden' },
+			{ '--hidden', '--max-filesize=1G' },
 			array.flat_map(ignore_files, function(file)
 				return vim.fn.filereadable(file) and { '--ignore-file', file } or {}
 			end),
