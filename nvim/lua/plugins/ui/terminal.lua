@@ -35,7 +35,7 @@ return {
 
 		local last_terminal_index
 
-		augroup:on('BufEnter', 'term://*', function()
+		augroup:on({ 'TermOpen', 'BufEnter' }, 'term://*', function()
 			last_terminal_index = terminal.current_term_index()
 		end)
 
