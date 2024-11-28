@@ -31,13 +31,15 @@ return {
 
 		local ignore_files = { '.gitignore', '.arcignore' }
 		local always_exclude = {
+			'*.bundle.js',
+			'*.cert',
+			'*.tsbuildinfo',
+			'.geodata',
 			'.git',
 			'node_modules',
-			'{package,pnpm}-lock.json',
 			'{dist,build}',
 			'{dist,build}-*',
-			'*.bundle.js',
-			'.geodata',
+			'{package,pnpm}-lock.json',
 		}
 
 		local rg_args = array.concat(
