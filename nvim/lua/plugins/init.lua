@@ -1,4 +1,5 @@
 local lazy = require 'lazy'
+local str = require 'util.string'
 local app = require 'util.app'
 local array = require 'util.array'
 
@@ -36,6 +37,7 @@ local lazy_spec = array.map(lazy_modules, function(module)
 end)
 
 lazy.setup(lazy_spec, {
+	lockfile = str.fmt(vim.fn.stdpath 'config', '/lazy-lock.', app.os(), '.json'),
 	performance = {
 		rtp = {
 			disabled_plugins = {
