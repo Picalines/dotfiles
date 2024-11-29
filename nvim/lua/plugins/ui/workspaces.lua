@@ -11,11 +11,16 @@ return {
 		sort = true,
 		mru_sort = true,
 
-		auto_open = true,
-		auto_dir = true,
+		auto_open = false,
+		auto_dir = false,
 
 		hooks = {
-			open = { 'Neotree current filesystem' },
+			open = {
+				'Neotree current filesystem',
+				function(w_name)
+					vim.t.tab_label = w_name
+				end,
+			},
 		},
 	},
 
