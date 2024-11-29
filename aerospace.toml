@@ -87,11 +87,32 @@ a = 'layout accordion horizontal vertical'
 
 esc = 'mode main'
 
-t = ['exec-and-forget alacritty msg create-window || alacritty || open -a Terminal', 'mode main']
-m = ['exec-and-forget open -a Telegram', 'mode main']
 b = ['exec-and-forget open -a Arc', 'mode main']
 c = ['exec-and-forget open -a Neovide', 'mode main']
+m = ['exec-and-forget open -a Telegram', 'mode main']
+n = ['exec-and-forget open -a Obsidian', 'mode main']
 s = ['exec-and-forget open -a Settings', 'mode main']
+t = ['exec-and-forget alacritty msg create-window || alacritty || open -a Terminal', 'mode main']
+
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.Browser'
+run = ['layout tiling', 'move-node-to-workspace B']
+
+[[on-window-detected]]
+if.app-id = 'com.neovide.neovide'
+run = ['layout tiling', 'move-node-to-workspace C']
+
+[[on-window-detected]]
+if.app-id = 'ru.keepcoder.Telegram'
+run = ['layout tiling', 'move-node-to-workspace M']
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = ['layout tiling', 'move-node-to-workspace N']
+
+[[on-window-detected]]
+if.app-id = 'us.zoom.xos'
+run = ['layout floating', 'move-node-to-workspace Z']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
@@ -105,18 +126,3 @@ run = ['layout floating']
 if.app-id = 'ru.yandex.desktop.disk2'
 run = ['layout floating']
 
-[[on-window-detected]]
-if.app-id = 'com.neovide.neovide'
-run = ['layout tiling', 'move-node-to-workspace C']
-
-[[on-window-detected]]
-if.app-id = 'company.thebrowser.Browser'
-run = ['layout tiling', 'move-node-to-workspace B']
-
-[[on-window-detected]]
-if.app-id = 'us.zoom.xos'
-run = ['layout floating', 'move-node-to-workspace Z']
-
-[[on-window-detected]]
-if.app-id = 'ru.keepcoder.Telegram'
-run = ['layout tiling', 'move-node-to-workspace M']
