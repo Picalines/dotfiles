@@ -189,7 +189,12 @@ return {
 
 				-- temp fix, see https://github.com/nvim-neo-tree/neo-tree.nvim/issues/914
 				use_libuv_file_watcher = app.os() ~= 'windows',
+
 				bind_to_cwd = true,
+				cwd_target = {
+					sidebar = 'tab',
+					current = 'tab',
+				},
 
 				filtered_items = {
 					visible = false,
