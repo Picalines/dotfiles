@@ -290,7 +290,7 @@ return {
 
 			{
 				provider = function(self)
-					return string.format(' %%%dT%s%%T', self.tabnr, self.tabpage)
+					return str.fmt(' %', self.tabnr, 'T', vim.t[self.tabpage].tab_label or str.fmt('[', self.tabnr, ']'), '%T')
 				end,
 
 				hl = function(self)
