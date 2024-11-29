@@ -1,3 +1,11 @@
+local keymap = require 'util.keymap'
+
+keymap.declare {
+	[{ 'n' }] = {
+		['<C-t>w'] = { '<Cmd>tabnew | WorkspacesOpen<Cr>' },
+	},
+}
+
 return {
 	'natecraddock/workspaces.nvim',
 
