@@ -8,13 +8,6 @@ return {
 		'williamboman/mason-lspconfig.nvim',
 
 		{ 'folke/neodev.nvim', config = true },
-
-		{
-			'davidosomething/format-ts-errors.nvim',
-			opts = {
-				add_markdown = true,
-			},
-		},
 	},
 
 	config = function()
