@@ -63,6 +63,7 @@ return {
 				{ name = 'luasnip' },
 				{ name = 'buffer' },
 				{ name = 'nvim_lsp_signature_help' },
+				{ name = 'lazydev', group_index = 0 },
 			},
 
 			mapping = {
