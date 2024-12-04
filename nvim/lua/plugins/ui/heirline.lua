@@ -203,7 +203,8 @@ return {
 					BufferName,
 
 					hl = function(self)
-						return { italic = not vim.b[self.bufnr].was_written }
+						local was_written = vim.b[self.bufnr].was_written
+						return { italic = not was_written, underline = not was_written }
 					end,
 				},
 				ModifiedFlag 'tab',
