@@ -13,12 +13,8 @@ return {
 		---@field [2] string action
 
 		---@param name string
-		---@param items StarterItem[] | (fun(): StarterItem[] | nil)
+		---@param items StarterItem[]
 		local function section(name, items)
-			if type(items) == 'function' then
-				items = items() or {}
-			end
-
 			return array.map(items, function(item)
 				local icon, item_name, action = item[1], item[2], item[3]
 				return { section = name, name = item_name, action = action, __icon = icon }
