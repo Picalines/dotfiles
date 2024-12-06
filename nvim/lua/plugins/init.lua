@@ -44,7 +44,7 @@ lazy.setup(lazy_spec, {
 				'gzip',
 				-- 'matchit',
 				-- 'matchparen',
-				'netrwPlugin',
+				-- 'netrwPlugin',
 				'tarPlugin',
 				'tohtml',
 				'tutor',

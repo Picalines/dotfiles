@@ -13,6 +13,7 @@ require 'settings.ui.window'
 require 'settings.ui.wrapping'
 
 if app.client() ~= 'vscode' then
+	require 'settings.ui.spell'
 	require 'settings.ui.buflisted'
 	require 'settings.ui.colorscheme'
 	require 'settings.ui.guicursor'
@@ -24,4 +25,4 @@ if app.client() == 'neovide' then
 	require 'settings.ui.neovide'
 end
 
--- NOTE: lsp folder is loaded by lspconfig
+-- NOTE: LSP folder is loaded by lspconfig

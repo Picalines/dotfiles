@@ -13,6 +13,7 @@ else
 	require 'keymaps.ui.number'
 	require 'keymaps.ui.quickfix'
 	require 'keymaps.ui.quit'
+	require 'keymaps.ui.spell'
 	require 'keymaps.ui.tab'
 	require 'keymaps.ui.terminal'
 	require 'keymaps.ui.window'
