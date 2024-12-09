@@ -25,43 +25,27 @@ outer.right =      16
 
 [mode.main.binding]
 
-alt-minus = 'resize smart -50'
-alt-equal = 'resize smart +50'
-alt-f = 'fullscreen'
+ctrl-alt-cmd-shift-minus = 'resize smart -50'
+ctrl-alt-cmd-shift-equal = 'resize smart +50'
+ctrl-alt-cmd-shift-f = 'fullscreen'
 
-alt-h = 'focus left'
-alt-j = 'focus down'
-alt-k = 'focus up'
-alt-l = 'focus right'
+ctrl-alt-cmd-shift-h = 'focus left'
+ctrl-alt-cmd-shift-j = 'focus down'
+ctrl-alt-cmd-shift-k = 'focus up'
+ctrl-alt-cmd-shift-l = 'focus right'
 
-alt-shift-h = 'focus-monitor left'
-alt-shift-j = 'focus-monitor down'
-alt-shift-k = 'focus-monitor up'
-alt-shift-l = 'focus-monitor right'
+ctrl-alt-cmd-shift-backspace = 'workspace-back-and-forth'
 
-alt-ctrl-h = 'move-workspace-to-monitor prev'
-alt-ctrl-l = 'move-workspace-to-monitor next'
+ctrl-alt-cmd-shift-w = 'mode win'
+ctrl-alt-cmd-shift-o = 'mode open'
 
-alt-backspace = 'workspace-back-and-forth'
-
-alt-w = 'mode win'
-alt-o = 'mode open'
-
-alt-z = 'workspace Z --auto-back-and-forth'
-alt-x = 'workspace X --auto-back-and-forth'
-alt-c = 'workspace C --auto-back-and-forth'
-alt-v = 'workspace V --auto-back-and-forth'
-alt-b = 'workspace B --auto-back-and-forth'
-alt-n = 'workspace N --auto-back-and-forth'
-alt-m = 'workspace M --auto-back-and-forth'
-
-alt-shift-z = ['move-node-to-workspace Z', 'workspace Z']
-alt-shift-x = ['move-node-to-workspace X', 'workspace X']
-alt-shift-c = ['move-node-to-workspace C', 'workspace C']
-alt-shift-v = ['move-node-to-workspace V', 'workspace V']
-alt-shift-b = ['move-node-to-workspace B', 'workspace B']
-alt-shift-n = ['move-node-to-workspace N', 'workspace N']
-alt-shift-m = ['move-node-to-workspace M', 'workspace M']
+ctrl-alt-cmd-shift-z = 'workspace Z --auto-back-and-forth'
+ctrl-alt-cmd-shift-x = 'workspace X --auto-back-and-forth'
+ctrl-alt-cmd-shift-c = 'workspace C --auto-back-and-forth'
+ctrl-alt-cmd-shift-v = 'workspace V --auto-back-and-forth'
+ctrl-alt-cmd-shift-b = 'workspace B --auto-back-and-forth'
+ctrl-alt-cmd-shift-n = 'workspace N --auto-back-and-forth'
+ctrl-alt-cmd-shift-m = 'workspace M --auto-back-and-forth'
 
 [mode.win.binding]
 
@@ -82,6 +66,17 @@ f = ['layout floating tiling', 'mode main']
 
 t = 'layout tiles horizontal vertical'
 a = 'layout accordion horizontal vertical'
+
+ctrl-h = 'move-workspace-to-monitor prev'
+ctrl-l = 'move-workspace-to-monitor next'
+
+z = ['move-node-to-workspace Z', 'workspace Z']
+x = ['move-node-to-workspace X', 'workspace X']
+c = ['move-node-to-workspace C', 'workspace C']
+v = ['move-node-to-workspace V', 'workspace V']
+b = ['move-node-to-workspace B', 'workspace B']
+n = ['move-node-to-workspace N', 'workspace N']
+m = ['move-node-to-workspace M', 'workspace M']
 
 [mode.open.binding]
 
