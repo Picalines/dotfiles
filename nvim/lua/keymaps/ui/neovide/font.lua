@@ -18,18 +18,48 @@ local function list_guifonts_fontconfig()
 
 	if ok and fc_list then
 		local font_lines = vim.split(fc_list, '\n')
-		return array.unique(array.map(font_lines, function(font_line)
+		return array.map(font_lines, function(font_line)
 			return string.match(font_line, '^[^:]+:%s*([^,:]+)')
-		end))
+		end)
+	end
+end
+
+local function list_guifonts_win()
+	local ok, list = pcall(function()
+		local result = vim.system({ 'reg', 'query', [[HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts]], '/s' }):wait()
+		return result.code == 0 and result.stdout or nil
+	end)
+
+	if ok and list then
+		local font_lines = vim.split(list, '\n')
+		table.remove(font_lines, 1)
+		table.remove(font_lines, 1)
+
+		return array.flat_map(font_lines, function(font_line)
+			local font_name = string.match(font_line, '%s*([^%(]+)')
+			if not font_name then
+				return {}
+			end
+
+			return { string.sub(string.match(font_line, '%s*([^%(]+)'), 1, -2) }
+		end)
 	end
 end
 
 local function list_guifonts()
+	local fonts = nil
+
 	if vim.fn.executable 'fc-list' == 1 then
-		return list_guifonts_fontconfig()
+		fonts = list_guifonts_fontconfig()
+	elseif app.os() == 'windows' then
+		fonts = list_guifonts_win()
 	end
 
-	return nil
+	if not fonts then
+		error 'could not detect fonts'
+	end
+
+	return array.unique(fonts)
 end
 
 list_guifonts = func.memo(list_guifonts)
