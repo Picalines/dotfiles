@@ -64,15 +64,15 @@ function M.memo(func)
 	return function(...)
 		local args_hash = vim.inspect { ... }
 		if hashes_map[args_hash] then
-			return table.unpack(cached_values[args_hash])
+			return unpack(cached_values[args_hash])
 		end
 
-		local values = table.pack(func(...))
+		local values = { func(...) }
 
 		hashes_map[args_hash] = true
 		cached_values[args_hash] = values
 
-		return table.unpack(values)
+		return unpack(values)
 	end
 end
 
