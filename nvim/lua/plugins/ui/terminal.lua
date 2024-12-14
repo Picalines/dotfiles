@@ -76,12 +76,12 @@ return {
 			end
 		end
 
-		local function kill_current_terminal()
-			local term = terminal.get_current_term()
-			if term then
-				vim.fn.jobstop(term.jobid)
-			end
-		end
+		-- local function kill_current_terminal()
+		-- 	local term = terminal.get_current_term()
+		-- 	if term then
+		-- 		vim.fn.jobstop(term.jobid)
+		-- 	end
+		-- end
 
 		local close_terminal_map = '<C-w>c<C-w>p'
 
@@ -95,7 +95,7 @@ return {
 						['o'] = { new_terminal_tab, 'New terminal' },
 						['}'] = { terminal_map.cycle_next, 'Cycle next terminal' },
 						['{'] = { terminal_map.cycle_prev, 'Cycle prev terminal' },
-						['<C-c>'] = { kill_current_terminal, 'Kill terminal process' },
+						-- ['<C-c>'] = { kill_current_terminal, 'Kill terminal process' },
 
 						['<C-o>'] = { '<C-w>p', 'Jump back' },
 						['<C-i>'] = '<Nop>',
@@ -121,7 +121,7 @@ return {
 		end)
 
 		augroup:on_winresized(function(event)
-			local buftype = vim.api.nvim_buf_get_option(event.buf, 'buftype')
+			local buftype = vim.api.nvim_get_option_value('buftype', { buf = event.buf })
 			if buftype == 'terminal' and win.layout_type(event.win) == 'col' then
 				panel_height(math.min(vim.api.nvim_win_get_height(event.win), vim.go.lines - 10))
 			end
