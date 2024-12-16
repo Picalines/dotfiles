@@ -81,13 +81,13 @@ return {
 		end
 
 		keymap.declare {
-			[{ 'n' }] = {
-				['<leader>Tr'] = { with_output_panel_clear(neotest.run.run), 'Test: run nearest' },
-				['<leader>TR'] = { with_output_panel_clear(with_file_path(neotest.run.run)), 'Test: run suite' },
-				['<leader>Tc'] = { neotest.run.stop, 'Test: cancel nearest' },
-				['<leader>TC'] = { with_file_path(neotest.run.stop), 'Test: cancel suite' },
-				['<leader>Tl'] = { neotest.summary.toggle, 'Test: list' },
-				['<leader>To'] = { neotest.output_panel.toggle, 'Test: output' },
+			[{ 'n', desc = 'Test: %s' }] = {
+				['<leader>ur'] = { with_output_panel_clear(neotest.run.run), 'run nearest' },
+				['<leader>uR'] = { with_output_panel_clear(with_file_path(neotest.run.run)), 'run suite' },
+				['<leader>uc'] = { neotest.run.stop, 'cancel nearest' },
+				['<leader>uC'] = { with_file_path(neotest.run.stop), 'cancel suite' },
+				['<leader>ul'] = { neotest.summary.toggle, 'list' },
+				['<leader>uo'] = { neotest.output_panel.toggle, 'output' },
 			},
 		}
 
@@ -97,7 +97,7 @@ return {
 			keymap.declare {
 				[{ 'n', buffer = event.buf }] = {
 					['q'] = { neotest.summary.close, 'Close panel' },
-					['<leader>Tl'] = { neotest.summary.close, 'Close panel' },
+					['<leader>ul'] = { neotest.summary.close, 'Close panel' },
 				},
 			}
 		end)
@@ -106,7 +106,7 @@ return {
 			keymap.declare {
 				[{ 'n', buffer = event.buf }] = {
 					['q'] = { neotest.output_panel.close, 'Close panel' },
-					['<leader>To'] = { neotest.output_panel.close, 'Close panel' },
+					['<leader>uo'] = { neotest.output_panel.close, 'Close panel' },
 				},
 			}
 		end)
