@@ -1,10 +1,10 @@
 local keymap = require 'util.keymap'
 
 keymap.declare {
-	[{ 'n', silent = true }] = {
-		['<C-t>o'] = { '<Cmd>tabnew<CR>', 'Empty tab' },
-		['<C-t>c'] = { '<Cmd>tabclose<CR>', 'Close tab' },
-		['<C-}>'] = { '<Cmd>tabnext<CR>', 'Next tab' },
-		['<C-{>'] = { '<Cmd>tabprev<CR>', 'Prev tab' },
+	[{ 'n', silent = true, desc = 'Tab: %s' }] = {
+		['<C-t>n'] = { '<Cmd>tabnew<CR>', 'new' },
+		['<C-t>c'] = { '<Cmd>tabclose<CR>', 'close' },
+		['<C-}>'] = { '<Cmd>tabnext<CR>', 'next' },
+		['<C-{>'] = { '<Cmd>tabprev<CR>', 'prev' },
 	},
 }

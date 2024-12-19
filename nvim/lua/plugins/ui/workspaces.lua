@@ -1,8 +1,8 @@
 local keymap = require 'util.keymap'
 
 keymap.declare {
-	[{ 'n' }] = {
-		['<C-t>w'] = { '<Cmd>tabnew | WorkspacesOpen<Cr>' },
+	[{ 'n', desc = 'Tab: %s' }] = {
+		['<C-t>w'] = { '<Cmd>tabnew | WorkspacesOpen<Cr>', 'new in workspace' },
 	},
 }
 

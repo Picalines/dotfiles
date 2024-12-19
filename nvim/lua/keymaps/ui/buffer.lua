@@ -34,12 +34,12 @@ local function close_all_buffers()
 end
 
 keymap.declare {
-	[{ 'n', silent = true }] = {
-		['<C-b>e'] = { '<Cmd>enew<CR>', 'Make empty buffer' },
-		['<C-b>r'] = { '<Cmd>e<CR>', 'Reload buffer' },
-		['<C-b>c'] = { close_buffer, 'Close buffer' },
-		['<C-b>C'] = { close_all_buffers, 'Close all buffers' },
-		['}'] = { '<Cmd>bn<CR>', 'Next buffer' },
-		['{'] = { '<Cmd>bp<CR>', 'Prev buffer' },
+	[{ 'n', silent = true, desc = 'Buffer: %s' }] = {
+		['<C-b>n'] = { '<Cmd>enew<CR>', 'new' },
+		['<C-b>r'] = { '<Cmd>e<CR>', 'reload' },
+		['<C-b>c'] = { close_buffer, 'close' },
+		['<C-b>C'] = { close_all_buffers, 'close all' },
+		['}'] = { '<Cmd>bn<CR>', 'next' },
+		['{'] = { '<Cmd>bp<CR>', 'previous' },
 	},
 }
