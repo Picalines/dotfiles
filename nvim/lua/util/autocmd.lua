@@ -1,4 +1,3 @@
-local array = require 'util.array'
 local func = require 'util.func'
 local tbl = require 'util.table'
 
@@ -7,7 +6,6 @@ local M = {}
 local SAFE_GROUP_FORMAT = 'config(%s)'
 
 M.UNSUB = {} -- return this in a callback to delete autocmd
-
 ---@class autocmd_event
 ---@field buf integer
 ---@field match string
@@ -63,30 +61,6 @@ function Group:on_user(event, callback_or_cmd)
 		callback = callback,
 		command = cmd,
 	})
-end
-
----@param filetypes string | string[]
----@param callback_or_cmd autocmd_callback | string
-function Group:on_filetype(filetypes, callback_or_cmd)
-	local callback, cmd = parse_callback_or_cmd(callback_or_cmd)
-
-	if type(filetypes) ~= 'table' then
-		filetypes = { filetypes }
-	end
-
-	filetypes = array.copy(filetypes)
-
-	return self:on('FileType', '*', function(event)
-		if not array.contains(filetypes, event.match) then
-			return
-		end
-
-		if callback then
-			return callback(event)
-		else
-			vim.cmd(cmd)
-		end
-	end)
 end
 
 ---@class autocmd_winresized_event: autocmd_event

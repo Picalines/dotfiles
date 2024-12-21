@@ -7,7 +7,7 @@ vim.o.expandtab = true
 
 local augroup = autocmd.group 'indent'
 
-augroup:on_filetype({ 'javascriptreact', 'typescriptreact' }, function()
+augroup:on('FileType', { 'javascriptreact', 'typescriptreact' }, function()
 	vim.bo.shiftwidth = 2
 	vim.bo.tabstop = 2
 	vim.bo.softtabstop = 2

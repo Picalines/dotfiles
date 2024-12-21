@@ -8,4 +8,4 @@ vim.go.linebreak = true
 
 local augroup = autocmd.group 'wrapping'
 
-augroup:on_filetype({ 'javascriptreact', 'typescriptreact', 'markdown' }, func.cmd 'setlocal wrap')
+augroup:on('FileType', { 'javascriptreact', 'typescriptreact', 'markdown' }, func.cmd 'setlocal wrap')

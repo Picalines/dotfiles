@@ -21,7 +21,7 @@ return {
 
 		local augroup = autocmd.group 'mini-cursorword'
 
-		augroup:on_filetype({
+		augroup:on('FileType', {
 			'help',
 			'lazy',
 			'neo-tree',
