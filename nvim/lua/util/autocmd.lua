@@ -6,6 +6,7 @@ local M = {}
 local SAFE_GROUP_FORMAT = 'config(%s)'
 
 M.UNSUB = {} -- return this in a callback to delete autocmd
+
 ---@class autocmd_event
 ---@field buf integer
 ---@field match string
