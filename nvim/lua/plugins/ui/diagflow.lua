@@ -8,7 +8,7 @@ return {
 
 		gap_size = 1,
 
-		scope = 'cursor',
+		scope = 'line',
 
 		toggle_event = { 'InsertEnter', 'InsertLeave' },
 
