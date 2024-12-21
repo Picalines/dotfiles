@@ -3,6 +3,7 @@ local keymap = require 'util.keymap'
 keymap.declare {
 	[{ 'n' }] = {
 		['<leader>v'] = '<Cmd>Git<CR>',
+		['<leader>V'] = ':Git ',
 	},
 }
 
