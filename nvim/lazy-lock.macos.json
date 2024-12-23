@@ -12,7 +12,6 @@
   "evergarden": { "branch": "mega", "commit": "c7d3ec1117b7e652b4da8a2dbfc4dcc2eee9cc20" },
   "format-ts-errors.nvim": { "branch": "main", "commit": "7cd1985612cb9187e1a3fe84535c7d091cf724c8" },
   "friendly-snippets": { "branch": "main", "commit": "efff286dd74c22f731cdec26a70b46e5b203c619" },
-  "gruvbox": { "branch": "master", "commit": "f1ecde848f0cdba877acb0c740320568252cc482" },
   "heirline.nvim": { "branch": "master", "commit": "cc359b628266cb9a84b2d71c883f2b99e16473a0" },
   "indent-blankline.nvim": { "branch": "master", "commit": "259357fa4097e232730341fa60988087d189193a" },
   "lazy.nvim": { "branch": "main", "commit": "56ead98e05bb37a4ec28930a54d836d033cf00f2" },
