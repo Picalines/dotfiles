@@ -23,19 +23,4 @@ return {
 
 		overrides = {},
 	},
-
-	config = function(_, opts)
-		local autocmd = require 'util.autocmd'
-		local hl = require 'util.highlight'
-
-		require('evergarden').setup(opts)
-
-		local augroup = autocmd.group 'evergarden'
-
-		augroup:on('ColorScheme', 'evergarden', function()
-			vim.cmd 'hi NoiceCursor gui=inverse'
-			vim.o.background = 'dark'
-			hl.link('NormalFloat', 'Normal')
-		end)
-	end,
 }
