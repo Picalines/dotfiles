@@ -43,14 +43,14 @@ return {
 			local gitsigns = require 'gitsigns'
 
 			keymap.declare {
-				[{ 'n', buffer = bufnr }] = {
-					['<leader>hp'] = { gitsigns.preview_hunk_inline, 'Preview hunk' },
-					['<leader>ha'] = { gitsigns.stage_hunk, 'Stage hunk' },
-					['<leader>hu'] = { gitsigns.undo_stage_hunk, 'Undo stage hunk' },
-					['<leader>hr'] = { gitsigns.reset_hunk, 'Reset hunk' },
+				[{ 'n', buffer = bufnr, desc = 'Hunk: %s' }] = {
+					['<leader>hp'] = { gitsigns.preview_hunk_inline, 'preview' },
+					['<leader>ha'] = { gitsigns.stage_hunk, 'stage' },
+					['<leader>hu'] = { gitsigns.undo_stage_hunk, 'unstage' },
+					['<leader>hr'] = { gitsigns.reset_hunk, 'reset' },
 
 					[']h'] = {
-						desc = 'Jump to next [h]unk',
+						desc = 'next',
 						function()
 							if vim.wo.diff then
 								return ']h'
@@ -61,7 +61,7 @@ return {
 					},
 
 					['[h'] = {
-						desc = 'Jump to previous [h]unk',
+						desc = 'previous',
 						function()
 							if vim.wo.diff then
 								return '[h'
@@ -73,7 +73,7 @@ return {
 				},
 
 				[{ 'o', 'x', buffer = bufnr, silent = true }] = {
-					['ih'] = { ':<C-U>Gitsigns select_hunk<CR>', 'Select hunk' },
+					['ih'] = { ':<C-U>Gitsigns select_hunk<CR>', 'Hunk: select' },
 				},
 			}
 		end,
