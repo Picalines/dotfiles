@@ -691,6 +691,14 @@ return {
 			Text('', { hl = '@boolean' }),
 		}
 
+		local InlayHintsFlag = {
+			condition = function()
+				return vim.lsp.inlay_hint.is_enabled()
+			end,
+
+			Text('', { hl = '@boolean' }),
+		}
+
 		local LeftStatusline = AppendAll(Space, 'right') {
 			ViMode,
 			ReadonlyFlag 'status',
@@ -707,6 +715,7 @@ return {
 
 		local RightStatusline = AppendAll(Space, 'left') {
 			TerminalList,
+			InlayHintsFlag,
 			SpellFlag,
 			FormatBeforeWriteFlag,
 			LSPActive,
