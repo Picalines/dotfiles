@@ -15,6 +15,9 @@ return {
 
 		local format_before_write = signal.new(false)
 		signal.persist(format_before_write, 'plugin.conform.format_before_write')
+		signal.watch(function()
+			vim.g.status_format_before_write = format_before_write()
+		end)
 
 		local function toggle_autoformat()
 			local is_enabled = format_before_write(not format_before_write())

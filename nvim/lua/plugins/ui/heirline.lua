@@ -689,6 +689,22 @@ return {
 			provider = func.field 'active_clients',
 		}
 
+		local SpellFlag = {
+			condition = function()
+				return vim.wo.spell
+			end,
+
+			Text('󰸟', { hl = '@boolean' }),
+		}
+
+		local FormatBeforeWriteFlag = {
+			condition = function()
+				return vim.g.status_format_before_write
+			end,
+
+			Text('', { hl = '@boolean' }),
+		}
+
 		local LeftStatusline = AppendAll(Space, 'right') {
 			ViMode,
 			ReadonlyFlag 'status',
@@ -705,6 +721,8 @@ return {
 
 		local RightStatusline = AppendAll(Space, 'left') {
 			TerminalList,
+			SpellFlag,
+			FormatBeforeWriteFlag,
 			LSPActive,
 			Ruler,
 			ScrollBar,
