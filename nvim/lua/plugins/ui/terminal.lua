@@ -37,6 +37,11 @@ return {
 
 		augroup:on({ 'TermOpen', 'BufEnter' }, 'term://*', function()
 			last_terminal_index = terminal.current_term_index()
+			vim.g.status_last_terminal_index = last_terminal_index
+		end)
+
+		augroup:on({ 'TermOpen', 'TermClose' }, '*', function()
+			vim.g.status_terminal_count = active_terminals:len()
 		end)
 
 		local panel_height = signal.new(60)

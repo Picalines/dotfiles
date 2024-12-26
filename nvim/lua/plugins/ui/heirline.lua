@@ -595,33 +595,19 @@ return {
 		local TerminalList = {
 			update = { 'TermOpen', 'TermClose', 'BufEnter' },
 
-			init = function(self)
-				self.icon = ''
-
-				local current_buftype = vim.api.nvim_get_option_value('buftype', { buf = 0 })
-				self.is_in_terminal = current_buftype == 'terminal'
-
-				local terminal = require 'terminal'
-				local active_terminals = require 'terminal.active_terminals'
-
-				self.current_terminal = terminal.current_term_index() or 0
-				self.terminal_count = active_terminals:len()
-			end,
-
 			condition = function()
-				local ok, active_terminals = pcall(require, 'terminal.active_terminals')
-				return ok and active_terminals:len() > 0
+				return (vim.g.status_terminal_count or 0) > 0
 			end,
 
-			provider = function(self)
-				local indicator
-				if not self.is_in_terminal then
-					indicator = tostring(self.terminal_count)
-				else
-					indicator = string.format('%d/%d', self.current_terminal, self.terminal_count)
-				end
+			provider = function()
+				local current_terminal = vim.g.status_last_terminal_index or 0
+				local terminal_count = vim.g.status_terminal_count or 0
 
-				return string.format('%s %s', indicator, self.icon)
+				if vim.bo.buftype == 'terminal' then
+					return string.format('%d/%d ', current_terminal, terminal_count)
+				else
+					return string.format('%d ', terminal_count)
+				end
 			end,
 
 			hl = '@attribute',
