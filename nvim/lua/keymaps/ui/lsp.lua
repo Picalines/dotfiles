@@ -2,7 +2,7 @@ local keymap = require 'util.keymap'
 local signal = require 'util.signal'
 
 local lsp_inlay_enabled = signal.new(false)
-signal.persist(lsp_inlay_enabled, 'lsp.inlay_hints')
+signal.persist(lsp_inlay_enabled, 'vim.lsp.inlay_hints')
 signal.watch(function()
 	local is_enabled = lsp_inlay_enabled()
 	vim.lsp.inlay_hint.enable(is_enabled)
