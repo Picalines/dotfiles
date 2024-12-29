@@ -27,5 +27,13 @@ return {
 				},
 			}
 		end)
+
+		augroup:on('FileType', 'gitcommit', function(event)
+			keymap.declare {
+				[{ 'n', buffer = event.buf, nowait = true, desc = 'Git: %s' }] = {
+					['<leader>y'] = { '<Cmd>w | bd<CR>', 'accept' },
+				},
+			}
+		end)
 	end,
 }
