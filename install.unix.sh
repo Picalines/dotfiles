@@ -17,6 +17,12 @@ then
     ln -snf $PWD/alacritty.toml ~/.config/alacritty/alacritty.toml
 fi
 
+if command -v ghostty &> /dev/null
+then
+    mkdir -p ~/.config/ghostty
+    ln -snf $PWD/ghostty.config ~/.config/ghostty/config
+fi
+
 if command -v neovide &> /dev/null
 then
     mkdir -p ~/.config/neovide
