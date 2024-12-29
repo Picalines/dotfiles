@@ -87,7 +87,7 @@ c = ['exec-and-forget open -a Neovide', 'mode main']
 m = ['exec-and-forget open -a Telegram', 'mode main']
 n = ['exec-and-forget open -a Obsidian', 'mode main']
 s = ['exec-and-forget open -a Settings', 'mode main']
-t = ['exec-and-forget alacritty msg create-window || alacritty || open -a Terminal', 'mode main']
+t = ['exec-and-forget open -a Ghostty || open -a Alacritty || open -a Terminal', 'mode main']
 
 [[on-window-detected]]
 if.app-id = 'company.thebrowser.Browser'
