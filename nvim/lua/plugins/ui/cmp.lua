@@ -7,7 +7,6 @@ return {
 		'hrsh7th/cmp-nvim-lsp',
 		'hrsh7th/cmp-buffer',
 		'saadparwaiz1/cmp_luasnip',
-		'f3fora/cmp-spell',
 
 		'onsails/lspkind.nvim',
 		'hrsh7th/cmp-nvim-lsp-signature-help',
@@ -58,20 +57,13 @@ return {
 			end
 		end
 
-		local lspkind_format = lspkind.cmp_format {
-			mode = 'symbol',
-			maxwdith = 50,
-			elipsis_char = '...',
-		}
-
 		cmp.setup {
 			sources = {
-				{ name = 'nvim_lsp' },
 				{ name = 'nvim_lsp_signature_help' },
+				{ name = 'nvim_lsp' },
 				{ name = 'luasnip' },
 				{ name = 'lazydev', group_index = 0 },
 				{ name = 'buffer' },
-				{ name = 'spell' },
 			},
 
 			mapping = {
@@ -98,13 +90,11 @@ return {
 
 			---@diagnostic disable-next-line: missing-fields
 			formatting = {
-				format = function(entry, vim_item)
-					local kind = lspkind_format(entry, vim_item)
-					if entry.source.name == 'spell' then
-						kind.kind = '󰸟'
-					end
-					return kind
-				end,
+				format = lspkind.cmp_format {
+					mode = 'symbol',
+					maxwdith = 50,
+					elipsis_char = '...',
+				},
 			},
 
 			snippet = {
