@@ -1,9 +1,9 @@
 local keymap = require 'util.keymap'
 
 keymap.declare {
-	[{ 'n' }] = {
-		['<leader>v'] = '<Cmd>Git<CR>',
-		['<leader>V'] = ':Git ',
+	[{ 'n', desc = 'Git: %s' }] = {
+		['<leader>v'] = { '<Cmd>Git<CR>', 'status' },
+		['<leader>V'] = { ':Git ', 'command' },
 	},
 }
 
