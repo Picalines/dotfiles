@@ -1,5 +1,4 @@
 local autocmd = require 'util.autocmd'
-local func = require 'util.func'
 
 vim.go.mouse = 'a'
 vim.go.termguicolors = true
@@ -9,4 +8,6 @@ vim.go.scrolloff = 8
 
 local augroup = autocmd.group 'window'
 
-augroup:on('FileType', 'help', func.cmd 'wincmd L')
+augroup:on('FileType', 'help', function(event)
+	autocmd.buffer(event.buf):on('BufWinEnter', 'wincmd L', { once = true })
+end)

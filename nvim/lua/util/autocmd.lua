@@ -12,6 +12,9 @@ M.UNSUB = {} -- return this in a callback to delete autocmd
 ---@field match string
 ---@field data any
 
+---@class autocmd_opts
+---@field once boolean?
+
 ---@alias autocmd_callback fun(event: autocmd_event): any
 
 ---@param callback_or_cmd autocmd_callback | string
@@ -40,7 +43,10 @@ local Group = {}
 ---@param event string | string[]
 ---@param pattern string | string[]
 ---@param callback_or_cmd autocmd_callback | string
-function Group:on(event, pattern, callback_or_cmd)
+---@param opts autocmd_opts?
+function Group:on(event, pattern, callback_or_cmd, opts)
+	opts = func.default_opts(opts, { once = false })
+
 	local callback, cmd = parse_callback_or_cmd(callback_or_cmd)
 
 	vim.api.nvim_create_autocmd(event, {
@@ -48,20 +54,15 @@ function Group:on(event, pattern, callback_or_cmd)
 		pattern = pattern,
 		callback = callback,
 		command = cmd,
+		once = opts.once,
 	})
 end
 
 ---@param event string | string[]
 ---@param callback_or_cmd autocmd_callback | string
-function Group:on_user(event, callback_or_cmd)
-	local callback, cmd = parse_callback_or_cmd(callback_or_cmd)
-
-	vim.api.nvim_create_autocmd('User', {
-		group = self._group_id,
-		pattern = event,
-		callback = callback,
-		command = cmd,
-	})
+---@param opts autocmd_opts?
+function Group:on_user(event, callback_or_cmd, opts)
+	return self:on('User', event, callback_or_cmd, opts)
 end
 
 ---@class autocmd_winresized_event: autocmd_event
@@ -103,6 +104,31 @@ function M.group(name, opts)
 	}, {
 		__index = Group,
 	})
+end
+
+---@class Buffer
+---@field private _buf_id? number
+local Buffer = {}
+
+---@param event string | string[]
+---@param callback_or_cmd autocmd_callback | string
+---@param opts autocmd_opts?
+function Buffer:on(event, callback_or_cmd, opts)
+	opts = func.default_opts(opts, { once = false })
+
+	local callback, cmd = parse_callback_or_cmd(callback_or_cmd)
+
+	vim.api.nvim_create_autocmd(event, {
+		buffer = self._buf_id,
+		callback = callback,
+		command = cmd,
+		once = opts.once,
+	})
+end
+
+---@param id number
+function M.buffer(id)
+	return setmetatable({ _buf_id = id }, { __index = Buffer })
 end
 
 return M
