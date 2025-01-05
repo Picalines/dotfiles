@@ -37,7 +37,7 @@ return {
 				return
 			end
 
-			local filetype = vim.api.nvim_buf_get_option(event.buf, 'filetype')
+			local filetype = vim.api.nvim_get_option_value('filetype', { buf = event.buf })
 			if filetype == 'neo-tree' and win.layout_type(event.win) == 'row' then
 				sidebar_width(math.min(vim.api.nvim_win_get_width(event.win), vim.go.columns - 20))
 			end
@@ -56,15 +56,16 @@ return {
 				{
 					event = 'neo_tree_window_after_open',
 					handler = function(event)
-						if event.position ~= 'current' then
-							vim.api.nvim_set_option_value('winfixbuf', true, { win = event.winid, scope = 'local' })
-						end
+						vim.api.nvim_set_option_value('winfixbuf', event.position ~= 'current', { win = event.winid, scope = 'local' })
 					end,
 				},
 				{
 					event = 'file_open_requested',
 					handler = function()
 						require('neo-tree.command').execute { action = 'close' }
+						if vim.bo.buftype == '' then
+							vim.api.nvim_set_option_value('winfixbuf', false, { win = 0, scope = 'local' })
+						end
 					end,
 				},
 			},
