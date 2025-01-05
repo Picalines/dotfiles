@@ -98,7 +98,15 @@ if.app-id = 'com.neovide.neovide'
 run = ['layout tiling', 'move-node-to-workspace C']
 
 [[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = ['layout tiling', 'move-node-to-workspace C']
+
+[[on-window-detected]]
 if.app-id = 'ru.keepcoder.Telegram'
+run = ['layout tiling', 'move-node-to-workspace M']
+
+[[on-window-detected]]
+if.app-id = 'ru.yandex.desktop.music'
 run = ['layout tiling', 'move-node-to-workspace M']
 
 [[on-window-detected]]
