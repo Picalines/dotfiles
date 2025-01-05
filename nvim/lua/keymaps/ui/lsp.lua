@@ -15,7 +15,7 @@ local function toggle_inlay_hints()
 end
 
 keymap.declare {
-	[{ 'n', silent = true, desc = 'LSP: %s' }] = {
+	[{ 'n', desc = 'LSP: %s' }] = {
 		['K'] = { vim.lsp.buf.hover, 'Hover' },
 		['<C-S>'] = { vim.lsp.buf.signature_help, 'Signature help' },
 
@@ -31,7 +31,7 @@ keymap.declare {
 		['<leader>li'] = { '<Cmd>LspInfo<CR>', 'See info' },
 		['<leader>lr'] = { '<Cmd>echo "Restarting LSP" | LspRestart<CR>', 'Restart' },
 		['<leader>ll'] = { '<Cmd>LspLog<CR>', 'See logs' },
-		['<leader>lh'] = { toggle_inlay_hints, 'Toggle inlay hints' },
+		['<leader>ih'] = { toggle_inlay_hints, 'Toggle inlay hints' },
 		['<leader>ls'] = { ':LspStart ', 'Start server' },
 	},
 

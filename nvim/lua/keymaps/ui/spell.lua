@@ -13,7 +13,7 @@ end
 
 keymap.declare {
 	[{ 'n' }] = {
-		['<leader><leader>s'] = { toggle_spell, 'Toggle spell' },
+		['<leader>is'] = { toggle_spell, 'Toggle spell' },
 	},
 }
 

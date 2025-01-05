@@ -27,7 +27,7 @@ return {
 		keymap.declare {
 			[{ 'n', silent = true }] = {
 				['<leader>F'] = { '<Cmd>Format<CR>', 'Format buffer' },
-				['<leader><leader>F'] = { toggle_autoformat, 'Toggle auto format' },
+				['<leader>if'] = { toggle_autoformat, 'Toggle auto format' },
 			},
 		}
 
