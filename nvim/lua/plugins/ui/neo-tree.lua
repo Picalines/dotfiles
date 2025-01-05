@@ -54,18 +54,9 @@ return {
 
 			event_handlers = {
 				{
-					event = 'neo_tree_window_after_open',
-					handler = function(event)
-						vim.api.nvim_set_option_value('winfixbuf', event.position ~= 'current', { win = event.winid, scope = 'local' })
-					end,
-				},
-				{
 					event = 'file_open_requested',
 					handler = function()
 						require('neo-tree.command').execute { action = 'close' }
-						if vim.bo.buftype == '' then
-							vim.api.nvim_set_option_value('winfixbuf', false, { win = 0, scope = 'local' })
-						end
 					end,
 				},
 			},
@@ -181,6 +172,9 @@ return {
 					['?'] = 'show_help',
 					['<'] = 'prev_source',
 					['>'] = 'next_source',
+
+					['}'] = function() end, -- prevents me from switching buffer accidentally
+					['{'] = function() end,
 				},
 			},
 
