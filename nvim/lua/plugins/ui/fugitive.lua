@@ -35,5 +35,9 @@ return {
 				},
 			}
 		end)
+
+		augroup:on('FileType', 'fugitive', function(event)
+			autocmd.buffer(event.buf):on('BufWinEnter', 'wincmd L', { once = true })
+		end)
 	end,
 }
