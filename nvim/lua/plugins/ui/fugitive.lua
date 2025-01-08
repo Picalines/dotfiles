@@ -28,10 +28,11 @@ return {
 			}
 		end)
 
-		augroup:on('FileType', 'gitcommit', function(event)
+		augroup:on('FileType', { 'gitcommit', 'gitrebase' }, function(event)
 			keymap.declare {
 				[{ 'n', buffer = event.buf, nowait = true, desc = 'Git: %s' }] = {
 					['<leader>y'] = { '<Cmd>w | bd<CR>', 'accept' },
+					['<leader>n'] = { 'ggdG<Cmd>w | bd<CR>', 'cancel' },
 				},
 			}
 		end)
