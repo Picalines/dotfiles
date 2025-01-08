@@ -38,3 +38,8 @@ uuid
 SSR
 bundler
 TODO
+vite
+vitest
+runtime
+memoization
+браузер
