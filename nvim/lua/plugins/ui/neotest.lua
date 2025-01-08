@@ -19,7 +19,7 @@ return {
 
 		---@diagnostic disable-next-line: missing-fields
 		neotest.setup {
-			adapters = require 'settings.neotest.adapters',
+			adapters = require 'settings.plugins.neotest.adapters',
 
 			status = {
 				enabled = true,
