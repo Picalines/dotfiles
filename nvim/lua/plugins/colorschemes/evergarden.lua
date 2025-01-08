@@ -8,7 +8,7 @@ return {
 	opts = {
 		transparent_background = false,
 
-		contrast_dark = 'hard',
+		variant = 'hard',
 
 		override_terminal = true,
 
