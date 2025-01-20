@@ -48,3 +48,8 @@ then
     eval "$(starship init bash)"
 fi
 
+# cargo
+if [ -f "$HOME/.cargo/env" ];
+then
+  . "$HOME/.cargo/env"
+fi

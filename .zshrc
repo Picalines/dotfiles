@@ -35,3 +35,9 @@ load-nvmrc() {
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 
+# cargo
+if [ -f "$HOME/.cargo/env" ];
+then
+  . "$HOME/.cargo/env"
+fi
+
