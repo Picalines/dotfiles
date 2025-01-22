@@ -701,6 +701,14 @@ return {
 			Text('', { hl = '@boolean' }),
 		}
 
+		local HardtimeFlag = {
+			condition = function()
+				return vim.g.status_hardtime_enabled
+			end,
+
+			Text('', { hl = '@boolean' }),
+		}
+
 		local LeftStatusline = AppendAll(Space, 'right') {
 			ViMode,
 			ReadonlyFlag 'status',
@@ -720,6 +728,7 @@ return {
 			InlayHintsFlag,
 			SpellFlag,
 			FormatBeforeWriteFlag,
+			HardtimeFlag,
 			LSPActive,
 			Ruler,
 			ScrollBar,
