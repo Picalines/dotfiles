@@ -41,3 +41,9 @@ then
   . "$HOME/.cargo/env"
 fi
 
+# arc
+if command -v arc &> /dev/null
+then
+  export ARC_TOKEN="$(arc token show)"
+fi
+
