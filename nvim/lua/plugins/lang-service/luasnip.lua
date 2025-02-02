@@ -10,13 +10,31 @@ return {
 	build = 'make install_jsregexp',
 
 	config = function(_, opts)
+		local keymap = require 'util.keymap'
 		local luasnip = require 'luasnip'
 
 		if opts then
 			luasnip.config.setup(opts)
 		end
 
-		require('luasnip.loaders.from_vscode').lazy_load()
+		keymap.declare {
+			[{ 'i', 's' }] = {
+				['<C-k>'] = function()
+					if luasnip.expand_or_jumpable() then
+						luasnip.expand_or_jump()
+					end
+				end,
+
+				['<C-j>'] = function()
+					if luasnip.jumpable(-1) then
+						luasnip.jump(-1)
+					end
+				end,
+			},
+		}
+
+		require('luasnip.loaders.from_vscode').lazy_load { exclude = { 'javascriptreact', 'typescriptreact' } }
+
 		require('luasnip.loaders.from_lua').lazy_load()
 		require('luasnip.loaders.from_snipmate').lazy_load()
 
