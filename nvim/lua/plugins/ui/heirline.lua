@@ -645,7 +645,7 @@ return {
 
 			static = {
 				client_icons = {
-					biome = '',
+					biome = '',
 					csharp_ls = '󰌛',
 					cssls = '',
 					eslint = '󰱺',
