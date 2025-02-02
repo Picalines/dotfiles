@@ -49,14 +49,12 @@ return {
 		end
 
 		keymap.declare {
-			[{ 'n', 'v' }] = {
+			[{ 'n', 'x', 'o' }] = {
 				['s'] = { '<Plug>(leap-forward)', 'Leap forward' },
 				['S'] = { '<Plug>(leap-backward)', 'Leap backward' },
 			},
 
 			[{ 'x', 'o' }] = {
-				['s'] = { '<Plug>(leap-forward-to)', 'Leap inclusive' },
-				['S'] = { '<Plug>(leap-backward-to)', 'Leap inclusive' },
 				['an'] = { func.curry(select_node_clever, 'n'), 'Leap treesitter node' },
 			},
 		}
