@@ -20,4 +20,3 @@ vim.g.neovide_position_animation_length = 0.05
 vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
 
 vim.g.neovide_cursor_animate_in_insert_mode = false
-vim.g.neovide_cursor_smooth_blink = true
