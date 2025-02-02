@@ -1,12 +1,9 @@
+local lspconfig_util = require 'lspconfig.util'
+
 return {
 	settings = {
 		tailwindCSS = {
 			experimental = {
-				configFile = {
-					['src/styles/index.css'] = '**',
-					['src/app/index.css'] = '**',
-				},
-
 				classRegex = {
 					'tw`([^`]*)',
 					'clsx[`]([\\s\\S][^`]*)[`]',
@@ -18,4 +15,6 @@ return {
 			},
 		},
 	},
+
+	root_dir = lspconfig_util.root_pattern { 'pnpm-workspace.yaml', 'pnpm-lock.yaml' },
 }
