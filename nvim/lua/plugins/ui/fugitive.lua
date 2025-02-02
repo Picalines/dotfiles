@@ -2,7 +2,7 @@ local keymap = require 'util.keymap'
 
 keymap.declare {
 	[{ 'n', desc = 'Git: %s' }] = {
-		['<leader>v'] = { '<Cmd>Git<CR>', 'status' },
+		['<leader>v'] = { '<Cmd>vert botright Git<CR>', 'status' },
 		['<leader>V'] = { ':Git ', 'command' },
 	},
 }
@@ -35,10 +35,6 @@ return {
 					['<leader>n'] = { 'ggdG<Cmd>w | bd<CR>', 'cancel' },
 				},
 			}
-		end)
-
-		augroup:on('FileType', 'fugitive', function(event)
-			autocmd.buffer(event.buf):on('BufWinEnter', 'wincmd L', { once = true })
 		end)
 	end,
 }
