@@ -6,7 +6,7 @@ local goto_prev = vim.diagnostic.goto_prev
 local severity = vim.diagnostic.severity
 
 keymap.declare {
-	[{ 'n', 'v' }] = {
+	[{ 'n', 'x' }] = {
 		['<Space>'] = '<Nop>',
 
 		['<C-u>'] = '<C-u>zz',

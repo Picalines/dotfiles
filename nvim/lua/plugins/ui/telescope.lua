@@ -159,7 +159,7 @@ return {
 				['<leader>ft'] = { builtin.filetypes, 'Select filetypes' },
 			},
 
-			[{ 'v' }] = tbl.map(picker_maps, function(lhs, rhs)
+			[{ 'x' }] = tbl.map(picker_maps, function(lhs, rhs)
 				local v_rhs = array.copy(rhs)
 				v_rhs[1] = pick_visual(v_rhs[1])
 				return lhs, v_rhs
