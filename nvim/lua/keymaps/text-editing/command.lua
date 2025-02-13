@@ -13,9 +13,6 @@ keymap.declare {
 		['<leader>s'] = { ':s//g<Left><Left>', 'Substitute' },
 		['<leader>g'] = { ':g/', 'Global command' },
 
-		['<leader>o'] = { ':sort<CR>', 'Sort' },
-		['<leader>O'] = { ':sort!<CR>', 'Sort (reversed)' },
-
 		['p'] = '"_dP',
 	},
 
