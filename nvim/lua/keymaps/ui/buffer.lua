@@ -6,7 +6,7 @@ keymap.declare {
 		['<C-b>r'] = { '<Cmd>e<CR>', 'reload' },
 		['<C-b>c'] = { '<Cmd>exe "silent w" | bd<CR>', 'close' },
 		['<C-b>C'] = { '<Cmd>bd!<CR>', 'close without saving' },
-		['}'] = { '<Cmd>bn<CR>', 'next' },
-		['{'] = { '<Cmd>bp<CR>', 'previous' },
+		[']b'] = { '<Cmd>bn<CR>', 'next' },
+		['[b'] = { '<Cmd>bp<CR>', 'previous' },
 	},
 }
