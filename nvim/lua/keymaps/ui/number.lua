@@ -23,8 +23,15 @@ end)
 
 local augroup = autocmd.group 'number'
 
-augroup:on('WinEnter', '*', function()
-	update_relativenumber(vim.api.nvim_get_current_win())
+augroup:on({ 'WinEnter', 'VimEnter' }, '*', function(event)
+	local win = vim.api.nvim_get_current_win()
+	local buftype = vim.api.nvim_get_option_value('buftype', { buf = event.buf })
+
+	if buftype == '' then
+		vim.api.nvim_set_option_value('number', true, { win = win, scope = 'local' })
+	end
+
+	update_relativenumber(win)
 end)
 
 local function toggle_relativenumber()
