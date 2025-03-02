@@ -67,8 +67,10 @@ f = ['layout floating tiling', 'mode main']
 t = 'layout tiles horizontal vertical'
 a = 'layout accordion horizontal vertical'
 
-ctrl-h = 'move-workspace-to-monitor prev'
-ctrl-l = 'move-workspace-to-monitor next'
+ctrl-h = 'move-workspace-to-monitor left'
+ctrl-j = 'move-workspace-to-monitor down'
+ctrl-k = 'move-workspace-to-monitor up'
+ctrl-l = 'move-workspace-to-monitor right'
 
 z = ['move-node-to-workspace Z', 'workspace Z']
 x = ['move-node-to-workspace X', 'workspace X']
