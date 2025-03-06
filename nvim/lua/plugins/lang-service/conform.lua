@@ -6,10 +6,8 @@ return {
 	config = function()
 		local autocmd = require 'util.autocmd'
 		local conform = require 'conform'
-		local conform_util = require 'conform.util'
 		local keymap = require 'util.keymap'
 		local signal = require 'util.signal'
-		local tbl = require 'util.table'
 
 		vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 
@@ -35,11 +33,12 @@ return {
 		-- 	return conform.get_formatter_info(formatter, bufnr).available
 		-- end
 
-		local function only_first(formatters)
-			return tbl.override(formatters, { stop_after_first = true })
-		end
-
-		local biome_or_prettier = only_first { 'biome', 'prettierd', 'prettier' }
+		local web_formatters = {
+			'biome',
+			'prettierd',
+			'prettier',
+			stop_after_first = true,
+		}
 
 		conform.setup {
 			notify_on_error = true,
@@ -55,16 +54,16 @@ return {
 				lua = { 'stylua' },
 				python = { 'isort', 'black' },
 
-				javascript = biome_or_prettier,
-				javascriptreact = biome_or_prettier,
-				typescript = biome_or_prettier,
-				typescriptreact = biome_or_prettier,
-				json = biome_or_prettier,
-				html = biome_or_prettier,
-				css = biome_or_prettier,
-				svelte = biome_or_prettier,
-				vue = biome_or_prettier,
-				graphql = biome_or_prettier,
+				javascript = web_formatters,
+				javascriptreact = web_formatters,
+				typescript = web_formatters,
+				typescriptreact = web_formatters,
+				json = web_formatters,
+				html = web_formatters,
+				css = web_formatters,
+				svelte = web_formatters,
+				vue = web_formatters,
+				graphql = web_formatters,
 
 				go = { 'gofmt' },
 				cs = { 'csharpier' },
@@ -84,8 +83,18 @@ return {
 				},
 
 				biome = {
-					cwd = conform_util.root_file { 'biome.json', 'biome.jsonc' },
 					require_cwd = true,
+					stdin = true,
+					args = {
+						'check',
+						'--write',
+						'--formatter-enabled=true',
+						'--organize-imports-enabled=true',
+						'--graphql-formatter-enabled=true',
+						'--linter-enabled=false',
+						'--stdin-file-path',
+						'$FILENAME',
+					},
 				},
 			},
 		}
