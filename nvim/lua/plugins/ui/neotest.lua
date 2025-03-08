@@ -1,25 +1,34 @@
 return {
 	'nvim-neotest/neotest',
 
-	event = 'LspAttach',
-
 	dependencies = {
 		'nvim-neotest/nvim-nio',
 		'nvim-lua/plenary.nvim',
 		'antoinemadec/FixCursorHold.nvim',
 		'nvim-treesitter/nvim-treesitter',
-
-		'nvim-neotest/neotest-jest',
 	},
+
+	event = 'LspAttach',
 
 	config = function()
 		local autocmd = require 'util.autocmd'
 		local keymap = require 'util.keymap'
 		local neotest = require 'neotest'
 
+		keymap.declare {
+			[{ 'n', desc = 'Test: %s' }] = {
+				['<leader>ur'] = { "<Cmd>lua require('neotest').run.run()<CR>", 'run nearest' },
+				['<leader>uR'] = { "<Cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", 'run suite' },
+				['<leader>uc'] = { "<Cmd>lua require('neotest').run.stop()<CR>", 'cancel nearest' },
+				['<leader>uC'] = { "<Cmd>lua require('neotest').run.stop(vim.fn.expand('%'))<CR>", 'cancel suite' },
+				['<leader>ul'] = { "<Cmd>lua require('neotest').summary.open()<CR>", 'list' },
+				['<leader>uo'] = { "<Cmd>lua require('neotest').output_panel.open()<CR>", 'output' },
+			},
+		}
+
 		---@diagnostic disable-next-line: missing-fields
 		neotest.setup {
-			adapters = require 'settings.plugins.neotest.adapters',
+			adapters = { require('plugins.ui.neotest-jest').neotest_adapter() },
 
 			status = {
 				enabled = true,
@@ -64,30 +73,6 @@ return {
 				namespace = 'Directory',
 				file = 'Normal',
 				expand_marker = 'NeotestIndent',
-			},
-		}
-
-		local function with_file_path(fn)
-			return function(...)
-				return fn(vim.fn.expand '%', ...)
-			end
-		end
-
-		local function with_output_panel_clear(fn)
-			return function(...)
-				neotest.output_panel.clear()
-				fn(...)
-			end
-		end
-
-		keymap.declare {
-			[{ 'n', desc = 'Test: %s' }] = {
-				['<leader>ur'] = { with_output_panel_clear(neotest.run.run), 'run nearest' },
-				['<leader>uR'] = { with_output_panel_clear(with_file_path(neotest.run.run)), 'run suite' },
-				['<leader>uc'] = { neotest.run.stop, 'cancel nearest' },
-				['<leader>uC'] = { with_file_path(neotest.run.stop), 'cancel suite' },
-				['<leader>ul'] = { neotest.summary.toggle, 'list' },
-				['<leader>uo'] = { neotest.output_panel.toggle, 'output' },
 			},
 		}
 
