@@ -28,7 +28,10 @@ return {
 
 		---@diagnostic disable-next-line: missing-fields
 		neotest.setup {
-			adapters = { require('plugins.ui.neotest-jest').neotest_adapter() },
+			adapters = {
+				require('plugins.ui.neotest-jest').neotest_adapter(),
+				require('plugins.ui.neotest-vitest').neotest_adapter(),
+			},
 
 			status = {
 				enabled = true,
