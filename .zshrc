@@ -10,6 +10,24 @@ then
     eval "$(starship init zsh)"
 fi
 
+# fzf
+if command -v fzf &> /dev/null
+then
+  source <(fzf --zsh)
+fi
+
+# cargo
+if [ -f "$HOME/.cargo/env" ];
+then
+  source "$HOME/.cargo/env"
+fi
+
+# arc
+if command -v arc &> /dev/null
+then
+  export ARC_TOKEN="$(arc token show)"
+fi
+
 # auto .nvmrc
 
 autoload -U add-zsh-hook
@@ -34,16 +52,4 @@ load-nvmrc() {
 
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
-
-# cargo
-if [ -f "$HOME/.cargo/env" ];
-then
-  . "$HOME/.cargo/env"
-fi
-
-# arc
-if command -v arc &> /dev/null
-then
-  export ARC_TOKEN="$(arc token show)"
-fi
 
