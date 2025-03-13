@@ -6,9 +6,8 @@ add_newline = false
 palette = 'custom'
 
 [palettes.custom]
-os = '#bright-white'
 username = '#47c158'
-dir = '#bright-white'
+dir = 'bright-blue'
 duration = '#cbcb41'
 status = '#b487f4'
 
