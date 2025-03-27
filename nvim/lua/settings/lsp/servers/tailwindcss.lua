@@ -3,16 +3,8 @@ local lspconfig_util = require 'lspconfig.util'
 return {
 	settings = {
 		tailwindCSS = {
-			experimental = {
-				classRegex = {
-					'tw`([^`]*)',
-					'clsx[`]([\\s\\S][^`]*)[`]',
-					{ 'clsx\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-					{ 'cva\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-					{ 'cn\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-					{ 'withClassName\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-				},
-			},
+			classFunctions = { 'tw', 'clsx', 'cva', 'cn', 'withClassName' },
+			classAttributes = { 'class', 'className', 'ngClass', 'class:list' },
 		},
 	},
 
