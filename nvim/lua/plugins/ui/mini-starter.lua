@@ -13,11 +13,14 @@ return {
 		---@field [2] string action
 
 		---@param name string
-		---@param items StarterItem[]
+		---@param items (StarterItem | nil)[]
 		local function section(name, items)
-			return array.map(items, function(item)
+			return array.flat_map(items, function(item)
+				if not item then
+					return {}
+				end
 				local icon, item_name, action = item[1], item[2], item[3]
-				return { section = name, name = item_name, action = action, __icon = icon }
+				return { { section = name, name = item_name, action = action, __icon = icon } }
 			end)
 		end
 
@@ -37,7 +40,7 @@ return {
 				section('Editor', {
 					{ '󱇨', 'New Buffer', 'enew' },
 					{ '󰸌', 'Theme', 'PickColorScheme' },
-					{ '', 'Font', 'PickGuiFont' },
+					app.client() == 'neovide' and { '', 'Font', 'PickGuiFont' } or nil,
 					{ '', 'Quit', 'wa | qa!' },
 				}),
 				section('Manage', {
