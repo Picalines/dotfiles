@@ -37,13 +37,13 @@ return {
 		},
 
 		lsp = {
-			hover = {
-				silent = true,
-			},
-
 			override = {
 				['vim.lsp.util.stylize_markdown'] = true,
 				['cmp.entry.get_documentation'] = true,
+			},
+
+			hover = {
+				silent = true,
 			},
 
 			progress = {
@@ -153,6 +153,24 @@ return {
 				},
 				win_options = {
 					winhighlight = { Normal = 'Normal', FloatBorder = 'DiagnosticInfo' },
+				},
+			},
+
+			hover = {
+				relative = 'cursor',
+				position = { row = 2 },
+				border = {
+					style = 'rounded',
+					padding = { 0, 1 },
+				},
+			},
+
+			signature = {
+				relative = 'cursor',
+				position = { row = 2 },
+				border = {
+					style = 'rounded',
+					padding = { 0, 1 },
 				},
 			},
 		},

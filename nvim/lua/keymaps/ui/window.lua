@@ -24,12 +24,6 @@ local function trigger_dismiss()
 	vim.api.nvim_exec_autocmds('User', { pattern = 'Dismiss' })
 end
 
-local function focus_diagnostic_popup()
-	if vim.diagnostic.open_float() then
-		vim.diagnostic.open_float()
-	end
-end
-
 keymap.declare {
 	[{ 'n', silent = true }] = {
 		['<Esc>'] = { trigger_dismiss, 'Dismiss' },
@@ -46,8 +40,6 @@ keymap.declare {
 
 		['+'] = { func.curry(resize_smart, 5), 'Increase window size' },
 		['_'] = { func.curry(resize_smart, -5), 'Decrease window size' },
-
-		['<C-w>d'] = { focus_diagnostic_popup, 'Diagnostics popup' },
 	},
 	[{ 'i' }] = {
 		['<C-d>'] = { trigger_dismiss, 'Dissmiss' },
