@@ -6,11 +6,14 @@ return {
 	priority = 1000,
 
 	opts = {
-		transparent_background = false,
+		theme = {
+			variant = 'winter',
+		},
 
-		variant = 'hard',
-
-		override_terminal = true,
+		editor = {
+			transparent_background = false,
+			override_terminal = true,
+		},
 
 		style = {
 			tabline = { reverse = true, color = 'green' },
@@ -20,7 +23,5 @@ return {
 			comment = { italic = true },
 			sign = {},
 		},
-
-		overrides = {},
 	},
 }
