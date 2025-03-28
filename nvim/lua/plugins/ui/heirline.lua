@@ -110,7 +110,7 @@ return {
 
 		local BufferName = {
 			init = function(self)
-				self.display_name = self.filename == '' and string.format('[%d]', self.bufnr) or vim.fn.fnamemodify(self.filename, ':t')
+				self.display_name = self.filename == '' and string.format('[%d]', self.bufnr) or vim.fn.fnamemodify(self.filename, ':t:r')
 			end,
 
 			hl = function(self)
@@ -131,11 +131,7 @@ return {
 					return { bold = self.is_active }
 				end,
 
-				{
-					provider = function(self)
-						return self.is_active and self.display_name or vim.fn.fnamemodify(self.display_name, ':r:r:r')
-					end,
-				},
+				provider = func.field 'display_name',
 			},
 		}
 
