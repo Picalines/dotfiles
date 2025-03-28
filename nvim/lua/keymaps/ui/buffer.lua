@@ -13,21 +13,24 @@ end
 
 keymap.declare {
 	[{ 'n', silent = true, desc = 'Buffer: %s' }] = {
-		['<C-b>n'] = { '<Cmd>enew<CR>', 'new' },
-		['<C-b>r'] = { '<Cmd>e<CR>', 'reload' },
-		[']b'] = { '<Cmd>bn<CR>', 'next' },
-		['[b'] = { '<Cmd>bp<CR>', 'previous' },
+		['L'] = { '<Cmd>bn<CR>', 'next' },
+		['H'] = { '<Cmd>bp<CR>', 'previous' },
+		['<leader>b]'] = { '<Cmd>bn<CR>', 'next' },
+		['<leader>b['] = { '<Cmd>bp<CR>', 'previous' },
 
-		['<C-b>c'] = {
-			desc = 'close',
+		['<leader>bn'] = { '<Cmd>enew<CR>', 'new' },
+		['<leader>br'] = { '<Cmd>e<CR>', 'reload' },
+
+		['<leader>bd'] = {
+			desc = 'delete',
 			expr = true,
 			function()
 				return add_safe_empty_buffer() .. '<Cmd>silent w!<CR><Cmd>bnext | bd #<CR>'
 			end,
 		},
 
-		['<C-b>C'] = {
-			desc = 'close without saving',
+		['<leader>bD'] = {
+			desc = 'delete without saving',
 			expr = true,
 			function()
 				return add_safe_empty_buffer() .. '<Cmd>bprev | bd! #<CR>'
