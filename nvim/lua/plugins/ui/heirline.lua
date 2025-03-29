@@ -175,11 +175,6 @@ return {
 			})
 		end
 
-		augroup:on('BufWritePost', '*', function(event)
-			vim.b[event.buf].was_written = true
-			vim.cmd.redrawtabline()
-		end)
-
 		local Buffer = {
 			init = function(self)
 				self.filename = vim.api.nvim_buf_get_name(self.bufnr)
@@ -195,14 +190,7 @@ return {
 
 			AppendAll(Space, 'right') {
 				BufferIcon,
-				{
-					BufferName,
-
-					hl = function(self)
-						local was_written = vim.b[self.bufnr].was_written
-						return { italic = not was_written, underline = not was_written }
-					end,
-				},
+				BufferName,
 				ModifiedFlag 'tab',
 				ReadonlyFlag 'tab',
 			},
