@@ -2,8 +2,11 @@ local keymap = require 'util.keymap'
 
 keymap.declare {
 	[{ 'n', desc = 'Git: %s' }] = {
-		['<leader>v'] = { '<Cmd>vert botright Git<CR>', 'status' },
-		['<leader>V'] = { ':Git ', 'command' },
+		['<leader>gg'] = { '<Cmd>vert botright Git<CR>', 'status' },
+		['<leader>G'] = { ':Git ', 'command' },
+
+		['<leader>gS'] = { '<Cmd>Git add %<CR>', 'stage file' },
+		['<leader>gU'] = { '<Cmd>Git restore --staged %<CR>', 'unstage file' },
 	},
 }
 
@@ -22,7 +25,7 @@ return {
 
 			keymap.declare {
 				[{ 'n', buffer = event.buf, desc = 'Git: %s' }] = {
-					['<leader>v'] = { '<Cmd>wincmd c | wincmd p<CR>', 'close' },
+					['<leader>gg'] = { '<Cmd>wincmd c | wincmd p<CR>', 'close' },
 					['q'] = { '<Cmd>wincmd c | wincmd p<CR>', 'close' },
 				},
 			}
@@ -31,8 +34,8 @@ return {
 		augroup:on('FileType', { 'gitcommit', 'gitrebase' }, function(event)
 			keymap.declare {
 				[{ 'n', buffer = event.buf, nowait = true, desc = 'Git: %s' }] = {
-					['<leader>y'] = { '<Cmd>w | bd<CR>', 'accept' },
-					['<leader>n'] = { 'ggdG<Cmd>w | bd<CR>', 'cancel' },
+					['<leader>w'] = { '<Cmd>w | bd<CR>', 'accept' },
+					['q'] = { 'ggdG<Cmd>w | bd<CR>', 'cancel' },
 				},
 			}
 		end)
