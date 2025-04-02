@@ -12,8 +12,8 @@ local function toggle_spell()
 end
 
 keymap.declare {
-	[{ 'n' }] = {
-		['<leader>is'] = { toggle_spell, 'Toggle spell' },
+	[{ 'n', desc = 'Spell: %s' }] = {
+		['<leader>us'] = { toggle_spell, 'toggle' },
 	},
 }
 

@@ -16,7 +16,7 @@ return {
 		local neotest = require 'neotest'
 
 		keymap.declare {
-			[{ 'n', desc = 'Test: %s' }] = {
+			[{ 'n', desc = 'Unit: %s' }] = {
 				['<leader>ur'] = { "<Cmd>lua require('neotest').run.run()<CR>", 'run nearest' },
 				['<leader>uR'] = { "<Cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", 'run suite' },
 				['<leader>uc'] = { "<Cmd>lua require('neotest').run.stop()<CR>", 'cancel nearest' },

@@ -41,8 +41,8 @@ return {
 		end
 
 		keymap.declare {
-			[{ 'n' }] = {
-				['<leader>it'] = { toggle, 'Toggle hardtime' },
+			[{ 'n', desc = 'Hardtime: %s' }] = {
+				['<leader>uh'] = { toggle, 'toggle' },
 			},
 		}
 	end,
