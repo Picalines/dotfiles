@@ -87,7 +87,10 @@ return {
 				zindex = 50,
 
 				position = { row = -2, col = -1 },
-				border = { style = 'rounded' },
+				border = {
+					style = 'rounded',
+					padding = { 0, 1 },
+				},
 				focusable = false,
 				enter = false,
 
