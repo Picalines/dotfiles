@@ -9,7 +9,6 @@ return {
 		'saadparwaiz1/cmp_luasnip',
 
 		'onsails/lspkind.nvim',
-		'hrsh7th/cmp-nvim-lsp-signature-help',
 
 		'L3MON4D3/LuaSnip',
 	},
@@ -59,7 +58,6 @@ return {
 
 		cmp.setup {
 			sources = {
-				{ name = 'nvim_lsp_signature_help' },
 				{ name = 'nvim_lsp' },
 				{ name = 'luasnip' },
 				{ name = 'lazydev', group_index = 0 },
