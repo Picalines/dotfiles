@@ -4,7 +4,7 @@ local autocmd = require 'util.autocmd'
 local hl = require 'util.highlight'
 local signal = require 'util.signal'
 
-local function patch_colorscheme()
+local function colorscheme_init()
 	local attrs = { 'bg', 'reverse' }
 	hl.clear('TabLine', attrs)
 	hl.clear('StatusLine', attrs)
@@ -16,9 +16,12 @@ local function patch_colorscheme()
 	hl.clear('DiffText', attrs)
 	hl.clear('DiffChange', attrs)
 	hl.clear('DiffDelete', attrs)
+	hl.clear('SignColumn', attrs)
 end
 
-vim.api.nvim_create_user_command('PatchColorScheme', patch_colorscheme, {})
+local augroup = autocmd.group 'settings.ui.colorscheme'
+
+augroup:on_user('ColorSchemeInit', colorscheme_init)
 
 local colorscheme = signal.new 'default'
 local background = signal.new 'dark'
@@ -35,13 +38,11 @@ signal.watch(function()
 	vim.g.background = background()
 end)
 
-local function on_colorscheme()
+local function persist_colorscheme()
 	colorscheme(vim.g.colors_name)
 	background(vim.o.background)
 end
 
-local augroup = autocmd.group 'colorscheme'
+augroup:on('ColorScheme', '*', persist_colorscheme)
 
-augroup:on('ColorScheme', '*', on_colorscheme)
-
-on_colorscheme()
+persist_colorscheme()

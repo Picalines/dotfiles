@@ -20,7 +20,8 @@ local autocmd = require 'util.autocmd'
 pcall(persist.load)
 
 local augroup = autocmd.group 'init'
-augroup:on('ColorScheme', '*', 'PatchColorScheme')
+augroup:on('ColorScheme', '*', 'doautocmd User ColorSchemeInit')
+augroup:on('ColorScheme', '*', 'doautocmd User ColorSchemePatch')
 
 pcall(function()
 	vim.cmd.highlight 'clear'
