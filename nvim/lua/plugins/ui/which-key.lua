@@ -3,7 +3,7 @@ return {
 
 	event = 'VeryLazy',
 
-	opts = {},
+	opts = { preset = 'modern' },
 
 	config = function(_, opts)
 		local keymap = require 'util.keymap'
