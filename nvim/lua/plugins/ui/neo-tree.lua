@@ -1,3 +1,4 @@
+local autocmd = require 'util.autocmd'
 local keymap = require 'util.keymap'
 
 keymap.declare {
@@ -5,6 +6,13 @@ keymap.declare {
 		['<leader>e'] = { '<Cmd>Neotree focus filesystem<CR>', 'File explorer' },
 	},
 }
+
+local augroup = autocmd.group 'neo-tree'
+
+augroup:on_user('ColorSchemePatch', function()
+	local hl = require 'util.highlight'
+	hl.link('NeoTreeWinSeparator', 'WinSeparator')
+end)
 
 return {
 	'nvim-neo-tree/neo-tree.nvim',
@@ -20,28 +28,8 @@ return {
 
 	config = function()
 		local app = require 'util.app'
-		local autocmd = require 'util.autocmd'
 		local func = require 'util.func'
 		local nt_fs = require 'neo-tree.sources.filesystem.commands'
-		local signal = require 'util.signal'
-		local str = require 'util.string'
-		local win = require 'util.window'
-
-		local sidebar_width = signal.new(40)
-		signal.persist(sidebar_width, str.fmt(app.client(), '.plugin.neo-tree.sidebar_width'))
-
-		local augroup = autocmd.group 'neo-tree'
-
-		augroup:on_winresized(function(event)
-			if #vim.v.event.windows <= 1 then
-				return
-			end
-
-			local filetype = vim.api.nvim_get_option_value('filetype', { buf = event.buf })
-			if filetype == 'neo-tree' and win.layout_type(event.win) == 'row' then
-				sidebar_width(math.min(vim.api.nvim_win_get_width(event.win), vim.go.columns - 20))
-			end
-		end)
 
 		require('neo-tree').setup {
 			sources = { 'filesystem' },
@@ -79,6 +67,7 @@ return {
 					folder_closed = '',
 					folder_open = '',
 					folder_empty = '',
+					folder_empty_open = '',
 					default = '',
 				},
 				modified = {
@@ -110,23 +99,19 @@ return {
 					enabled = false,
 					required_width = 122,
 				},
-				last_modified = {
-					enabled = false,
-					required_width = 88,
-				},
-				created = {
-					enabled = false,
-					required_width = 110,
-				},
-				symlink_target = {
-					enabled = false,
-				},
+				---@diagnostic disable-next-line: missing-fields
+				last_modified = { enabled = false },
+				---@diagnostic disable-next-line: missing-fields
+				created = { enabled = false },
+				---@diagnostic disable-next-line: missing-fields
+				symlink_target = { enabled = false },
 			},
 
 			window = {
 				position = 'left',
 
-				width = func.curry_only(sidebar_width),
+				---@diagnostic disable-next-line: assign-type-mismatch
+				width = '25%',
 
 				mapping_options = {
 					noremap = true,
