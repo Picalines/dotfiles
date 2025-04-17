@@ -6,46 +6,30 @@ return {
 	dependencies = {
 		'williamboman/mason.nvim',
 		'williamboman/mason-lspconfig.nvim',
+
+		'saghen/blink.cmp',
 	},
 
 	config = function()
 		local func = require 'util.func'
-		local tbl = require 'util.table'
 
 		local lspconfig = require 'lspconfig'
-		local mason_lspconfig = require 'mason-lspconfig'
 
-		mason_lspconfig.setup {}
+		require('mason-lspconfig').setup {
+			nsure_installed = {},
+			automatic_installation = false,
 
-		local default_capabilities = vim.lsp.protocol.make_client_capabilities()
-		default_capabilities = require('cmp_nvim_lsp').default_capabilities(default_capabilities)
+			handlers = {
+				function(server_name)
+					local ok, server_config = pcall(require, 'settings.lsp.servers.' .. server_name)
+					server_config = ok and server_config or {}
 
-		local function setup_server(server_name)
-			local server_config_ok, server_config = pcall(require, 'settings.lsp.servers.' .. server_name)
+					server_config.on_attach = func.pcalled(server_config.on_attach or func.noop)
+					server_config.capabilities = require('blink.cmp').get_lsp_capabilities()
 
-			if not server_config_ok then
-				server_config = {}
-			end
-
-			local custom_on_attach = server_config.on_attach or func.noop
-
-			local function on_attach(client, bufnr)
-				pcall(custom_on_attach, client, bufnr)
-			end
-
-			local default_server_config = {
-				capabilities = tbl.override_deep(default_capabilities, {
-					workspace = {
-						didChangeWatchedFiles = {
-							dynamicRegistration = true,
-						},
-					},
-				}),
-			}
-
-			lspconfig[server_name].setup(tbl.override_deep(default_server_config, server_config, { on_attach = on_attach }))
-		end
-
-		mason_lspconfig.setup_handlers { setup_server }
+					lspconfig[server_name].setup(server_config)
+				end,
+			},
+		}
 	end,
 }

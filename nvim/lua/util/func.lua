@@ -31,6 +31,15 @@ function M.default_opts(opts_arg, defaults)
 	return tbl.override_deep(defaults, opts_arg)
 end
 
+---@generic Args, R
+---@param func fun(...: Args): R
+---@return fun(...: Args): R
+function M.pcalled(func)
+	return function(...)
+		return pcall(func, ...)
+	end
+end
+
 ---(lua is not typescript, sorry)
 ---@generic Args, R
 ---@param func fun(...: Args): R
