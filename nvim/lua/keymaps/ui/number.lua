@@ -39,7 +39,7 @@ local function toggle_relativenumber()
 end
 
 keymap.declare {
-	[{ 'n' }] = {
-		['<leader><leader>r'] = { toggle_relativenumber, 'Toggle relativenumber' },
+	[{ 'n', desc = 'UI: %s' }] = {
+		['<leader>un'] = { toggle_relativenumber, 'Toggle relativenumber' },
 	},
 }

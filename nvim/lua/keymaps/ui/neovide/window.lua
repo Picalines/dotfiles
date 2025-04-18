@@ -13,7 +13,7 @@ local function toggle_opacity()
 end
 
 keymap.declare {
-	[{ 'n', nowait = true }] = {
-		['<leader><leader>t'] = { toggle_opacity, 'Neovide: Toggle opacity' },
+	[{ 'n', nowait = true, desc = 'UI: %s' }] = {
+		['<leader>ug'] = { toggle_opacity, 'Neovide: Toggle opacity' },
 	},
 }

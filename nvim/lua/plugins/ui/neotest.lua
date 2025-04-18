@@ -19,8 +19,7 @@ return {
 			[{ 'n', desc = 'Unit: %s' }] = {
 				['<leader>ur'] = { "<Cmd>lua require('neotest').run.run()<CR>", 'run nearest' },
 				['<leader>uR'] = { "<Cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", 'run suite' },
-				['<leader>uc'] = { "<Cmd>lua require('neotest').run.stop()<CR>", 'cancel nearest' },
-				['<leader>uC'] = { "<Cmd>lua require('neotest').run.stop(vim.fn.expand('%'))<CR>", 'cancel suite' },
+				['<leader>uc'] = { "<Cmd>lua require('neotest').run.stop(vim.fn.expand('%'))<CR>", 'cancel suite' },
 				['<leader>ul'] = { "<Cmd>lua require('neotest').summary.open()<CR>", 'list' },
 				['<leader>uo'] = { "<Cmd>lua require('neotest').output_panel.open()<CR>", 'output' },
 			},

@@ -14,8 +14,8 @@ return {
 		require('noice').setup(opts)
 
 		keymap.declare {
-			[{ 'n' }] = {
-				['<leader><leader>m'] = { '<Cmd>Noice all<CR>', 'Open messages' },
+			[{ 'n', desc = 'UI: %s' }] = {
+				['<leader>um'] = { '<Cmd>Noice all<CR>', 'Open messages' },
 			},
 		}
 

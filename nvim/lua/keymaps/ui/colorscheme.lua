@@ -50,13 +50,8 @@ end
 
 vim.api.nvim_create_user_command('PickColorScheme', open_colorscheme_picker, {})
 
-local function toggle_background()
-	vim.o.background = vim.o.background == 'dark' and 'light' or 'dark'
-end
-
 keymap.declare {
-	[{ 'n', silent = true }] = {
-		['<leader><leader>c'] = { '<Cmd>PickColorScheme<CR>', 'Select color scheme' },
-		['<leader><leader>b'] = { toggle_background, 'Toggle background' },
+	[{ 'n', silent = true, desc = 'UI: %s' }] = {
+		['<leader>uC'] = { '<Cmd>PickColorScheme<CR>', 'colorscheme' },
 	},
 }
