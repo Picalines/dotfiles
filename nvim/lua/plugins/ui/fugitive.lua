@@ -22,6 +22,8 @@ return {
 
 		augroup:on('BufEnter', 'fugitive://*', function(event)
 			vim.api.nvim_set_option_value('buflisted', false, { buf = event.buf })
+			vim.api.nvim_set_option_value('number', false, { win = vim.fn.bufwinid(event.buf) })
+			vim.api.nvim_set_option_value('relativenumber', false, { win = vim.fn.bufwinid(event.buf) })
 
 			keymap.declare {
 				[{ 'n', buffer = event.buf, desc = 'Git: %s' }] = {
