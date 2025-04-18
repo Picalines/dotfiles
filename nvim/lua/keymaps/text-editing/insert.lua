@@ -2,8 +2,6 @@ local keymap = require 'util.keymap'
 
 keymap.declare {
 	[{ 'i' }] = {
-		['<C-j>'] = '<Down>',
-		['<C-k>'] = '<Up>',
 		['<C-l>'] = '<Right>',
 		['<C-h>'] = '<Left>',
 
