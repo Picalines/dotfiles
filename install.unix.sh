@@ -3,7 +3,10 @@ ln -snf $PWD/.zshrc ~/.zshrc
 
 mkdir -p ~/.config
 
-ln -snf $PWD/nvim ~/.config/nvim
+if command -v nvim &> /dev/null
+then
+    ln -snf $PWD/nvim ~/.config/nvim
+fi
 
 if command -v aerospace &> /dev/null
 then
