@@ -6,17 +6,19 @@ local signal = require 'util.signal'
 
 local function colorscheme_init()
 	local attrs = { 'bg', 'reverse' }
-	hl.clear('TabLine', attrs)
-	hl.clear('StatusLine', attrs)
-	hl.clear('WinSeparator', attrs)
-	hl.clear('NormalFloat', attrs)
-	hl.clear('NonText', attrs)
-	hl.clear('EndOfBuffer', attrs)
 	hl.clear('DiffAdd', attrs)
-	hl.clear('DiffText', attrs)
 	hl.clear('DiffChange', attrs)
 	hl.clear('DiffDelete', attrs)
+	hl.clear('DiffText', attrs)
+	hl.clear('EndOfBuffer', attrs)
+	hl.clear('NonText', attrs)
+	hl.clear('NormalFloat', attrs)
 	hl.clear('SignColumn', attrs)
+	hl.clear('StatusLine', attrs)
+	hl.clear('StatusLineNC', attrs)
+	hl.clear('TabLine', attrs)
+	hl.clear('TabLineFill', attrs)
+	hl.clear('WinSeparator', attrs)
 end
 
 local augroup = autocmd.group 'settings.ui.colorscheme'
