@@ -33,8 +33,13 @@ return {
 			},
 
 			custom_textobjects = {
-				a = spec_treesitter { a = '@parameter.outer', i = '@parameter.inner' },
+				a = spec_treesitter {
+					a = { '@parameter.outer', '@attribute.outer' },
+					i = { '@parameter.inner', '@attribute.inner' },
+				},
+
 				f = spec_treesitter { a = '@call.outer', i = '@call.inner' },
+
 				F = spec_treesitter { a = '@function.outer', i = '@function.inner' },
 			},
 		}
