@@ -378,7 +378,6 @@ return {
 					t = 'terminal',
 				},
 				mode_hls = {
-					n = 'Normal',
 					i = '@diff.plus',
 					v = '@comment',
 					V = '@comment',
