@@ -25,7 +25,7 @@ return {
 					server_config = ok and server_config or {}
 
 					server_config.on_attach = func.pcalled(server_config.on_attach or func.noop)
-					server_config.capabilities = require('blink.cmp').get_lsp_capabilities()
+					server_config.capabilities = require('blink.cmp').get_lsp_capabilities(server_config.capabilities, true)
 
 					lspconfig[server_name].setup(server_config)
 				end,
