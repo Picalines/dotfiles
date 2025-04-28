@@ -16,7 +16,7 @@ return {
 		local lspconfig = require 'lspconfig'
 
 		require('mason-lspconfig').setup {
-			nsure_installed = {},
+			ensure_installed = {},
 			automatic_installation = false,
 
 			handlers = {
