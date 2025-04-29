@@ -98,8 +98,8 @@ return {
 						['q'] = { close_terminal_map, 'Close terminal' },
 
 						['o'] = { new_terminal_tab, 'New terminal' },
-						['}'] = { terminal_map.cycle_next, 'Cycle next terminal' },
-						['{'] = { terminal_map.cycle_prev, 'Cycle prev terminal' },
+						['L'] = { terminal_map.cycle_next, 'Cycle next terminal' },
+						['H'] = { terminal_map.cycle_prev, 'Cycle prev terminal' },
 						-- ['<C-c>'] = { kill_current_terminal, 'Kill terminal process' },
 
 						['<C-o>'] = { '<C-w>p', 'Jump back' },
@@ -107,11 +107,6 @@ return {
 
 						['gf'] = { '<Cmd>norm! gf<CR>mF' .. close_terminal_map .. '`F' },
 						['gF'] = { '<Cmd>norm! gF<CR>mF' .. close_terminal_map .. '`F' },
-					},
-
-					[{ 't' }] = {
-						['<C-}>'] = { terminal_map.cycle_next, 'Cycle next terminal' },
-						['<C-{>'] = { terminal_map.cycle_prev, 'Cycle prev terminal' },
 					},
 				},
 			}
