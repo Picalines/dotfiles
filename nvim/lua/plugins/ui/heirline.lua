@@ -280,7 +280,8 @@ return {
 
 			{
 				provider = function(self)
-					return str.fmt(' %', self.tabnr, 'T', vim.t[self.tabpage].tab_label or str.fmt('[', self.tabnr, ']'), '%T')
+					local title = vim.fn.fnamemodify(vim.fn.getcwd(-1, self.tabnr), ':t')
+					return str.fmt(' %', self.tabnr, 'T', title, '%T')
 				end,
 
 				hl = function(self)
@@ -299,20 +300,11 @@ return {
 			},
 		}
 
-		local SidebarOffset = {
-			condition = function(self)
-				local win = vim.api.nvim_tabpage_list_wins(0)[1]
-				local bufnr = vim.api.nvim_win_get_buf(win)
-				self.winid = win
-
-				return has_normal_bufs() and vim.bo[bufnr].filetype == 'neo-tree'
-			end,
-
+		local Cwd = {
 			init = function(self)
-				self.is_focused = vim.api.nvim_get_current_win() == self.winid
-
 				local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
 				self.title = string.format(' %s', cwd)
+				self.is_focused = vim.api.nvim_get_option_value('filetype', { buf = 0 }) == 'neo-tree'
 			end,
 
 			hl = function(self)
@@ -320,22 +312,11 @@ return {
 			end,
 
 			{
-				provider = function(self)
-					local width = math.max(0, vim.api.nvim_win_get_width(self.winid))
-					return str.pad_center(self.title, width, {
-						pad_char = ' ',
-						align_odd = 'left',
-					})
-				end,
-
+				provider = func.field 'title',
 				hl = function(self)
 					return self.is_focused and 'Directory' or '@comment'
 				end,
 			},
-
-			Text('│%<', { hl = 'WinSeparator' }),
-
-			Space,
 		}
 
 		local ViMode = {
@@ -728,7 +709,8 @@ return {
 			---@diagnostic disable-next-line: missing-fields
 			tabline = {
 				hl = 'TabLine',
-				SidebarOffset,
+				Cwd,
+				Space,
 				BufferLine,
 				Align,
 				Append(Space, 'left') { TabPageList },
