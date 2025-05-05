@@ -1,5 +1,4 @@
-format = "$directory$cmd_duration$status [❯](blue) "
-right_format = "[](dimmed yellow) $time"
+format = "[](dimmed yellow) $directory$cmd_duration$status [❯](blue) "
 
 add_newline = false
 
@@ -43,10 +42,3 @@ disabled = false
 "node_modules" = ''
 ".github" = ''
 ".git" = ''
-
-[time]
-disabled = false
-format = "[$time]($style)"
-time_format = "%R"
-utc_time_offset = "local"
-style = "italic dimmed yellow"
