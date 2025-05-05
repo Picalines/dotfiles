@@ -4,21 +4,6 @@ return {
 	priority = 1000,
 
 	opts = {
-		override = {
-			['stories.tsx'] = {
-				icon = '',
-				color = '#eb5685',
-				cterm_color = '206',
-				name = 'Storybook',
-			},
-			['stories.jsx'] = {
-				icon = '',
-				color = '#eb5685',
-				cterm_color = '206',
-				name = 'Storybook',
-			},
-		},
-
 		override_by_extension = {
 			['html'] = {
 				icon = '',
