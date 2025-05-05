@@ -1,6 +1,6 @@
 local keymap = require 'util.keymap'
 
-keymap.declare {
+keymap {
 	[{ 'n' }] = {
 		['<leader>t'] = { '<Cmd>OpenTerminal<CR>', 'Toggle terminal' },
 	},
@@ -91,7 +91,7 @@ return {
 		local close_terminal_map = '<C-w>c<C-w>p'
 
 		augroup:on('TermOpen', '*', function(event)
-			keymap.declare {
+			keymap {
 				[{ buffer = event.buf, nowait = true }] = {
 					[{ 'n' }] = {
 						['<leader>t'] = { close_terminal_map, 'Close terminal' },

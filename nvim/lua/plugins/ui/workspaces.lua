@@ -1,6 +1,6 @@
 local keymap = require 'util.keymap'
 
-keymap.declare {
+keymap {
 	[{ 'n', desc = 'Space: %s' }] = {
 		['<leader>sw'] = { '<Cmd>tabnew | WorkspacesOpen<Cr>', 'new in workspace' },
 	},

@@ -152,7 +152,7 @@ return {
 			['<leader>fS'] = { builtin.lsp_dynamic_workspace_symbols, 'Find workspace symbols' },
 		}
 
-		keymap.declare {
+		keymap {
 			[{ 'n' }] = picker_maps,
 
 			[{ 'n' }] = {

@@ -4,7 +4,7 @@ local function vscode_call(action)
 	return string.format('<Cmd>lua require("vscode-neovim").call("%s")<CR>', action)
 end
 
-keymap.declare {
+keymap {
 	[{ 'n' }] = {
 		['<C-j>'] = vscode_call 'workbench.action.navigateDown',
 		['<C-k>'] = vscode_call 'workbench.action.navigateUp',

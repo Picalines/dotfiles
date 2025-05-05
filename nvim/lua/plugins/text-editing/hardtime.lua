@@ -40,7 +40,7 @@ return {
 			print('Hardtime: ' .. (enabled() and 'on' or 'off'))
 		end
 
-		keymap.declare {
+		keymap {
 			[{ 'n', desc = 'Hardtime: %s' }] = {
 				['<leader>uh'] = { toggle, 'toggle' },
 			},

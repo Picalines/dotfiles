@@ -15,7 +15,7 @@ end
 vim.api.nvim_create_user_command('ZoomIn', func.curry(zoom, 0.1), {})
 vim.api.nvim_create_user_command('ZoomOut', func.curry(zoom, -0.1), {})
 
-keymap.declare {
+keymap {
 	[{ 'n', nowait = true }] = {
 		['<D-=>'] = { '<Cmd>ZoomIn<CR>', 'Neovide: Increase font size' },
 		['<D-->'] = { '<Cmd>ZoomOut<CR>', 'Neovide: Decrease font size' },

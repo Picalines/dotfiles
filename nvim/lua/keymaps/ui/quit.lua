@@ -12,7 +12,7 @@ local function quit()
 	vim.cmd 'qa!'
 end
 
-keymap.declare {
+keymap {
 	[{ 'n' }] = {
 		['<leader><leader>q'] = { quit, 'Write all and quit' },
 	},

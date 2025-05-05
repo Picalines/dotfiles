@@ -15,7 +15,7 @@ return {
 		local keymap = require 'util.keymap'
 		local neotest = require 'neotest'
 
-		keymap.declare {
+		keymap {
 			[{ 'n', desc = 'Unit: %s' }] = {
 				['<leader>ur'] = { "<Cmd>lua require('neotest').run.run()<CR>", 'run nearest' },
 				['<leader>uR'] = { "<Cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", 'run suite' },
@@ -81,7 +81,7 @@ return {
 		local augroup = autocmd.group 'neotest'
 
 		augroup:on('FileType', 'neotest-summary', function(event)
-			keymap.declare {
+			keymap {
 				[{ 'n', buffer = event.buf }] = {
 					['q'] = { neotest.summary.close, 'Close panel' },
 					['<leader>ul'] = { neotest.summary.close, 'Close panel' },
@@ -90,7 +90,7 @@ return {
 		end)
 
 		augroup:on('FileType', 'neotest-output-panel', function(event)
-			keymap.declare {
+			keymap {
 				[{ 'n', buffer = event.buf }] = {
 					['q'] = { neotest.output_panel.close, 'Close panel' },
 					['<leader>uo'] = { neotest.output_panel.close, 'Close panel' },

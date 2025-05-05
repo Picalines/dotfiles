@@ -24,7 +24,7 @@ local function trigger_dismiss()
 	vim.api.nvim_exec_autocmds('User', { pattern = 'Dismiss' })
 end
 
-keymap.declare {
+keymap {
 	[{ 'n', silent = true }] = {
 		['<Esc>'] = { trigger_dismiss, 'Dismiss' },
 

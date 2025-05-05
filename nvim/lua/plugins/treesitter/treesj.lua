@@ -15,7 +15,7 @@ return {
 
 		treesj.setup(opts)
 
-		keymap.declare {
+		keymap {
 			[{ 'n' }] = {
 				['gj'] = { treesj.toggle, 'Join Treesitter nodes' },
 			},

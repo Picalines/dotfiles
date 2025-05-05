@@ -105,7 +105,7 @@ end
 
 vim.api.nvim_create_user_command('PickGuiFont', open_guifont_picker, {})
 
-keymap.declare {
+keymap {
 	[{ 'n' }] = {
 		['<leader><leader>f'] = { '<Cmd>PickGuiFont<CR>', 'Select guifont' },
 	},

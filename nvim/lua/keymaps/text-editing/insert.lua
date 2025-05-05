@@ -1,6 +1,6 @@
 local keymap = require 'util.keymap'
 
-keymap.declare {
+keymap {
 	[{ 'i' }] = {
 		['<C-l>'] = '<Right>',
 		['<C-h>'] = '<Left>',

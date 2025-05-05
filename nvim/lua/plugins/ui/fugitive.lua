@@ -1,6 +1,6 @@
 local keymap = require 'util.keymap'
 
-keymap.declare {
+keymap {
 	[{ 'n', desc = 'Git: %s' }] = {
 		['<leader>gg'] = { '<Cmd>vert botright Git<CR>', 'status' },
 		['<leader>G'] = { ':Git ', 'command' },
@@ -25,7 +25,7 @@ return {
 			vim.api.nvim_set_option_value('number', false, { win = vim.fn.bufwinid(event.buf) })
 			vim.api.nvim_set_option_value('relativenumber', false, { win = vim.fn.bufwinid(event.buf) })
 
-			keymap.declare {
+			keymap {
 				[{ 'n', buffer = event.buf, desc = 'Git: %s' }] = {
 					['<leader>gg'] = { '<Cmd>wincmd c | wincmd p<CR>', 'close' },
 					['q'] = { '<Cmd>wincmd c | wincmd p<CR>', 'close' },
@@ -34,7 +34,7 @@ return {
 		end)
 
 		augroup:on('FileType', { 'gitcommit', 'gitrebase' }, function(event)
-			keymap.declare {
+			keymap {
 				[{ 'n', buffer = event.buf, nowait = true, desc = 'Git: %s' }] = {
 					['<leader>w'] = { '<Cmd>w | bd<CR>', 'accept' },
 					['q'] = { 'ggdG<Cmd>w | bd<CR>', 'cancel' },

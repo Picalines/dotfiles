@@ -1,7 +1,26 @@
+local keymap = require 'util.keymap'
+
 local arc_plugin_path = vim.fn.expand '~/Arcadia/junk/a-matveev9/gitsigns.arc.nvim'
 local arc_plugin_exists = vim.fn.isdirectory(arc_plugin_path) == 1
 local is_in_arcadia = vim.startswith(vim.fn.getcwd() or '', vim.fn.expand '~/Arcadia')
 local should_use_arc = arc_plugin_exists and is_in_arcadia
+
+keymap {
+	[{ 'n', desc = 'Git: %s' }] = {
+		['<leader>gd'] = { '<Cmd>Gitsigns preview_hunk<CR>', 'preview diff' },
+		['<leader>gs'] = { '<Cmd>Gitsigns stage_hunk<CR>', 'toggle staged hunk' },
+		['<leader>gr'] = { '<Cmd>Gitsigns reset_hunk<CR>', 'reset hunk' },
+		['<leader>gb'] = { '<Cmd>Gitsigns blame_line full=true<CR>', 'blame line' },
+		['<leader>gB'] = { '<Cmd>Gitsigns blame<CR>', 'blame buffer' },
+
+		[']h'] = { '<Cmd>Gitsigns nav_hunk next<CR>', 'next' },
+		['[h'] = { '<Cmd>Gitsigns nav_hunk prev<CR>', 'previous' },
+	},
+
+	[{ 'o', 'x', silent = true }] = {
+		['ih'] = { ':<C-U>Gitsigns select_hunk<CR>', 'Hunk: select' },
+	},
+}
 
 return {
 	not should_use_arc and 'lewis6991/gitsigns.nvim' or nil,
@@ -9,14 +28,19 @@ return {
 
 	event = { 'BufReadPre', 'BufNewFile' },
 
+	cmd = { 'Gitsigns' },
+
+	---@module 'gitsigns'
+	---@type Gitsigns.Config
+	---@diagnostic disable-next-line: missing-fields
 	opts = {
 		signs = {
-			add = { text = '│' },
-			change = { text = '│' },
-			delete = { text = '_' },
-			topdelete = { text = '‾' },
-			changedelete = { text = '│' },
-			untracked = { text = '┆' },
+			add = { text = '│', show_count = false },
+			change = { text = '│', show_count = false },
+			delete = { text = '_', show_count = false },
+			topdelete = { text = '‾', show_count = false },
+			changedelete = { text = '│', show_count = false },
+			untracked = { text = '┆', show_count = false },
 		},
 
 		signcolumn = true,
@@ -42,51 +66,5 @@ return {
 			col = 1,
 			style = 'minimal',
 		},
-
-		on_attach = function(bufnr)
-			local keymap = require 'util.keymap'
-			local gitsigns = require 'gitsigns'
-
-			local function blame_line()
-				gitsigns.blame_line { full = true }
-			end
-
-			keymap.declare {
-				[{ 'n', buffer = bufnr, desc = 'Git: %s' }] = {
-					['<leader>gd'] = { gitsigns.preview_hunk, 'preview diff' },
-					['<leader>gs'] = { gitsigns.stage_hunk, 'stage hunk' },
-					['<leader>gu'] = { gitsigns.undo_stage_hunk, 'unstage hunk' },
-					['<leader>gr'] = { gitsigns.reset_hunk, 'reset hunk' },
-
-					['<leader>gb'] = { blame_line, 'blame line' },
-
-					[']h'] = {
-						desc = 'next',
-						function()
-							if vim.wo.diff then
-								return ']h'
-							end
-							vim.schedule(gitsigns.next_hunk)
-							return '<Ignore>'
-						end,
-					},
-
-					['[h'] = {
-						desc = 'previous',
-						function()
-							if vim.wo.diff then
-								return '[h'
-							end
-							vim.schedule(gitsigns.prev_hunk)
-							return '<Ignore>'
-						end,
-					},
-				},
-
-				[{ 'o', 'x', buffer = bufnr, silent = true }] = {
-					['ih'] = { ':<C-U>Gitsigns select_hunk<CR>', 'Hunk: select' },
-				},
-			}
-		end,
 	},
 }

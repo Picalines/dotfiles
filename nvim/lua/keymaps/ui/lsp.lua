@@ -30,7 +30,7 @@ local function diagnostic_popup()
 	end
 end
 
-keymap.declare {
+keymap {
 	[{ 'n', desc = 'LSP: %s' }] = {
 		['K'] = { hover, 'Hover' },
 		['<C-S>'] = { signature_help, 'Signature help' },

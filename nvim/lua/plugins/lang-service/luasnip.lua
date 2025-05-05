@@ -17,7 +17,7 @@ return {
 			luasnip.config.setup(opts)
 		end
 
-		keymap.declare {
+		keymap {
 			[{ 'i', 's' }] = {
 				['<C-k>'] = function()
 					if luasnip.expand_or_jumpable() then

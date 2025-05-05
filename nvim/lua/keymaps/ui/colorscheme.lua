@@ -50,7 +50,7 @@ end
 
 vim.api.nvim_create_user_command('PickColorScheme', open_colorscheme_picker, {})
 
-keymap.declare {
+keymap {
 	[{ 'n', silent = true, desc = 'UI: %s' }] = {
 		['<leader>uC'] = { '<Cmd>PickColorScheme<CR>', 'colorscheme' },
 	},

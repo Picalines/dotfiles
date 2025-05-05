@@ -11,7 +11,7 @@ local function toggle_spell()
 	print('Spell check: ' .. (is_on and 'on' or 'off'))
 end
 
-keymap.declare {
+keymap {
 	[{ 'n', desc = 'UI: %s' }] = {
 		['<leader>us'] = { toggle_spell, 'toggle spell' },
 	},

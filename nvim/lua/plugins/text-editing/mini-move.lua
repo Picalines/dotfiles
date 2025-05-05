@@ -20,7 +20,7 @@ return {
 
 		local move_selection = mini_move.move_selection
 
-		keymap.declare {
+		keymap {
 			[{ 'x' }] = {
 				['H'] = { func.curry(move_selection, 'left'), 'Move selection left' },
 				['J'] = { func.curry(move_selection, 'down'), 'Move selection down' },

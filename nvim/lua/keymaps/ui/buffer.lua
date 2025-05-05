@@ -11,7 +11,7 @@ local function add_safe_empty_buffer()
 	return number_of_buffers() <= 1 and '<Cmd>enew | b #<CR>' or ''
 end
 
-keymap.declare {
+keymap {
 	[{ 'n', silent = true, desc = 'Buffer: %s' }] = {
 		['L'] = { '<Cmd>bn<CR>', 'next' },
 		['H'] = { '<Cmd>bp<CR>', 'previous' },

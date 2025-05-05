@@ -36,7 +36,7 @@ return {
 
 		augroup:on('ColorScheme', '*', clear_all_bgs)
 
-		keymap.declare {
+		keymap {
 			[{ 'n', desc = 'UI: %s' }] = {
 				['<leader>ug'] = { transparent.toggle, 'Toggle transparency' },
 			},

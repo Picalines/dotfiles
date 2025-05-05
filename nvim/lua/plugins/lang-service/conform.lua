@@ -22,7 +22,7 @@ return {
 			print('Auto format: ' .. (is_enabled and 'on' or 'off'))
 		end
 
-		keymap.declare {
+		keymap {
 			[{ 'n', silent = true, desc = 'Format: %s' }] = {
 				['<leader>F'] = { '<Cmd>Format<CR>', 'buffer' },
 				['<leader>uf'] = { toggle_autoformat, 'toggle auto' },

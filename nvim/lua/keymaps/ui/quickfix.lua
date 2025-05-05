@@ -1,7 +1,7 @@
 local keymap = require 'util.keymap'
 local autocmd = require 'util.autocmd'
 
-keymap.declare {
+keymap {
 	[{ 'n', silent = true }] = {
 		['<leader>q'] = { '<Cmd>copen<CR>', 'Open quickfix list' },
 
@@ -16,7 +16,7 @@ keymap.declare {
 local augroup = autocmd.group 'quickfix'
 
 augroup:on('FileType', 'qf', function(event)
-	keymap.declare {
+	keymap {
 		[{ 'n', remap = true, silent = true, buffer = event.buf }] = {
 			['q'] = { '<Cmd>cclose<CR>', 'Close quickfix list' },
 			['<leader>q'] = { '<Cmd>cclose<CR>', 'Close quickfix list' },

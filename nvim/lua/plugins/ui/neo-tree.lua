@@ -1,7 +1,7 @@
 local autocmd = require 'util.autocmd'
 local keymap = require 'util.keymap'
 
-keymap.declare {
+keymap {
 	[{ 'n', silent = true }] = {
 		['<leader>e'] = { '<Cmd>Neotree focus filesystem<CR>', 'File explorer' },
 	},

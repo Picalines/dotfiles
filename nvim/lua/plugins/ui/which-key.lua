@@ -10,7 +10,7 @@ return {
 
 		require('which-key').setup(opts)
 
-		keymap.declare {
+		keymap {
 			[{ 'n' }] = {
 				['<leader>?'] = { '<Cmd>WhichKey<CR>', 'Keymap help' },
 			},

@@ -2,15 +2,13 @@ local app = require 'util.app'
 local array = require 'util.array'
 local tbl = require 'util.table'
 
-local M = {}
-
 ---@class keymap_info
 ---@field modes string[]
 ---@field opts table
 
 ---@param decl_table table
 ---@param _info? keymap_info
-function M.declare(decl_table, _info)
+local function keymap(decl_table, _info)
 	if _info == nil then
 		_info = { modes = {}, opts = {} }
 	end
@@ -68,7 +66,7 @@ function M.declare(decl_table, _info)
 				end
 			end
 
-			M.declare(value, {
+			keymap(value, {
 				modes = array.concat(_info.modes, group_modes),
 				opts = tbl.override_deep(_info.opts, group_opts),
 			})
@@ -76,4 +74,4 @@ function M.declare(decl_table, _info)
 	end
 end
 
-return M
+return keymap

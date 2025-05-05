@@ -12,7 +12,7 @@ local function toggle_opacity()
 	neovide_opacity(neovide_opacity() == 1 and 0.75 or 1)
 end
 
-keymap.declare {
+keymap {
 	[{ 'n', nowait = true, desc = 'UI: %s' }] = {
 		['<leader>ug'] = { toggle_opacity, 'Neovide: Toggle opacity' },
 	},

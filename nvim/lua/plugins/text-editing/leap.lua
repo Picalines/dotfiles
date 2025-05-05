@@ -48,7 +48,7 @@ return {
 			}
 		end
 
-		keymap.declare {
+		keymap {
 			[{ 'n', 'x', 'o' }] = {
 				['s'] = { '<Plug>(leap-forward)', 'Leap forward' },
 				['S'] = { '<Plug>(leap-backward)', 'Leap backward' },

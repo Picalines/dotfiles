@@ -3,7 +3,7 @@ local func = require 'util.func'
 
 local severity = vim.diagnostic.severity
 
-keymap.declare {
+keymap {
 	[{ 'n', 'x' }] = {
 		['<Space>'] = '<Nop>',
 

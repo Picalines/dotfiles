@@ -1,6 +1,6 @@
 local keymap = require 'util.keymap'
 
-keymap.declare {
+keymap {
 	[{ 'n' }] = {
 		['<leader>w'] = { '<Cmd>silent w<CR>', 'Write file' },
 		['<leader>W'] = { '<Cmd>silent wa!<CR>', 'Write all' },
