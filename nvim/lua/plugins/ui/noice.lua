@@ -47,8 +47,7 @@ return {
 			},
 
 			progress = {
-				enabled = true,
-				view = 'notifications',
+				enabled = false,
 			},
 		},
 
