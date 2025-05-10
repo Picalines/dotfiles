@@ -31,7 +31,12 @@ return {
 
 		routes = {
 			{
-				filter = { event = 'notify', find = 'No information available' },
+				filter = {
+					any = {
+						{ event = 'notify', find = 'No information available' },
+						{ event = 'notify', find = '%[lspconfig%] Unable to find ESLint library.' },
+					},
+				},
 				opts = { skip = true },
 			},
 		},
