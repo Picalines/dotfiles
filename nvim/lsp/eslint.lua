@@ -16,4 +16,11 @@ return {
 		'eslint.config.mts',
 		'eslint.config.cts',
 	},
+
+	handlers = {
+		['eslint/noLibrary'] = function()
+			-- vim.notify('[lspconfig] Unable to find ESLint library.', vim.log.levels.WARN)
+			return {}
+		end,
+	},
 }
