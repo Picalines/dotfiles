@@ -43,6 +43,14 @@ return {
 				auto_show = false,
 				draw = {
 					columns = { { 'kind_icon' }, { 'label', 'label_description', gap = 1 } },
+					components = {
+						-- see https://github.com/Saghen/blink.cmp/issues/1610
+						label_description = {
+							text = function(ctx)
+								return ctx.label_description ~= '' and ctx.label_description or ctx.item.detail
+							end,
+						},
+					},
 				},
 			},
 			ghost_text = {
