@@ -78,6 +78,15 @@ return {
 				cmd = {
 					adapter = default_adapter,
 				},
+
+				tools = {
+					['files'] = {
+						opts = { requires_approval = true },
+					},
+					['cmd_runner'] = {
+						opts = { requires_approval = true },
+					},
+				},
 			},
 		}
 	end,
