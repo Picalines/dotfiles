@@ -2,9 +2,14 @@ local autocmd = require 'util.autocmd'
 local keymap = require 'util.keymap'
 
 keymap {
-	[{ 'n', desc = 'AI: %s' }] = {
-		['<leader>C'] = { '<Cmd>CodeCompanion<CR>', 'inline prompt' },
-		['<leader>cc'] = { '<Cmd>CodeCompanionChat Toggle<CR>', 'open chat' },
+	[{ desc = 'AI: %s' }] = {
+		[{ 'n' }] = {
+			['<leader>cc'] = { '<Cmd>CodeCompanionChat Toggle<CR>', 'open chat' },
+			['<leader>C'] = { '<Cmd>CodeCompanion<CR>', 'inline prompt' },
+		},
+		[{ 'x' }] = {
+			['<leader>C'] = { ':CodeCompanion<CR>', 'inline prompt' },
+		},
 	},
 }
 
