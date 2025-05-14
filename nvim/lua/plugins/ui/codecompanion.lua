@@ -4,7 +4,7 @@ local keymap = require 'util.keymap'
 keymap {
 	[{ 'n', desc = 'AI: %s' }] = {
 		['<leader>C'] = { '<Cmd>CodeCompanion<CR>', 'inline prompt' },
-		['<leader>cc'] = { '<Cmd>CodeCompanionChat<CR>', 'open chat' },
+		['<leader>cc'] = { '<Cmd>CodeCompanionChat Toggle<CR>', 'open chat' },
 	},
 }
 
