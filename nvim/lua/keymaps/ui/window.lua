@@ -20,13 +20,11 @@ local function resize_smart(count)
 	vim.cmd.wincmd(cmd)
 end
 
-local function trigger_dismiss()
-	vim.api.nvim_exec_autocmds('User', { pattern = 'Dismiss' })
-end
+local dismiss_map = '<Cmd>doautocmd User Dismiss | nohlsearch<CR>'
 
 keymap {
 	[{ 'n', silent = true }] = {
-		['<Esc>'] = { trigger_dismiss, 'Dismiss' },
+		['<Esc>'] = { dismiss_map, 'Dismiss' },
 
 		['<C-j>'] = { '<C-W>j', 'Move to bottom window' },
 		['<C-k>'] = { '<C-W>k', 'Move to upper window' },
@@ -41,7 +39,8 @@ keymap {
 		['+'] = { func.curry(resize_smart, 5), 'Increase window size' },
 		['_'] = { func.curry(resize_smart, -5), 'Decrease window size' },
 	},
+
 	[{ 'i' }] = {
-		['<C-d>'] = { trigger_dismiss, 'Dissmiss' },
+		['<C-d>'] = { dismiss_map, 'Dismiss' },
 	},
 }
