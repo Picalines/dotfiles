@@ -62,7 +62,7 @@ return {
 		local function setup_highlights()
 			hl.clear('LeapBackdrop', 'all')
 			hl.link('LeapMatch', 'CurSearch')
-			hl.link('LeapLabel', 'CurSearch')
+			hl.link('LeapLabel', 'Search')
 		end
 
 		setup_highlights()
