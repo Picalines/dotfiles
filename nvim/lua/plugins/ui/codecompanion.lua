@@ -5,6 +5,7 @@ keymap {
 	[{ desc = 'AI: %s' }] = {
 		[{ 'n' }] = {
 			['<leader>cc'] = { '<Cmd>CodeCompanionChat Toggle<CR>', 'open chat' },
+			['<leader>ca'] = { '<Cmd>CodeCompanionActions<CR>', 'actions' },
 			['<leader>C'] = { '<Cmd>CodeCompanion<CR>', 'inline prompt' },
 		},
 		[{ 'x' }] = {
