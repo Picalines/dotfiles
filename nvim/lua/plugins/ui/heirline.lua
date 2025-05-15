@@ -393,7 +393,7 @@ return {
 						end,
 
 						hl = function(self)
-							return self.mode_hls[self.mode:sub(1, 1)]
+							return self.mode_hls[self.mode:sub(1, 1)] or 'Normal'
 						end,
 					},
 				},
