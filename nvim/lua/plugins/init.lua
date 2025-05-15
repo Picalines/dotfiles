@@ -38,6 +38,9 @@ end)
 
 lazy.setup(lazy_spec, {
 	lockfile = str.fmt(vim.fn.stdpath 'config', '/lazy-lock.', app.os(), '.json'),
+	change_detection = {
+		enabled = false,
+	},
 	performance = {
 		rtp = {
 			disabled_plugins = {
