@@ -139,31 +139,34 @@ return {
 		end
 
 		local picker_maps = {
-			['<leader>ff'] = { builtin.find_files, 'Find files' },
-			['<leader>fo'] = { builtin.oldfiles, 'Find old files' },
-			['<leader>fb'] = { builtin.buffers, 'Find buffer' },
-			['<leader>fg'] = { builtin.live_grep, 'Find global' },
-			['<leader>fc'] = { builtin.commands, 'Find commands' },
-			['<leader>fh'] = { builtin.help_tags, 'Find help' },
-			['<leader>fd'] = { builtin.diagnostics, 'Find diagnostics' },
-			['<leader>fr'] = { builtin.resume, 'Find resume' },
-			['<leader>f/'] = { builtin.current_buffer_fuzzy_find, 'Find in current buffer' },
-			['<leader>fs'] = { builtin.lsp_document_symbols, 'Find document symbols' },
-			['<leader>fS'] = { builtin.lsp_dynamic_workspace_symbols, 'Find workspace symbols' },
+			['<leader>ff'] = { builtin.find_files, 'files' },
+			['<leader>fo'] = { builtin.oldfiles, 'old files' },
+			['<leader>fb'] = { builtin.buffers, 'buffer' },
+			['<leader>bb'] = { builtin.buffers, 'buffer' },
+			['<leader>fg'] = { builtin.live_grep, 'global' },
+			['<leader>fc'] = { builtin.commands, 'commands' },
+			['<leader>fh'] = { builtin.help_tags, 'help' },
+			['<leader>fd'] = { builtin.diagnostics, 'diagnostics' },
+			['<leader>fr'] = { builtin.resume, 'resume' },
+			['<leader>f/'] = { builtin.current_buffer_fuzzy_find, 'in current buffer' },
+			['<leader>fs'] = { builtin.lsp_document_symbols, 'document symbols' },
+			['<leader>fS'] = { builtin.lsp_dynamic_workspace_symbols, 'workspace symbols' },
 		}
 
 		keymap {
-			[{ 'n' }] = picker_maps,
+			[{ desc = 'Find: %s' }] = {
+				[{ 'n' }] = picker_maps,
 
-			[{ 'n' }] = {
-				['<leader>ft'] = { builtin.filetypes, 'Select filetypes' },
+				[{ 'n' }] = {
+					['<leader>ft'] = { builtin.filetypes, 'Select filetypes' },
+				},
+
+				[{ 'x' }] = tbl.map(picker_maps, function(lhs, rhs)
+					local v_rhs = array.copy(rhs)
+					v_rhs[1] = pick_visual(v_rhs[1])
+					return lhs, v_rhs
+				end),
 			},
-
-			[{ 'x' }] = tbl.map(picker_maps, function(lhs, rhs)
-				local v_rhs = array.copy(rhs)
-				v_rhs[1] = pick_visual(v_rhs[1])
-				return lhs, v_rhs
-			end),
 		}
 	end,
 }
