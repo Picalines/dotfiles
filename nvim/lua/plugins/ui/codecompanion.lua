@@ -4,12 +4,11 @@ local keymap = require 'util.keymap'
 keymap {
 	[{ desc = 'AI: %s' }] = {
 		[{ 'n' }] = {
-			['<leader>cc'] = { '<Cmd>CodeCompanionChat Toggle<CR>', 'open chat' },
-			['<leader>ca'] = { '<Cmd>CodeCompanionActions<CR>', 'actions' },
-			['<leader>C'] = { '<Cmd>CodeCompanion<CR>', 'inline prompt' },
+			['<leader>c'] = { '<Cmd>CodeCompanionChat Toggle<CR>', 'open chat' },
+			['<leader>C'] = { '<Cmd>CodeCompanionActions<CR>', 'actions' },
 		},
 		[{ 'x' }] = {
-			['<leader>C'] = { ':CodeCompanion<CR>', 'inline prompt' },
+			['<leader>c'] = { '<Cmd>CodeCompanionActions<CR>', 'actions' },
 		},
 	},
 }
@@ -20,7 +19,7 @@ augroup:on('FileType', 'codecompanion', function(event)
 	keymap {
 		[{ 'n', remap = true, buffer = event.buf, desc = 'AI: %s' }] = {
 			['q'] = { '<C-w>c', 'close' },
-			['<leader>cc'] = { '<C-w>c', 'close' },
+			['<leader>c'] = { '<C-w>c', 'close' },
 		},
 	}
 end)
@@ -39,7 +38,7 @@ return {
 		},
 	},
 
-	cmd = { 'CodeCompanion', 'CodeCompanionChat' },
+	cmd = { 'CodeCompanion', 'CodeCompanionActions', 'CodeCompanionChat' },
 
 	opts = function()
 		local ok, private_adapters = pcall(require, 'settings.ui.codecompanion.private-providers')
