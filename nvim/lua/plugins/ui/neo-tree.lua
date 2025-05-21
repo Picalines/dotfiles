@@ -157,9 +157,6 @@ return {
 					['?'] = 'show_help',
 					['<'] = 'prev_source',
 					['>'] = 'next_source',
-
-					['}'] = function() end, -- prevents me from switching buffer accidentally
-					['{'] = function() end,
 				},
 			},
 
@@ -208,6 +205,9 @@ return {
 						['!'] = 'run_command',
 						['gx'] = 'system_open',
 
+						['cw'] = 'codecompanion_watch',
+						['cp'] = 'codecompanion_pin',
+
 						['o'] = { 'show_help', nowait = false, config = { title = 'Order by', prefix_key = 'o' } },
 						['oc'] = { 'order_by_created', nowait = false },
 						['od'] = { 'order_by_diagnostics', nowait = false },
@@ -233,15 +233,39 @@ return {
 
 						vim.api.nvim_set_current_dir(root)
 					end,
+
 					run_command = function(state)
 						local node = state.tree:get_node()
 						local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
 						vim.api.nvim_input(':! ' .. path .. '<Home><Right>')
 					end,
+
 					system_open = function(state)
 						local node = state.tree:get_node()
 						local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
 						vim.ui.open(path)
+					end,
+
+					codecompanion_watch = function(state)
+						local node = state.tree:get_node()
+						local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
+						require('codecompanion').last_chat().references:add {
+							id = '<file>' .. path .. '</file>',
+							path = path,
+							source = 'codecompanion.strategies.chat.slash_commands.file',
+							opts = { visible = true },
+						}
+					end,
+
+					codecompanion_pin = function(state)
+						local node = state.tree:get_node()
+						local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
+						require('codecompanion').last_chat().references:add {
+							id = '<file>' .. path .. '</file>',
+							path = path,
+							source = 'codecompanion.strategies.chat.slash_commands.file',
+							opts = { pinned = true, visible = true },
+						}
 					end,
 				},
 			},
