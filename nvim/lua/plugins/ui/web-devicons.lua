@@ -17,6 +17,24 @@ return {
 				cterm_color = '55',
 				name = 'Css',
 			},
+			['module.ts'] = {
+				icon = '',
+				color = '#da214c',
+				cterm_color = '161',
+				name = 'NestModule',
+			},
+			['service.ts'] = {
+				icon = '',
+				color = '#519aba',
+				cterm_color = '74',
+				name = 'NestService',
+			},
+			['controller.ts'] = {
+				icon = '',
+				color = '#90d402',
+				cterm_color = '76',
+				name = 'NestController',
+			},
 		},
 
 		override_by_filename = {
@@ -51,6 +69,12 @@ return {
 				name = 'Turborepo',
 			},
 			['biome.json'] = {
+				icon = '',
+				color = '#60a5fa',
+				cterm_color = '111',
+				name = 'Biome',
+			},
+			['biome.jsonc'] = {
 				icon = '',
 				color = '#60a5fa',
 				cterm_color = '111',
