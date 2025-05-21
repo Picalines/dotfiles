@@ -65,6 +65,8 @@ return {
 
 					[{ 'go' }] = { 'gopls' },
 
+					[{ 'rustc' }] = { 'rust-analyzer' },
+
 					[{ 'kotlin' }] = { 'kotlin-language-server', 'ktfmt', 'ktlint' },
 
 					[{ 'gradle' }] = { 'gradle-language-server' },
