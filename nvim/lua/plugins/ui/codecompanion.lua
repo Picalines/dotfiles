@@ -75,7 +75,9 @@ return {
 					},
 
 					keymaps = {
-						stop = { modes = { n = 's' } },
+						stop = { modes = { n = '<C-c>' } },
+						system_prompt = { modes = { n = '<Nul>' } },
+						close = { modes = { n = '<Nul>' } },
 					},
 				},
 				inline = {
