@@ -1,17 +1,26 @@
 #!/bin/zsh
 
+command-exists() {
+  command -v "$1" &> /dev/null
+}
+
+if command-exists nvim
+then
+  alias vim=nvim
+fi
+
 if [[ -f ~/.zsh_aliases ]]; then
     source ~/.zsh_aliases
 fi
 
 # starship
-if command -v starship &> /dev/null
+if command-exists starship
 then
     eval "$(starship init zsh)"
 fi
 
 # fzf
-if command -v fzf &> /dev/null
+if command-exists fzf
 then
   source <(fzf --zsh)
 fi
@@ -23,7 +32,7 @@ then
 fi
 
 # arc
-if command -v arc &> /dev/null
+if command-exists arc
 then
   export ARC_TOKEN="$(arc token show)"
 fi
