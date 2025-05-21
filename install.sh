@@ -9,36 +9,37 @@ command-exists() {
   command -v "$1" &> /dev/null
 }
 
+symlink-from-to() {
+    mkdir -p "$(dirname $2)"
+    ln -snf "$PWD/$1" "$2"
+}
+
 if command-exists nvim
 then
-    ln -snf $PWD/nvim ~/.config/nvim
+    symlink-from-to ./nvim ~/.config/nvim
 fi
 
 if command-exists aerospace
 then
-    mkdir -p ~/.config/aerospace
-    ln -snf $PWD/aerospace.toml ~/.config/aerospace/aerospace.toml
+    symlink-from-to ./aerospace.toml ~/.config/aerospace/aerospace.toml
 fi
 
 if command-exists alacritty
 then
-    mkdir -p ~/.config/alacritty
-    ln -snf $PWD/alacritty.toml ~/.config/alacritty/alacritty.toml
+    symlink-from-to ./alacritty.toml ~/.config/alacritty/alacritty.toml
 fi
 
 if command-exists ghostty
 then
-    mkdir -p ~/.config/ghostty
-    ln -snf $PWD/ghostty.config ~/.config/ghostty/config
+    symlink-from-to ./ghostty.config ~/.config/ghostty/config
 fi
 
 if command-exists neovide
 then
-    mkdir -p ~/.config/neovide
-    ln -snf $PWD/neovide.toml ~/.config/neovide/config.toml
+    symlink-from-to ./neovide.toml ~/.config/neovide/config.toml
 fi
 
 if command-exists starship
 then
-    ln -snf $PWD/starship.toml ~/.config/starship.toml
+    symlink-from-to ./starship.toml ~/.config/starship.toml
 fi
