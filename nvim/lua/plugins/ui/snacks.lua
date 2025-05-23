@@ -1,6 +1,11 @@
 local keymap = require 'util.keymap'
 
 keymap {
+	[{ 'n', desc = 'Buffer: %s' }] = {
+		['<leader>bd'] = { "<Cmd>luado require('snacks').bufdelete()<CR>", 'delete' },
+		['<leader>bD'] = { "<Cmd>luado require('snacks').bufdelete.all()<CR>", 'delete all' },
+	},
+
 	[{ 'n', desc = 'Terminal: %s' }] = {
 		['<leader>t'] = { '<Cmd>TerminalFocus<CR>', 'toggle' },
 	},
