@@ -1,5 +1,7 @@
 local app = require 'util.app'
 
+require 'settings.system.shell'
+
 require 'settings.text-editing.autoreload'
 require 'settings.text-editing.clipboard'
 require 'settings.text-editing.completeopt'
