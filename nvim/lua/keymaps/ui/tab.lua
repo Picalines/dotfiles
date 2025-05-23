@@ -8,7 +8,8 @@ keymap {
 		['<leader>sn'] = { '<Cmd>tabnew<CR>', 'new' },
 		['<leader>sd'] = { '<Cmd>tabclose<CR>', 'close' },
 
-		['<leader>ss'] = { '<Cmd>tabnext<CR>', 'next' },
+		[']s'] = { '<Cmd>tabnext<CR>', 'next' },
+		['[s'] = { '<Cmd>tabprev<CR>', 'prev' },
 		['<leader>s]'] = { '<Cmd>tabnext<CR>', 'next' },
 		['<leader>s['] = { '<Cmd>tabprev<CR>', 'prev' },
 

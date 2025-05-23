@@ -18,6 +18,16 @@ return {
 
 		'nvim-telescope/telescope-ui-select.nvim',
 		'gbrlsnchs/telescope-lsp-handlers.nvim',
+		{
+			'LukasPietzschmann/telescope-tabs',
+			opts = {
+				entry_formatter = function(tabnr, _, filenames)
+					local tab_cwd = vim.fn.fnamemodify(vim.fn.getcwd(-1, tabnr), ':t')
+					local file_list = table.concat(filenames, ', ')
+					return string.format('%s: %s', tab_cwd, file_list)
+				end,
+			},
+		},
 	},
 
 	config = function()
@@ -116,6 +126,7 @@ return {
 		safe_load_extension 'fzf'
 		safe_load_extension 'ui-select'
 		safe_load_extension 'lsp_handlers'
+		safe_load_extension 'telescope-tabs'
 
 		local function exit_visual_mode()
 			vim.api.nvim_feedkeys(':', 'nx', false)
@@ -139,10 +150,12 @@ return {
 		end
 
 		local picker_maps = {
+			['<leader>bb'] = { builtin.buffers, 'buffer' },
+			['<leader>ss'] = { '<Cmd>Telescope telescope-tabs list_tabs<CR>', 'spaces' },
+
 			['<leader>ff'] = { builtin.find_files, 'files' },
 			['<leader>fo'] = { builtin.oldfiles, 'old files' },
 			['<leader>fb'] = { builtin.buffers, 'buffer' },
-			['<leader>bb'] = { builtin.buffers, 'buffer' },
 			['<leader>fg'] = { builtin.live_grep, 'global' },
 			['<leader>fc'] = { builtin.commands, 'commands' },
 			['<leader>fh'] = { builtin.help_tags, 'help' },
