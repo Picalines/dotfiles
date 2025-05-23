@@ -559,19 +559,15 @@ return {
 		local TerminalList = {
 			update = { 'TermOpen', 'TermClose', 'BufEnter' },
 
-			condition = function()
-				return (vim.g.status_terminal_count or 0) > 0
+			condition = function(self)
+				self.terminal_count = #array.filter(vim.api.nvim_list_chans(), function(chan)
+					return chan.mode == 'terminal'
+				end)
+				return self.terminal_count > 0
 			end,
 
-			provider = function()
-				local current_terminal = vim.g.status_last_terminal_index or 0
-				local terminal_count = vim.g.status_terminal_count or 0
-
-				if vim.bo.buftype == 'terminal' then
-					return string.format('%d/%d ', current_terminal, terminal_count)
-				else
-					return string.format('%d ', terminal_count)
-				end
+			provider = function(self)
+				return str.fmt(self.terminal_count, ' ')
 			end,
 
 			hl = '@attribute',
