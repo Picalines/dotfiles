@@ -570,7 +570,7 @@ return {
 				return str.fmt(self.terminal_count, ' ')
 			end,
 
-			hl = '@attribute',
+			hl = 'DevIconTerminal',
 		}
 
 		local Ruler = {
