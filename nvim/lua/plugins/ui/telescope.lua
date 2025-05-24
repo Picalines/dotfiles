@@ -109,12 +109,11 @@ return {
 					additional_args = rg_args,
 				},
 
-				oldfiles = {
-					previewer = false,
-				},
+				oldfiles = { previewer = false },
+				buffers = { previewer = false },
 
-				buffers = {
-					previewer = false,
+				colorscheme = {
+					enable_preview = true,
 				},
 			},
 		}
@@ -164,6 +163,8 @@ return {
 			['<leader>f/'] = { builtin.current_buffer_fuzzy_find, 'in current buffer' },
 			['<leader>fs'] = { builtin.lsp_document_symbols, 'document symbols' },
 			['<leader>fS'] = { builtin.lsp_dynamic_workspace_symbols, 'workspace symbols' },
+
+			['<leader>uC'] = { builtin.colorscheme, 'colorscheme' },
 		}
 
 		keymap {
