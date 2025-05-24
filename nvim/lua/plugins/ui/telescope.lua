@@ -155,7 +155,7 @@ return {
 			['<leader>ff'] = { builtin.find_files, 'files' },
 			['<leader>fo'] = { builtin.oldfiles, 'old files' },
 			['<leader>fb'] = { builtin.buffers, 'buffer' },
-			['<leader>fg'] = { builtin.live_grep, 'global' },
+			['<leader>fg'] = { builtin.live_grep, 'grep' },
 			['<leader>fc'] = { builtin.commands, 'commands' },
 			['<leader>fh'] = { builtin.help_tags, 'help' },
 			['<leader>fd'] = { builtin.diagnostics, 'diagnostics' },
