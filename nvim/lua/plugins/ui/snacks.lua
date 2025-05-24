@@ -22,10 +22,16 @@ return {
 				on_buf = vim.schedule_wrap(function(win)
 					-- terminal -> normal by fast <Esc><Esc>
 					keymap {
-						[{ 'n', buffer = win.buf, desc = 'Terminal: %s' }] = {
-							['<leader>t'] = { '<Cmd>TerminalHide<CR>', 'close' },
-							['q'] = { '<Cmd>TerminalHide<CR>', 'close' },
-							['n'] = { '<Cmd>TerminalNew<CR>', 'new' },
+						[{ buffer = win.buf, desc = 'Terminal: %s' }] = {
+							[{ 'n' }] = {
+								['<leader>t'] = { '<Cmd>TerminalHide<CR>', 'close' },
+								['q'] = { '<Cmd>TerminalHide<CR>', 'close' },
+								['n'] = { '<Cmd>TerminalNew<CR>', 'new' },
+							},
+
+							[{ 't' }] = {
+								['<Esc><Esc>'] = { '<C-\\><C-n>', 'exit to normal' },
+							},
 						},
 					}
 				end),
