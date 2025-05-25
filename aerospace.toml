@@ -100,11 +100,47 @@ if.app-id = 'app.zen-browser.zen'
 run = ['layout tiling', 'move-node-to-workspace B']
 
 [[on-window-detected]]
+if.app-id = 'com.apple.Safari'
+run = ['layout tiling', 'move-node-to-workspace B']
+
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = ['layout tiling', 'move-node-to-workspace B']
+
+[[on-window-detected]]
+if.app-id = 'ru.yandex.desktop.yandex-browser'
+run = ['layout tiling', 'move-node-to-workspace B']
+
+[[on-window-detected]]
 if.app-id = 'com.neovide.neovide'
 run = ['layout tiling', 'move-node-to-workspace C']
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
+run = ['layout tiling', 'move-node-to-workspace C']
+
+[[on-window-detected]]
+if.app-id = 'org.alacritty'
+run = ['layout tiling', 'move-node-to-workspace C']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Terminal'
+run = ['layout tiling', 'move-node-to-workspace C']
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.VSCode'
+run = ['layout tiling', 'move-node-to-workspace C']
+
+[[on-window-detected]]
+if.app-id = 'com.jetbrains.intellij.ce'
+run = ['layout tiling', 'move-node-to-workspace C']
+
+[[on-window-detected]]
+if.app-id = 'com.jetbrains.intellij'
+run = ['layout tiling', 'move-node-to-workspace C']
+
+[[on-window-detected]]
+if.app-id = 'com.google.android.studio'
 run = ['layout tiling', 'move-node-to-workspace C']
 
 [[on-window-detected]]
@@ -120,8 +156,20 @@ if.app-id = 'md.obsidian'
 run = ['layout tiling', 'move-node-to-workspace N']
 
 [[on-window-detected]]
+if.app-id = 'com.apple.Notes'
+run = ['layout tiling', 'move-node-to-workspace N']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.reminders'
+run = ['layout tiling', 'move-node-to-workspace N']
+
+[[on-window-detected]]
 if.app-id = 'us.zoom.xos'
-run = ['layout floating', 'move-node-to-workspace Z']
+run = ['layout tiling', 'move-node-to-workspace Z']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.FaceTime'
+run = ['layout tiling', 'move-node-to-workspace Z']
 
 [[on-window-detected]]
 if.app-id = 'com.microsoft.Word'
@@ -134,6 +182,30 @@ run = ['layout tiling', 'move-node-to-workspace V']
 [[on-window-detected]]
 if.app-id = 'com.microsoft.Powerpoint'
 run = ['layout tiling', 'move-node-to-workspace V']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.iWork.Keynote'
+run = ['layout tiling', 'move-node-to-workspace V']
+
+[[on-window-detected]]
+if.app-id = 'org.audacityteam.audacity'
+run = ['layout tiling', 'move-node-to-workspace V']
+
+[[on-window-detected]]
+if.app-id = 'org.blenderfoundation.blender'
+run = ['layout tiling', 'move-node-to-workspace V']
+
+[[on-window-detected]]
+if.app-id = 'nightradio.SunVox'
+run = ['layout tiling', 'move-node-to-workspace V']
+
+[[on-window-detected]]
+if.app-id = 'com.figma.Desktop'
+run = ['layout tiling', 'move-node-to-workspace V']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.ActivityMonitor'
+run = ['layout floating']
 
 [[on-window-detected]]
 if.app-id = 'e.AmneziaVPN'
