@@ -69,7 +69,18 @@ return {
 		},
 
 		signature = {
-			enabled = false,
+			enabled = true,
+			trigger = {
+				enabled = true,
+				show_on_accept = true,
+				show_on_insert = true,
+				show_on_accept_on_trigger_character = true,
+				show_on_insert_on_trigger_character = true,
+			},
+			window = {
+				show_documentation = true,
+				border = 'rounded',
+			},
 		},
 
 		snippets = {
@@ -78,6 +89,11 @@ return {
 
 		appearance = {
 			nerd_font_variant = 'mono',
+		},
+
+		cmdline = {
+			enabled = true,
+			keymap = { preset = 'inherit' },
 		},
 	},
 

@@ -24,9 +24,14 @@ return {
 		augroup:on_user('Dismiss', 'NoiceDismiss')
 	end,
 
+	---@module 'noice'
+	---@type NoiceConfig
 	opts = {
 		presets = {
 			long_message_to_split = false,
+			bottom_search = false,
+			command_palette = true,
+			inc_rename = false,
 		},
 
 		routes = {
@@ -51,14 +56,17 @@ return {
 				silent = true,
 			},
 
-			progress = {
-				enabled = false,
-			},
+			progress = { enabled = false }, -- fidget.nvim
+			signature = { enabled = false }, -- blink.nvim
 		},
 
 		notify = {
 			enabled = true,
 			view = 'notifications',
+		},
+
+		popupmenu = {
+			enabled = false,
 		},
 
 		messages = {
@@ -84,6 +92,15 @@ return {
 		},
 
 		views = {
+			hover = {
+				relative = 'cursor',
+				position = { row = 2 },
+				border = {
+					style = 'rounded',
+					padding = { 0, 1 },
+				},
+			},
+
 			notifications = {
 				backend = 'mini',
 				relative = 'editor',
@@ -129,55 +146,6 @@ return {
 
 				close = {
 					keys = { 'q' },
-				},
-			},
-
-			cmdline_popup = {
-				relative = 'editor',
-				position = {
-					row = 5,
-					col = '50%',
-				},
-				size = {
-					width = 80,
-					height = 'auto',
-				},
-			},
-
-			popupmenu = {
-				relative = 'editor',
-				position = {
-					row = 8,
-					col = '50%',
-				},
-				size = {
-					width = 80,
-					height = 10,
-				},
-				border = {
-					style = 'rounded',
-					padding = { 0, 1 },
-				},
-				win_options = {
-					winhighlight = { Normal = 'Normal', FloatBorder = 'DiagnosticInfo' },
-				},
-			},
-
-			hover = {
-				relative = 'cursor',
-				position = { row = 2 },
-				border = {
-					style = 'rounded',
-					padding = { 0, 1 },
-				},
-			},
-
-			signature = {
-				relative = 'cursor',
-				position = { row = 2 },
-				border = {
-					style = 'rounded',
-					padding = { 0, 1 },
 				},
 			},
 		},
