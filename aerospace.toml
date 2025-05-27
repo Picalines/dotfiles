@@ -72,13 +72,13 @@ ctrl-j = 'move-workspace-to-monitor down'
 ctrl-k = 'move-workspace-to-monitor up'
 ctrl-l = 'move-workspace-to-monitor right'
 
-z = ['move-node-to-workspace Z', 'workspace Z']
-x = ['move-node-to-workspace X', 'workspace X']
-c = ['move-node-to-workspace C', 'workspace C']
-v = ['move-node-to-workspace V', 'workspace V']
-b = ['move-node-to-workspace B', 'workspace B']
-n = ['move-node-to-workspace N', 'workspace N']
-m = ['move-node-to-workspace M', 'workspace M']
+z = ['move-node-to-workspace Z', 'workspace Z', 'mode main']
+x = ['move-node-to-workspace X', 'workspace X', 'mode main']
+c = ['move-node-to-workspace C', 'workspace C', 'mode main']
+v = ['move-node-to-workspace V', 'workspace V', 'mode main']
+b = ['move-node-to-workspace B', 'workspace B', 'mode main']
+n = ['move-node-to-workspace N', 'workspace N', 'mode main']
+m = ['move-node-to-workspace M', 'workspace M', 'mode main']
 
 [mode.open.binding]
 
