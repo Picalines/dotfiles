@@ -14,15 +14,6 @@ local function toggle_inlay_hints()
 	print('Inlay hints: ' .. (is_enabled and 'on' or 'off'))
 end
 
--- NOTE: for some reason i have to move this to a function
-local function hover()
-	vim.lsp.buf.hover()
-end
-
-local function signature_help()
-	vim.lsp.buf.signature_help()
-end
-
 local function diagnostic_popup()
 	local opened = vim.diagnostic.open_float { border = 'rounded' }
 	if opened then
@@ -32,11 +23,10 @@ end
 
 keymap {
 	[{ 'n', desc = 'LSP: %s' }] = {
-		['K'] = { hover, 'Hover' },
-		['<C-S>'] = { signature_help, 'Signature help' },
+		['K'] = { '<Cmd>luado vim.lsp.buf.hover()<CR>', 'hover' },
 
-		['<leader>r'] = { vim.lsp.buf.rename, 'Rename' },
-		['<leader>a'] = { vim.lsp.buf.code_action, 'Code action' },
+		['<leader>r'] = { '<Cmd>luado vim.lsp.buf.rename()<CR>', 'rename' },
+		['<leader>a'] = { '<Cmd>luado vim.lsp.buf.code_action()<CR>', 'action' },
 
 		['gD'] = { '<Cmd>Telescope lsp_definitions<CR>', 'Go to definition' },
 		['gR'] = { '<Cmd>Telescope lsp_references<CR>', 'Go to references' },
@@ -50,9 +40,5 @@ keymap {
 		['<leader>ls'] = { ':LspStart ', 'Start server' },
 
 		['<C-w>d'] = { diagnostic_popup, 'Diagnostics popup' },
-	},
-
-	[{ 'i', desc = 'LSP: %s' }] = {
-		['<C-S>'] = { signature_help, 'Signature help' },
 	},
 }
