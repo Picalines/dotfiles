@@ -9,8 +9,8 @@ keymap {
 		['<C-e>'] = '<Esc><Cmd>norm! e<CR>a',
 		['<C-w>'] = '<C-o>w',
 
-		['<C-S-h>'] = '<Backspace>',
-		['<C-S-l>'] = '<Delete>',
+		['<S-BS>'] = '<Delete>',
+		['<M-BS>'] = '<Delete>',
 	},
 
 	[{ 'i', 'c' }] = {
