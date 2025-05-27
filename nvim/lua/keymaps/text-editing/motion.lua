@@ -1,5 +1,5 @@
-local keymap = require 'util.keymap'
 local func = require 'util.func'
+local keymap = require 'util.keymap'
 
 local severity = vim.diagnostic.severity
 

@@ -1,5 +1,5 @@
-local keymap = require 'util.keymap'
 local autocmd = require 'util.autocmd'
+local keymap = require 'util.keymap'
 
 keymap {
 	[{ 'n', silent = true, desc = 'Quickfix: %s' }] = {

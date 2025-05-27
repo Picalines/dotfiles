@@ -1,7 +1,7 @@
-local lazy = require 'lazy'
-local str = require 'util.string'
 local app = require 'util.app'
 local array = require 'util.array'
+local lazy = require 'lazy'
+local str = require 'util.string'
 
 local client = app.client()
 

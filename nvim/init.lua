@@ -14,8 +14,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local persist = require 'util.persist'
 local autocmd = require 'util.autocmd'
+local persist = require 'util.persist'
 
 pcall(persist.load)
 

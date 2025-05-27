@@ -1,5 +1,5 @@
-local tbl = require 'util.table'
 local array = require 'util.array'
+local tbl = require 'util.table'
 
 local M = {}
 
