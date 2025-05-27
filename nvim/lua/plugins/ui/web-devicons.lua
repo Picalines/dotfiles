@@ -98,6 +98,18 @@ return {
 				cterm_color = '71',
 				name = 'Vitest',
 			},
+			['next.config.js'] = {
+				icon = '',
+				color = '#58c4dc',
+				cterm_color = '15',
+				name = 'Nextjs',
+			},
+			['next.config.ts'] = {
+				icon = '',
+				color = '#58c4dc',
+				cterm_color = '15',
+				name = 'Nextjs',
+			},
 		},
 	},
 }
