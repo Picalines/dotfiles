@@ -20,7 +20,6 @@ return {
 		terminal = {
 			win = {
 				on_buf = vim.schedule_wrap(function(win)
-					-- terminal -> normal by fast <Esc><Esc>
 					keymap {
 						[{ buffer = win.buf, desc = 'Terminal: %s' }] = {
 							[{ 'n' }] = {
@@ -30,7 +29,7 @@ return {
 							},
 
 							[{ 't' }] = {
-								['<Esc><Esc>'] = { '<C-\\><C-n>', 'exit to normal' },
+								['<Esc>'] = { '<C-\\><C-n>', 'exit terminal' },
 							},
 						},
 					}
