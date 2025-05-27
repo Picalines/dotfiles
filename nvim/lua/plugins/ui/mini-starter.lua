@@ -39,7 +39,7 @@ return {
 				}),
 				section('Editor', {
 					{ '󱇨', 'New Buffer', 'enew' },
-					{ '󰸌', 'Theme', 'PickColorScheme' },
+					{ '󰸌', 'Theme', 'Telescope colorscheme' },
 					app.client() == 'neovide' and { '', 'Font', 'PickGuiFont' } or nil,
 					{ '', 'Quit', 'wa | qa!' },
 				}),
