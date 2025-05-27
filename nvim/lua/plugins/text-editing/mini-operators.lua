@@ -8,11 +8,6 @@ return {
 			prefix = 'g=',
 		},
 
-		exchange = {
-			prefix = 'gx',
-			reindent_linewise = true,
-		},
-
 		multiply = {
 			prefix = 'gm',
 		},
@@ -24,6 +19,10 @@ return {
 
 		sort = {
 			prefix = 'go',
+		},
+
+		exchange = {
+			prefix = '',
 		},
 	},
 }
