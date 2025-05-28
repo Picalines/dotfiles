@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+autoload -U add-zsh-hook
+
 command-exists() {
   command -v "$1" &> /dev/null
 }
@@ -37,9 +39,16 @@ then
   export ARC_TOKEN="$(arc token show)"
 fi
 
-# auto .nvmrc
+# terminal title
+update-term-title() {
+  local title="$(basename $PWD)"
+  echo -ne "\033]0;$title\007"
+}
 
-autoload -U add-zsh-hook
+add-zsh-hook chpwd update-term-title
+update-term-title
+
+# auto .nvmrc
 
 load-nvmrc() {
   local node_version="$(nvm version)"
