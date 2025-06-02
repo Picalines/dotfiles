@@ -36,7 +36,7 @@ return {
 				end),
 
 				on_win = function(win)
-					vim.wo[win.win].winbar = ''
+					vim.wo[win.win].winbar = ' %{b:term_title}'
 				end,
 			},
 		},
