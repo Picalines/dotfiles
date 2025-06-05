@@ -23,10 +23,10 @@ end
 
 keymap {
 	[{ 'n', desc = 'LSP: %s' }] = {
-		['K'] = { '<Cmd>luado vim.lsp.buf.hover()<CR>', 'hover' },
+		['K'] = { '<Cmd>lua vim.lsp.buf.hover()<CR>', 'hover' },
 
-		['<leader>r'] = { '<Cmd>luado vim.lsp.buf.rename()<CR>', 'rename' },
-		['<leader>a'] = { '<Cmd>luado vim.lsp.buf.code_action()<CR>', 'action' },
+		['<leader>r'] = { '<Cmd>lua vim.lsp.buf.rename()<CR>', 'rename' },
+		['<leader>a'] = { '<Cmd>lua vim.lsp.buf.code_action()<CR>', 'action' },
 
 		['gD'] = { '<Cmd>Telescope lsp_definitions<CR>', 'Go to definition' },
 		['gR'] = { '<Cmd>Telescope lsp_references<CR>', 'Go to references' },
