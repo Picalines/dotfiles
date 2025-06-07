@@ -53,7 +53,7 @@ return {
 						'prettierd',
 						'svelte-language-server',
 						'tailwindcss-language-server',
-						'typescript-language-server',
+						'vtsls',
 						{ 'eslint-lsp', version = '4.8.0' },
 					},
 
