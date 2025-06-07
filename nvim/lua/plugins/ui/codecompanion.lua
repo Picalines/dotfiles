@@ -34,8 +34,11 @@ return {
 			'MeanderingProgrammer/render-markdown.nvim',
 			-- I don't like editing markdown files with the plugin,
 			-- so enable it only in codecompanion window
-			ft = { 'codecompanion' },
-			opts = { file_types = { 'codecompanion' } },
+			opts = {
+				file_types = { 'codecompanion' },
+				heading = { position = 'inline' },
+				icons = { '󰎤 ', '󰎧 ', '󰎪 ', '󰎭 ', '󰎱 ', '󰎳 ' },
+			},
 		},
 	},
 
@@ -59,6 +62,11 @@ return {
 					window = {
 						position = 'right',
 						width = 0.35,
+						opts = {
+							number = false,
+							relativenumber = false,
+							signcolumn = 'no',
+						},
 					},
 				},
 				diff = {
