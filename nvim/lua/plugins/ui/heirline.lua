@@ -557,8 +557,6 @@ return {
 		}
 
 		local TerminalList = {
-			update = { 'TermOpen', 'TermClose', 'BufEnter' },
-
 			condition = function(self)
 				self.terminal_count = #array.filter(vim.api.nvim_list_chans(), function(chan)
 					return chan.mode == 'terminal'
