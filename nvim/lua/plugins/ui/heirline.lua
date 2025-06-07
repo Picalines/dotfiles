@@ -456,50 +456,46 @@ return {
 			hl = 'DiagnosticInfo',
 		}
 
-		local Git = {
-			condition = h_conditions.is_git_repo,
+		local GitBranch = {
+			condition = function()
+				return vim.b.gitsigns_status_dict
+			end,
 
-			init = function(self)
-				self.status_dict = vim.b.gitsigns_status_dict
-				self.has_changes = self.status_dict.added ~= 0 or self.status_dict.removed ~= 0 or self.status_dict.changed ~= 0
+			provider = function()
+				return ' ' .. tostring(vim.b.gitsigns_status_dict.head):gsub('^users/[^/]+/', '')
 			end,
 
 			hl = '@diff.delta',
+		}
 
-			Bold {
-				provider = function(self)
-					local branch = tostring(self.status_dict.head)
-					branch = branch:gsub('^users/[^/]+/', '')
-					return ' ' .. branch
+		local function diff_count(key)
+			local b = vim.b
+			local count = b.minidiff_summary and b.minidiff_summary[key]
+			if count ~= 0 then
+				return count
+			end
+		end
+
+		local function DiffCounter(count_key, sign, hl)
+			return {
+				condition = function()
+					return diff_count(count_key)
 				end,
-			},
-			{
-				provider = ' ',
-				condition = function(self)
-					return self.has_changes
+				provider = function()
+					return sign .. diff_count(count_key)
 				end,
-			},
-			{
-				provider = function(self)
-					local count = self.status_dict.added or 0
-					return count > 0 and ('+' .. count)
-				end,
-				hl = '@diff.plus',
-			},
-			{
-				provider = function(self)
-					local count = self.status_dict.removed or 0
-					return count > 0 and ('-' .. count)
-				end,
-				hl = '@diff.minus',
-			},
-			{
-				provider = function(self)
-					local count = self.status_dict.changed or 0
-					return count > 0 and ('~' .. count)
-				end,
-				hl = '@diff.delta',
-			},
+				hl = hl,
+			}
+		end
+
+		local Diff = {
+			condition = function()
+				return diff_count 'add' or diff_count 'delete' or diff_count 'change'
+			end,
+
+			DiffCounter('add', '+', '@diff.plus'),
+			DiffCounter('delete', '-', '@diff.minus'),
+			DiffCounter('change', '~', '@diff.delta'),
 		}
 
 		---@class DiagnisticCounterOpts
@@ -671,7 +667,8 @@ return {
 		local LeftStatusline = AppendAll(Space, 'right') {
 			ViMode,
 			ReadonlyFlag 'status',
-			Git,
+			GitBranch,
+			Diff,
 			ErrorCount,
 			WarningCount,
 			InfoCount,

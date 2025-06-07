@@ -6,19 +6,17 @@ local is_in_arcadia = vim.startswith(vim.fn.getcwd() or '', vim.fn.expand '~/Arc
 local should_use_arc = arc_plugin_exists and is_in_arcadia
 
 keymap {
-	[{ 'n', desc = 'Git: %s' }] = {
-		['<leader>gd'] = { '<Cmd>Gitsigns preview_hunk<CR>', 'preview diff' },
-		['<leader>gs'] = { '<Cmd>Gitsigns stage_hunk<CR>', 'toggle staged hunk' },
-		['<leader>gr'] = { '<Cmd>Gitsigns reset_hunk<CR>', 'reset hunk' },
-		['<leader>gb'] = { '<Cmd>Gitsigns blame_line full=true<CR>', 'blame line' },
-		['<leader>gB'] = { '<Cmd>Gitsigns blame<CR>', 'blame buffer' },
+	[{ desc = 'Git: %s' }] = {
+		[{ 'n' }] = {
+			['<leader>gs'] = { '<Cmd>Gitsigns stage_hunk<CR>', 'toggle staged hunk' },
+			['<leader>gr'] = { '<Cmd>Gitsigns reset_hunk<CR>', 'reset hunk' },
+			['<leader>gb'] = { '<Cmd>Gitsigns blame_line full=true<CR>', 'blame line' },
+			['<leader>gB'] = { '<Cmd>Gitsigns blame<CR>', 'blame buffer' },
+		},
 
-		[']h'] = { '<Cmd>Gitsigns nav_hunk next<CR>', 'next' },
-		['[h'] = { '<Cmd>Gitsigns nav_hunk prev<CR>', 'previous' },
-	},
-
-	[{ 'o', 'x', silent = true }] = {
-		['ih'] = { ':<C-U>Gitsigns select_hunk<CR>', 'Hunk: select' },
+		[{ 'x' }] = {
+			['<leader>gs'] = { ':Gitsigns stage_hunk<CR>', 'stage selected' },
+		},
 	},
 }
 
@@ -34,27 +32,9 @@ return {
 	---@type Gitsigns.Config
 	---@diagnostic disable-next-line: missing-fields
 	opts = {
-		signs = {
-			add = { text = '+', show_count = false },
-			change = { text = '~', show_count = false },
-			delete = { text = '_', show_count = false },
-			topdelete = { text = '‾', show_count = false },
-			changedelete = { text = '~', show_count = false },
-			untracked = { text = '+', show_count = false },
-		},
+		signcolumn = false,
 
-		signs_staged = {
-			add = { text = '+', show_count = false },
-			change = { text = '~', show_count = false },
-			delete = { text = '_', show_count = false },
-			topdelete = { text = '‾', show_count = false },
-			changedelete = { text = '~', show_count = false },
-			untracked = { text = '+', show_count = false },
-		},
-
-		signcolumn = true,
-
-		attach_to_untracked = true,
+		attach_to_untracked = false,
 		watch_gitdir = {
 			follow_files = true,
 		},

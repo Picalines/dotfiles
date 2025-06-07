@@ -6,10 +6,6 @@ local signal = require 'util.signal'
 
 local function colorscheme_init()
 	local attrs = { 'bg', 'reverse' }
-	hl.clear('DiffAdd', attrs)
-	hl.clear('DiffChange', attrs)
-	hl.clear('DiffDelete', attrs)
-	hl.clear('DiffText', attrs)
 	hl.clear('EndOfBuffer', attrs)
 	hl.clear('NonText', attrs)
 	hl.clear('NormalFloat', attrs)
