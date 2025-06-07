@@ -25,7 +25,7 @@ return {
 							[{ 'n' }] = {
 								['<leader>t'] = { '<Cmd>TerminalHide<CR>', 'close' },
 								['q'] = { '<Cmd>TerminalHide<CR>', 'close' },
-								['n'] = { '<Cmd>TerminalNew<CR>', 'new' },
+								['o'] = { '<Cmd>TerminalNew<CR>', 'new' },
 							},
 
 							[{ 't' }] = {
