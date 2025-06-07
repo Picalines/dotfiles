@@ -1,3 +1,11 @@
+local keymap = require 'util.keymap'
+
+keymap {
+	[{ 'c' }] = {
+		['<Tab>'] = { '<C-n>', remap = true },
+	},
+}
+
 return {
 	'saghen/blink.cmp',
 
