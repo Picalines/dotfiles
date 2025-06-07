@@ -10,29 +10,21 @@ local client_modules = {
 		'colorschemes',
 		'lang-service',
 		'text-editing',
-		'treesitter',
 		'ui',
 	},
-	neovide = {},
+	neovide = {
+		'colorschemes',
+		'lang-service',
+		'text-editing',
+		'ui',
+	},
 	vscode = {
 		'text-editing',
-		'treesitter',
+		'lang-service',
 	},
 }
 
-local lazy_modules
-
-if client == 'vscode' then
-	lazy_modules = client_modules.vscode
-else
-	lazy_modules = client_modules.terminal
-
-	if client == 'neovide' then
-		lazy_modules = array.concat(lazy_modules, client_modules.neovide)
-	end
-end
-
-local lazy_spec = array.map(lazy_modules, function(module)
+local lazy_spec = array.map(client_modules[client], function(module)
 	return { import = 'plugins.' .. module }
 end)
 

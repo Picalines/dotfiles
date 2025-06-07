@@ -1,5 +1,3 @@
----@diagnostic disable: missing-fields
-
 return {
 	'nvim-treesitter/nvim-treesitter',
 
@@ -14,15 +12,7 @@ return {
 
 		indent = { enable = true },
 
-		incremental_selection = {
-			enable = false,
-			keymaps = {
-				init_selection = 'vn',
-				node_incremental = 'n',
-				scope_incremental = false,
-				node_decremental = 'N',
-			},
-		},
+		incremental_selection = { enable = false },
 
 		ensure_installed = {
 			'bash',
