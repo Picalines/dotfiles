@@ -22,7 +22,19 @@ return {
 			hl = 'Whitespace',
 		},
 
+		input = {
+			enabled = true,
+			icon_pos = 'title',
+			icon = '󰙏',
+			win = {
+				relative = 'cursor',
+				title_pos = 'left',
+				row = 1,
+			},
+		},
+
 		terminal = {
+			enabled = true,
 			win = {
 				on_buf = vim.schedule_wrap(function(win)
 					keymap {
