@@ -29,6 +29,7 @@ return {
 
 	dependencies = {
 		'j-hui/fidget.nvim',
+		'echasnovski/mini.diff',
 		{
 			'MeanderingProgrammer/render-markdown.nvim',
 			-- I don't like editing markdown files with the plugin,
@@ -59,6 +60,10 @@ return {
 						position = 'right',
 						width = 0.35,
 					},
+				},
+				diff = {
+					enabled = true,
+					provider = 'mini_diff',
 				},
 			},
 
