@@ -1,5 +1,3 @@
-local app = require 'util.app'
-
 return {
 	'nvim-telescope/telescope.nvim',
 
@@ -12,7 +10,7 @@ return {
 			'nvim-telescope/telescope-fzf-native.nvim',
 			build = 'make',
 			cond = function()
-				return app.os() ~= 'windows'
+				return require('util.app').os() ~= 'windows'
 			end,
 		},
 
@@ -32,7 +30,6 @@ return {
 
 	config = function()
 		local array = require 'util.array'
-		local tbl = require 'util.table'
 		local keymap = require 'util.keymap'
 		local telescope = require 'telescope'
 		local actions = require 'telescope.actions'
@@ -127,59 +124,25 @@ return {
 		safe_load_extension 'lsp_handlers'
 		safe_load_extension 'telescope-tabs'
 
-		local function exit_visual_mode()
-			vim.api.nvim_feedkeys(':', 'nx', false)
-		end
-
-		local function get_visual_text()
-			local temp_reg = 't'
-			local old_reg, old_reg_type = vim.fn.getreg(temp_reg), vim.fn.getregtype(temp_reg)
-			exit_visual_mode()
-			vim.cmd(':noau silent norm gv"' .. temp_reg .. 'y')
-			local visual_text = vim.fn.getreg(temp_reg)
-			vim.fn.setreg(temp_reg, old_reg, old_reg_type)
-			return visual_text
-		end
-
-		local function pick_visual(picker)
-			return function(opts)
-				local text = vim.split(get_visual_text(), '\n')[1]
-				return picker(tbl.override_deep({ default_text = text }, opts or {}))
-			end
-		end
-
-		local picker_maps = {
-			['<leader>bb'] = { builtin.buffers, 'buffer' },
-			['<leader>ss'] = { '<Cmd>Telescope telescope-tabs list_tabs<CR>', 'spaces' },
-
-			['<leader>ff'] = { builtin.find_files, 'files' },
-			['<leader>fo'] = { builtin.oldfiles, 'old files' },
-			['<leader>fb'] = { builtin.buffers, 'buffer' },
-			['<leader>fg'] = { builtin.live_grep, 'grep' },
-			['<leader>fc'] = { builtin.commands, 'commands' },
-			['<leader>fh'] = { builtin.help_tags, 'help' },
-			['<leader>fd'] = { builtin.diagnostics, 'diagnostics' },
-			['<leader>fr'] = { builtin.resume, 'resume' },
-			['<leader>f/'] = { builtin.current_buffer_fuzzy_find, 'in current buffer' },
-			['<leader>fs'] = { builtin.lsp_document_symbols, 'document symbols' },
-			['<leader>fS'] = { builtin.lsp_dynamic_workspace_symbols, 'workspace symbols' },
-
-			['<leader>uC'] = { builtin.colorscheme, 'colorscheme' },
-		}
-
 		keymap {
-			[{ desc = 'Find: %s' }] = {
-				[{ 'n' }] = picker_maps,
+			[{ 'n', desc = 'Find: %s' }] = {
+				['<leader>bb'] = { builtin.buffers, 'buffer' },
+				['<leader>ss'] = { '<Cmd>Telescope telescope-tabs list_tabs<CR>', 'spaces' },
 
-				[{ 'n' }] = {
-					['<leader>ft'] = { builtin.filetypes, 'Select filetypes' },
-				},
+				['<leader>ff'] = { builtin.find_files, 'files' },
+				['<leader>fo'] = { builtin.oldfiles, 'old files' },
+				['<leader>fb'] = { builtin.buffers, 'buffer' },
+				['<leader>fg'] = { builtin.live_grep, 'grep' },
+				['<leader>fc'] = { builtin.commands, 'commands' },
+				['<leader>fh'] = { builtin.help_tags, 'help' },
+				['<leader>fd'] = { builtin.diagnostics, 'diagnostics' },
+				['<leader>fr'] = { builtin.resume, 'resume' },
+				['<leader>f/'] = { builtin.current_buffer_fuzzy_find, 'in current buffer' },
+				['<leader>fs'] = { builtin.lsp_document_symbols, 'document symbols' },
+				['<leader>fS'] = { builtin.lsp_dynamic_workspace_symbols, 'workspace symbols' },
+				['<leader>ft'] = { builtin.filetypes, 'Select filetypes' },
 
-				[{ 'x' }] = tbl.map(picker_maps, function(lhs, rhs)
-					local v_rhs = array.copy(rhs)
-					v_rhs[1] = pick_visual(v_rhs[1])
-					return lhs, v_rhs
-				end),
+				['<leader>uC'] = { builtin.colorscheme, 'colorscheme' },
 			},
 		}
 	end,
