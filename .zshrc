@@ -8,7 +8,9 @@ command-exists() {
 
 if command-exists nvim
 then
+  export EDITOR="$(which nvim)"
   alias vim=nvim
+  alias nv=nvim
 fi
 
 if [[ -f ~/.zsh_aliases ]]; then
