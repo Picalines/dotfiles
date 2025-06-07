@@ -26,26 +26,6 @@ return {
 
 		local augroup = autocmd.group 'heirline'
 
-		local tab_winids = signal.new {} --[=[@as integer[]]=]
-		augroup:on({ 'TabNew', 'WinNew', 'WinEnter', 'BufWinEnter', 'TermOpen' }, '*', function()
-			tab_winids(vim.api.nvim_tabpage_list_wins(0))
-		end)
-
-		local has_normal_bufs = signal.derive(function()
-			return array.some(tab_winids(), function(winid)
-				local buf = vim.api.nvim_win_get_buf(winid)
-				local buftype = vim.api.nvim_get_option_value('buftype', { buf = buf })
-				local config = vim.api.nvim_win_get_config(winid)
-				return buftype == '' and config.relative == ''
-			end)
-		end)
-
-		vim.o.laststatus = 3 -- global statusline
-
-		signal.watch(function()
-			vim.o.showtabline = has_normal_bufs() and 2 or 1 -- always OR only when #tabpages > 1
-		end)
-
 		---@param text string
 		---@param opts? table
 		local function Text(text, opts)
