@@ -16,11 +16,8 @@ return {
 		---@param items (StarterItem | nil)[]
 		local function section(name, items)
 			return array.flat_map(items, function(item)
-				if not item then
-					return {}
-				end
-				local icon, item_name, action = item[1], item[2], item[3]
-				return { { section = name, name = item_name, action = action, __icon = icon } }
+				local item_name, cmd = item[1], item[2]
+				return { { section = name, name = item_name, action = cmd } }
 			end)
 		end
 
@@ -33,58 +30,51 @@ return {
 
 			items = {
 				section('Files', {
-					{ '', 'Explore Files', 'Neotree filesystem reveal' },
-					{ '', 'Change Directory', string.format('Neotree filesystem current %s', app.os() == 'windows' and '/' or '~') },
-					{ '󰣩', 'Open Workspace', 'WorkspacesOpen' },
+					{ 'Explore Files ', 'Neotree filesystem reveal' },
+					{ 'Change Directory ', string.format('Neotree filesystem current %s', app.os() == 'windows' and '/' or '~') },
+					{ 'Open Workspace 󰣩', 'WorkspacesOpen' },
 				}),
 				section('Editor', {
-					{ '󱇨', 'New Buffer', 'enew' },
-					{ '󰸌', 'Theme', 'Telescope colorscheme' },
-					app.client() == 'neovide' and { '', 'Font', 'PickGuiFont' } or nil,
-					{ '', 'Quit', 'wa | qa!' },
+					{ 'New Buffer 󱇨', 'enew' },
+					{ 'Theme 󰸌', 'Telescope colorscheme' },
+					{ 'Quit ', 'wa | qa!' },
 				}),
 				section('Manage', {
-					{ '󰒲', 'Lazy', 'Lazy' },
-					{ '󰏗', 'Mason', 'Mason' },
-					{ '', 'Health', 'checkhealth' },
+					{ 'Lazy 󰒲', 'Lazy' },
+					{ 'Mason 󰏗', 'Mason' },
+					{ 'Health ', 'checkhealth' },
 				}),
 			},
 
 			content_hooks = {
-				function(content)
-					local coords = MiniStarter.content_coords(content, 'item')
-					for i = #coords, 1, -1 do
-						local l_num, u_num = coords[i].line, coords[i].unit
-						local item = content[l_num][u_num].item
-						table.insert(content[l_num], u_num, {
-							string = item.__icon .. ' ',
-							type = 'item_bullet',
-							hl = 'MiniStarterItemBullet',
-							_item = item,
-							_place_cursor = true,
-						})
-					end
-
-					return content
-				end,
-
+				starter.gen_hook.adding_bullet('░ ', true),
 				starter.gen_hook.aligning('center', 'center'),
 			},
 
-			header = table.concat({
-				[[                                                     ]],
-				[[   ██ █        ██       ██       █         █       ██ █    ]],
-				[[  ███ █       ██     ██     █           █     ██ █    ]],
-				[[ ███ █      ██ █   █  █   █            ██   ██ █    ]],
-				[[███ █ ██ █ █    █ █      ██ █████]],
-				[[██ ██ █ █  █    █ ██ █   █ ██      █]],
-				[[    ███   █ █      █  █  ██ █  █   ██            █ ]],
-				[[    ███     █      ██   █  █     █           █  ]],
-				[[    ██       █          ██     ████       █         █   ]],
-				[[                                                         ]],
-				'',
-				string.format('v%s', vim.version()),
-			}, '\n'),
+			header = function()
+				local str = require 'util.string'
+
+				local logo = {
+					[[                                                     ]],
+					[[   ██ █        ██       ██       █         █       ██ █    ]],
+					[[  ███ █       ██     ██     █           █     ██ █    ]],
+					[[ ███ █      ██ █   █  █   █            ██   ██ █    ]],
+					[[███ █ ██ █ █    █ █      ██ █████]],
+					[[██ ██ █ █  █    █ ██ █   █ ██      █]],
+					[[    ███   █ █      █  █  ██ █  █   ██            █ ]],
+					[[    ███     █      ██   █  █     █           █  ]],
+					[[    ██       █          ██     ████       █         █   ]],
+					[[                                                         ]],
+				}
+
+				local logo_width = vim.fn.strcharlen(logo[1])
+
+				local version_line = str.pad_center(string.format(' v%s ', vim.version()), logo_width, { pad_char = '░' })
+
+				local lines = array.concat({ string.rep('░', logo_width), '' }, logo, { '', version_line })
+
+				return table.concat(lines, '\n')
+			end,
 
 			footer = '',
 		}
