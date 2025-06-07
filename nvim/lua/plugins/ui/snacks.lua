@@ -17,6 +17,11 @@ return {
 	---@module 'snacks'
 	---@type snacks.Config
 	opts = {
+		indent = {
+			enabled = true,
+			hl = 'Whitespace',
+		},
+
 		terminal = {
 			win = {
 				on_buf = vim.schedule_wrap(function(win)
