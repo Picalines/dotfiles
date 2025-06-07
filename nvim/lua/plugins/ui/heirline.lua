@@ -617,19 +617,17 @@ return {
 				},
 			},
 
-			init = function(self)
+			provider = function(self)
 				local client_names = array.map(vim.lsp.get_clients { bufnr = 0 }, function(client)
 					local s = self.client_icons[client.name] or client.name
 					s = s:gsub('_language_server$', ''):gsub('_ls$', '')
 					return s
 				end)
 
-				self.active_clients = table.concat(client_names, ' ')
+				return table.concat(client_names, ' ')
 			end,
 
 			hl = '@tag',
-
-			provider = func.field 'active_clients',
 		}
 
 		local SpellFlag = {
