@@ -14,6 +14,7 @@ return {
 	dependencies = {
 		'rafamadriz/friendly-snippets',
 		'L3MON4D3/LuaSnip',
+		'xzbdmw/colorful-menu.nvim',
 	},
 
 	---@module 'blink.cmp'
@@ -39,7 +40,7 @@ return {
 		},
 
 		sources = {
-			default = { 'lsp', 'path', 'snippets', 'buffer' },
+			default = { 'lsp', 'path', 'buffer' },
 		},
 
 		fuzzy = {
@@ -50,15 +51,23 @@ return {
 			menu = {
 				auto_show = false,
 				draw = {
-					columns = { { 'kind_icon' }, { 'label', 'label_description', gap = 1 } },
+					columns = { { 'kind_icon' }, { 'label', gap = 1 } },
 					components = {
-						-- see https://github.com/Saghen/blink.cmp/issues/1610
-						label_description = {
+						label = {
 							text = function(ctx)
-								return ctx.label_description ~= '' and ctx.label_description or ctx.item.detail
+								return require('colorful-menu').blink_components_text(ctx)
+							end,
+							highlight = function(ctx)
+								return require('colorful-menu').blink_components_highlight(ctx)
 							end,
 						},
 					},
+				},
+			},
+			list = {
+				selection = {
+					preselect = true,
+					auto_insert = true,
 				},
 			},
 			ghost_text = {
