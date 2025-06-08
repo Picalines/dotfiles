@@ -28,6 +28,8 @@ return {
 		'nvim-tree/nvim-web-devicons',
 	},
 
+	---@module 'neo-tree'
+	---@type neotree.Config?
 	opts = {
 		sources = { 'filesystem' },
 
@@ -244,25 +246,39 @@ return {
 				end,
 
 				codecompanion_watch = function(state)
+					local chat = require('codecompanion').last_chat()
 					local node = state.tree:get_node()
 					local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
-					require('codecompanion').last_chat().references:add {
-						id = '<file>' .. path .. '</file>',
-						path = path,
-						source = 'codecompanion.strategies.chat.slash_commands.file',
-						opts = { visible = true },
-					}
+					local name = vim.fn.fnamemodify(path, ':t')
+					if chat then
+						chat.references:add {
+							id = string.format('<file>%s</file>', path),
+							path = path,
+							source = 'codecompanion.strategies.chat.slash_commands.file',
+							opts = { visible = true },
+						}
+						vim.notify(string.format('Chat: %s added to context (watch)', name))
+					else
+						vim.notify 'no chat'
+					end
 				end,
 
 				codecompanion_pin = function(state)
+					local chat = require('codecompanion').last_chat()
 					local node = state.tree:get_node()
 					local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
-					require('codecompanion').last_chat().references:add {
-						id = '<file>' .. path .. '</file>',
-						path = path,
-						source = 'codecompanion.strategies.chat.slash_commands.file',
-						opts = { pinned = true, visible = true },
-					}
+					local name = vim.fn.fnamemodify(path, ':t')
+					if chat then
+						chat.references:add {
+							id = string.format('<file>%s</file>', path),
+							path = path,
+							source = 'codecompanion.strategies.chat.slash_commands.file',
+							opts = { pinned = true, visible = true },
+						}
+						vim.notify(string.format('Chat: %s added to context (watch)', name))
+					else
+						vim.notify 'no chat'
+					end
 				end,
 			},
 		},
