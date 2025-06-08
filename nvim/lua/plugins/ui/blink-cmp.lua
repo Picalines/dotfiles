@@ -9,11 +9,11 @@ keymap {
 return {
 	'saghen/blink.cmp',
 
+	event = { 'BufReadPre', 'BufNewFile' },
+
 	build = 'cargo build --release',
 
 	dependencies = {
-		'rafamadriz/friendly-snippets',
-		'L3MON4D3/LuaSnip',
 		'xzbdmw/colorful-menu.nvim',
 	},
 
