@@ -15,9 +15,9 @@ return {
 		highlight_duration = 500,
 
 		mappings = {
-			add = 'gs',
-			delete = 'dgs',
-			replace = 'cgs',
+			add = 'gss',
+			delete = 'gsd',
+			replace = 'gsc',
 
 			find = '',
 			find_left = '',
