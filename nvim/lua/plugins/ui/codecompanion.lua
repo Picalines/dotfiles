@@ -87,13 +87,28 @@ return {
 					},
 
 					keymaps = {
-						stop = { modes = { n = '<C-c>' } },
-						system_prompt = { modes = { n = '<Nul>' } },
+						auto_tool_mode = { modes = { n = '<LocalLeader>ta' } },
+						change_adapter = { modes = { n = '<LocalLeader>a' } },
+						clear = { modes = { n = '<LocalLeader>x' } },
 						close = { modes = { n = '<Nul>' } },
+						codeblock = { modes = { n = '<Nul>' } },
+						debug = { modes = { n = '<LocalLeader>d' } },
+						fold_code = { modes = { n = '<LocalLeader>f' } },
+						pin = { modes = { n = '<LocalLeader>p' } },
+						regenerate = { modes = { n = '<LocalLeader>r' } },
+						stop = { modes = { n = '<LocalLeader>s' } },
+						system_prompt = { modes = { n = '<LocalLeader>ps' } },
+						watch = { modes = { n = '<LocalLeader>w' } },
+						yank_code = { modes = { n = '<LocalLeader>y' } },
 					},
 				},
 				inline = {
 					adapter = default_adapter,
+
+					keymaps = {
+						accept_change = { modes = { n = '<LocalLeader>a' } },
+						reject_change = { modes = { n = '<LocalLeader>r' } },
+					},
 				},
 				cmd = {
 					adapter = default_adapter,
