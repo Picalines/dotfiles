@@ -27,8 +27,6 @@ return {
 		{
 			'WhoIsSethDaniel/mason-tool-installer.nvim',
 
-			event = 'UiEnter',
-
 			opts = {
 				auto_update = true,
 				debounce_hours = 6,
