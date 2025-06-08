@@ -1,3 +1,26 @@
+local keymap = require 'util.keymap'
+
+local function expand_or_jump()
+	local luasnip = require 'luasnip'
+	if luasnip.expand_or_jumpable() then
+		luasnip.expand_or_jump()
+	end
+end
+
+local function jump_back()
+	local luasnip = require 'luasnip'
+	if luasnip.jumpable(-1) then
+		luasnip.jump(-1)
+	end
+end
+
+keymap {
+	[{ 'i', 's', desc = 'Snippet: %s' }] = {
+		['<C-k>'] = { expand_or_jump, 'expand / jump' },
+		['<C-j>'] = { jump_back, 'jump back' },
+	},
+}
+
 return {
 	'L3MON4D3/LuaSnip',
 
@@ -9,35 +32,10 @@ return {
 
 	build = 'make install_jsregexp',
 
-	config = function(_, opts)
-		local keymap = require 'util.keymap'
-		local luasnip = require 'luasnip'
-
-		if opts then
-			luasnip.config.setup(opts)
-		end
-
-		keymap {
-			[{ 'i', 's' }] = {
-				['<C-k>'] = function()
-					if luasnip.expand_or_jumpable() then
-						luasnip.expand_or_jump()
-					end
-				end,
-
-				['<C-j>'] = function()
-					if luasnip.jumpable(-1) then
-						luasnip.jump(-1)
-					end
-				end,
-			},
-		}
-
+	config = function()
 		require('luasnip.loaders.from_vscode').lazy_load { exclude = { 'javascriptreact', 'typescriptreact' } }
 
-		require('luasnip.loaders.from_lua').lazy_load()
-		require('luasnip.loaders.from_snipmate').lazy_load()
-
+		local luasnip = require 'luasnip'
 		luasnip.filetype_extend('typescript', { 'javascript', 'tsdoc' })
 		luasnip.filetype_extend('typescriptreact', { 'typescript', 'javascript', 'tsdoc' })
 		luasnip.filetype_extend('javascript', { 'jsdoc' })
