@@ -31,12 +31,12 @@ return {
 					end
 				end,
 				'select_next',
-				'fallback',
 			},
 
-			['<C-S-n>'] = { 'select_prev', 'fallback' },
-
+			['<C-S-n>'] = { 'select_prev' },
 			['<C-y>'] = { 'accept' },
+			['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
+			['<C-d>'] = { 'scroll_documentation_down', 'hide', 'fallback' },
 		},
 
 		sources = {
