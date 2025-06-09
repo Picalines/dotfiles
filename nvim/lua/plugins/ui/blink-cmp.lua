@@ -9,7 +9,7 @@ keymap {
 return {
 	'saghen/blink.cmp',
 
-	event = { 'BufReadPre', 'BufNewFile' },
+	event = { 'InsertEnter', 'CmdlineEnter' },
 
 	build = 'cargo build --release',
 
