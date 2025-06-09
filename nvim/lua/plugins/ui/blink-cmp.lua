@@ -96,6 +96,7 @@ return {
 			},
 			window = {
 				show_documentation = true,
+				direction_priority = { 's', 'n' },
 				border = 'rounded',
 			},
 		},
