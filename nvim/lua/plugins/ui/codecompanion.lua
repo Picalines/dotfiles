@@ -52,7 +52,7 @@ return {
 
 		local default_adapter = private_adapters.default
 
-		return {
+		local opts = {
 			adapters = private_adapters.adapters,
 
 			display = {
@@ -124,16 +124,13 @@ return {
 				},
 			},
 		}
-	end,
 
-	init = function()
 		-- fidget.nvim integration
 		-- original: https://github.com/olimorris/codecompanion.nvim/discussions/813#discussioncomment-12289384
-		local fidget_progress = require 'fidget.progress'
-
 		local progress_handles = {}
 
 		augroup:on_user('CodeCompanionRequestStarted', function(event)
+			local fidget_progress = require 'fidget.progress'
 			progress_handles[event.data.id] = fidget_progress.handle.create {
 				title = ' ai generation',
 				message = 'in progress...',
@@ -158,5 +155,7 @@ return {
 				handle:finish()
 			end
 		end)
+
+		return opts
 	end,
 }
