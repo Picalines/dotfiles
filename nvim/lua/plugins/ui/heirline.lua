@@ -17,6 +17,7 @@ return {
 		local h_conditions = require 'heirline.conditions'
 		local h_util = require 'heirline.utils'
 		local heirline = require 'heirline'
+		local hl = require 'util.highlight'
 		local signal = require 'util.signal'
 		local str = require 'util.string'
 		local tbl = require 'util.table'
@@ -24,6 +25,13 @@ return {
 		local augroup = autocmd.group 'heirline'
 
 		local Space = { provider = ' ', hl = { fg = 'NONE' } }
+
+		local function hl_fg(hl_name)
+			return function(...)
+				local hl_name_str = type(hl_name) == 'function' and hl_name(...) or hl_name
+				return { fg = hl.attr(hl_name_str, 'fg') }
+			end
+		end
 
 		---@param decorate fun(c: table): table
 		local function Decorated(decorate)
@@ -101,7 +109,7 @@ return {
 
 		local BufferModifiedFlag = {
 			provider = '+',
-			hl = '@diff.plus',
+			hl = hl_fg '@diff.plus',
 			condition = function(self)
 				return vim.bo[self.bufnr].modified
 			end,
@@ -298,14 +306,14 @@ return {
 					s = '@comment',
 					S = '@comment',
 					['\19'] = '@comment',
-					R = '@diff.change',
-					r = '@diff.change',
+					R = '@diff.delta',
+					r = '@diff.delta',
 					['!'] = '@diff.minus',
 					t = 'DiagnosticWarn',
 				},
 			},
 
-			{ provider = '', hl = '@diff.plus' },
+			{ provider = '', hl = hl_fg '@diff.plus' },
 
 			AppendAll(Space, 'left') {
 				{
@@ -319,9 +327,9 @@ return {
 					provider = function(self)
 						return self.mode_names[self.mode] or self.mode
 					end,
-					hl = function(self)
+					hl = hl_fg(function(self)
 						return self.mode_hls[self.mode:sub(1, 1)] or 'Normal'
-					end,
+					end),
 				},
 			},
 
@@ -380,7 +388,7 @@ return {
 		}
 
 		local GitBranch = {
-			hl = '@diff.delta',
+			hl = hl_fg '@diff.delta',
 			condition = function()
 				return vim.b.gitsigns_status_dict
 			end,
@@ -397,7 +405,7 @@ return {
 			end
 		end
 
-		local function DiffCounter(count_key, sign, hl)
+		local function DiffCounter(count_key, sign, comp_hl)
 			return {
 				condition = function()
 					return diff_count(count_key)
@@ -405,7 +413,7 @@ return {
 				provider = function()
 					return sign .. diff_count(count_key)
 				end,
-				hl = hl,
+				hl = comp_hl,
 			}
 		end
 
@@ -414,9 +422,9 @@ return {
 				return diff_count 'add' or diff_count 'delete' or diff_count 'change'
 			end,
 
-			DiffCounter('add', '+', '@diff.plus'),
-			DiffCounter('delete', '-', '@diff.minus'),
-			DiffCounter('change', '~', '@diff.delta'),
+			DiffCounter('add', '+', hl_fg '@diff.plus'),
+			DiffCounter('delete', '-', hl_fg '@diff.minus'),
+			DiffCounter('change', '~', hl_fg '@diff.delta'),
 		}
 
 		local function DiagnisticCounter(opts)
@@ -461,7 +469,7 @@ return {
 
 		local StatusModifiedFlag = {
 			provider = '+',
-			hl = '@diff.plus',
+			hl = hl_fg '@diff.plus',
 			condition = function()
 				return vim.bo.buftype ~= 'prompt' and vim.bo.modified
 			end,
@@ -478,7 +486,7 @@ return {
 		local LeapMarker = {
 			update = { 'User', pattern = 'HeirlineLeapUpdate' },
 			condition = func.curry_only(is_leaping),
-			{ provider = '󰤇 leap', hl = '@diff.plus' },
+			{ provider = '󰤇 leap', hl = hl_fg '@diff.plus' },
 		}
 
 		local TerminalList = {
