@@ -87,8 +87,8 @@ return {
 					},
 
 					keymaps = {
-						auto_tool_mode = { modes = { n = '<LocalLeader>ta' } },
-						change_adapter = { modes = { n = '<LocalLeader>a' } },
+						auto_tool_mode = { modes = { n = '<LocalLeader>t' } },
+						change_adapter = { modes = { n = '<LocalLeader>m' } },
 						clear = { modes = { n = '<LocalLeader>x' } },
 						close = { modes = { n = '<Nul>' } },
 						codeblock = { modes = { n = '<Nul>' } },
