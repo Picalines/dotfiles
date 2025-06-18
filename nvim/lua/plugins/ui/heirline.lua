@@ -491,9 +491,7 @@ return {
 
 		local TerminalList = {
 			condition = function(self)
-				self.terminal_count = #array.filter(vim.api.nvim_list_chans(), function(chan)
-					return chan.mode == 'terminal'
-				end)
+				self.terminal_count = #require('snacks').terminal.list()
 				return self.terminal_count > 0
 			end,
 
