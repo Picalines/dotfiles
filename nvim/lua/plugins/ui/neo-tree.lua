@@ -71,7 +71,7 @@ return {
 			},
 			modified = {
 				symbol = '+',
-				highlight = 'DiffAdd',
+				highlight = '@diff.plus',
 			},
 			name = {
 				trailing_slash = false,
