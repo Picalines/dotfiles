@@ -15,7 +15,7 @@ return {
 		highlight_duration = 500,
 
 		mappings = {
-			add = 'gss',
+			add = 'gs',
 			delete = 'gsd',
 			replace = 'gsc',
 
