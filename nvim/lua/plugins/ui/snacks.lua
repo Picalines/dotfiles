@@ -43,6 +43,8 @@ return {
 								['<leader>t'] = { '<Cmd>TerminalHide<CR>', 'close' },
 								['q'] = { '<Cmd>TerminalHide<CR>', 'close' },
 								['o'] = { '<Cmd>TerminalNew<CR>', 'new' },
+								['<C-d>'] = { 'i<C-d>', 'stop' },
+								['<C-w>c'] = { 'i<C-d>', 'close' },
 							},
 
 							[{ 't' }] = {
