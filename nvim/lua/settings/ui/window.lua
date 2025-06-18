@@ -5,7 +5,9 @@ local augroup = autocmd.group 'window'
 
 vim.go.mouse = 'a'
 vim.go.termguicolors = true
-vim.go.equalalways = true
+
+vim.o.splitright = true
+vim.o.splitbelow = true
 
 vim.go.scrolloff = 8
 
