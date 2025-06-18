@@ -49,11 +49,10 @@ return {
 
 			icons = {
 				unknown = '',
-				running = '',
-				skipped = '',
+				running = '',
+				skipped = '',
 				failed = '',
-				passed = '',
-				watching = '',
+				passed = '󰄴',
 			},
 		}
 
