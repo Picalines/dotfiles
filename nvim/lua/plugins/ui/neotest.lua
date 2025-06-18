@@ -62,6 +62,7 @@ return {
 			local winid = vim.fn.bufwinid(event.buf)
 
 			vim.wo[winid].winbar = ' output'
+			vim.wo[winid].signcolumn = 'no'
 
 			keymap {
 				[{ 'n', buffer = event.buf }] = {

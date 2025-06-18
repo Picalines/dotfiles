@@ -13,10 +13,14 @@ keymap {
 
 local augroup = autocmd.group 'fugitive'
 
-augroup:on('BufEnter', 'fugitive://*', function(event)
-	vim.api.nvim_set_option_value('buflisted', false, { buf = event.buf })
-	vim.api.nvim_set_option_value('number', false, { win = vim.fn.bufwinid(event.buf) })
-	vim.api.nvim_set_option_value('relativenumber', false, { win = vim.fn.bufwinid(event.buf) })
+augroup:on('BufWinEnter', 'fugitive://*', function(event)
+	local win = vim.fn.bufwinid(event.buf)
+
+	vim.bo[event.buf].buflisted = false
+	vim.wo[win].number = false
+	vim.wo[win].relativenumber = false
+	vim.wo[win].signcolumn = 'no'
+	vim.wo[win].winbar = '󰊢 git'
 
 	keymap {
 		[{ 'n', buffer = event.buf, desc = 'Git: %s' }] = {
