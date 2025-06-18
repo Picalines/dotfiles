@@ -1,3 +1,14 @@
+local keymap = require 'util.keymap'
+
+keymap {
+	[{ 'n', desc = 'Unit: %s' }] = {
+		['<leader>ur'] = { '<Cmd>Neotest run<CR>', 'run nearest' },
+		['<leader>uR'] = { '<Cmd>Neotest run file<CR>', 'run suite' },
+		['<leader>uc'] = { '<Cmd>Neotest stop<CR>', 'cancel suite' },
+		['<leader>uo'] = { '<Cmd>Neotest output-panel open<CR>', 'output' },
+	},
+}
+
 return {
 	'nvim-neotest/neotest',
 
@@ -5,25 +16,13 @@ return {
 		'nvim-neotest/nvim-nio',
 		'nvim-lua/plenary.nvim',
 		'antoinemadec/FixCursorHold.nvim',
-		'nvim-treesitter/nvim-treesitter',
 	},
 
-	event = 'LspAttach',
+	cmd = 'Neotest',
 
 	config = function()
 		local autocmd = require 'util.autocmd'
-		local keymap = require 'util.keymap'
 		local neotest = require 'neotest'
-
-		keymap {
-			[{ 'n', desc = 'Unit: %s' }] = {
-				['<leader>ur'] = { "<Cmd>lua require('neotest').run.run()<CR>", 'run nearest' },
-				['<leader>uR'] = { "<Cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", 'run suite' },
-				['<leader>uc'] = { "<Cmd>lua require('neotest').run.stop(vim.fn.expand('%'))<CR>", 'cancel suite' },
-				['<leader>ul'] = { "<Cmd>lua require('neotest').summary.open()<CR>", 'list' },
-				['<leader>uo'] = { "<Cmd>lua require('neotest').output_panel.open()<CR>", 'output' },
-			},
-		}
 
 		---@diagnostic disable-next-line: missing-fields
 		neotest.setup {
@@ -45,19 +44,7 @@ return {
 
 			---@diagnostic disable-next-line: missing-fields
 			summary = {
-				enabled = true,
-				follow = true,
-				animated = false,
-				---@diagnostic disable-next-line: missing-fields
-				mappings = {
-					expand = 'l',
-					expand_all = 'L',
-					output = 'o',
-					jumpto = '<CR>',
-					stop = 's',
-					next_failed = ']f',
-					prev_failed = '[f',
-				},
+				enabled = false,
 			},
 
 			icons = {
@@ -68,34 +55,25 @@ return {
 				passed = '',
 				watching = '',
 			},
-
-			highlights = {
-				adapter_name = '@attribute',
-				dir = 'Directory',
-				namespace = 'Directory',
-				file = 'Normal',
-				expand_marker = 'NeotestIndent',
-			},
 		}
 
 		local augroup = autocmd.group 'neotest'
 
-		augroup:on('FileType', 'neotest-summary', function(event)
-			keymap {
-				[{ 'n', buffer = event.buf }] = {
-					['q'] = { neotest.summary.close, 'Close panel' },
-					['<leader>ul'] = { neotest.summary.close, 'Close panel' },
-				},
-			}
-		end)
+		augroup:on('BufWinEnter', 'Neotest Output Panel', function(event)
+			local winid = vim.fn.bufwinid(event.buf)
 
-		augroup:on('FileType', 'neotest-output-panel', function(event)
+			vim.wo[winid].winbar = ' output'
+
 			keymap {
 				[{ 'n', buffer = event.buf }] = {
 					['q'] = { neotest.output_panel.close, 'Close panel' },
 					['<leader>uo'] = { neotest.output_panel.close, 'Close panel' },
 				},
 			}
+
+			vim.schedule(function()
+				vim.api.nvim_set_current_win(winid)
+			end)
 		end)
 	end,
 }
