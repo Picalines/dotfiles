@@ -16,6 +16,8 @@ local function colorscheme_init()
 	hl.clear('StatusLineTermNC', attrs)
 	hl.clear('TabLine', attrs)
 	hl.clear('TabLineFill', attrs)
+	hl.clear('WinBar', attrs)
+	hl.clear('WinBarNC', attrs)
 	hl.clear('WinSeparator', attrs)
 end
 
