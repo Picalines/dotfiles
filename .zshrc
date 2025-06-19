@@ -50,8 +50,13 @@ update-term-title() {
 add-zsh-hook chpwd update-term-title
 update-term-title
 
-# auto .nvmrc
+# pnpm completion
+if command-exists pnpm
+then
+  eval "$(pnpm completion zsh)"
+fi
 
+# auto .nvmrc
 load-nvmrc() {
   local node_version="$(nvm version)"
   local nvmrc_path="$(nvm_find_nvmrc)"
