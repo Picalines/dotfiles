@@ -20,11 +20,9 @@ local function resize_smart(count)
 	vim.cmd.wincmd(cmd)
 end
 
-local dismiss_map = '<Cmd>doautocmd User Dismiss | nohlsearch<CR>'
-
 keymap {
 	[{ 'n', silent = true }] = {
-		['<Esc>'] = { dismiss_map, 'Dismiss' },
+		['<Esc>'] = { '<Cmd>doautocmd User Dismiss<CR>', 'Dismiss' },
 
 		['<C-j>'] = { '<C-W>j', 'Move to bottom window' },
 		['<C-k>'] = { '<C-W>k', 'Move to upper window' },
@@ -41,6 +39,6 @@ keymap {
 	},
 
 	[{ 'i' }] = {
-		['<C-d>'] = { dismiss_map, 'Dismiss' },
+		['<C-d>'] = { '<Cmd>doautocmd User Dismiss<CR>', 'Dismiss' },
 	},
 }
