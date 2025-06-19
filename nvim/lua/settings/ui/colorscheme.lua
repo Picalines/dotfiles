@@ -37,7 +37,7 @@ signal.watch(function()
 		print('failed to load persisted colorscheme: ' .. vim.inspect(error))
 	end
 
-	vim.g.background = background()
+	vim.o.background = background()
 end)
 
 local function persist_colorscheme()
