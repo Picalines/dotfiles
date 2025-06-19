@@ -20,22 +20,32 @@ local function resize_smart(count)
 	vim.cmd.wincmd(cmd)
 end
 
+local function toggle_background()
+	vim.o.background = vim.o.background == 'dark' and 'light' or 'dark'
+end
+
 keymap {
 	[{ 'n', silent = true }] = {
 		['<Esc>'] = { '<Cmd>doautocmd User Dismiss<CR>', 'Dismiss' },
 
-		['<C-j>'] = { '<C-W>j', 'Move to bottom window' },
-		['<C-k>'] = { '<C-W>k', 'Move to upper window' },
-		['<C-h>'] = { '<C-W>h', 'Move to left window' },
-		['<C-l>'] = { '<C-W>l', 'Move to right window' },
+		[{ desc = 'Window: %s' }] = {
+			['<C-j>'] = { '<C-W>j', 'move to bottom' },
+			['<C-k>'] = { '<C-W>k', 'move to upper' },
+			['<C-h>'] = { '<C-W>h', 'move to left' },
+			['<C-l>'] = { '<C-W>l', 'move to right' },
 
-		['<S-Down>'] = { '5<C-W>-', 'Decrease window height' },
-		['<S-Up>'] = { '5<C-W>+', 'Increase window height' },
-		['<S-Left>'] = { '5<C-W><', 'Decrease window width' },
-		['<S-Right>'] = { '5<C-W>>', 'Increase window width' },
+			['<S-Down>'] = { '5<C-W>-', 'decrease height' },
+			['<S-Up>'] = { '5<C-W>+', 'increase height' },
+			['<S-Left>'] = { '5<C-W><', 'decrease width' },
+			['<S-Right>'] = { '5<C-W>>', 'increase width' },
 
-		['+'] = { func.curry(resize_smart, 5), 'Increase window size' },
-		['_'] = { func.curry(resize_smart, -5), 'Decrease window size' },
+			['+'] = { func.curry(resize_smart, 5), 'increase size' },
+			['_'] = { func.curry(resize_smart, -5), 'decrease size' },
+		},
+
+		[{ desc = 'UI: %s' }] = {
+			['<leader>ul'] = { toggle_background, 'toggle background' },
+		},
 	},
 
 	[{ 'i' }] = {
