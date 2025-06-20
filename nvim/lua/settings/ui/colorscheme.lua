@@ -26,23 +26,20 @@ local augroup = autocmd.group 'settings.ui.colorscheme'
 augroup:on_user('ColorSchemeInit', colorscheme_init)
 
 local colorscheme = signal.new 'default'
-local background = signal.new 'dark'
+
+-- NOTE: `background` should be handled by a terminal / GUI
 
 signal.persist(colorscheme, 'vim.colorscheme')
-signal.persist(background, 'vim.background')
 
 signal.watch(function()
 	local ok, error = pcall(vim.cmd.colorscheme, colorscheme())
 	if not ok then
 		print('failed to load persisted colorscheme: ' .. vim.inspect(error))
 	end
-
-	vim.o.background = background()
 end)
 
 local function persist_colorscheme()
 	colorscheme(vim.g.colors_name)
-	background(vim.o.background)
 end
 
 augroup:on('ColorScheme', '*', persist_colorscheme)
