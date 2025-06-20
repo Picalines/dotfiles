@@ -1,3 +1,5 @@
+vim.g.neovide_theme = 'auto'
+
 vim.g.neovide_refresh_rate = 90
 
 vim.g.neovide_padding_top = 20
