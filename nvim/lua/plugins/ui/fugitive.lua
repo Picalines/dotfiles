@@ -40,6 +40,12 @@ augroup:on('FileType', { 'gitcommit', 'gitrebase' }, function(event)
 	}
 end)
 
+augroup:on_user('FugitiveEditor', function(event)
+	if vim.bo[event.buf].filetype == 'gitcommit' then
+		vim.cmd 'startinsert'
+	end
+end)
+
 return {
 	'tpope/vim-fugitive',
 
