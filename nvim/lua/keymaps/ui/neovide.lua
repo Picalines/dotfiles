@@ -22,7 +22,7 @@ local function zoom(delta)
 end
 
 local function toggle_opacity()
-	neovide_opacity(neovide_opacity() == 1 and 0.75 or 1)
+	neovide_opacity(neovide_opacity() == 1 and 0.95 or 1)
 end
 
 keymap {
