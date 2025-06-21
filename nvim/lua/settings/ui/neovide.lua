@@ -11,9 +11,10 @@ vim.g.neovide_show_border = true
 
 vim.g.neovide_hide_mouse_when_typing = true
 
-vim.g.neovide_floating_shadow = false
+vim.g.neovide_floating_shadow = true
 vim.g.neovide_floating_blur_amount_x = 10
 vim.g.neovide_floating_blur_amount_y = 10
+vim.g.neovide_floating_corner_radius = 0.15
 
 vim.g.neovide_cursor_animation_length = 0.015
 vim.g.neovide_scroll_animation_length = 0.05
