@@ -1,19 +1,19 @@
+local keymap = require 'util.keymap'
+
+keymap {
+	[{ 'n' }] = {
+		['<leader>?'] = { '<Cmd>WhichKey<CR>', 'keymap help' },
+	},
+}
+
 return {
 	'folke/which-key.nvim',
 
 	event = 'VeryLazy',
+	cmd = 'WhichKey',
 
-	opts = { preset = 'modern' },
-
-	config = function(_, opts)
-		local keymap = require 'util.keymap'
-
-		require('which-key').setup(opts)
-
-		keymap {
-			[{ 'n' }] = {
-				['<leader>?'] = { '<Cmd>WhichKey<CR>', 'Keymap help' },
-			},
-		}
-	end,
+	opts = {
+		preset = 'helix',
+		delay = 500,
+	},
 }
