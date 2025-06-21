@@ -1,5 +1,6 @@
 local func = require 'util.func'
 local tbl = require 'util.table'
+local umath = require 'util.math'
 
 local M = {}
 
@@ -129,6 +130,61 @@ function M.clear(target_hl, attrs, opts)
 	local hl = M.get(target_hl, { ns_id = opts.ns_id, follow_link = true }) or {}
 
 	vim.api.nvim_set_hl(opts.ns_id, target_hl, tbl.override_deep(hl, new_attrs))
+end
+
+---@param hex integer
+local function hex_to_rgb(hex)
+	hex = hex % 0x1000000
+	local r = math.floor(hex / 0x10000) % 0x100
+	local g = math.floor(hex / 0x100) % 0x100
+	local b = hex % 0x100
+	return r, g, b
+end
+
+---@param hex1 integer
+---@param hex2 integer
+---@param blend number
+local function blend_hex(hex1, hex2, blend)
+	blend = umath.clamp(blend, 0, 1)
+
+	local r1, g1, b1 = hex_to_rgb(hex1)
+	local r2, g2, b2 = hex_to_rgb(hex2)
+
+	local r = umath.clamp(math.floor(umath.lerp(r1, r2, blend)), 0, 255)
+	local g = umath.clamp(math.floor(umath.lerp(g1, g2, blend)), 0, 255)
+	local b = umath.clamp(math.floor(umath.lerp(b1, b2, blend)), 0, 255)
+
+	return r * 0x10000 + g * 0x100 + b
+end
+
+---@module 'util.autocmd'
+---@param augroup AutocmdGroup
+---@param source_hl string
+---@param target_hl string
+---@param opacity_factor number
+---@param opts? get_opts
+function M.fade(augroup, source_hl, target_hl, opacity_factor, opts)
+	opts = func.default_opts(opts, {
+		ns_id = 0,
+		follow_link = true,
+		fallback_hl = nil,
+	})
+
+	local function set_target_hl()
+		local source_attrs = M.get(source_hl, opts)
+
+		local target_attrs = {}
+		if source_attrs then
+			target_attrs = tbl.override(source_attrs, {
+				fg = blend_hex(source_attrs.bg, source_attrs.fg, opacity_factor),
+			})
+		end
+
+		vim.api.nvim_set_hl(opts.ns_id, target_hl, target_attrs)
+	end
+
+	augroup:on('ColorScheme', '*', set_target_hl)
+	set_target_hl()
 end
 
 return M

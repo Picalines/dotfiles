@@ -36,7 +36,7 @@ local function parse_callback_or_cmd(callback_or_cmd)
 	return callback, cmd
 end
 
----@class Group
+---@class AutocmdGroup
 ---@field private _group_id number
 local Group = {}
 
@@ -89,7 +89,7 @@ end
 
 ---@param name string
 ---@param opts? group_opts
----@return Group
+---@return AutocmdGroup
 function M.group(name, opts)
 	opts = func.default_opts(opts, {
 		clear = true,

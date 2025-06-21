@@ -25,6 +25,8 @@ local augroup = autocmd.group 'settings.ui.colorscheme'
 
 augroup:on_user('ColorSchemeInit', colorscheme_init)
 
+hl.fade(augroup, 'Normal', 'NormalMuted', 0.5)
+
 local colorscheme = signal.new 'default'
 
 -- NOTE: `background` should be handled by a terminal / GUI

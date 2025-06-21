@@ -89,7 +89,7 @@ return {
 			end,
 
 			hl = function(self)
-				return self.is_active and 'Normal' or '@comment'
+				return self.is_active and 'Normal' or 'NormalMuted'
 			end,
 
 			{
@@ -117,7 +117,7 @@ return {
 
 		local BufferReadonlyFlag = {
 			provider = '',
-			hl = '@comment',
+			hl = 'NormalMuted',
 			condition = function(self)
 				return not vim.api.nvim_get_option_value('modifiable', { buf = self.bufnr }) or vim.api.nvim_get_option_value('readonly', { buf = self.bufnr })
 			end,
@@ -219,7 +219,7 @@ return {
 			end
 		end)
 
-		local BufferLine = h_util.make_buflist(Buffer, { provider = ' ', hl = '@comment' }, { provider = '', hl = '@comment' }, function()
+		local BufferLine = h_util.make_buflist(Buffer, { provider = ' ', hl = 'NormalMuted' }, { provider = '', hl = 'NormalMuted' }, function()
 			return buflist_cache
 		end, false)
 
@@ -230,7 +230,7 @@ return {
 			end,
 
 			hl = function(self)
-				return self.is_active and 'Normal' or '@comment'
+				return self.is_active and 'Normal' or 'NormalMuted'
 			end,
 		}
 
@@ -239,7 +239,7 @@ return {
 				return #vim.api.nvim_list_tabpages() >= 2
 			end,
 			{
-				{ provider = '', hl = '@comment' },
+				{ provider = '', hl = 'NormalMuted' },
 				h_util.make_tablist(TabPage),
 			},
 		}
@@ -254,7 +254,7 @@ return {
 				return self.title
 			end,
 			hl = function(self)
-				return self.is_focused and 'Directory' or '@comment'
+				return self.is_focused and 'Directory' or 'NormalMuted'
 			end,
 		}
 
@@ -299,13 +299,13 @@ return {
 				},
 				mode_hls = {
 					i = '@diff.plus',
-					v = '@comment',
-					V = '@comment',
-					['\22'] = '@comment',
+					v = 'NormalMuted',
+					V = 'NormalMuted',
+					['\22'] = 'NormalMuted',
 					c = 'DiagnosticInfo',
-					s = '@comment',
-					S = '@comment',
-					['\19'] = '@comment',
+					s = 'NormalMuted',
+					S = 'NormalMuted',
+					['\19'] = 'NormalMuted',
 					R = '@diff.delta',
 					r = '@diff.delta',
 					['!'] = '@diff.minus',
@@ -477,7 +477,7 @@ return {
 
 		local StatusReadonlyFlag = {
 			provider = '',
-			hl = '@comment',
+			hl = 'NormalMuted',
 			condition = function()
 				return vim.bo.buftype ~= 'terminal' and (not vim.bo.modifiable or vim.bo.readonly)
 			end,
@@ -504,11 +504,11 @@ return {
 
 		local Location = {
 			provider = '%04l/%04L:%04c',
-			hl = '@comment',
+			hl = 'NormalMuted',
 		}
 
 		local ScrollProgress = {
-			hl = '@comment',
+			hl = 'NormalMuted',
 			static = {
 				chars = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '▒' },
 			},
