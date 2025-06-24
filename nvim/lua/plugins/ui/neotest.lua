@@ -2,10 +2,10 @@ local keymap = require 'util.keymap'
 
 keymap {
 	[{ 'n', desc = 'Unit: %s' }] = {
-		['<leader>ur'] = { '<Cmd>Neotest run<CR>', 'run nearest' },
-		['<leader>uR'] = { '<Cmd>Neotest run file<CR>', 'run suite' },
-		['<leader>uc'] = { '<Cmd>Neotest stop<CR>', 'cancel suite' },
-		['<leader>uo'] = { '<Cmd>Neotest output-panel open<CR>', 'output' },
+		['<leader>ur'] = { "<Cmd>lua require('neotest').run.run()<CR>", 'run nearest' },
+		['<leader>uR'] = { "<Cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", 'run suite' },
+		['<leader>uc'] = { "<Cmd>lua require('neotest').run.stop(vim.fn.expand('%'))<CR>", 'cancel suite' },
+		['<leader>uo'] = { "<Cmd>lua require('neotest').output_panel.open()<CR>", 'output' },
 	},
 }
 
@@ -18,6 +18,7 @@ return {
 		'antoinemadec/FixCursorHold.nvim',
 	},
 
+	lazy = true,
 	cmd = 'Neotest',
 
 	config = function()
