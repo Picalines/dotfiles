@@ -15,12 +15,12 @@ return {
 		highlight_duration = 500,
 
 		mappings = {
-			add = 'gs',
+			add = 'gsa',
 			delete = 'gsd',
 			replace = 'gsc',
 
-			find = '',
-			find_left = '',
+			find = 'gsn',
+			find_left = 'gsp',
 			highlight = '',
 			suffix_last = '',
 			suffix_next = '',
