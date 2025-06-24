@@ -1,2 +1,5 @@
 frame = "buttonless"
 title-hidden = true
+
+[box-drawing]
+mode = "native"
