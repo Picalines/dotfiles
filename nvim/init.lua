@@ -23,11 +23,6 @@ local augroup = autocmd.group 'init'
 augroup:on('ColorScheme', '*', 'doautocmd User ColorSchemeInit')
 augroup:on('ColorScheme', '*', 'doautocmd User ColorSchemePatch')
 
-pcall(function()
-	vim.cmd.highlight 'clear'
-	vim.cmd.syntax 'reset'
-end)
-
 pcall(require, 'plugins')
 pcall(require, 'settings')
 pcall(require, 'keymaps')
