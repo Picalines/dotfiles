@@ -110,7 +110,7 @@ return {
 				position = { row = -2, col = -1 },
 				border = {
 					style = 'rounded',
-					padding = { 0, 1 },
+					padding = { 0, 0 },
 				},
 				focusable = false,
 				enter = false,
