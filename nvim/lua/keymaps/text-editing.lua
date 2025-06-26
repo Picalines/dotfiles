@@ -15,6 +15,8 @@ keymap {
 			['[d'] = { func.curry(vim.diagnostic.jump, { count = -1, float = false }), 'previous diagnostic' },
 			[']d'] = { func.curry(vim.diagnostic.jump, { count = 1, float = false }), 'next diagnostic' },
 		},
+
+		['y<C-g>'] = { '<Cmd>eval setreg(v:register, @%) | echo @% . " -> " . v:register<CR>', 'yank buffer path' },
 	},
 
 	[{ 'i' }] = {
