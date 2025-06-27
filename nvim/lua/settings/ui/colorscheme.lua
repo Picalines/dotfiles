@@ -5,20 +5,23 @@ local hl = require 'util.highlight'
 local signal = require 'util.signal'
 
 local function colorscheme_init()
-	local attrs = { 'bg', 'reverse' }
-	hl.clear('EndOfBuffer', attrs)
-	hl.clear('NonText', attrs)
-	hl.clear('NormalFloat', attrs)
-	hl.clear('SignColumn', attrs)
-	hl.clear('StatusLine', attrs)
-	hl.clear('StatusLineNC', attrs)
-	hl.clear('StatusLineTerm', attrs)
-	hl.clear('StatusLineTermNC', attrs)
-	hl.clear('TabLine', attrs)
-	hl.clear('TabLineFill', attrs)
-	hl.clear('WinBar', attrs)
-	hl.clear('WinBarNC', attrs)
-	hl.clear('WinSeparator', attrs)
+	for _, hl_group in ipairs {
+		'EndOfBuffer',
+		'NonText',
+		'NormalFloat',
+		'SignColumn',
+		'StatusLine',
+		'StatusLineNC',
+		'StatusLineTerm',
+		'StatusLineTermNC',
+		'TabLine',
+		'TabLineFill',
+		'WinBar',
+		'WinBarNC',
+		'WinSeparator',
+	} do
+		hl.clear(hl_group, { 'bg', 'reverse' })
+	end
 end
 
 local augroup = autocmd.group 'settings.ui.colorscheme'
