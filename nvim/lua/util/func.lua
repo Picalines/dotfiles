@@ -125,7 +125,7 @@ end
 ---@param timeout integer
 ---@param fn fun()
 function M.debounce(timeout, fn)
-	local timer = vim.loop.new_timer()
+	local timer = vim.uv.new_timer() or error 'new_timer failed'
 
 	return function(...)
 		local fn_args = { ... }
