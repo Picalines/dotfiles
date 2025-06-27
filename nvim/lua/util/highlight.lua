@@ -187,4 +187,32 @@ function M.fade(augroup, source_hl, target_hl, opacity_factor, opts)
 	set_target_hl()
 end
 
+---@class on_background_map
+---@field light string
+---@field dark string
+
+---@param augroup AutocmdGroup
+---@param map on_background_map
+function M.link_colorschemes_by_background(augroup, map)
+	augroup:on(
+		'ColorScheme',
+		map.dark,
+		vim.schedule_wrap(function()
+			if vim.o.background == 'light' then
+				vim.cmd.colorscheme(map.light)
+			end
+		end)
+	)
+
+	augroup:on(
+		'ColorScheme',
+		map.light,
+		vim.schedule_wrap(function()
+			if vim.o.background == 'dark' then
+				vim.cmd.colorscheme(map.dark)
+			end
+		end)
+	)
+end
+
 return M

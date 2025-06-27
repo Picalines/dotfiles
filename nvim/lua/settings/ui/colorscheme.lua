@@ -27,23 +27,15 @@ augroup:on_user('ColorSchemeInit', colorscheme_init)
 
 hl.fade(augroup, 'Normal', 'NormalMuted', 0.5)
 
-local colorscheme = signal.new 'default'
-
 -- NOTE: `background` should be handled by a terminal / GUI
+local startup_colorscheme = signal.new 'default'
 
-signal.persist(colorscheme, 'vim.colorscheme')
+signal.persist(startup_colorscheme, 'vim.colorscheme')
 
-signal.watch(function()
-	local ok, error = pcall(vim.cmd.colorscheme, colorscheme())
-	if not ok then
-		print('failed to load persisted colorscheme: ' .. vim.inspect(error))
+pcall(vim.cmd.colorscheme, startup_colorscheme())
+
+augroup:on('ColorScheme', '*', function()
+	if vim.g.colors_name then
+		startup_colorscheme(vim.g.colors_name)
 	end
 end)
-
-local function persist_colorscheme()
-	colorscheme(vim.g.colors_name)
-end
-
-augroup:on('ColorScheme', '*', persist_colorscheme)
-
-persist_colorscheme()
