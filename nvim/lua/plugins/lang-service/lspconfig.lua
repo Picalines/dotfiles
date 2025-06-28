@@ -27,24 +27,17 @@ return {
 		{
 			'WhoIsSethDaniel/mason-tool-installer.nvim',
 
-			opts = {
-				auto_update = true,
-				debounce_hours = 6,
+			opts = function()
+				local array = require 'util.array'
 
-				ensure_installed = {
+				local ensure_installed = {
 					'jsonls',
 					'lua_ls',
 					'stylua',
 					'vim-language-server',
-				},
-			},
+				}
 
-			config = function(_, base_opts)
-				local tbl = require 'util.table'
-				local array = require 'util.array'
-				local installer = require 'mason-tool-installer'
-
-				local packages_by_executables = {
+				local ensure_installed_by_executable = {
 					[{ 'node' }] = {
 						{ 'biome', version = '1.9.4' },
 						'graphql-language-service-cli',
@@ -70,9 +63,7 @@ return {
 					[{ 'gradle' }] = { 'gradle-language-server' },
 				}
 
-				local ensure_installed = base_opts.ensure_installed or {}
-
-				for executables, packages in pairs(packages_by_executables) do
+				for executables, packages in pairs(ensure_installed_by_executable) do
 					local should_install = array.some(executables, function(exe)
 						return vim.fn.executable(exe) == 1
 					end)
@@ -82,9 +73,16 @@ return {
 					end
 				end
 
-				local opts = tbl.copy_deep(base_opts)
-				opts.ensure_installed = ensure_installed
-				opts.run_on_start = true
+				return {
+					auto_update = true,
+					debounce_hours = 6,
+					ensure_installed = ensure_installed,
+					run_on_start = true,
+				}
+			end,
+
+			config = function(_, opts)
+				local installer = require 'mason-tool-installer'
 
 				installer.setup(opts)
 
