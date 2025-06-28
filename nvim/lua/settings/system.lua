@@ -1,1 +1,1 @@
-vim.go.shell = (vim.fn.executable 'pwsh' == 1) and 'pwsh' or vim.go.shell
+vim.go.shell = (vim.fn.executable 'powershell' == 1) and 'powershell -nologo' or vim.go.shell
