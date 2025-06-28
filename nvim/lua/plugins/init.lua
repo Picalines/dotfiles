@@ -29,7 +29,7 @@ local lazy_spec = array.map(client_modules[client], function(module)
 end)
 
 lazy.setup(lazy_spec, {
-	lockfile = str.fmt(vim.fn.stdpath 'config', '/lazy-lock.', app.os(), '.json'),
+	lockfile = str.fmt(vim.fn.stdpath 'config', '/lazy-lock.json'),
 	change_detection = {
 		enabled = false,
 	},
