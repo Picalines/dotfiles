@@ -1,12 +1,4 @@
-local array = require 'util.array'
-
 local M = {}
-
----@param ... any
----@return string
-function M.fmt(...)
-	return table.concat(array.map({ ... }, tostring), '')
-end
 
 ---@param s string
 ---@param len integer

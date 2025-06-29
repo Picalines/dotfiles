@@ -19,7 +19,6 @@ return {
 		local heirline = require 'heirline'
 		local hl = require 'util.highlight'
 		local signal = require 'util.signal'
-		local str = require 'util.string'
 		local tbl = require 'util.table'
 
 		local augroup = autocmd.group 'heirline'
@@ -226,7 +225,7 @@ return {
 		local TabPage = {
 			provider = function(self)
 				local title = vim.fn.fnamemodify(vim.fn.getcwd(-1, self.tabnr), ':t')
-				return str.fmt(' %', self.tabnr, 'T', title, '%T')
+				return string.format(' %%%dT%s%%T', self.tabnr, title)
 			end,
 
 			hl = function(self)
@@ -496,7 +495,7 @@ return {
 			end,
 
 			provider = function(self)
-				return str.fmt(self.terminal_count, ' ')
+				return string.format('%d ', self.terminal_count)
 			end,
 
 			hl = 'DevIconTerminal',
