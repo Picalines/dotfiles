@@ -15,12 +15,16 @@ local augroup = autocmd.group 'fugitive'
 
 augroup:on('BufWinEnter', 'fugitive://*', function(event)
 	local win = vim.fn.bufwinid(event.buf)
+	local bo = vim.bo[event.buf]
+	local wo = vim.wo[win]
 
-	vim.bo[event.buf].buflisted = false
-	vim.wo[win].number = false
-	vim.wo[win].relativenumber = false
-	vim.wo[win].signcolumn = 'no'
-	vim.wo[win].winbar = '󰊢 git'
+	bo.buflisted = false
+	wo.number = false
+	wo.relativenumber = false
+	wo.signcolumn = 'no'
+	wo.winbar = '%=󰊢 git%='
+
+	vim.api.nvim_win_set_width(win, math.floor(vim.o.columns * 0.35))
 
 	keymap {
 		[{ 'n', buffer = event.buf, desc = 'Git: %s' }] = {

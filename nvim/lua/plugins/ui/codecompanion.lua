@@ -63,9 +63,13 @@ return {
 						position = 'right',
 						width = 0.35,
 						opts = {
+							winbar = '%=󰚩 codecompanion%=',
 							number = false,
 							relativenumber = false,
 							signcolumn = 'no',
+							wrap = true,
+							breakindent = false,
+							linebreak = true,
 						},
 					},
 				},
