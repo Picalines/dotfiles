@@ -1,7 +1,32 @@
+local keymap = require 'util.keymap'
+
+keymap {
+	[{ 'n', desc = 'Find: %s' }] = {
+		['<leader>bb'] = { '<Cmd>Telescope buffers<CR>', 'buffer' },
+		['<leader>ss'] = { '<Cmd>Telescope telescope-tabs list_tabs<CR>', 'spaces' },
+
+		['<leader>ff'] = { '<Cmd>Telescope find_files<CR>', 'files' },
+		['<leader>fo'] = { '<Cmd>Telescope oldfiles<CR>', 'old files' },
+		['<leader>fb'] = { '<Cmd>Telescope buffers<CR>', 'buffer' },
+		['<leader>fg'] = { '<Cmd>Telescope live_grep<CR>', 'grep' },
+		['<leader>fc'] = { '<Cmd>Telescope commands<CR>', 'commands' },
+		['<leader>fh'] = { '<Cmd>Telescope help_tags<CR>', 'help' },
+		['<leader>fd'] = { '<Cmd>Telescope diagnostics<CR>', 'diagnostics' },
+		['<leader>fr'] = { '<Cmd>Telescope resume<CR>', 'resume' },
+		['<leader>f/'] = { '<Cmd>Telescope current_buffer_fuzzy_find<CR>', 'in current buffer' },
+		['<leader>fs'] = { '<Cmd>Telescope lsp_document_symbols<CR>', 'document symbols' },
+		['<leader>fS'] = { '<Cmd>Telescope lsp_dynamic_workspace_symbols<CR>', 'workspace symbols' },
+		['<leader>ft'] = { '<Cmd>Telescope filetypes<CR>', 'Select filetypes' },
+
+		['<leader>uC'] = { '<Cmd>Telescope colorscheme<CR>', 'colorscheme' },
+	},
+}
+
 return {
 	'nvim-telescope/telescope.nvim',
 
 	event = 'VeryLazy',
+	cmd = 'Telescope',
 
 	dependencies = {
 		'nvim-lua/plenary.nvim',
@@ -30,13 +55,21 @@ return {
 
 	config = function()
 		local array = require 'util.array'
-		local keymap = require 'util.keymap'
 		local telescope = require 'telescope'
 		local actions = require 'telescope.actions'
 		local themes = require 'telescope.themes'
-		local builtin = require 'telescope.builtin'
 
-		local ignore_files = { '.gitignore', '.arcignore' }
+		local base_rg_args = {
+			'--hidden',
+			'--max-filesize=1G',
+			'--color=never',
+		}
+
+		local ignore_files = {
+			'.gitignore',
+			'.arcignore',
+		}
+
 		local always_exclude = {
 			'*.bundle.js',
 			'*.cert',
@@ -48,17 +81,17 @@ return {
 			'{package,pnpm}-lock.json',
 		}
 
-		local rg_args = array.concat(
-			{ '--hidden', '--max-filesize=1G' },
+		local grep_args = array.concat(
+			base_rg_args,
 			array.flat_map(ignore_files, function(file)
-				return vim.fn.filereadable(file) and { '--ignore-file', file } or {}
+				return { '--ignore-file', file }
 			end),
 			array.flat_map(always_exclude, function(path)
 				return { '-g', '!' .. path }
 			end)
 		)
 
-		local rg_file_args = array.concat({ 'rg', '--files' }, rg_args)
+		local find_file_args = array.concat({ 'rg', '--files' }, grep_args)
 
 		telescope.setup {
 			defaults = {
@@ -99,11 +132,11 @@ return {
 			pickers = {
 				find_files = {
 					previewer = false,
-					find_command = rg_file_args,
+					find_command = find_file_args,
 				},
 
 				live_grep = {
-					additional_args = rg_args,
+					additional_args = grep_args,
 				},
 
 				oldfiles = { previewer = false },
@@ -123,27 +156,5 @@ return {
 		safe_load_extension 'ui-select'
 		safe_load_extension 'lsp_handlers'
 		safe_load_extension 'telescope-tabs'
-
-		keymap {
-			[{ 'n', desc = 'Find: %s' }] = {
-				['<leader>bb'] = { builtin.buffers, 'buffer' },
-				['<leader>ss'] = { '<Cmd>Telescope telescope-tabs list_tabs<CR>', 'spaces' },
-
-				['<leader>ff'] = { builtin.find_files, 'files' },
-				['<leader>fo'] = { builtin.oldfiles, 'old files' },
-				['<leader>fb'] = { builtin.buffers, 'buffer' },
-				['<leader>fg'] = { builtin.live_grep, 'grep' },
-				['<leader>fc'] = { builtin.commands, 'commands' },
-				['<leader>fh'] = { builtin.help_tags, 'help' },
-				['<leader>fd'] = { builtin.diagnostics, 'diagnostics' },
-				['<leader>fr'] = { builtin.resume, 'resume' },
-				['<leader>f/'] = { builtin.current_buffer_fuzzy_find, 'in current buffer' },
-				['<leader>fs'] = { builtin.lsp_document_symbols, 'document symbols' },
-				['<leader>fS'] = { builtin.lsp_dynamic_workspace_symbols, 'workspace symbols' },
-				['<leader>ft'] = { builtin.filetypes, 'Select filetypes' },
-
-				['<leader>uC'] = { builtin.colorscheme, 'colorscheme' },
-			},
-		}
 	end,
 }
