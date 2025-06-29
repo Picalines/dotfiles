@@ -2,6 +2,11 @@ local keymap = require 'util.keymap'
 
 keymap {
 	[{ 'n', desc = 'Find: %s' }] = {
+		['gD'] = { '<Cmd>Telescope lsp_definitions<CR>', 'lsp definitions' },
+		['gR'] = { '<Cmd>Telescope lsp_references<CR>', 'lsp references' },
+		['gI'] = { '<Cmd>Telescope lsp_implementations<CR>', 'lsp implementations' },
+		['gT'] = { '<Cmd>Telescope lsp_type_definitions<CR>', 'lsp type definitions' },
+
 		['<leader>bb'] = { '<Cmd>Telescope buffers<CR>', 'buffer' },
 		['<leader>ss'] = { '<Cmd>Telescope telescope-tabs list_tabs<CR>', 'spaces' },
 
