@@ -30,16 +30,6 @@ return {
 	dependencies = {
 		'j-hui/fidget.nvim',
 		'echasnovski/mini.diff',
-		{
-			'MeanderingProgrammer/render-markdown.nvim',
-			-- I don't like editing markdown files with the plugin,
-			-- so enable it only in codecompanion window
-			opts = {
-				file_types = { 'codecompanion' },
-				heading = { position = 'inline' },
-				icons = { '󰎤 ', '󰎧 ', '󰎪 ', '󰎭 ', '󰎱 ', '󰎳 ' },
-			},
-		},
 	},
 
 	cmd = { 'CodeCompanion', 'CodeCompanionActions', 'CodeCompanionChat' },
