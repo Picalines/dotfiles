@@ -52,7 +52,7 @@ return {
 			},
 
 			header = (function()
-				local random_chars = { '☕', '✨', '🎒', '🎨', '🎯', '💤', '📚', '🚧', '🧠' }
+				local random_chars = { '☕', '✨', '🎒', '🎨', '🎯', '💤', '📚', '🧠' }
 				return string.format('Neovim %s v%s', random_chars[math.random(1, #random_chars)], vim.version())
 			end)(),
 
