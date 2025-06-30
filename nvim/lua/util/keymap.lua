@@ -44,7 +44,7 @@ local function keymap(decl_table, _info)
 
 			local ok = pcall(vim.keymap.set, modes, lhs, rhs, opts)
 			if not ok then
-				print(string.format('keymap: failed to map `%s`', lhs))
+				vim.notify(string.format('keymap: failed to map `%s`', lhs), vim.log.levels.ERROR)
 			end
 		elseif type(key) == 'table' and type(value) == 'table' then
 			local group_modes = {}

@@ -36,7 +36,7 @@ M.save = func.debounce(500, function()
 
 	local file = io.open(PERSIST_PATH, 'w+')
 	if not file then
-		print(PERSIST_PATH .. ': failed to write')
+		vim.notify(PERSIST_PATH .. ': failed to write', vim.log.levels.ERROR)
 	else
 		file:write(json_to_store)
 		file:close()
@@ -79,7 +79,7 @@ vim.api.nvim_create_user_command('Persist', function(opts)
 
 	if action == 'clear' then
 		M.clear()
-		print 'persist file cleared'
+		vim.notify 'persist file cleared'
 	elseif action == 'open_file' then
 		vim.cmd.e(PERSIST_PATH)
 	end

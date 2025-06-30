@@ -40,7 +40,7 @@ return {
 					if ok then
 						entry.message = new_message
 					else
-						print('format-ts-errors: ', new_message)
+						vim.notify('format-ts-errors: ' .. tostring(new_message), vim.log.levels.ERROR)
 					end
 				end
 			end

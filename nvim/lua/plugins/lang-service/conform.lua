@@ -19,7 +19,7 @@ return {
 
 		local function toggle_autoformat()
 			local is_enabled = format_before_write(not format_before_write())
-			print('Auto format: ' .. (is_enabled and 'on' or 'off'))
+			vim.notify('Auto format: ' .. (is_enabled and 'on' or 'off'))
 		end
 
 		keymap {

@@ -8,7 +8,7 @@ signal.persist(spell, 'vim.spell')
 
 local function toggle_spell()
 	local is_on = spell(not spell())
-	print('Spell check: ' .. (is_on and 'on' or 'off'))
+	vim.notify('Spell check: ' .. (is_on and 'on' or 'off'))
 end
 
 keymap {

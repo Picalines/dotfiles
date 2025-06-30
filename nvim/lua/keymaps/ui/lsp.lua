@@ -3,7 +3,7 @@ local keymap = require 'util.keymap'
 local function toggle_inlay_hints()
 	local enabled = not vim.lsp.inlay_hint.is_enabled()
 	vim.lsp.inlay_hint.enable(enabled)
-	print('inlay hints: ' .. (enabled and 'on' or 'off'))
+	vim.notify('inlay hints: ' .. (enabled and 'on' or 'off'))
 end
 
 keymap {
