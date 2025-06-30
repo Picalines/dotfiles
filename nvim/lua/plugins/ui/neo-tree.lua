@@ -29,7 +29,8 @@ return {
 	},
 
 	---@module 'neo-tree'
-	---@type neotree.Config?
+	---@module 'nui.tree'
+	---@type neotree.Config
 	opts = {
 		sources = { 'filesystem' },
 
@@ -121,7 +122,12 @@ return {
 				['<C-o>'] = func.cmd 'wincmd p',
 				['<C-w>c'] = func.cmd 'Neotree close filesystem',
 
-				['<esc>'] = 'cancel',
+				-- default maps
+				['<esc>'] = 'noop',
+				['?'] = 'noop',
+				['/'] = 'noop',
+				['s'] = 'noop', -- leap.nvim
+				['S'] = 'noop',
 
 				['<cr>'] = 'open',
 				['<2-LeftMouse>'] = 'open',
@@ -129,8 +135,6 @@ return {
 				['h'] = 'close_node',
 				['v'] = 'open_vsplit',
 				['V'] = 'open_split',
-				['s'] = 'noop', -- leap.nvim
-				['S'] = 'noop',
 
 				['t'] = 'open_tabnew',
 				-- ['h'] = 'close_all_subnodes',
@@ -153,7 +157,6 @@ return {
 
 				['q'] = 'close_window',
 				['R'] = 'refresh',
-				['?'] = 'show_help',
 				['<'] = 'prev_source',
 				['>'] = 'next_source',
 			},
@@ -194,7 +197,7 @@ return {
 			window = {
 				mappings = {
 					['<bs>'] = 'navigate_up',
-					['/'] = 'set_root',
+					['.'] = 'set_root',
 
 					['H'] = 'toggle_hidden',
 
@@ -219,65 +222,49 @@ return {
 			},
 
 			commands = {
-				set_root = function(state)
-					require('neo-tree.sources.filesystem.commands').set_root(state)
-
-					local tree = state.tree
-					local node = tree:get_node()
-					local root = node.path
-
-					if node.type == 'file' then
-						root = vim.fn.fnamemodify(root, ':h')
-					end
-
-					vim.api.nvim_set_current_dir(root)
-				end,
-
 				run_command = function(state)
 					local node = state.tree:get_node()
-					local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
-					vim.api.nvim_input(':! ' .. path .. '<Home><Right>')
+					if node then
+						vim.api.nvim_input(':! ' .. vim.fn.fnamemodify(node:get_id(), ':p:.') .. '<Home><Right>')
+					end
 				end,
 
 				system_open = function(state)
 					local node = state.tree:get_node()
-					local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
-					vim.ui.open(path)
+					if node then
+						vim.ui.open(vim.fn.fnamemodify(node:get_id(), ':p:.'))
+					end
 				end,
 
 				codecompanion_watch = function(state)
 					local chat = require('codecompanion').last_chat()
 					local node = state.tree:get_node()
-					local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
-					local name = vim.fn.fnamemodify(path, ':t')
-					if chat then
+					if node and chat then
+						local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
+						local name = vim.fn.fnamemodify(path, ':t')
 						chat.references:add {
 							id = string.format('<file>%s</file>', path),
 							path = path,
 							source = 'codecompanion.strategies.chat.slash_commands.file',
 							opts = { visible = true },
 						}
-						vim.notify(string.format('Chat: %s added to context (watch)', name))
-					else
-						vim.notify 'no chat'
+						vim.notify(string.format('%s added to chat context (watch)', name))
 					end
 				end,
 
 				codecompanion_pin = function(state)
 					local chat = require('codecompanion').last_chat()
 					local node = state.tree:get_node()
-					local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
-					local name = vim.fn.fnamemodify(path, ':t')
-					if chat then
+					if node and chat then
+						local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
+						local name = vim.fn.fnamemodify(path, ':t')
 						chat.references:add {
 							id = string.format('<file>%s</file>', path),
 							path = path,
 							source = 'codecompanion.strategies.chat.slash_commands.file',
 							opts = { pinned = true, visible = true },
 						}
-						vim.notify(string.format('Chat: %s added to context (watch)', name))
-					else
-						vim.notify 'no chat'
+						vim.notify(string.format('%s added to chat context (watch)', name))
 					end
 				end,
 			},
