@@ -22,7 +22,7 @@ augroup:on('BufWinEnter', 'fugitive://*', function(event)
 	wo.number = false
 	wo.relativenumber = false
 	wo.signcolumn = 'no'
-	wo.winbar = '%=󰊢 git%='
+	wo.winbar = '%=󰊢 git status%='
 
 	vim.api.nvim_win_set_width(win, math.floor(vim.o.columns * 0.35))
 
@@ -45,8 +45,9 @@ augroup:on('FileType', { 'gitcommit', 'gitrebase' }, function(event)
 end)
 
 augroup:on_user('FugitiveEditor', function(event)
-	if vim.bo[event.buf].filetype == 'gitcommit' then
-		vim.cmd 'startinsert'
+	local bo = vim.bo[event.buf]
+	if bo.filetype == 'gitcommit' and vim.o.splitbelow then
+		vim.cmd.wincmd 'r'
 	end
 end)
 
