@@ -1,14 +1,15 @@
 local autocmd = require 'util.autocmd'
 local func = require 'util.func'
 local keymap = require 'util.keymap'
+local options = require 'util.options'
 local signal = require 'util.signal'
 
 local spell = signal.new(false)
 signal.persist(spell, 'vim.spell')
 
 local function toggle_spell()
-	local is_on = spell(not spell())
-	vim.notify('Spell check: ' .. (is_on and 'on' or 'off'))
+	local enabled = spell(not spell())
+	vim.notify('spell ' .. (enabled and 'on' or 'off'))
 end
 
 keymap {
@@ -19,11 +20,8 @@ keymap {
 
 ---@param winid integer
 local function update_spell_win(winid)
-	local buf = vim.api.nvim_win_get_buf(winid)
-	local is_normal_buf = vim.bo[buf].buftype == ''
-	local spell_enabled = is_normal_buf and spell()
-
-	vim.api.nvim_set_option_value('spell', spell_enabled, { scope = 'local', win = winid })
+	local wo, bo = options.winlocal(winid)
+	wo.spell = bo.buftype == '' and spell()
 end
 
 ---@param tabpage integer

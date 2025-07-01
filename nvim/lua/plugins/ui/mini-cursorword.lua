@@ -16,8 +16,7 @@ return {
 		local augroup = autocmd.group 'mini-cursorword'
 
 		augroup:on({ 'BufEnter', 'TermOpen' }, '*', function(event)
-			local buftype = vim.api.nvim_get_option_value('buftype', { buf = event.buf })
-			vim.api.nvim_buf_set_var(event.buf, 'minicursorword_disable', buftype ~= '')
+			vim.b[event.buf].minicursorword_disable = vim.bo[event.buf].buftype ~= ''
 		end)
 
 		require('mini.cursorword').setup(opts)

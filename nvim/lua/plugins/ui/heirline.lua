@@ -118,7 +118,8 @@ return {
 			provider = '',
 			hl = 'NormalMuted',
 			condition = function(self)
-				return not vim.api.nvim_get_option_value('modifiable', { buf = self.bufnr }) or vim.api.nvim_get_option_value('readonly', { buf = self.bufnr })
+				local bo = vim.bo[self.bufnr]
+				return not bo.modifiable or bo.readonly
 			end,
 		}
 
@@ -147,7 +148,7 @@ return {
 
 		local function get_listed_buffers()
 			return array.filter(vim.api.nvim_list_bufs(), function(bufnr)
-				return vim.api.nvim_get_option_value('buflisted', { buf = bufnr })
+				return vim.bo[bufnr].buflisted
 			end)
 		end
 
@@ -247,7 +248,7 @@ return {
 			init = function(self)
 				local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
 				self.title = string.format(' %s', cwd)
-				self.is_focused = vim.api.nvim_get_option_value('filetype', { buf = 0 }) == 'neo-tree'
+				self.is_focused = vim.bo.filetype == 'neo-tree'
 			end,
 			provider = function(self)
 				return self.title

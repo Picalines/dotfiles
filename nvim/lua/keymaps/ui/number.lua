@@ -1,5 +1,6 @@
 local autocmd = require 'util.autocmd'
 local keymap = require 'util.keymap'
+local options = require 'util.options'
 local signal = require 'util.signal'
 
 local relativenumber = signal.new(true)
@@ -7,10 +8,9 @@ local relativenumber = signal.new(true)
 signal.persist(relativenumber, 'vim.relativenumber')
 
 local function update_relativenumber(win)
-	local opts = { win = win, scope = 'local' }
-	local has_numbers = vim.api.nvim_get_option_value('number', opts)
-	if has_numbers then
-		vim.api.nvim_set_option_value('relativenumber', relativenumber(), opts)
+	local wo = options.winlocal(win)
+	if wo.number then
+		wo.relativenumber = relativenumber()
 	end
 end
 
@@ -24,11 +24,9 @@ end)
 local augroup = autocmd.group 'number'
 
 augroup:on({ 'WinEnter', 'VimEnter' }, '*', function(event)
-	local win = vim.api.nvim_get_current_win()
-	local buftype = vim.api.nvim_get_option_value('buftype', { buf = event.buf })
-
-	if buftype == '' then
-		vim.api.nvim_set_option_value('number', true, { win = win, scope = 'local' })
+	local bo, wo, win = options.buflocal(event.buf)
+	if bo.buftype == '' then
+		wo.number = true
 	end
 
 	update_relativenumber(win)
