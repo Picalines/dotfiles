@@ -1,5 +1,4 @@
 local func = require 'util.func'
-local tbl = require 'util.table'
 
 local M = {}
 
@@ -63,25 +62,6 @@ end
 ---@param opts autocmd_opts?
 function Group:on_user(event, callback_or_cmd, opts)
 	return self:on('User', event, callback_or_cmd, opts)
-end
-
----@class autocmd_winresized_event: autocmd_event
----@field win integer
-
----@param callback fun(event: autocmd_winresized_event): any
-function Group:on_winresized(callback)
-	return self:on('WinResized', '*', function(event)
-		for _, win in ipairs(vim.v.event.windows) do
-			local returned = callback(tbl.override(event, {
-				win = win,
-				buf = vim.api.nvim_win_get_buf(win),
-			}))
-
-			if type(returned) ~= 'nil' then
-				return returned
-			end
-		end
-	end)
 end
 
 ---@class group_opts
