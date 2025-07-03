@@ -6,6 +6,24 @@ keymap {
 		['<leader>bD'] = { "<Cmd>lua require('snacks').bufdelete.all()<CR>", 'delete all' },
 	},
 
+	[{ 'n', desc = 'Find: %s' }] = {
+		['gD'] = { '<Cmd>lua Snacks.picker.lsp_definitions()<CR>', 'lsp definitions' },
+		['gR'] = { '<Cmd>lua Snacks.picker.lsp_references()<CR>', 'lsp references' },
+		['gI'] = { '<Cmd>lua Snacks.picker.lsp_implementations()<CR>', 'lsp implementations' },
+		['gT'] = { '<Cmd>lua Snacks.picker.lsp_type_definitions()<CR>', 'lsp type definitions' },
+
+		['<leader>bb'] = { '<Cmd>lua Snacks.picker.buffers()<CR>', 'buffer' },
+
+		['<leader>ff'] = { '<Cmd>lua Snacks.picker.files()<CR>', 'files' },
+		['<leader>fo'] = { '<Cmd>lua Snacks.picker.recent()<CR>', 'recent' },
+		['<leader>fb'] = { '<Cmd>lua Snacks.picker.buffers()<CR>', 'buffer' },
+		['<leader>fg'] = { '<Cmd>lua Snacks.picker.grep()<CR>', 'grep' },
+		['<leader>fh'] = { '<Cmd>lua Snacks.picker.help()<CR>', 'help' },
+		['<leader>fr'] = { '<Cmd>lua Snacks.picker.resume()<CR>', 'resume' },
+
+		['<leader>uC'] = { '<Cmd>lua Snacks.picker.colorschemes()<CR>', 'colorscheme' },
+	},
+
 	[{ 'n', desc = 'Terminal: %s' }] = {
 		['<leader>t'] = { '<Cmd>TerminalFocus<CR>', 'toggle' },
 	},
@@ -20,6 +38,15 @@ return {
 		indent = {
 			enabled = true,
 			hl = 'Whitespace',
+		},
+
+		picker = {
+			ui_select = true,
+			layout = {
+				preset = 'select',
+				cycle = false,
+				layout = { row = 2 },
+			},
 		},
 
 		input = {
