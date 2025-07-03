@@ -60,6 +60,7 @@ return {
 							wrap = true,
 							breakindent = false,
 							linebreak = true,
+							winfixbuf = true,
 						},
 					},
 				},
