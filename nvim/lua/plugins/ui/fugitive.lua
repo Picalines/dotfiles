@@ -14,6 +14,11 @@ keymap {
 
 local augroup = autocmd.group 'fugitive'
 
+augroup:on('BufWinEnter', 'fugitive://*', function(event)
+	local _, _, win = options.buflocal(event.buf)
+	vim.api.nvim_win_set_width(win, math.floor(vim.o.columns * 0.35))
+end)
+
 augroup:on_user('FugitiveIndex', function(event)
 	keymap {
 		[{ 'n', buffer = event.buf, desc = 'Git: %s' }] = {
@@ -22,15 +27,14 @@ augroup:on_user('FugitiveIndex', function(event)
 		},
 	}
 
-	local bo, wo, win = options.buflocal(event.buf)
+	local bo, wo = options.buflocal(event.buf)
 
 	bo.buflisted = false
 	wo.number = false
 	wo.relativenumber = false
 	wo.signcolumn = 'no'
+	wo.winfixbuf = true
 	wo.winbar = '%=󰊢 git status%='
-
-	vim.api.nvim_win_set_width(win, math.floor(vim.o.columns * 0.35))
 end)
 
 augroup:on_user('FugitiveEditor', function(event)
@@ -47,6 +51,7 @@ augroup:on_user('FugitiveEditor', function(event)
 	wo.number = false
 	wo.relativenumber = false
 	wo.signcolumn = 'no'
+	wo.winfixbuf = true
 	wo.winbar = '%=󰊢 git editor%='
 
 	if vim.o.splitbelow then
