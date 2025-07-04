@@ -36,7 +36,7 @@ return {
 				}),
 				section('Editor', {
 					{ 'New Buffer 󱇨', 'enew' },
-					{ 'Theme 󰸌', 'Telescope colorscheme' },
+					{ 'Theme 󰸌', 'lua Snacks.picker.colorschemes()' },
 					{ 'Quit ', 'wa | qa!' },
 				}),
 				section('Manage', {
