@@ -1,7 +1,7 @@
 return {
 	'echasnovski/mini.diff',
 
-	event = { 'BufReadPre', 'BufNewFile' },
+	event = 'VeryLazy',
 
 	config = function()
 		local diff = require 'mini.diff'
