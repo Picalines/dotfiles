@@ -1,7 +1,7 @@
 return {
 	'echasnovski/mini.operators',
 
-	event = { 'BufReadPre', 'BufNewFile' },
+	event = 'VeryLazy',
 
 	opts = {
 		evaluate = {
