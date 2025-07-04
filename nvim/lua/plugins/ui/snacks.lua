@@ -20,6 +20,7 @@ keymap {
 		['<leader>fg'] = { '<Cmd>lua Snacks.picker.grep()<CR>', 'grep' },
 		['<leader>fh'] = { '<Cmd>lua Snacks.picker.help()<CR>', 'help' },
 		['<leader>fr'] = { '<Cmd>lua Snacks.picker.resume()<CR>', 'resume' },
+		['<leader>ft'] = { ':set filetype=', 'filetype' },
 
 		['<leader>uC'] = { '<Cmd>lua Snacks.picker.colorschemes()<CR>', 'colorscheme' },
 	},
