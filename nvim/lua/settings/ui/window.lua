@@ -14,6 +14,15 @@ vim.go.scrolloff = 8
 
 vim.o.laststatus = 3 -- global statusline
 
+vim.go.number = true
+vim.go.relativenumber = true
+vim.go.signcolumn = 'yes'
+
+vim.go.fillchars = 'eob: '
+
+vim.go.list = true
+vim.go.listchars = 'tab:   ,trail:,extends:,precedes:,nbsp:'
+
 augroup:on({ 'TabNew', 'WinNew', 'WinEnter', 'BufWinEnter', 'TermOpen' }, '*', function()
 	local tab_winids = vim.api.nvim_tabpage_list_wins(0)
 
@@ -24,4 +33,8 @@ augroup:on({ 'TabNew', 'WinNew', 'WinEnter', 'BufWinEnter', 'TermOpen' }, '*', f
 	end)
 
 	vim.o.showtabline = has_normal_bufs and 2 or 1 -- always OR only when #tabpages > 1
+end)
+
+augroup:on('TextYankPost', '*', function()
+	vim.highlight.on_yank()
 end)
