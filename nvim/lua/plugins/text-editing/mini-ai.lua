@@ -3,10 +3,6 @@ return {
 
 	event = 'VeryLazy',
 
-	dependencies = {
-		'nvim-treesitter/nvim-treesitter-textobjects',
-	},
-
 	config = function()
 		local mini_ai = require 'mini.ai'
 
@@ -37,6 +33,8 @@ return {
 					a = { '@parameter.outer', '@attribute.outer' },
 					i = { '@parameter.inner', '@attribute.inner' },
 				},
+
+				c = spec_treesitter { a = '@comment.outer', i = '@comment.inner' },
 
 				f = spec_treesitter { a = '@call.outer', i = '@call.inner' },
 
