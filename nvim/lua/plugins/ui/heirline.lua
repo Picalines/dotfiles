@@ -570,7 +570,7 @@ return {
 		local FormatBeforeWriteFlag = {
 			{ provider = '', hl = '@boolean' },
 			condition = function()
-				return vim.g.conform_enabled
+				return vim.g.format_on_write
 			end,
 		}
 

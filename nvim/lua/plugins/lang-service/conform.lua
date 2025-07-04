@@ -3,7 +3,7 @@ local keymap = require 'util.keymap'
 
 vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 
-vim.g.conform_enabled = true
+vim.g.format_on_write = true
 
 keymap {
 	[{ 'n', desc = 'Format: %s' }] = {
@@ -17,8 +17,8 @@ keymap {
 		['<leader>uf'] = {
 			desc = 'toggle on write',
 			function()
-				vim.g.conform_enabled = not vim.g.conform_enabled
-				vim.notify('format before write ' .. (vim.g.conform_enabled and 'on' or 'off'))
+				vim.g.format_on_write = not vim.g.format_on_write
+				vim.notify('format before write ' .. (vim.g.format_on_write and 'on' or 'off'))
 			end,
 		},
 	},
@@ -26,8 +26,12 @@ keymap {
 
 local augroup = autocmd.group 'conform'
 
+augroup:on('BufRead', { '*lock.json', '*lock.yaml' }, function(event)
+	vim.b[event.buf].format_on_write = false
+end)
+
 augroup:on('BufWritePre', '*', function(event)
-	if vim.g.conform_enabled then
+	if vim.g.format_on_write and vim.b[event.buf].format_on_write ~= false then
 		require('conform').format { async = false, bufnr = event.buf }
 	end
 end)
