@@ -129,6 +129,8 @@ return {
 				['s'] = 'noop', -- leap.nvim
 				['S'] = 'noop',
 
+				['f'] = func.cmd 'lua Snacks.picker.files()',
+
 				['<cr>'] = 'open',
 				['<2-LeftMouse>'] = 'open',
 				['l'] = 'open',

@@ -35,14 +35,6 @@ keymap {
 
 augroup:on('TabLeave', '*', 'TerminalHide')
 
-augroup:on('FileType', 'neo-tree', function(event)
-	keymap {
-		[{ 'n', buffer = event.buf, desc = 'Find: %s' }] = {
-			['f'] = { '<leader>ff', 'files', remap = true },
-		},
-	}
-end)
-
 return {
 	'folke/snacks.nvim',
 
@@ -52,6 +44,10 @@ return {
 		indent = {
 			enabled = true,
 			hl = 'Whitespace',
+			filter = function(buf)
+				local bo = vim.bo[buf]
+				return bo.buftype == '' and bo.filetype ~= 'markdown'
+			end,
 		},
 
 		picker = {
