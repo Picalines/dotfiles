@@ -1,8 +1,5 @@
 #!/bin/bash
 
-ln -snf $PWD/.bashrc ~/.bashrc
-ln -snf $PWD/.zshrc ~/.zshrc
-
 mkdir -p ~/.config
 
 command-exists() {
@@ -13,6 +10,9 @@ symlink-from-to() {
     mkdir -p "$(dirname $2)"
     ln -snf "$PWD/$1" "$2"
 }
+
+symlink-from-to ./.bashrc ~/.bashrc
+symlink-from-to ./.zshrc ~/.zshrc
 
 if command-exists nvim
 then
