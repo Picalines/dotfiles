@@ -1,4 +1,7 @@
+local autocmd = require 'util.autocmd'
 local keymap = require 'util.keymap'
+
+local augroup = autocmd.group 'snacks'
 
 keymap {
 	[{ 'n', desc = 'Buffer: %s' }] = {
@@ -29,6 +32,16 @@ keymap {
 		['<leader>t'] = { '<Cmd>TerminalFocus<CR>', 'toggle' },
 	},
 }
+
+augroup:on('TabLeave', '*', 'TerminalHide')
+
+augroup:on('FileType', 'neo-tree', function(event)
+	keymap {
+		[{ 'n', buffer = event.buf, desc = 'Find: %s' }] = {
+			['f'] = { '<leader>ff', 'files', remap = true },
+		},
+	}
+end)
 
 return {
 	'folke/snacks.nvim',
@@ -89,12 +102,8 @@ return {
 		},
 	},
 
-	config = function(_, opts)
-		local autocmd = require 'util.autocmd'
-
+	init = function()
 		local snacks = require 'snacks'
-
-		snacks.setup(opts)
 
 		local function new_terminal()
 			-- NOTE: snacks.terminal.open doesn't add it to terminals list
@@ -136,9 +145,5 @@ return {
 		vim.api.nvim_create_user_command('TerminalNew', new_terminal, {})
 		vim.api.nvim_create_user_command('TerminalFocus', focus, {})
 		vim.api.nvim_create_user_command('TerminalHide', hide_all, {})
-
-		local augroup = autocmd.group 'snacks'
-
-		augroup:on('TabLeave', '*', 'TerminalHide')
 	end,
 }
