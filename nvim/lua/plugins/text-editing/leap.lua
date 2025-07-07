@@ -63,6 +63,7 @@ return {
 			hl.clear('LeapBackdrop', 'all')
 			hl.link('LeapMatch', 'CurSearch')
 			hl.link('LeapLabel', 'Search')
+			leap.init_hl()
 		end
 
 		setup_highlights()
