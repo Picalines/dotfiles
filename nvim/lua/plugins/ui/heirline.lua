@@ -397,75 +397,71 @@ return {
 			end,
 		}
 
-		local function diff_count(key)
-			local b = vim.b
-			local count = b.minidiff_summary and b.minidiff_summary[key]
-			if count ~= 0 then
-				return count
-			end
-		end
+		---@class line_counter
+		---@field count fun(): integer
+		---@field icon string
+		---@field hl string
 
-		local function DiffCounter(count_key, sign, comp_hl)
+		---@param update? string[]
+		---@param counters line_counter[]
+		local function Counters(update, counters)
 			return {
+				update = update,
 				condition = function()
-					return diff_count(count_key)
+					return array.some(counters, function(counter)
+						return counter.count() > 0
+					end)
 				end,
-				provider = function()
-					return sign .. diff_count(count_key)
-				end,
-				hl = comp_hl,
+
+				array.map(counters, function(counter)
+					return {
+						hl = hl_fg(counter.hl),
+						update = update,
+						condition = function()
+							return counter.count() > 0
+						end,
+						provider = function()
+							return counter.icon .. counter.count()
+						end,
+					}
+				end),
 			}
 		end
 
-		local Diff = {
-			condition = function()
-				return diff_count 'add' or diff_count 'delete' or diff_count 'change'
-			end,
+		local DiffCounts = Counters(
+			nil,
+			array.map({
+				{ key = 'add', sign = '+', hl = '@diff.plus' },
+				{ key = 'delete', sign = '-', hl = '@diff.minus' },
+				{ key = 'change', sign = '~', hl = '@diff.delta' },
+			}, function(count)
+				return {
+					hl = count.hl,
+					icon = count.sign,
+					count = function()
+						return vim.b.minidiff_summary and vim.b.minidiff_summary[count.key] or 0
+					end,
+				}
+			end)
+		)
 
-			DiffCounter('add', '+', hl_fg '@diff.plus'),
-			DiffCounter('delete', '-', hl_fg '@diff.minus'),
-			DiffCounter('change', '~', hl_fg '@diff.delta'),
-		}
-
-		local function DiagnisticCounter(opts)
-			local function get_diagnostic_count()
-				return #vim.diagnostic.get(0, { severity = opts.severity })
-			end
-
-			return {
-				condition = function()
-					return get_diagnostic_count() > 0
-				end,
-
-				update = { 'DiagnosticChanged', 'BufEnter' },
-
-				init = function(self)
-					self.icon = vim.diagnostic.config().signs.text[opts.severity] or opts.fallback_icon
-					self.diagnostic_count = get_diagnostic_count()
-				end,
-
-				provider = function(self)
-					return string.format('%s %d', self.icon, self.diagnostic_count)
-				end,
-
-				hl = opts.hl,
-			}
-		end
-
-		local severity = vim.diagnostic.severity
-		local ErrorCount = DiagnisticCounter { severity = severity.ERROR, fallback_icon = 'E', hl = 'DiagnosticError' }
-		local WarningCount = DiagnisticCounter { severity = severity.WARN, fallback_icon = 'W', hl = 'DiagnosticWarn' }
-		local InfoCount = DiagnisticCounter { severity = severity.INFO, fallback_icon = 'I', hl = 'DiagnosticInfo' }
-		local HintCount = DiagnisticCounter { severity = severity.HINT, fallback_icon = 'H', hl = 'DiagnosticHint' }
-
-		local is_leaping = signal.new(false)
-
-		augroup:on_user('LeapEnter', func.curry(is_leaping, true))
-		augroup:on_user('LeapLeave', func.curry(is_leaping, false))
-
-		signal.on(is_leaping, function()
-			vim.api.nvim_exec_autocmds('User', { pattern = 'HeirlineLeapUpdate' })
-		end)
+		local DiagnosticCounts = Counters(
+			{ 'DiagnosticChanged', 'BufEnter' },
+			array.map({
+				{ severity = vim.diagnostic.severity.ERROR, hl = 'DiagnosticError' },
+				{ severity = vim.diagnostic.severity.WARN, hl = 'DiagnosticWarn' },
+				{ severity = vim.diagnostic.severity.INFO, hl = 'DiagnosticInfo' },
+				{ severity = vim.diagnostic.severity.HINT, hl = 'DiagnosticHint' },
+			}, function(count)
+				return {
+					hl = count.hl,
+					icon = vim.diagnostic.config().signs.text[count.severity],
+					count = function()
+						return #vim.diagnostic.get(0, { severity = count.severity })
+					end,
+				}
+			end)
+		)
 
 		local StatusModifiedFlag = {
 			provider = '+',
@@ -577,11 +573,8 @@ return {
 		local LeftStatusline = AppendAll(Space, 'right') {
 			ViMode,
 			GitBranch,
-			Diff,
-			ErrorCount,
-			WarningCount,
-			InfoCount,
-			HintCount,
+			DiffCounts,
+			DiagnosticCounts,
 			StatusModifiedFlag,
 			StatusReadonlyFlag,
 			MacroRec,
