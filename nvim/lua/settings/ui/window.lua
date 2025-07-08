@@ -11,6 +11,7 @@ vim.o.splitright = true
 vim.o.splitbelow = true
 
 vim.go.scrolloff = 8
+vim.go.sidescrolloff = 16
 
 vim.o.laststatus = 3 -- global statusline
 
