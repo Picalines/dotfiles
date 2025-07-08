@@ -18,7 +18,6 @@ return {
 		local h_util = require 'heirline.utils'
 		local heirline = require 'heirline'
 		local hl = require 'util.highlight'
-		local signal = require 'util.signal'
 		local tbl = require 'util.table'
 
 		local augroup = autocmd.group 'heirline'
@@ -354,15 +353,21 @@ return {
 			update = { 'RecordingEnter', 'RecordingLeave' },
 		}
 
-		local search_shown = signal.new(false)
+		local search_shown = false
 
-		augroup:on('CmdlineEnter', { '/', '?' }, func.curry(search_shown, true))
-		augroup:on_user('Dismiss', func.curry(search_shown, false))
+		augroup:on('CmdlineEnter', { '/', '?' }, function()
+			search_shown = true
+		end)
 
-		signal.on(search_shown, vim.schedule_wrap(vim.cmd.redrawstatus))
+		augroup:on_user('Dismiss', function()
+			search_shown = false
+			vim.cmd.redrawstatus()
+		end)
 
 		local SearchCount = {
-			condition = func.curry_only(search_shown),
+			condition = function()
+				return search_shown
+			end,
 
 			init = function(self)
 				self.current = 0
@@ -479,10 +484,17 @@ return {
 			end,
 		}
 
+		local is_leaping = false
+		augroup:on_user({ 'LeapEnter', 'LeapLeave' }, function(event)
+			is_leaping = event.match == 'LeapEnter'
+		end)
+
 		local LeapMarker = {
-			update = { 'User', pattern = 'HeirlineLeapUpdate' },
-			condition = func.curry_only(is_leaping),
+			update = { 'User', pattern = { 'LeapEnter', 'LeapLeave' } },
 			{ provider = '󰤇 leap', hl = hl_fg '@diff.plus' },
+			condition = function()
+				return is_leaping
+			end,
 		}
 
 		local TerminalList = {
