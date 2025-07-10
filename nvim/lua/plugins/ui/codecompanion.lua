@@ -127,8 +127,8 @@ return {
 		augroup:on_user('CodeCompanionRequestStarted', function(event)
 			local fidget_progress = require 'fidget.progress'
 			progress_handles[event.data.id] = fidget_progress.handle.create {
-				title = ' ai generation',
-				message = 'in progress...',
+				title = ' AI',
+				message = 'Generating',
 				lsp_client = {
 					name = event.data.adapter.formatted_name,
 				},
@@ -140,11 +140,11 @@ return {
 			progress_handles[event.data.id] = nil
 			if handle then
 				if event.data.status == 'success' then
-					handle.message = 'done'
+					handle.message = '󰄴 Done'
 				elseif event.data.status == 'error' then
-					handle.message = '󰅝 error'
+					handle.message = '󰅝 Error'
 				else
-					handle.message = '󰜺 cancelled'
+					handle.message = '󰜺 Cancelled'
 				end
 
 				handle:finish()
