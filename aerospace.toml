@@ -16,6 +16,7 @@ on-focus-changed = 'move-mouse window-lazy-center'
 accordion-padding = 60
 
 [gaps]
+
 inner.horizontal = 16
 inner.vertical =   16
 outer.left =       16
@@ -28,6 +29,8 @@ outer.right =      16
 ctrl-alt-cmd-shift-minus = 'resize smart -50'
 ctrl-alt-cmd-shift-equal = 'resize smart +50'
 ctrl-alt-cmd-shift-f = 'fullscreen'
+
+ctrl-alt-cmd-shift-s = 'exec-and-forget screencapture -i -c'
 
 ctrl-alt-cmd-shift-h = 'focus left'
 ctrl-alt-cmd-shift-j = 'focus down'
