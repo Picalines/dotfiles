@@ -28,8 +28,6 @@ return {
 			'WhoIsSethDaniel/mason-tool-installer.nvim',
 
 			opts = function()
-				local array = require 'util.array'
-
 				local ensure_installed = {
 					'jsonls',
 					'lua_ls',
@@ -64,12 +62,12 @@ return {
 				}
 
 				for executables, packages in pairs(ensure_installed_by_executable) do
-					local should_install = array.some(executables, function(exe)
+					local should_install = vim.iter(executables):any(function(exe)
 						return vim.fn.executable(exe) == 1
 					end)
 
 					if should_install then
-						ensure_installed = array.concat(ensure_installed, packages)
+						vim.list_extend(ensure_installed, packages)
 					end
 				end
 

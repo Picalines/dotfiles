@@ -1,5 +1,4 @@
 local app = require 'util.app'
-local array = require 'util.array'
 local lazy = require 'lazy'
 
 local client = app.client()
@@ -23,9 +22,12 @@ local client_modules = {
 	},
 }
 
-local lazy_spec = array.map(client_modules[client], function(module)
-	return { import = 'plugins.' .. module }
-end)
+local lazy_spec = vim
+	.iter(client_modules[client])
+	:map(function(module)
+		return { import = 'plugins.' .. module }
+	end)
+	:totable()
 
 lazy.setup(lazy_spec, {
 	lockfile = vim.fn.stdpath 'config' .. '/lazy-lock.json',

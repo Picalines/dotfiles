@@ -34,7 +34,6 @@ return {
 	},
 
 	init = function()
-		local array = require 'util.array'
 		local autocmd = require 'util.autocmd'
 		local nvim_treesitter = require 'nvim-treesitter'
 
@@ -44,7 +43,7 @@ return {
 
 		augroup:on('FileType', '*', function(event)
 			local language = vim.treesitter.language.get_lang(event.match)
-			if language and array.contains(available_parsers, language) then
+			if language and vim.list_contains(available_parsers, language) then
 				nvim_treesitter.install(language):await(function()
 					vim.treesitter.start(event.buf, language)
 				end)

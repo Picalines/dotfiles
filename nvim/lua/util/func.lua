@@ -1,4 +1,3 @@
-local array = require 'util.array'
 local tbl = require 'util.table'
 
 local M = {}
@@ -48,8 +47,7 @@ end
 function M.curry(func, ...)
 	local curried = { ... }
 	return function(...)
-		local args = { ... }
-		return func(unpack(array.concat(curried, args)))
+		return func(unpack(vim.iter({ curried, { ... } }):flatten():totable()))
 	end
 end
 

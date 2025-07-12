@@ -1,4 +1,3 @@
-local array = require 'util.array'
 local persist = require 'util.persist'
 
 local M = {}
@@ -21,7 +20,7 @@ function M.new(initial_value)
 
 	local function read()
 		local observer = observer_stack[#observer_stack]
-		if observer and not array.contains(_subscribers, observer) then
+		if observer and not vim.list_contains(_subscribers, observer) then
 			_subscribers[#_subscribers + 1] = observer
 		end
 
@@ -77,7 +76,7 @@ function M.derive(factory)
 		end
 
 		local observer = observer_stack[#observer_stack]
-		if observer and not array.contains(_subscribers, observer) then
+		if observer and not vim.list_contains(_subscribers, observer) then
 			if observer == _self then
 				error 'recursive signal'
 			end

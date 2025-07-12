@@ -5,7 +5,6 @@ return {
 
 	config = function()
 		local app = require 'util.app'
-		local array = require 'util.array'
 		local starter = require 'mini.starter'
 
 		---@class StarterItem
@@ -15,10 +14,13 @@ return {
 		---@param name string
 		---@param items (StarterItem | nil)[]
 		local function section(name, items)
-			return array.flat_map(items, function(item)
-				local item_name, cmd = item[1], item[2]
-				return { { section = name, name = item_name, action = cmd } }
-			end)
+			return vim
+				.iter(items)
+				:map(function(item)
+					local item_name, cmd = item[1], item[2]
+					return { section = name, name = item_name, action = cmd }
+				end)
+				:totable()
 		end
 
 		starter.setup {

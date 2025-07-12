@@ -1,5 +1,4 @@
 local app = require 'util.app'
-local array = require 'util.array'
 local tbl = require 'util.table'
 
 ---@class keymap_info
@@ -66,8 +65,12 @@ local function keymap(decl_table, _info)
 				end
 			end
 
+			local inner_modes = {}
+			vim.list_extend(inner_modes, _info.modes)
+			vim.list_extend(inner_modes, group_modes)
+
 			keymap(value, {
-				modes = array.concat(_info.modes, group_modes),
+				modes = inner_modes,
 				opts = tbl.override_deep(_info.opts, group_opts),
 			})
 		end

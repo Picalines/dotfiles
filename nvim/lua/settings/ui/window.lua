@@ -1,4 +1,3 @@
-local array = require 'util.array'
 local autocmd = require 'util.autocmd'
 local options = require 'util.options'
 
@@ -27,7 +26,7 @@ vim.go.listchars = 'tab:   ,trail:,extends:,precedes:,nbsp:'
 augroup:on({ 'TabNew', 'WinNew', 'WinEnter', 'BufWinEnter', 'TermOpen' }, '*', function()
 	local tab_winids = vim.api.nvim_tabpage_list_wins(0)
 
-	local has_normal_bufs = array.some(tab_winids, function(winid)
+	local has_normal_bufs = vim.iter(tab_winids):any(function(winid)
 		local _, bo = options.winlocal(winid)
 		local config = vim.api.nvim_win_get_config(winid)
 		return bo.buftype == '' and config.relative == ''

@@ -4,15 +4,12 @@ return {
 	lazy = false,
 
 	config = function()
-		local array = require 'util.array'
 		local autocmd = require 'util.autocmd'
 		local func = require 'util.func'
 		local hl = require 'util.highlight'
 		local keymap = require 'util.keymap'
-		local tbl = require 'util.table'
 
 		local leap = require 'leap'
-		local leap_treesitter = require 'leap.treesitter'
 
 		leap.setup {}
 
@@ -24,28 +21,8 @@ return {
 		leap.opts.special_keys.next_group = { '<Tab>' }
 		leap.opts.special_keys.prev_group = { '<S-Tab>' }
 
-		local function exclude(iarray, excluded_items)
-			return array.filter(iarray, function(item)
-				return not array.contains(excluded_items, item)
-			end)
-		end
-
-		local unsafe_labels = { ',', '.', '/', ':', '?', 'N', 'n' }
-
-		leap.opts.labels = exclude(leap.opts.labels, unsafe_labels)
-		leap.opts.safe_labels = exclude(leap.opts.safe_labels, unsafe_labels)
-
-		local function select_node_clever(forward_key)
-			local special_keys = tbl.copy_deep(leap.opts.special_keys)
-			special_keys.next_target = array.concat({ forward_key }, special_keys.next_target)
-			special_keys.prev_target = array.concat({ string.upper(forward_key) }, special_keys.prev_target)
-
-			leap_treesitter.select {
-				opts = {
-					special_keys = special_keys,
-					labels = leap.opts.safe_labels,
-				},
-			}
+		local function select_node()
+			require('leap.treesitter').select { opts = require('leap.user').with_traversal_keys('n', 'N') }
 		end
 
 		keymap {
@@ -55,7 +32,7 @@ return {
 			},
 
 			[{ 'x', 'o' }] = {
-				['an'] = { func.curry(select_node_clever, 'n'), 'Leap treesitter node' },
+				['an'] = { func.curry(select_node, 'n'), 'Leap treesitter node' },
 			},
 		}
 

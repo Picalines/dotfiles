@@ -8,7 +8,6 @@ return {
 	},
 
 	config = function(_, opts)
-		local array = require 'util.array'
 		local autopairs = require 'nvim-autopairs'
 		local Rule = require 'nvim-autopairs.rule'
 
@@ -29,7 +28,7 @@ return {
 				variants = { variants }
 			end
 
-			return array.contains(variants, value)
+			return vim.list_contains(variants, value)
 		end
 
 		local function is_inside_ts_node(node_types)

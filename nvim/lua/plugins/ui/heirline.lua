@@ -10,7 +10,6 @@ return {
 
 	config = function()
 		local app = require 'util.app'
-		local array = require 'util.array'
 		local autocmd = require 'util.autocmd'
 		local devicons = require 'nvim-web-devicons'
 		local func = require 'util.func'
@@ -64,7 +63,7 @@ return {
 			local appender = Append(separator, side)
 			---@param components table[]
 			return function(components)
-				return array.map(components, appender)
+				return vim.iter(components):map(appender):totable()
 			end
 		end
 
@@ -146,9 +145,12 @@ return {
 		}
 
 		local function get_listed_buffers()
-			return array.filter(vim.api.nvim_list_bufs(), function(bufnr)
-				return vim.bo[bufnr].buflisted
-			end)
+			return vim
+				.iter(vim.api.nvim_list_bufs())
+				:filter(function(bufnr)
+					return vim.bo[bufnr].buflisted
+				end)
+				:totable()
 		end
 
 		local function compute_unique_prefixes(bufnrs)
@@ -157,13 +159,19 @@ return {
 			local is_windows = app.os() == 'windows'
 			local path_separator = not is_windows and '/' or '\\'
 
-			local prefixes = array.generate(#bufnrs, function()
-				return {}
-			end)
+			local prefixes = vim
+				.iter(function()
+					return {}
+				end)
+				:take(#bufnrs)
+				:totable()
 
-			local paths = array.map(bufnrs, function(bufnr)
-				return vim.fn.reverse(vim.split(vim.api.nvim_buf_get_name(bufnr), path_separator))
-			end)
+			local paths = vim
+				.iter(bufnrs)
+				:map(function(bufnr)
+					return vim.fn.reverse(vim.split(vim.api.nvim_buf_get_name(bufnr), path_separator))
+				end)
+				:totable()
 
 			for i = 1, #paths do
 				for j = i + 1, #paths do
@@ -180,9 +188,12 @@ return {
 				end
 			end
 
-			return array.map(prefixes, function(path)
-				return table.concat(vim.fn.reverse(path), '/')
-			end)
+			return vim
+				.iter(prefixes)
+				:map(function(path)
+					return table.concat(vim.fn.reverse(path), '/')
+				end)
+				:totable()
 		end
 
 		local buflist_cache = {}
@@ -413,59 +424,68 @@ return {
 			return {
 				update = update,
 				condition = function()
-					return array.some(counters, function(counter)
+					return vim.iter(counters):any(function(counter)
 						return counter.count() > 0
 					end)
 				end,
 
-				array.map(counters, function(counter)
-					return {
-						hl = hl_fg(counter.hl),
-						update = update,
-						condition = function()
-							return counter.count() > 0
-						end,
-						provider = function()
-							return counter.icon .. counter.count()
-						end,
-					}
-				end),
+				vim
+					.iter(counters)
+					:map(function(counter)
+						return {
+							hl = hl_fg(counter.hl),
+							update = update,
+							condition = function()
+								return counter.count() > 0
+							end,
+							provider = function()
+								return counter.icon .. counter.count()
+							end,
+						}
+					end)
+					:totable(),
 			}
 		end
 
 		local DiffCounts = Counters(
 			nil,
-			array.map({
-				{ key = 'add', sign = '+', hl = '@diff.plus' },
-				{ key = 'delete', sign = '-', hl = '@diff.minus' },
-				{ key = 'change', sign = '~', hl = '@diff.delta' },
-			}, function(count)
-				return {
-					hl = count.hl,
-					icon = count.sign,
-					count = function()
-						return vim.b.minidiff_summary and vim.b.minidiff_summary[count.key] or 0
-					end,
-				}
-			end)
+			vim
+				.iter({
+					{ key = 'add', sign = '+', hl = '@diff.plus' },
+					{ key = 'delete', sign = '-', hl = '@diff.minus' },
+					{ key = 'change', sign = '~', hl = '@diff.delta' },
+				})
+				:map(function(count)
+					return {
+						hl = count.hl,
+						icon = count.sign,
+						count = function()
+							return vim.b.minidiff_summary and vim.b.minidiff_summary[count.key] or 0
+						end,
+					}
+				end)
+				:totable()
 		)
 
 		local DiagnosticCounts = Counters(
 			{ 'DiagnosticChanged', 'BufEnter' },
-			array.map({
-				{ severity = vim.diagnostic.severity.ERROR, hl = 'DiagnosticError' },
-				{ severity = vim.diagnostic.severity.WARN, hl = 'DiagnosticWarn' },
-				{ severity = vim.diagnostic.severity.INFO, hl = 'DiagnosticInfo' },
-				{ severity = vim.diagnostic.severity.HINT, hl = 'DiagnosticHint' },
-			}, function(count)
-				return {
-					hl = count.hl,
-					icon = vim.diagnostic.config().signs.text[count.severity],
-					count = function()
-						return #vim.diagnostic.get(0, { severity = count.severity })
-					end,
-				}
-			end)
+			vim
+				.iter({
+					{ severity = vim.diagnostic.severity.ERROR, hl = 'DiagnosticError' },
+					{ severity = vim.diagnostic.severity.WARN, hl = 'DiagnosticWarn' },
+					{ severity = vim.diagnostic.severity.INFO, hl = 'DiagnosticInfo' },
+					{ severity = vim.diagnostic.severity.HINT, hl = 'DiagnosticHint' },
+				})
+				:map(function(count)
+					return {
+						hl = count.hl,
+						icon = vim.diagnostic.config().signs.text[count.severity],
+						count = function()
+							return #vim.diagnostic.get(0, { severity = count.severity })
+						end,
+					}
+				end)
+				:totable()
 		)
 
 		local StatusModifiedFlag = {
@@ -556,13 +576,13 @@ return {
 			},
 
 			provider = function(self)
-				local client_names = array.map(vim.lsp.get_clients { bufnr = 0 }, function(client)
-					local s = self.client_icons[client.name] or client.name
-					s = s:gsub('_language_server$', ''):gsub('_ls$', '')
-					return s
-				end)
-
-				return table.concat(client_names, ' ')
+				return vim
+					.iter(vim.lsp.get_clients { bufnr = 0 })
+					:map(function(client)
+						local name = (self.client_icons[client.name] or client.name):gsub('_language_server$', ''):gsub('_ls$', '')
+						return name
+					end)
+					:join ' '
 			end,
 
 			hl = '@tag',
