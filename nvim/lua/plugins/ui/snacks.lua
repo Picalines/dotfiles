@@ -54,8 +54,16 @@ return {
 			ui_select = true,
 			layout = {
 				preset = 'select',
-				cycle = false,
 				layout = { row = 2 },
+			},
+			win = {
+				input = {
+					keys = {
+						['<Esc>'] = { 'close', mode = { 'n', 'i' } },
+						['<c-b>'] = false,
+						['<c-p>'] = false,
+					},
+				},
 			},
 		},
 
