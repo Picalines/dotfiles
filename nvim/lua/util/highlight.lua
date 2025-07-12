@@ -1,5 +1,4 @@
 local func = require 'util.func'
-local tbl = require 'util.table'
 local umath = require 'util.math'
 
 local M = {}
@@ -116,20 +115,22 @@ function M.clear(target_hl, attrs, opts)
 	opts = func.default_opts(opts, { ns_id = 0 })
 
 	if not attrs or attrs == '*' then
-		attrs = tbl.keys(clear_map)
+		attrs = vim.tbl_keys(clear_map)
 	end
 
 	if type(attrs) ~= 'table' then
 		attrs = { attrs }
 	end
 
-	local new_attrs = tbl.map(attrs, function(_, attr)
-		return attr, clear_map[attr]
+	local new_attrs = vim.iter(attrs):fold({}, function(acc, attr)
+		acc[attr] = clear_map[attr]
+		return acc
 	end)
 
 	local hl = M.get(target_hl, { ns_id = opts.ns_id, follow_link = true }) or {}
 
-	vim.api.nvim_set_hl(opts.ns_id, target_hl, tbl.override_deep(hl, new_attrs))
+	---@diagnostic disable-next-line: param-type-mismatch
+	vim.api.nvim_set_hl(opts.ns_id, target_hl, vim.tbl_deep_extend('force', hl, new_attrs))
 end
 
 ---@param hex integer
@@ -175,7 +176,7 @@ function M.fade(augroup, source_hl, target_hl, opacity_factor, opts)
 
 		local target_attrs = {}
 		if source_attrs then
-			target_attrs = tbl.override(source_attrs, {
+			target_attrs = vim.tbl_extend('force', source_attrs, {
 				fg = blend_hex(source_attrs.bg, source_attrs.fg, opacity_factor),
 			})
 		end

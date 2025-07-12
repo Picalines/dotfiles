@@ -1,6 +1,5 @@
 local func = require 'util.func'
 local io = require 'io'
-local tbl = require 'util.table'
 
 local M = {}
 
@@ -23,12 +22,7 @@ function M.load()
 end
 
 M.save = func.debounce(500, function()
-	local keys = tbl.keys(M._storage)
-	table.sort(keys)
-
-	local json_to_store = vim.json.encode(tbl.map(keys, function(_, key)
-		return key, M._storage[key]
-	end))
+	local json_to_store = vim.json.encode(M._storage)
 
 	if json_to_store == '[]' then
 		json_to_store = '{}'

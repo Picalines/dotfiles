@@ -17,7 +17,6 @@ return {
 		local h_util = require 'heirline.utils'
 		local heirline = require 'heirline'
 		local hl = require 'util.highlight'
-		local tbl = require 'util.table'
 
 		local augroup = autocmd.group 'heirline'
 
@@ -37,7 +36,7 @@ return {
 				local condition = component.condition or func.const(true)
 				local update = component.update
 
-				component = tbl.copy_deep(component)
+				component = vim.deepcopy(component)
 				component.condition = nil
 				component.update = nil
 
@@ -201,14 +200,14 @@ return {
 		local function update_buflist()
 			buflist_cache = get_listed_buffers()
 
-			local bufnr_to_name = tbl.map(buflist_cache, function(_, bufnr)
-				return bufnr, vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ':t')
+			local name_to_bufnrs = vim.iter(buflist_cache):fold({}, function(acc, bufnr)
+				local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ':t')
+				acc[name] = vim.list_extend(acc[name] or {}, { bufnr })
+				return acc
 			end)
 
-			local name_to_bufnr = tbl.inverse(bufnr_to_name)
-
 			local buffer_prefixes = {}
-			for bufname, bufnrs in pairs(name_to_bufnr) do
+			for bufname, bufnrs in pairs(name_to_bufnrs) do
 				if #bufname > 0 and #bufnrs > 1 then
 					local prefixes = compute_unique_prefixes(bufnrs)
 					for i, prefix in pairs(prefixes) do

@@ -1,5 +1,4 @@
 local app = require 'util.app'
-local tbl = require 'util.table'
 
 ---@class keymap_info
 ---@field modes string[]
@@ -19,7 +18,7 @@ local function keymap(decl_table, _info)
 
 			if type(value) == 'table' then
 				rhs = value[1]
-				local_opts = tbl.copy_deep(value)
+				local_opts = vim.deepcopy(value)
 				local_opts.desc = value.desc or value[2]
 				local_opts[1] = nil
 				local_opts[2] = nil
@@ -34,7 +33,7 @@ local function keymap(decl_table, _info)
 			end
 
 			local group_desc = _info.opts.desc
-			local opts = tbl.override_deep(_info.opts, local_opts)
+			local opts = vim.tbl_deep_extend('force', _info.opts, local_opts)
 
 			if type(group_desc) == 'string' and local_opts.desc then
 				---@diagnostic disable-next-line: inject-field
@@ -71,7 +70,7 @@ local function keymap(decl_table, _info)
 
 			keymap(value, {
 				modes = inner_modes,
-				opts = tbl.override_deep(_info.opts, group_opts),
+				opts = vim.tbl_deep_extend('force', _info.opts, group_opts),
 			})
 		end
 	end

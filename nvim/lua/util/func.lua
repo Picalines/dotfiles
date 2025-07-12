@@ -1,5 +1,3 @@
-local tbl = require 'util.table'
-
 local M = {}
 
 function M.noop(...)
@@ -27,7 +25,7 @@ function M.default_opts(opts_arg, defaults)
 		return defaults
 	end
 
-	return tbl.override_deep(defaults, opts_arg)
+	return vim.tbl_deep_extend('force', defaults, opts_arg)
 end
 
 ---@generic Args, R
