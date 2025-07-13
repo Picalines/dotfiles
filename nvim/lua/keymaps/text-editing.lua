@@ -19,7 +19,7 @@ keymap {
 		['y<C-g>'] = { '<Cmd>eval setreg(v:register, @%) | echo @% . " -> " . v:register<CR>', 'yank buffer path' },
 	},
 
-	[{ 'i' }] = {
+	[{ 'i', 'c' }] = {
 		['<C-l>'] = '<Right>',
 		['<C-h>'] = '<Left>',
 
