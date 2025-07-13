@@ -15,12 +15,12 @@ return {
 		highlight_duration = 500,
 
 		mappings = {
-			add = 'gsa',
-			delete = 'gsd',
-			replace = 'gsc',
+			add = 's',
+			delete = 'ds',
+			replace = 'cs',
+			find = 'sn',
+			find_left = 'sN',
 
-			find = 'gsn',
-			find_left = 'gsp',
 			highlight = '',
 			suffix_last = '',
 			suffix_next = '',
@@ -29,4 +29,14 @@ return {
 
 		custom_surroundings = nil,
 	},
+
+	init = function()
+		local keymap = require 'util.keymap'
+
+		keymap {
+			[{ 'n', desc = 'surround %s' }] = {
+				['ss'] = { 's_', 'line', remap = true },
+			},
+		}
+	end,
 }

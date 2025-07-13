@@ -126,8 +126,6 @@ return {
 				['<esc>'] = 'noop',
 				['?'] = 'noop',
 				['/'] = 'noop',
-				['s'] = 'noop', -- leap.nvim
-				['S'] = 'noop',
 
 				['f'] = func.cmd 'lua Snacks.picker.files()',
 

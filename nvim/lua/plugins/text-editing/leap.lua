@@ -16,19 +16,27 @@ return {
 		leap.opts.case_sensitive = false
 		leap.opts.highlight_unlabeled_phase_one_targets = true
 
-		leap.opts.special_keys.next_target = { '<Enter>' }
-		leap.opts.special_keys.prev_target = { '<S-Enter>' }
+		leap.opts.special_keys.next_target = { 'n' }
+		leap.opts.special_keys.prev_target = { 'N' }
 		leap.opts.special_keys.next_group = { '<Tab>' }
 		leap.opts.special_keys.prev_group = { '<S-Tab>' }
 
+		leap.opts.labels = 'sjklhodweimbuyvrgtaqpcxzSFNJKLHODWEIMBUYVRGTAQPCXZ'
+		leap.opts.safe_labels = 'sutSFNLHMUGTZ'
+
 		local function select_node()
-			require('leap.treesitter').select { opts = require('leap.user').with_traversal_keys('n', 'N') }
+			require('leap.treesitter').select {
+				opts = require('leap.user').with_traversal_keys('n', 'N'),
+			}
 		end
 
 		keymap {
-			[{ 'n', 'x', 'o' }] = {
-				['s'] = { '<Plug>(leap-forward)', 'Leap forward' },
-				['S'] = { '<Plug>(leap-backward)', 'Leap backward' },
+			[{ 'n', 'x', 'o', desc = 'leap %s' }] = {
+				['f'] = { '<Plug>(leap-forward-to)', 'to' },
+				['F'] = { '<Plug>(leap-backward-to)', 'backward to' },
+
+				['t'] = { '<Plug>(leap-forward-till)', 'till' },
+				['T'] = { '<Plug>(leap-backward-till)', 'backward till' },
 			},
 
 			[{ 'x', 'o' }] = {
