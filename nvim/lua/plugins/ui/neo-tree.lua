@@ -209,9 +209,6 @@ return {
 					['!'] = 'run_command',
 					['gx'] = 'system_open',
 
-					['cw'] = 'codecompanion_watch',
-					['cp'] = 'codecompanion_pin',
-
 					['o'] = { 'show_help', nowait = false, config = { title = 'Order by', prefix_key = 'o' } },
 					['oc'] = { 'order_by_created', nowait = false },
 					['od'] = { 'order_by_diagnostics', nowait = false },
@@ -235,38 +232,6 @@ return {
 					local node = state.tree:get_node()
 					if node then
 						vim.ui.open(vim.fn.fnamemodify(node:get_id(), ':p:.'))
-					end
-				end,
-
-				codecompanion_watch = function(state)
-					local chat = require('codecompanion').last_chat()
-					local node = state.tree:get_node()
-					if node and chat then
-						local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
-						local name = vim.fn.fnamemodify(path, ':t')
-						chat.references:add {
-							id = string.format('<file>%s</file>', path),
-							path = path,
-							source = 'codecompanion.strategies.chat.slash_commands.file',
-							opts = { visible = true },
-						}
-						vim.notify(string.format('%s added to chat context (watch)', name))
-					end
-				end,
-
-				codecompanion_pin = function(state)
-					local chat = require('codecompanion').last_chat()
-					local node = state.tree:get_node()
-					if node and chat then
-						local path = vim.fn.fnamemodify(node:get_id(), ':p:.')
-						local name = vim.fn.fnamemodify(path, ':t')
-						chat.references:add {
-							id = string.format('<file>%s</file>', path),
-							path = path,
-							source = 'codecompanion.strategies.chat.slash_commands.file',
-							opts = { pinned = true, visible = true },
-						}
-						vim.notify(string.format('%s added to chat context (watch)', name))
 					end
 				end,
 			},
