@@ -110,6 +110,11 @@ return {
 
 		augroup:on('FileType', '*', function(event)
 			install_parsers { event.match }
+
+			local language = vim.treesitter.language.get_lang(event.match)
+			if language and vim.treesitter.language.add(language) then
+				vim.treesitter.start(event.buf, language)
+			end
 		end)
 	end,
 }
