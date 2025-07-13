@@ -1,4 +1,5 @@
 local autocmd = require 'util.autocmd'
+local keymap = require 'util.keymap'
 local options = require 'util.options'
 
 local augroup = autocmd.group 'window'
@@ -37,4 +38,14 @@ end)
 
 augroup:on('TextYankPost', '*', function()
 	vim.highlight.on_yank()
+end)
+
+augroup:on('FileType', 'help', function(event)
+	autocmd.buffer(event.buf):on('BufWinEnter', 'wincmd L')
+
+	keymap {
+		[{ 'n', buffer = event.buf }] = {
+			['q'] = { '<C-w>c', 'close' },
+		},
+	}
 end)
