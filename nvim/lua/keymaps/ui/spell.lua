@@ -31,9 +31,9 @@ local function update_spell_tabpage(tabpage)
 	end
 end
 
-signal.watch(func.curry(update_spell_tabpage, 0))
+signal.watch(func.partial(update_spell_tabpage, 0))
 
 local augroup = autocmd.group 'spell'
 
-augroup:on({ 'TabEnter' }, '*', func.curry(update_spell_tabpage, 0))
-augroup:on({ 'BufWinEnter', 'TermOpen' }, '*', func.curry(update_spell_win, 0))
+augroup:on({ 'TabEnter' }, '*', func.partial(update_spell_tabpage, 0))
+augroup:on({ 'BufWinEnter', 'TermOpen' }, '*', func.partial(update_spell_win, 0))

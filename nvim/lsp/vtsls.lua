@@ -1,5 +1,3 @@
-local func = require 'util.func'
-
 local language_opts = {
 	inlayHints = {
 		includeInlayParameterNameHints = 'all',
@@ -35,7 +33,10 @@ return {
 
 			for _, entry in pairs(result.diagnostics) do
 				if not ignored_codes[entry.code] then
-					local formatter = formatTsErrors[entry.code] or func.const(entry.message)
+					local formatter = formatTsErrors[entry.code] or function()
+						return entry.message
+					end
+
 					local ok, new_message = pcall(formatter, entry.message)
 					if ok then
 						entry.message = new_message

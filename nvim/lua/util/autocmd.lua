@@ -1,5 +1,3 @@
-local func = require 'util.func'
-
 local M = {}
 
 local SAFE_GROUP_FORMAT = 'config(%s)'
@@ -44,7 +42,7 @@ local Group = {}
 ---@param callback_or_cmd autocmd_callback | string
 ---@param opts autocmd_opts?
 function Group:on(event, pattern, callback_or_cmd, opts)
-	opts = func.default_opts(opts, { once = false })
+	opts = vim.tbl_deep_extend('keep', opts or {}, { once = false })
 
 	local callback, cmd = parse_callback_or_cmd(callback_or_cmd)
 
@@ -71,9 +69,7 @@ end
 ---@param opts? group_opts
 ---@return AutocmdGroup
 function M.group(name, opts)
-	opts = func.default_opts(opts, {
-		clear = true,
-	})
+	opts = vim.tbl_deep_extend('keep', opts or {}, { clear = true })
 
 	name = string.format(SAFE_GROUP_FORMAT, name)
 
@@ -94,7 +90,7 @@ local Buffer = {}
 ---@param callback_or_cmd autocmd_callback | string
 ---@param opts autocmd_opts?
 function Buffer:on(event, callback_or_cmd, opts)
-	opts = func.default_opts(opts, { once = false })
+	opts = vim.tbl_deep_extend('keep', opts or {}, { once = false })
 
 	local callback, cmd = parse_callback_or_cmd(callback_or_cmd)
 

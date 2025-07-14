@@ -5,7 +5,6 @@ return {
 
 	config = function()
 		local autocmd = require 'util.autocmd'
-		local func = require 'util.func'
 		local hl = require 'util.highlight'
 		local keymap = require 'util.keymap'
 
@@ -40,7 +39,7 @@ return {
 			},
 
 			[{ 'x', 'o' }] = {
-				['an'] = { func.curry(select_node, 'n'), 'Leap treesitter node' },
+				['an'] = { select_node, 'Leap treesitter node' },
 			},
 		}
 

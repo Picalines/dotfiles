@@ -33,7 +33,10 @@ return {
 		local function Decorated(decorate)
 			---@param component table
 			return function(component)
-				local condition = component.condition or func.const(true)
+				local condition = component.condition or function()
+					return true
+				end
+
 				local update = component.update
 
 				component = vim.deepcopy(component)
@@ -643,7 +646,7 @@ return {
 			},
 		}
 
-		augroup:on('ColorScheme', '*', func.curry(h_util.on_colorscheme, {}))
+		augroup:on('ColorScheme', '*', func.partial(h_util.on_colorscheme, {}))
 
 		-- https://github.com/rebelot/heirline.nvim/issues/203#issuecomment-2208395807
 		vim.cmd [[:au VimLeavePre * set stl=]]

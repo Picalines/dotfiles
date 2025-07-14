@@ -39,8 +39,8 @@ keymap {
 			['<S-Left>'] = { '5<C-W><', 'decrease width' },
 			['<S-Right>'] = { '5<C-W>>', 'increase width' },
 
-			['+'] = { func.curry(resize_smart, 5), 'increase size' },
-			['_'] = { func.curry(resize_smart, -5), 'decrease size' },
+			['+'] = { func.partial(resize_smart, 5), 'increase size' },
+			['_'] = { func.partial(resize_smart, -5), 'decrease size' },
 		},
 
 		[{ desc = 'UI: %s' }] = {

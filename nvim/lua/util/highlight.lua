@@ -1,4 +1,3 @@
-local func = require 'util.func'
 local umath = require 'util.math'
 
 local M = {}
@@ -11,7 +10,7 @@ local M = {}
 ---@param hl_name string
 ---@param opts get_opts
 function M.get(hl_name, opts)
-	opts = func.default_opts(opts, {
+	opts = vim.tbl_deep_extend('keep', opts, {
 		ns_id = 0,
 		follow_link = true,
 		fallback_hl = nil,
@@ -48,7 +47,7 @@ end
 ---@param attribute 'fg' | 'bg'
 ---@param opts? attr_opts
 function M.attr(hl_name, attribute, opts)
-	opts = func.default_opts(opts, {
+	opts = vim.tbl_deep_extend('keep', opts or {}, {
 		ns_id = 0,
 		follow_link = true,
 		fallback_hl = 'Normal',
@@ -81,9 +80,7 @@ end
 ---@param source_hl string
 ---@param opts? link_opts
 function M.link(target_hl, source_hl, opts)
-	opts = func.default_opts(opts, {
-		ns_id = 0,
-	})
+	opts = vim.tbl_deep_extend('keep', opts or {}, { ns_id = 0 })
 
 	vim.api.nvim_set_hl(opts.ns_id, target_hl, { link = source_hl })
 end
@@ -112,7 +109,7 @@ local clear_map = {
 ---@param attrs? string | string[]
 ---@param opts? clear_opts
 function M.clear(target_hl, attrs, opts)
-	opts = func.default_opts(opts, { ns_id = 0 })
+	opts = vim.tbl_deep_extend('keep', opts or {}, { ns_id = 0 })
 
 	if not attrs or attrs == '*' then
 		attrs = vim.tbl_keys(clear_map)
@@ -165,7 +162,7 @@ end
 ---@param opacity_factor number
 ---@param opts? get_opts
 function M.fade(augroup, source_hl, target_hl, opacity_factor, opts)
-	opts = func.default_opts(opts, {
+	opts = vim.tbl_deep_extend('keep', opts or {}, {
 		ns_id = 0,
 		follow_link = true,
 		fallback_hl = nil,
