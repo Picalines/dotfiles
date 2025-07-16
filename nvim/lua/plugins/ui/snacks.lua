@@ -1,7 +1,4 @@
-local autocmd = require 'util.autocmd'
 local keymap = require 'util.keymap'
-
-local augroup = autocmd.group 'snacks'
 
 keymap {
 	[{ 'n', desc = 'Buffer: %s' }] = {
@@ -27,13 +24,7 @@ keymap {
 
 		['<leader>uC'] = { '<Cmd>lua Snacks.picker.colorschemes()<CR>', 'colorscheme' },
 	},
-
-	[{ 'n', desc = 'Terminal: %s' }] = {
-		['<leader>t'] = { '<Cmd>TerminalFocus<CR>', 'toggle' },
-	},
 }
-
-augroup:on('TabLeave', '*', 'TerminalHide')
 
 return {
 	'folke/snacks.nvim',
@@ -77,77 +68,5 @@ return {
 				row = 1,
 			},
 		},
-
-		terminal = {
-			enabled = true,
-			win = {
-				on_buf = vim.schedule_wrap(function(win)
-					keymap {
-						[{ buffer = win.buf, desc = 'Terminal: %s' }] = {
-							[{ 'n' }] = {
-								['<leader>t'] = { '<Cmd>TerminalHide<CR>', 'close' },
-								['q'] = { '<Cmd>TerminalHide<CR>', 'close' },
-								['o'] = { '<Cmd>TerminalNew<CR>', 'new' },
-								['<C-d>'] = { 'i<C-d>', 'stop' },
-								['<C-w>c'] = { 'i<C-d>', 'close' },
-							},
-
-							[{ 't' }] = {
-								['<Esc>'] = { '<C-\\><C-n>', 'exit terminal' },
-							},
-						},
-					}
-				end),
-
-				on_win = function(win)
-					vim.wo[win.win].winbar = ' %{b:term_title}'
-				end,
-			},
-		},
 	},
-
-	init = function()
-		local snacks = require 'snacks'
-
-		local function new_terminal()
-			-- NOTE: snacks.terminal.open doesn't add it to terminals list
-			local term = snacks.terminal.get(nil, {
-				interactive = false,
-				create = true,
-				env = { __nvim_snacks_id = math.random() },
-			})
-
-			if term then
-				term:focus()
-			end
-		end
-
-		local function focus()
-			local terms = snacks.terminal.list()
-			for _, term in ipairs(terms) do
-				if term.closed then
-					term:toggle()
-				end
-			end
-
-			if #terms > 0 then
-				terms[1]:focus()
-			else
-				new_terminal()
-			end
-		end
-
-		local function hide_all()
-			local terms = snacks.terminal.list()
-			for _, term in ipairs(terms) do
-				if not term.closed then
-					term:toggle()
-				end
-			end
-		end
-
-		vim.api.nvim_create_user_command('TerminalNew', new_terminal, {})
-		vim.api.nvim_create_user_command('TerminalFocus', focus, {})
-		vim.api.nvim_create_user_command('TerminalHide', hide_all, {})
-	end,
 }
