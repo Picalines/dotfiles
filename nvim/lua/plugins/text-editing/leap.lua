@@ -15,13 +15,14 @@ return {
 		leap.opts.case_sensitive = false
 		leap.opts.highlight_unlabeled_phase_one_targets = true
 
-		leap.opts.special_keys.next_target = { 'n' }
-		leap.opts.special_keys.prev_target = { 'N' }
+		leap.opts.special_keys.next_target = { '<Enter>' }
+		leap.opts.special_keys.prev_target = { '<S-Enter>' }
 		leap.opts.special_keys.next_group = { '<Tab>' }
 		leap.opts.special_keys.prev_group = { '<S-Tab>' }
 
-		leap.opts.labels = 'sjklhodweimbuyvrgtaqpcxzSFNJKLHODWEIMBUYVRGTAQPCXZ'
-		leap.opts.safe_labels = 'sutSFNLHMUGTZ'
+		leap.opts.labels = 'sjklhodweimbuyvrgtaqpcxzSFJKLHODWEIMBUYVRGTAQPCXZ'
+		leap.opts.safe_labels = 'sutSFLHMUGTZ'
+
 		leap.opts.vim_opts['go.hlsearch'] = false
 		leap.opts.vim_opts['wo.spell'] = false
 
