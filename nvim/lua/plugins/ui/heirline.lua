@@ -519,19 +519,6 @@ return {
 			end,
 		}
 
-		local TerminalList = {
-			condition = function(self)
-				self.terminal_count = #require('snacks').terminal.list()
-				return self.terminal_count > 0
-			end,
-
-			provider = function(self)
-				return string.format('%d ', self.terminal_count)
-			end,
-
-			hl = 'DevIconTerminal',
-		}
-
 		local Location = {
 			provider = '%04l/%04L:%04c',
 			hl = 'NormalMuted',
@@ -617,7 +604,6 @@ return {
 		}
 
 		local RightStatusline = AppendAll(Space, 'left') {
-			TerminalList,
 			SpellFlag,
 			FormatBeforeWriteFlag,
 			LSPActive,
