@@ -22,6 +22,8 @@ return {
 
 		leap.opts.labels = 'sjklhodweimbuyvrgtaqpcxzSFNJKLHODWEIMBUYVRGTAQPCXZ'
 		leap.opts.safe_labels = 'sutSFNLHMUGTZ'
+		leap.opts.vim_opts['go.hlsearch'] = false
+		leap.opts.vim_opts['wo.spell'] = false
 
 		local function select_node()
 			require('leap.treesitter').select {
