@@ -59,7 +59,8 @@ keymap {
 		['g:'] = { ':g##<Left>', 'Global command' },
 	},
 
-	[{ 't' }] = {
+	[{ 't', desc = 'Terminal: %s' }] = {
 		['<C-p>'] = { '<C-\\><C-n>pi', 'paste' },
+		['<Esc>'] = { '<C-\\><C-n>', 'exit' },
 	},
 }
