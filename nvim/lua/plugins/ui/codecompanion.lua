@@ -27,6 +27,8 @@ end)
 return {
 	'olimorris/codecompanion.nvim',
 
+	version = '*',
+
 	dependencies = {
 		'j-hui/fidget.nvim',
 		'echasnovski/mini.diff',
