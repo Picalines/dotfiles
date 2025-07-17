@@ -7,13 +7,14 @@ local augroup = autocmd.group 'window'
 vim.go.mouse = 'a'
 vim.go.termguicolors = true
 
-vim.o.splitright = true
-vim.o.splitbelow = true
+vim.go.splitright = true
+vim.go.splitbelow = true
+vim.go.equalalways = false
 
 vim.go.scrolloff = 8
 vim.go.sidescrolloff = 16
 
-vim.o.laststatus = 3 -- global statusline
+vim.go.laststatus = 3 -- global statusline
 
 vim.go.number = true
 vim.go.relativenumber = true
