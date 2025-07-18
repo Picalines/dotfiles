@@ -50,3 +50,12 @@ augroup:on('FileType', 'help', function(event)
 		},
 	}
 end)
+
+augroup:on('ExitPre', '*', function()
+	for _, chan in ipairs(vim.api.nvim_list_chans()) do
+		if chan.mode == 'terminal' and chan.stream == 'job' then
+			vim.fn.jobstop(chan.id)
+			print('stopping', chan.id)
+		end
+	end
+end)

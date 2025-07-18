@@ -25,7 +25,9 @@ local function toggle_background()
 end
 
 keymap {
-	[{ 'n', silent = true }] = {
+	[{ 'n' }] = {
+		['<leader><leader>q'] = { '<Cmd>wqa<CR>', 'Write all and quit' },
+
 		['<Esc>'] = { '<Cmd>doautocmd User Dismiss<CR>', 'Dismiss' },
 
 		[{ desc = 'Window: %s' }] = {
