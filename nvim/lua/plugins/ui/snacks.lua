@@ -2,8 +2,9 @@ local keymap = require 'util.keymap'
 
 keymap {
 	[{ 'n', desc = 'Buffer: %s' }] = {
-		['<leader>bd'] = { "<Cmd>lua require('snacks').bufdelete()<CR>", 'delete' },
-		['<leader>bD'] = { "<Cmd>lua require('snacks').bufdelete.all()<CR>", 'delete all' },
+		['<leader>bd'] = { '<Cmd>lua Snacks.bufdelete()<CR>', 'delete' },
+		['<leader>bD'] = { '<Cmd>lua Snacks.bufdelete.all()<CR>', 'delete all' },
+		['<leader>bo'] = { '<Cmd>lua Snacks.bufdelete.other()<CR>', 'delete other' },
 	},
 
 	[{ 'n', desc = 'Find: %s' }] = {
