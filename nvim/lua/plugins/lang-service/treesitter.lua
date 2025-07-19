@@ -53,6 +53,7 @@ return {
 				'lua',
 				'luadoc',
 				'markdown',
+				'markdown_linline',
 				'toml',
 				'vim',
 				'vimdoc',
