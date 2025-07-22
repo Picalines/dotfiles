@@ -27,8 +27,10 @@ end
 
 keymap {
 	[{ 'n', desc = 'Neovide: %s' }] = {
-		['<D-=>'] = { func.partial(zoom, 0.1), 'zoom in' },
-		['<D-->'] = { func.partial(zoom, -0.1), 'zoom out' },
+		[{ 'n', 'i', 'x', 'c' }] = {
+			['<D-=>'] = { func.partial(zoom, 0.1), 'zoom in' },
+			['<D-->'] = { func.partial(zoom, -0.1), 'zoom out' },
+		},
 
 		['<leader>ug'] = { toggle_opacity, 'toggle opacity' },
 
