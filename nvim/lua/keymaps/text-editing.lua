@@ -19,19 +19,16 @@ keymap {
 		['y<C-g>'] = { '<Cmd>eval setreg(v:register, @%) | echo @% . " -> " . v:register<CR>', 'yank buffer path' },
 	},
 
+	[{ 'i' }] = {
+		['<C-b>'] = '<C-o>b',
+		['<C-e>'] = '<Esc><Cmd>norm! e<CR>a',
+		['<C-w>'] = '<C-o>w',
+	},
+
 	[{ 'i', 'c' }] = {
 		['<C-l>'] = '<Right>',
 		['<C-h>'] = '<Left>',
 
-		['<C-b>'] = '<C-o>b',
-		['<C-e>'] = '<Esc><Cmd>norm! e<CR>a',
-		['<C-w>'] = '<C-o>w',
-
-		['<S-BS>'] = '<Delete>',
-		['<M-BS>'] = '<Delete>',
-	},
-
-	[{ 'i', 'c' }] = {
 		['<C-p>'] = { '<C-r>*', 'paste' },
 	},
 
