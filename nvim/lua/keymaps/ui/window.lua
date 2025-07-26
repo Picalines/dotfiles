@@ -47,6 +47,7 @@ keymap {
 
 		[{ desc = 'UI: %s' }] = {
 			['<leader>ul'] = { toggle_background, 'toggle background' },
+			['<leader>un'] = { '<Cmd>set relativenumber!<CR>', 'toggle relativenumber' },
 		},
 	},
 
