@@ -109,9 +109,7 @@ return {
 
 		window = {
 			position = 'left',
-
-			---@diagnostic disable-next-line: assign-type-mismatch
-			width = '25%',
+			width = 0.3,
 
 			mapping_options = {
 				noremap = true,
