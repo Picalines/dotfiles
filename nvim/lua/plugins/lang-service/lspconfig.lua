@@ -22,6 +22,43 @@ return {
 				automatic_installation = false,
 				automatic_enable = true,
 			},
+
+			init = function()
+				vim.lsp.config('eslint', {
+					'.eslintrc',
+					'.eslintrc.js',
+					'.eslintrc.cjs',
+					'.eslintrc.yaml',
+					'.eslintrc.yml',
+					'.eslintrc.json',
+					'.eslintrc.jsonc',
+					'eslint.config.js',
+					'eslint.config.mjs',
+					'eslint.config.cjs',
+					'eslint.config.ts',
+					'eslint.config.mts',
+					'eslint.config.cts',
+				})
+
+				vim.lsp.config('lua_ls', {
+					settings = {
+						Lua = { telemetry = { enable = false } },
+					},
+				})
+
+				vim.lsp.config('tailwindcss', {
+					settings = {
+						tailwindCSS = {
+							classFunctions = { 'tw', 'clsx', 'cva', 'cn' },
+							classAttributes = { 'class', 'className', 'ngClass', 'class:list' },
+						},
+					},
+				})
+
+				vim.lsp.config('vtsls', {
+					root_markers = { 'pnpm-lock.yaml', 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' },
+				})
+			end,
 		},
 
 		{
