@@ -19,8 +19,7 @@ end)
 return {
 	'nvim-neo-tree/neo-tree.nvim',
 
-	lazy = vim.fn.argc() == 0,
-	cmd = 'Neotree',
+	lazy = false,
 
 	dependencies = {
 		'nvim-lua/plenary.nvim',
@@ -205,14 +204,16 @@ return {
 					['!'] = 'run_command',
 					['gx'] = 'system_open',
 
-					['o'] = { 'show_help', nowait = false, config = { title = 'Order by', prefix_key = 'o' } },
-					['oc'] = { 'order_by_created', nowait = false },
-					['od'] = { 'order_by_diagnostics', nowait = false },
-					['og'] = { 'order_by_git_status', nowait = false },
-					['om'] = { 'order_by_modified', nowait = false },
-					['on'] = { 'order_by_name', nowait = false },
-					['os'] = { 'order_by_size', nowait = false },
-					['ot'] = { 'order_by_type', nowait = false },
+					['s'] = 'git_add_file',
+					['u'] = 'git_unstage_file',
+
+					['oc'] = 'order_by_created',
+					['od'] = 'order_by_diagnostics',
+					['og'] = 'order_by_git_status',
+					['om'] = 'order_by_modified',
+					['on'] = 'order_by_name',
+					['os'] = 'order_by_size',
+					['ot'] = 'order_by_type',
 				},
 			},
 
