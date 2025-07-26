@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+e() { $EDITOR $@ }
+
 autoload -U add-zsh-hook
 
 command-exists() {
