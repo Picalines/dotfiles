@@ -54,6 +54,8 @@ return {
 						['<Esc>'] = { 'close', mode = { 'n', 'i' } },
 						['<c-b>'] = false,
 						['<c-p>'] = false,
+						['<C-n>'] = { 'list_down', mode = { 'n', 'i' } },
+						['<C-S-n>'] = { 'list_up', mode = { 'n', 'i' } },
 					},
 				},
 			},
