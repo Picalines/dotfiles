@@ -4,15 +4,8 @@ return {
 	lazy = false,
 
 	config = function()
-		local app = require 'util.app'
 		local starter = require 'mini.starter'
 
-		---@class StarterItem
-		---@field [1] string name
-		---@field [2] string action
-
-		---@param name string
-		---@param items (StarterItem | nil)[]
 		local function section(name, items)
 			return vim
 				.iter(items)
@@ -32,9 +25,9 @@ return {
 
 			items = {
 				section('Files', {
-					{ 'Explore Files ', 'Neotree filesystem reveal' },
-					{ 'Change Directory ', string.format('Neotree filesystem current %s', app.os() == 'windows' and '/' or '~') },
 					{ 'Open Workspace 󰣩', 'WorkspacesOpen' },
+					{ 'Explore Files ', 'Neotree filesystem current' },
+					{ 'Find Files ', 'lua Snacks.picker.files()' },
 				}),
 				section('Editor', {
 					{ 'New Buffer 󱇨', 'enew' },
