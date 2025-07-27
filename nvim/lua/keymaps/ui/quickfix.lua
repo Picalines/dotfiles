@@ -15,10 +15,15 @@ keymap {
 
 local augroup = autocmd.group 'quickfix'
 
+vim.g.quickfix_scroll = function()
+	local qf_info = vim.fn.getqflist { idx = 0, size = 0 }
+	return string.format('%s/%s', qf_info.idx, qf_info.size)
+end
+
 augroup:on('FileType', 'qf', function(event)
 	local wo = vim.wo[vim.fn.bufwinid(event.buf)]
 
-	wo.winbar = ' quickfix'
+	wo.winbar = ' quickfix %{g:quickfix_scroll()}'
 
 	keymap {
 		[{ 'n', remap = true, silent = true, buffer = event.buf, desc = 'Quickfix: %s' }] = {
