@@ -3,7 +3,13 @@ local keymap = require 'util.keymap'
 
 keymap {
 	[{ 'n', silent = true, desc = 'Quickfix: %s' }] = {
-		['<leader>q'] = { '<Cmd>botright copen<CR>', 'open' },
+		['<leader>q'] = {
+			expr = true,
+			desc = 'open',
+			function()
+				return string.format('<Cmd>botright copen | resize %d<CR>', math.floor(vim.go.lines / 3))
+			end,
+		},
 
 		[']q'] = { '<Cmd>cnext<CR>zz', 'next item' },
 		['[q'] = { '<Cmd>cprevious<CR>zz', 'prev item' },
