@@ -9,7 +9,7 @@ keymap {
 		['<leader>w'] = { '<Cmd>silent w<CR>', 'Write file' },
 		['<leader>W'] = { '<Cmd>silent wa!<CR>', 'Write all' },
 
-		['g/'] = { ':%s###g<Left><Left><Left>', 'Substitute' },
+		['g/'] = { ':%s//g<Left><Left>', 'Substitute' },
 
 		[{ silent = true }] = {
 			['[d'] = { func.partial(vim.diagnostic.jump, { count = -1, float = false }), 'previous diagnostic' },
@@ -34,7 +34,7 @@ keymap {
 
 	[{ 'x' }] = {
 		['p'] = '"_dP',
-		['g/'] = { ':s###g<Left><Left><Left>', 'Substitute' },
+		['g/'] = { ':s//g<Left><Left>', 'Substitute' },
 	},
 
 	[{ 'n', 'x' }] = {
@@ -53,7 +53,7 @@ keymap {
 
 		['<C-x>'] = { '"_', 'Void register' },
 
-		['g:'] = { ':g##<Left>', 'Global command' },
+		['g:'] = { ':g//<Left>', 'Global command' },
 	},
 
 	[{ 't', desc = 'Terminal: %s' }] = {
