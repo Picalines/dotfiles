@@ -235,24 +235,22 @@ return {
 			return buflist_cache
 		end, false)
 
-		local TabPage = {
-			provider = function(self)
-				local title = vim.fn.fnamemodify(vim.fn.getcwd(-1, self.tabnr), ':t')
-				return string.format(' %%%dT%s%%T', self.tabnr, title)
-			end,
-
-			hl = function(self)
-				return self.is_active and 'Normal' or 'NormalMuted'
-			end,
-		}
-
 		local TabPageList = {
 			condition = function()
 				return #vim.api.nvim_list_tabpages() >= 2
 			end,
-			{
-				{ provider = '', hl = 'NormalMuted' },
-				h_util.make_tablist(TabPage),
+			{ provider = '', hl = 'NormalMuted' },
+			h_util.make_tablist {
+				provider = function(self)
+					if self.is_active then
+						return ' 󰨐'
+					end
+					local title = vim.fn.fnamemodify(vim.fn.getcwd(-1, self.tabnr), ':t')
+					return string.format(' %%%dT%s%%T', self.tabnr, title)
+				end,
+				hl = function(self)
+					return self.is_active and '@diff.delta' or 'NormalMuted'
+				end,
 			},
 		}
 
@@ -596,7 +594,7 @@ return {
 				Space,
 				BufferLine,
 				Align,
-				Append(Space, 'left') { TabPageList },
+				TabPageList,
 			},
 		}
 
