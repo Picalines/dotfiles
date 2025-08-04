@@ -405,16 +405,6 @@ return {
 			hl = 'DiagnosticInfo',
 		}
 
-		local GitBranch = {
-			hl = hl_fg '@diff.delta',
-			condition = function()
-				return vim.b.gitsigns_status_dict
-			end,
-			provider = function()
-				return ' ' .. tostring(vim.b.gitsigns_status_dict.head):gsub('^users/[^/]+/', '')
-			end,
-		}
-
 		---@class line_counter
 		---@field count fun(): integer
 		---@field icon string
@@ -498,27 +488,6 @@ return {
 			end,
 		}
 
-		local StatusReadonlyFlag = {
-			provider = '',
-			hl = 'NormalMuted',
-			condition = function()
-				return vim.bo.buftype ~= 'terminal' and (not vim.bo.modifiable or vim.bo.readonly)
-			end,
-		}
-
-		local is_leaping = false
-		augroup:on_user({ 'LeapEnter', 'LeapLeave' }, function(event)
-			is_leaping = event.match == 'LeapEnter'
-		end)
-
-		local LeapMarker = {
-			update = { 'User', pattern = { 'LeapEnter', 'LeapLeave' } },
-			{ provider = '󰤇 leap', hl = hl_fg '@diff.plus' },
-			condition = function()
-				return is_leaping
-			end,
-		}
-
 		local Location = {
 			provider = '%04l/%04L:%04c',
 			hl = 'NormalMuted',
@@ -578,14 +547,16 @@ return {
 		}
 
 		local SpellFlag = {
-			{ provider = '󰸟', hl = '@boolean' },
+			provider = '󰸟',
+			hl = '@boolean',
 			condition = function()
 				return vim.wo.spell
 			end,
 		}
 
 		local FormatBeforeWriteFlag = {
-			{ provider = '', hl = '@boolean' },
+			provider = '',
+			hl = '@boolean',
 			condition = function()
 				return vim.g.format_on_write
 			end,
@@ -593,14 +564,11 @@ return {
 
 		local LeftStatusline = AppendAll(Space, 'right') {
 			ViMode,
-			GitBranch,
 			DiffCounts,
 			DiagnosticCounts,
 			StatusModifiedFlag,
-			StatusReadonlyFlag,
 			MacroRec,
 			SearchCount,
-			LeapMarker,
 		}
 
 		local RightStatusline = AppendAll(Space, 'left') {
