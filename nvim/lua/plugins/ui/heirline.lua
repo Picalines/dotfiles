@@ -71,14 +71,14 @@ return {
 
 		local BufferIcon = {
 			init = function(self)
-				self.icon, self.hl = devicons.get_icon(vim.fn.fnamemodify(self.filename, ':t'))
+				self.icon, self.icon_hl = devicons.get_icon(vim.fn.fnamemodify(self.filename, ':t'))
 				self.icon = self.icon or ''
 			end,
 			provider = function(self)
 				return self.icon
 			end,
 			hl = function(self)
-				return self.hl
+				return self.is_active and self.icon_hl or 'NormalMuted'
 			end,
 		}
 
