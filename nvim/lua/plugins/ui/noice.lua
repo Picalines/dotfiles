@@ -32,18 +32,6 @@ return {
 			inc_rename = false,
 		},
 
-		routes = {
-			{
-				filter = {
-					any = {
-						{ event = 'notify', find = 'No information available' },
-						{ event = 'notify', find = '%[lspconfig%] Unable to find ESLint library.' },
-					},
-				},
-				opts = { skip = true },
-			},
-		},
-
 		lsp = {
 			override = {
 				['vim.lsp.util.stylize_markdown'] = true,
