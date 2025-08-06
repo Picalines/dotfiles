@@ -25,6 +25,8 @@ vim.go.fillchars = 'eob: '
 vim.go.list = true
 vim.go.listchars = 'tab:   ,trail:,extends:,precedes:,nbsp:'
 
+vim.go.tabclose = 'left'
+
 augroup:on('TextYankPost', '*', function()
 	vim.highlight.on_yank()
 end)
