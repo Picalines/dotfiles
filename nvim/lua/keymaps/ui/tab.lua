@@ -4,15 +4,15 @@ local keymap = require 'util.keymap'
 -- Please, don't make this commit again
 
 keymap {
-	[{ 'n', silent = true, desc = 'Space: %s' }] = {
-		['<leader>sn'] = { '<Cmd>tabnew<CR>', 'new' },
-		['<leader>sd'] = { '<Cmd>tabclose<CR>', 'close' },
+	[{ 'n', silent = true, desc = 'Page: %s' }] = {
+		['<leader>pn'] = { '<Cmd>tabnew<CR>', 'new' },
+		['<leader>pd'] = { '<Cmd>tabclose<CR>', 'close' },
 
-		[']s'] = { '<Cmd>tabnext<CR>', 'next' },
-		['[s'] = { '<Cmd>tabprev<CR>', 'prev' },
-		['<leader>s]'] = { '<Cmd>tabnext<CR>', 'next' },
-		['<leader>s['] = { '<Cmd>tabprev<CR>', 'prev' },
+		[']p'] = { '<Cmd>tabnext<CR>', 'next' },
+		['[p'] = { '<Cmd>tabprev<CR>', 'prev' },
+		['<leader>p]'] = { '<Cmd>tabnext<CR>', 'next' },
+		['<leader>p['] = { '<Cmd>tabprev<CR>', 'prev' },
 
-		['<leader>so'] = { '<Cmd>tabonly<CR>', 'only' },
+		['<leader>po'] = { '<Cmd>tabonly<CR>', 'only' },
 	},
 }
