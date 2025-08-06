@@ -1,14 +1,3 @@
-local keymap = require 'util.keymap'
-
-keymap {
-	[{ 'n', desc = 'Unit: %s' }] = {
-		['<leader>ur'] = { "<Cmd>lua require('neotest').run.run()<CR>", 'run nearest' },
-		['<leader>uR'] = { "<Cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", 'run suite' },
-		['<leader>uc'] = { "<Cmd>lua require('neotest').run.stop(vim.fn.expand('%'))<CR>", 'cancel suite' },
-		['<leader>uo'] = { "<Cmd>lua require('neotest').output_panel.open()<CR>", 'output' },
-	},
-}
-
 return {
 	'nvim-neotest/neotest',
 
@@ -21,8 +10,22 @@ return {
 	lazy = true,
 	cmd = 'Neotest',
 
+	init = function()
+		local keymap = require 'util.keymap'
+
+		keymap {
+			[{ 'n', desc = 'Unit: %s' }] = {
+				['<leader>ur'] = { "<Cmd>lua require('neotest').run.run()<CR>", 'run nearest' },
+				['<leader>uR'] = { "<Cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", 'run suite' },
+				['<leader>uc'] = { "<Cmd>lua require('neotest').run.stop(vim.fn.expand('%'))<CR>", 'cancel suite' },
+				['<leader>uo'] = { "<Cmd>lua require('neotest').output_panel.open()<CR>", 'output' },
+			},
+		}
+	end,
+
 	config = function()
 		local autocmd = require 'util.autocmd'
+		local keymap = require 'util.keymap'
 		local neotest = require 'neotest'
 
 		---@diagnostic disable-next-line: missing-fields

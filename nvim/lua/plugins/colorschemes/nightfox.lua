@@ -1,18 +1,3 @@
-local autocmd = require 'util.autocmd'
-local hl = require 'util.highlight'
-
-local augroup = autocmd.group 'nightfox-theme'
-
-hl.link_colorschemes_by_background(augroup, {
-	light = 'dayfox',
-	dark = 'nightfox',
-})
-
-hl.link_colorschemes_by_background(augroup, {
-	light = 'dawnfox',
-	dark = 'duskfox',
-})
-
 return {
 	'EdenEast/nightfox.nvim',
 
@@ -33,4 +18,21 @@ return {
 			},
 		},
 	},
+
+	init = function()
+		local autocmd = require 'util.autocmd'
+		local hl = require 'util.highlight'
+
+		local augroup = autocmd.group 'nightfox-theme'
+
+		hl.link_colorschemes_by_background(augroup, {
+			light = 'dayfox',
+			dark = 'nightfox',
+		})
+
+		hl.link_colorschemes_by_background(augroup, {
+			light = 'dawnfox',
+			dark = 'duskfox',
+		})
+	end,
 }

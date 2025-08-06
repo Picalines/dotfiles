@@ -1,29 +1,3 @@
-local autocmd = require 'util.autocmd'
-local keymap = require 'util.keymap'
-
-keymap {
-	[{ desc = 'AI: %s' }] = {
-		[{ 'n' }] = {
-			['<leader>c'] = { '<Cmd>CodeCompanionChat Toggle<CR>', 'open chat' },
-			['<leader>C'] = { '<Cmd>CodeCompanionActions<CR>', 'actions' },
-		},
-		[{ 'x' }] = {
-			['<leader>c'] = { '<Cmd>CodeCompanionActions<CR>', 'actions' },
-		},
-	},
-}
-
-local augroup = autocmd.group 'codecompanion'
-
-augroup:on('FileType', 'codecompanion', function(event)
-	keymap {
-		[{ 'n', remap = true, buffer = event.buf, desc = 'AI: %s' }] = {
-			['q'] = { '<C-w>c', 'close' },
-			['<leader>c'] = { '<C-w>c', 'close' },
-		},
-	}
-end)
-
 return {
 	'olimorris/codecompanion.nvim',
 
@@ -35,6 +9,65 @@ return {
 	},
 
 	cmd = { 'CodeCompanion', 'CodeCompanionActions', 'CodeCompanionChat' },
+
+	init = function()
+		local autocmd = require 'util.autocmd'
+		local keymap = require 'util.keymap'
+
+		keymap {
+			[{ desc = 'AI: %s' }] = {
+				[{ 'n' }] = {
+					['<leader>c'] = { '<Cmd>CodeCompanionChat Toggle<CR>', 'open chat' },
+					['<leader>C'] = { '<Cmd>CodeCompanionActions<CR>', 'actions' },
+				},
+				[{ 'x' }] = {
+					['<leader>c'] = { '<Cmd>CodeCompanionActions<CR>', 'actions' },
+				},
+			},
+		}
+
+		local augroup = autocmd.group 'codecompanion'
+
+		augroup:on('FileType', 'codecompanion', function(event)
+			keymap {
+				[{ 'n', remap = true, buffer = event.buf, desc = 'AI: %s' }] = {
+					['q'] = { '<C-w>c', 'close' },
+					['<leader>c'] = { '<C-w>c', 'close' },
+				},
+			}
+		end)
+
+		-- fidget.nvim integration
+		-- original: https://github.com/olimorris/codecompanion.nvim/discussions/813#discussioncomment-12289384
+		local progress_handles = {}
+
+		augroup:on_user('CodeCompanionRequestStarted', function(event)
+			local fidget_progress = require 'fidget.progress'
+			progress_handles[event.data.id] = fidget_progress.handle.create {
+				title = ' AI',
+				message = 'Generating',
+				lsp_client = {
+					name = event.data.adapter.formatted_name,
+				},
+			}
+		end)
+
+		augroup:on_user('CodeCompanionRequestFinished', function(event)
+			local handle = progress_handles[event.data.id]
+			progress_handles[event.data.id] = nil
+			if handle then
+				if event.data.status == 'success' then
+					handle.message = '󰄴 Done'
+				elseif event.data.status == 'error' then
+					handle.message = '󰅝 Error'
+				else
+					handle.message = '󰜺 Cancelled'
+				end
+
+				handle:finish()
+			end
+		end)
+	end,
 
 	opts = function()
 		local ok, private_adapters = pcall(require, 'settings.ui.codecompanion.private-providers')
@@ -121,37 +154,6 @@ return {
 				},
 			},
 		}
-
-		-- fidget.nvim integration
-		-- original: https://github.com/olimorris/codecompanion.nvim/discussions/813#discussioncomment-12289384
-		local progress_handles = {}
-
-		augroup:on_user('CodeCompanionRequestStarted', function(event)
-			local fidget_progress = require 'fidget.progress'
-			progress_handles[event.data.id] = fidget_progress.handle.create {
-				title = ' AI',
-				message = 'Generating',
-				lsp_client = {
-					name = event.data.adapter.formatted_name,
-				},
-			}
-		end)
-
-		augroup:on_user('CodeCompanionRequestFinished', function(event)
-			local handle = progress_handles[event.data.id]
-			progress_handles[event.data.id] = nil
-			if handle then
-				if event.data.status == 'success' then
-					handle.message = '󰄴 Done'
-				elseif event.data.status == 'error' then
-					handle.message = '󰅝 Error'
-				else
-					handle.message = '󰜺 Cancelled'
-				end
-
-				handle:finish()
-			end
-		end)
 
 		return opts
 	end,

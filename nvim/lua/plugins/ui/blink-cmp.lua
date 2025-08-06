@@ -1,11 +1,3 @@
-local keymap = require 'util.keymap'
-
-keymap {
-	[{ 'c' }] = {
-		['<Tab>'] = { '<C-n>', remap = true },
-	},
-}
-
 return {
 	'saghen/blink.cmp',
 
@@ -119,16 +111,20 @@ return {
 
 	opts_extend = { 'sources.default' },
 
-	config = function(_, opts)
-		local cmp = require 'blink-cmp'
+	init = function()
+		local keymap = require 'util.keymap'
 
-		cmp.setup(opts)
+		keymap {
+			[{ 'c' }] = {
+				['<Tab>'] = { '<C-n>', remap = true },
+			},
+		}
 
 		local autocmd = require 'util.autocmd'
 		local augroup = autocmd.group 'cmp'
 
 		augroup:on_user('Dismiss', function()
-			cmp.hide()
+			require('blink-cmp').hide()
 		end)
 	end,
 }

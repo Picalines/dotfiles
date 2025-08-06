@@ -1,49 +1,52 @@
-local autocmd = require 'util.autocmd'
-local keymap = require 'util.keymap'
-
-keymap {
-	[{ 'n', desc = 'Terminal: %s' }] = {
-		['<leader>t'] = { '<Cmd>TermFocus<CR>', 'toggle' },
-
-		[']t'] = { '<Cmd>TermCycleNext<CR>', 'next' },
-		['[t'] = { '<Cmd>TermCyclePrev<CR>', 'prev' },
-	},
-}
-
-local keys_augroup = autocmd.group 'terminal.keys'
-
-keys_augroup:on('TabLeave', '*', 'TermClose')
-
-keys_augroup:on('TermOpen', 'term://*', function(event)
-	keymap {
-		[{ 'n', buffer = event.buf, desc = 'Terminal: %s' }] = {
-			['<leader>t'] = { '<Cmd>q | wincmd p<CR>', 'close' },
-			['q'] = { '<Cmd>q | wincmd p<CR>', 'close' },
-
-			['o'] = { '<Cmd>TermNewTab<CR>', 'new tab' },
-
-			['gf'] = {
-				desc = 'go to file',
-				expr = true,
-				function()
-					local cfile = vim.fn.findfile(vim.fn.expand '<cfile>', '**')
-					if cfile == '' then
-						return "<Cmd>echo 'no file'<CR>"
-					end
-					return string.format('<Cmd>q | wincmd p | e %s<CR>', cfile)
-				end,
-			},
-		},
-	}
-end)
-
 return {
 	'rebelot/terminal.nvim',
 
 	lazy = true,
 	cmd = { 'TermFocus', 'TermClose', 'TermCycleNext', 'TermCyclePrev' },
 
+	init = function()
+		local autocmd = require 'util.autocmd'
+		local keymap = require 'util.keymap'
+
+		keymap {
+			[{ 'n', desc = 'Terminal: %s' }] = {
+				['<leader>t'] = { '<Cmd>TermFocus<CR>', 'toggle' },
+
+				[']t'] = { '<Cmd>TermCycleNext<CR>', 'next' },
+				['[t'] = { '<Cmd>TermCyclePrev<CR>', 'prev' },
+			},
+		}
+
+		local augroup = autocmd.group 'terminal.keys'
+
+		augroup:on('TabLeave', '*', 'TermClose')
+
+		augroup:on('TermOpen', 'term://*', function(event)
+			keymap {
+				[{ 'n', buffer = event.buf, desc = 'Terminal: %s' }] = {
+					['<leader>t'] = { '<Cmd>q | wincmd p<CR>', 'close' },
+					['q'] = { '<Cmd>q | wincmd p<CR>', 'close' },
+
+					['o'] = { '<Cmd>TermNewTab<CR>', 'new tab' },
+
+					['gf'] = {
+						desc = 'go to file',
+						expr = true,
+						function()
+							local cfile = vim.fn.findfile(vim.fn.expand '<cfile>', '**')
+							if cfile == '' then
+								return "<Cmd>echo 'no file'<CR>"
+							end
+							return string.format('<Cmd>q | wincmd p | e %s<CR>', cfile)
+						end,
+					},
+				},
+			}
+		end)
+	end,
+
 	config = function()
+		local autocmd = require 'util.autocmd'
 		local opt = require 'util.options'
 
 		local terminal = require 'terminal'
@@ -52,14 +55,14 @@ return {
 
 		terminal.setup { autoclose = true }
 
-		local term_augroup = autocmd.group 'terminal.plugin'
+		local augroup = autocmd.group 'terminal.plugin'
 
-		term_augroup:on({ 'TermOpen', 'TermClose', 'BufWinEnter' }, 'term://*', function()
+		augroup:on({ 'TermOpen', 'TermClose', 'BufWinEnter' }, 'term://*', function()
 			vim.g.term_index = terminal.current_term_index()
 			vim.g.term_count = active_terminals:len()
 		end)
 
-		term_augroup:on('TermOpen', 'term://*', function(event)
+		augroup:on('TermOpen', 'term://*', function(event)
 			local _, wo = opt.buflocal(event.buf)
 			wo.number = false
 			wo.relativenumber = false

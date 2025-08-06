@@ -20,10 +20,4 @@ return {
 			reindent_linewise = true,
 		},
 	},
-
-	config = function(_, opts)
-		local mini_move = require 'mini.move'
-
-		mini_move.setup(opts)
-	end,
 }

@@ -1,24 +1,7 @@
-local keymap = require 'util.keymap'
-
 local arc_plugin_path = vim.fn.expand '~/Arcadia/junk/a-matveev9/gitsigns.arc.nvim'
 local arc_plugin_exists = vim.fn.isdirectory(arc_plugin_path) == 1
 local is_in_arcadia = vim.startswith(vim.fn.getcwd() or '', vim.fn.expand '~/Arcadia')
 local should_use_arc = arc_plugin_exists and is_in_arcadia
-
-keymap {
-	[{ desc = 'Git: %s' }] = {
-		[{ 'n' }] = {
-			['<leader>gs'] = { '<Cmd>Gitsigns stage_hunk<CR>', 'toggle staged hunk' },
-			['<leader>gr'] = { '<Cmd>Gitsigns reset_hunk<CR>', 'reset hunk' },
-			['<leader>gb'] = { '<Cmd>Gitsigns blame_line full=true<CR>', 'blame line' },
-			['<leader>gB'] = { '<Cmd>Gitsigns blame<CR>', 'blame buffer' },
-		},
-
-		[{ 'x' }] = {
-			['<leader>gs'] = { ':Gitsigns stage_hunk<CR>', 'stage selected' },
-		},
-	},
-}
 
 return {
 	not should_use_arc and 'lewis6991/gitsigns.nvim' or nil,
@@ -27,6 +10,25 @@ return {
 	event = { 'BufReadPre', 'BufNewFile' },
 
 	cmd = { 'Gitsigns' },
+
+	init = function()
+		local keymap = require 'util.keymap'
+
+		keymap {
+			[{ desc = 'Git: %s' }] = {
+				[{ 'n' }] = {
+					['<leader>gs'] = { '<Cmd>Gitsigns stage_hunk<CR>', 'toggle staged hunk' },
+					['<leader>gr'] = { '<Cmd>Gitsigns reset_hunk<CR>', 'reset hunk' },
+					['<leader>gb'] = { '<Cmd>Gitsigns blame_line full=true<CR>', 'blame line' },
+					['<leader>gB'] = { '<Cmd>Gitsigns blame<CR>', 'blame buffer' },
+				},
+
+				[{ 'x' }] = {
+					['<leader>gs'] = { ':Gitsigns stage_hunk<CR>', 'stage selected' },
+				},
+			},
+		}
+	end,
 
 	---@module 'gitsigns'
 	---@type Gitsigns.Config

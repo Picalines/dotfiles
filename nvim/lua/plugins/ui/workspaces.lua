@@ -1,15 +1,28 @@
-local keymap = require 'util.keymap'
-
-keymap {
-	[{ 'n', desc = 'Space: %s' }] = {
-		['<leader>sw'] = { '<Cmd>tabnew | WorkspacesOpen<Cr>', 'new in workspace' },
-	},
-}
-
 return {
 	'natecraddock/workspaces.nvim',
 
 	lazy = false,
+
+	init = function()
+		local workspaces = require 'workspaces'
+		local keymap = require 'util.keymap'
+
+		keymap {
+			[{ 'n', desc = 'Page: %s' }] = {
+				['<leader>pw'] = { '<Cmd>tabnew | WorkspacesOpen<Cr>', 'new in workspace' },
+			},
+		}
+
+		if #workspaces.get() == 0 then
+			local default_repos_dir = vim.fn.expand '~/Repos'
+
+			if vim.fn.isdirectory(default_repos_dir) == 1 then
+				workspaces.add_dir(default_repos_dir)
+			end
+		end
+
+		workspaces.sync_dirs()
+	end,
 
 	opts = {
 		path = vim.fn.stdpath 'data' .. '/workspaces',
@@ -31,20 +44,4 @@ return {
 			},
 		},
 	},
-
-	config = function(_, opts)
-		local workspaces = require 'workspaces'
-
-		workspaces.setup(opts)
-
-		if #workspaces.get() == 0 then
-			local default_repos_dir = vim.fn.expand '~/Repos'
-
-			if vim.fn.isdirectory(default_repos_dir) == 1 then
-				workspaces.add_dir(default_repos_dir)
-			end
-		end
-
-		workspaces.sync_dirs()
-	end,
 }

@@ -1,20 +1,5 @@
 local app = require 'util.app'
-local autocmd = require 'util.autocmd'
 local func = require 'util.func'
-local keymap = require 'util.keymap'
-
-keymap {
-	[{ 'n', silent = true }] = {
-		['<leader>e'] = { '<Cmd>Neotree focus filesystem<CR>', 'File explorer' },
-	},
-}
-
-local augroup = autocmd.group 'neo-tree'
-
-augroup:on_user('ColorSchemePatch', function()
-	local hl = require 'util.highlight'
-	hl.link('NeoTreeWinSeparator', 'WinSeparator')
-end)
 
 return {
 	'nvim-neo-tree/neo-tree.nvim',
@@ -26,6 +11,24 @@ return {
 		'MunifTanjim/nui.nvim',
 		'nvim-tree/nvim-web-devicons',
 	},
+
+	init = function()
+		local autocmd = require 'util.autocmd'
+		local keymap = require 'util.keymap'
+
+		keymap {
+			[{ 'n', silent = true }] = {
+				['<leader>e'] = { '<Cmd>Neotree focus filesystem<CR>', 'File explorer' },
+			},
+		}
+
+		local augroup = autocmd.group 'neo-tree'
+
+		augroup:on_user('ColorSchemePatch', function()
+			local hl = require 'util.highlight'
+			hl.link('NeoTreeWinSeparator', 'WinSeparator')
+		end)
+	end,
 
 	---@module 'neo-tree'
 	---@module 'nui.tree'

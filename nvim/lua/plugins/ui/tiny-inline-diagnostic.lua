@@ -21,9 +21,7 @@ return {
 		},
 	},
 
-	config = function(_, opts)
-		require('tiny-inline-diagnostic').setup(opts)
-
+	init = function()
 		vim.diagnostic.config { virtual_text = false }
 	end,
 }

@@ -7,11 +7,9 @@ return {
 		'MunifTanjim/nui.nvim',
 	},
 
-	config = function(_, opts)
+	init = function()
 		local autocmd = require 'util.autocmd'
 		local keymap = require 'util.keymap'
-
-		require('noice').setup(opts)
 
 		keymap {
 			[{ 'n', desc = 'UI: %s' }] = {
