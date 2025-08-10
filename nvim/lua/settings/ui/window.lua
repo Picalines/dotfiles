@@ -49,3 +49,9 @@ augroup:on('ExitPre', '*', function()
 		end
 	end
 end)
+
+augroup:on('WinClosed', '*', function(event)
+	if event.match == tostring(vim.api.nvim_get_current_win()) then
+		vim.cmd 'wincmd p'
+	end
+end)

@@ -24,8 +24,8 @@ return {
 		augroup:on('TermOpen', 'term://*', function(event)
 			keymap {
 				[{ 'n', buffer = event.buf, desc = 'Terminal: %s' }] = {
-					['<leader>t'] = { '<Cmd>q | wincmd p<CR>', 'close' },
-					['q'] = { '<Cmd>q | wincmd p<CR>', 'close' },
+					['<leader>t'] = { '<C-w>c', 'close' },
+					['q'] = { '<C-w>c', 'close' },
 
 					['o'] = { '<Cmd>TermNewTab<CR>', 'new tab' },
 

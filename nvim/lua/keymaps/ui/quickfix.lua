@@ -33,8 +33,8 @@ augroup:on('FileType', 'qf', function(event)
 
 	keymap {
 		[{ 'n', remap = true, silent = true, buffer = event.buf, desc = 'Quickfix: %s' }] = {
-			['q'] = { '<Cmd>cclose | wincmd p<CR>', 'close' },
-			['<leader>q'] = { '<Cmd>cclose | wincmd p<CR>', 'close' },
+			['q'] = { '<Cmd>cclose<CR>', 'close' },
+			['<leader>q'] = { '<Cmd>cclose<CR>', 'close' },
 		},
 	}
 end)
