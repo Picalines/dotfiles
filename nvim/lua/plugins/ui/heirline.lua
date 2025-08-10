@@ -9,7 +9,6 @@ return {
 	event = 'VeryLazy',
 
 	config = function()
-		local app = require 'util.app'
 		local autocmd = require 'util.autocmd'
 		local devicons = require 'nvim-web-devicons'
 		local func = require 'util.func'
@@ -69,171 +68,48 @@ return {
 			end
 		end
 
-		local BufferIcon = {
-			init = function(self)
-				self.icon, self.icon_hl = devicons.get_icon(vim.fn.fnamemodify(self.filename, ':t'))
-				self.icon = self.icon or ''
-			end,
-			provider = function(self)
-				return self.icon
-			end,
-			hl = function(self)
-				return self.is_active and self.icon_hl or 'NormalMuted'
-			end,
-		}
-
-		local BufferName = {
-			init = function(self)
-				self.display_name = self.filename == '' and string.format('[%d]', self.bufnr) or vim.fn.fnamemodify(self.filename, ':t:r')
-			end,
-
-			hl = function(self)
-				return self.is_active and 'Normal' or 'NormalMuted'
-			end,
-
-			{
-				condition = function(self)
-					return self.buffer_prefixes and self.buffer_prefixes[self.bufnr]
-				end,
-				provider = function(self)
-					return self.buffer_prefixes[self.bufnr] .. '/'
-				end,
-			},
-			{
-				provider = function(self)
-					return self.display_name
-				end,
-			},
-		}
-
-		local BufferModifiedFlag = {
-			provider = '+',
-			hl = hl_fg '@diff.plus',
-			condition = function(self)
-				return vim.bo[self.bufnr].modified
-			end,
-		}
-
-		local BufferReadonlyFlag = {
-			provider = '',
-			hl = 'NormalMuted',
-			condition = function(self)
-				local bo = vim.bo[self.bufnr]
-				return not bo.modifiable or bo.readonly
-			end,
-		}
-
 		local Buffer = {
-			init = function(self)
-				self.filename = vim.api.nvim_buf_get_name(self.bufnr)
+			update = { 'BufEnter', 'DirChanged' },
+
+			condition = function()
+				return vim.bo.buflisted
 			end,
 
-			on_click = {
-				minwid = function(self)
-					return self.bufnr
-				end,
-				name = 'heirline_tabline_buffer_callback',
-				callback = function(_, minwid)
-					vim.api.nvim_win_set_buf(0, minwid)
-				end,
-			},
-
-			AppendAll(Space, 'right') {
-				BufferIcon,
-				BufferName,
-				BufferModifiedFlag,
-				BufferReadonlyFlag,
+			AppendAll(Space, 'left') {
+				{ provider = '', hl = 'NormalMuted' },
+				{
+					init = function(self)
+						if vim.bo.buftype == '' and vim.fn.expand '%:p' ~= '' then
+							local dir_path = vim.fn.expand '%:~:.:h'
+							self.dir = dir_path == '.' and '' or dir_path .. '/'
+							self.name = vim.fn.expand '%:~:.:t:r'
+						else
+							self.dir = ''
+							self.name = string.format('[%d]', vim.fn.bufnr())
+						end
+					end,
+					{
+						hl = 'NormalMuted',
+						provider = function(self)
+							return self.dir
+						end,
+					},
+					{
+						hl = 'Normal',
+						provider = function(self)
+							return self.name
+						end,
+					},
+				},
+				{
+					init = function(self)
+						local icon, icon_hl = devicons.get_icon(vim.fn.expand '%:.:t')
+						self.provider = icon or ''
+						self.hl = icon_hl
+					end,
+				},
 			},
 		}
-
-		local function get_listed_buffers()
-			return vim
-				.iter(vim.api.nvim_list_bufs())
-				:filter(function(bufnr)
-					return vim.bo[bufnr].buflisted
-				end)
-				:totable()
-		end
-
-		local function compute_unique_prefixes(bufnrs)
-			-- "inspiration": https://github.com/willothy/nvim-cokeline/blob/adfd1eb87e0804b6b86126e03611db6f62bb2909/lua/cokeline/buffers.lua#L57
-
-			local is_windows = app.os() == 'windows'
-			local path_separator = not is_windows and '/' or '\\'
-
-			local prefixes = vim
-				.iter(function()
-					return {}
-				end)
-				:take(#bufnrs)
-				:totable()
-
-			local paths = vim
-				.iter(bufnrs)
-				:map(function(bufnr)
-					return vim.fn.reverse(vim.split(vim.api.nvim_buf_get_name(bufnr), path_separator))
-				end)
-				:totable()
-
-			for i = 1, #paths do
-				for j = i + 1, #paths do
-					local k = 1
-					while paths[i][k] == paths[j][k] and paths[i][k] do
-						k = k + 1
-						prefixes[i][k - 1] = prefixes[i][k - 1] or paths[i][k]
-						prefixes[j][k - 1] = prefixes[j][k - 1] or paths[j][k]
-					end
-					if k ~= 1 then
-						prefixes[i][k - 1] = prefixes[i][k - 1] or paths[i][k]
-						prefixes[j][k - 1] = prefixes[j][k - 1] or paths[j][k]
-					end
-				end
-			end
-
-			return vim
-				.iter(prefixes)
-				:map(function(path)
-					return table.concat(vim.fn.reverse(path), '/')
-				end)
-				:totable()
-		end
-
-		local buflist_cache = {}
-
-		local function update_buflist()
-			buflist_cache = get_listed_buffers()
-
-			local name_to_bufnrs = vim.iter(buflist_cache):fold({}, function(acc, bufnr)
-				local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ':t')
-				acc[name] = vim.list_extend(acc[name] or {}, { bufnr })
-				return acc
-			end)
-
-			local buffer_prefixes = {}
-			for bufname, bufnrs in pairs(name_to_bufnrs) do
-				if #bufname > 0 and #bufnrs > 1 then
-					local prefixes = compute_unique_prefixes(bufnrs)
-					for i, prefix in pairs(prefixes) do
-						buffer_prefixes[bufnrs[i]] = prefix
-					end
-				end
-			end
-
-			---@diagnostic disable-next-line: inject-field
-			heirline.tabline.buffer_prefixes = buffer_prefixes
-		end
-
-		augroup:on({ 'VimEnter', 'UIEnter', 'TabEnter', 'BufAdd', 'BufDelete' }, '*', vim.schedule_wrap(update_buflist))
-
-		augroup:on_user('LazyLoad', function(event)
-			if event.data == 'heirline.nvim' then
-				update_buflist()
-			end
-		end)
-
-		local BufferLine = h_util.make_buflist(Buffer, { provider = ' ', hl = 'NormalMuted' }, { provider = '', hl = 'NormalMuted' }, function()
-			return buflist_cache
-		end, false)
 
 		local TabPageList = {
 			condition = function()
@@ -255,16 +131,13 @@ return {
 		}
 
 		local Cwd = {
+			update = { 'BufEnter', 'DirChanged' },
 			init = function(self)
+				local is_focused = vim.bo.filetype == 'neo-tree'
 				local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
-				self.title = string.format(' %s', cwd)
-				self.is_focused = vim.bo.filetype == 'neo-tree'
-			end,
-			provider = function(self)
-				return self.title
-			end,
-			hl = function(self)
-				return self.is_focused and 'Directory' or 'NormalMuted'
+				local icon = is_focused and '' or ''
+				self.provider = string.format('%s %s', icon, cwd)
+				self.hl = is_focused and 'Directory' or 'NormalMuted'
 			end,
 		}
 
@@ -591,8 +464,7 @@ return {
 			tabline = {
 				hl = 'TabLine',
 				Cwd,
-				Space,
-				BufferLine,
+				Buffer,
 				Align,
 				TabPageList,
 			},
