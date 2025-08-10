@@ -19,14 +19,13 @@ return {
 			},
 
 			mappings = {
-				apply = 'gha',
-				reset = 'ghr',
 				textobject = 'ih',
-
-				goto_first = '',
-				goto_last = '',
 				goto_prev = '[h',
 				goto_next = ']h',
+				apply = '',
+				reset = '',
+				goto_first = '',
+				goto_last = '',
 			},
 
 			options = {
@@ -35,9 +34,8 @@ return {
 		}
 
 		keymap {
-			[{ 'n', desc = 'Hunk: %s' }] = {
-				['gha'] = { 'vihgha', 'apply', remap = true },
-				['ghd'] = { diff.toggle_overlay, 'diff' },
+			[{ 'n', desc = 'Git: %s' }] = {
+				['<leader>gd'] = { diff.toggle_overlay, 'diff' },
 			},
 		}
 	end,
