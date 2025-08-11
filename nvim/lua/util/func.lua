@@ -1,5 +1,12 @@
 local M = {}
 
+function M.value(func_or_value, ...)
+	while type(func_or_value) == 'function' do
+		func_or_value = func_or_value(...)
+	end
+	return func_or_value
+end
+
 ---(lua is not typescript, sorry)
 ---@generic Args, R
 ---@param func fun(...: Args): R

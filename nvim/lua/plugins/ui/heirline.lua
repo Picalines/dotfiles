@@ -23,8 +23,8 @@ return {
 
 		local function hl_fg(hl_name)
 			return function(...)
-				local hl_name_str = type(hl_name) == 'function' and hl_name(...) or hl_name
-				return { fg = hl.attr(hl_name_str, 'fg') }
+				local hl_name_r = func.value(hl_name, ...)
+				return hl_name_r and { fg = hl.attr(hl_name_r, 'fg') } or nil
 			end
 		end
 
@@ -69,41 +69,48 @@ return {
 		end
 
 		local Buffer = {
-			update = { 'BufEnter', 'DirChanged' },
+			update = { 'BufEnter', 'DirChanged', 'FileType' },
 
 			condition = function()
 				return vim.bo.buflisted
 			end,
 
+			init = function(self)
+				self.is_on_disk = vim.fn.expand '%:p' ~= ''
+				if vim.bo.buftype == '' and self.is_on_disk then
+					local dir_path = vim.fn.expand '%:~:.:h'
+					self.dir = dir_path == '.' and '' or dir_path
+					self.name = vim.fn.expand '%:~:.:t:r'
+				else
+					self.dir = ''
+					self.name = string.format('[%d]', vim.fn.bufnr())
+				end
+			end,
+
 			AppendAll(Space, 'left') {
-				{ provider = '', hl = 'NormalMuted' },
+				{ provider = '', hl = 'Directory' },
 				{
-					init = function(self)
-						if vim.bo.buftype == '' and vim.fn.expand '%:p' ~= '' then
-							local dir_path = vim.fn.expand '%:~:.:h'
-							self.dir = dir_path == '.' and '' or dir_path .. '/'
-							self.name = vim.fn.expand '%:~:.:t:r'
-						else
-							self.dir = ''
-							self.name = string.format('[%d]', vim.fn.bufnr())
-						end
+					hl = 'Directory',
+					provider = function(self)
+						return string.format('%s ', self.dir)
 					end,
-					{
-						hl = 'NormalMuted',
-						provider = function(self)
-							return self.dir
-						end,
-					},
-					{
-						hl = 'Normal',
-						provider = function(self)
-							return self.name
-						end,
-					},
+					condition = function(self)
+						return #self.dir > 0
+					end,
+				},
+				{
+					provider = function(self)
+						return self.name
+					end,
 				},
 				{
 					init = function(self)
-						local icon, icon_hl = devicons.get_icon(vim.fn.expand '%:.:t')
+						local icon, icon_hl
+						if self.is_on_disk then
+							icon, icon_hl = devicons.get_icon(vim.fn.expand '%:.:t')
+						else
+							icon, icon_hl = devicons.get_icon_by_filetype(vim.bo.filetype)
+						end
 						self.provider = icon or ''
 						self.hl = icon_hl
 					end,
@@ -115,7 +122,6 @@ return {
 			condition = function()
 				return #vim.api.nvim_list_tabpages() >= 2
 			end,
-			{ provider = '', hl = 'NormalMuted' },
 			h_util.make_tablist {
 				provider = function(self)
 					if self.is_active then
@@ -125,7 +131,7 @@ return {
 					return string.format(' %%%dT%s%%T', self.tabnr, title)
 				end,
 				hl = function(self)
-					return self.is_active and '@diff.delta' or 'NormalMuted'
+					return self.is_active and 'Directory' or nil
 				end,
 			},
 		}
@@ -137,8 +143,8 @@ return {
 				local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
 				local icon = is_focused and '' or ''
 				self.provider = string.format('%s %s', icon, cwd)
-				self.hl = is_focused and 'Directory' or 'NormalMuted'
 			end,
+			hl = 'Directory',
 		}
 
 		local ViMode = {
@@ -182,13 +188,7 @@ return {
 				},
 				mode_hls = {
 					i = '@diff.plus',
-					v = 'NormalMuted',
-					V = 'NormalMuted',
-					['\22'] = 'NormalMuted',
 					c = 'DiagnosticInfo',
-					s = 'NormalMuted',
-					S = 'NormalMuted',
-					['\19'] = 'NormalMuted',
 					R = '@diff.delta',
 					r = '@diff.delta',
 					['!'] = '@diff.minus',
@@ -196,24 +196,14 @@ return {
 				},
 			},
 
-			{ provider = '', hl = hl_fg '@diff.plus' },
-
-			AppendAll(Space, 'left') {
-				{
-					provider = '',
-					hl = 'DiagnosticWarn',
-					condition = function()
-						return #vim.fn.state 'o' > 0
-					end,
-				},
-				{
-					provider = function(self)
-						return self.mode_names[self.mode] or self.mode
-					end,
-					hl = hl_fg(function(self)
-						return self.mode_hls[self.mode:sub(1, 1)] or 'Normal'
-					end),
-				},
+			{ provider = ' ', hl = hl_fg '@diff.plus' },
+			{
+				provider = function(self)
+					return self.mode_names[self.mode] or self.mode
+				end,
+				hl = hl_fg(function(self)
+					return self.mode_hls[self.mode:sub(1, 1)]
+				end),
 			},
 
 			update = {
@@ -361,11 +351,9 @@ return {
 
 		local Location = {
 			provider = '%04l/%04L:%04c',
-			hl = 'NormalMuted',
 		}
 
 		local ScrollProgress = {
-			hl = 'NormalMuted',
 			static = {
 				chars = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '▒' },
 			},
