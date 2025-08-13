@@ -19,14 +19,23 @@ return {
 
 		local augroup = autocmd.group 'heirline'
 
-		local Space = { provider = ' ', hl = { fg = 'NONE' } }
+		hl.pick(augroup, 'StatusLineDiffDelta', { fg = '@diff.delta' })
+		hl.pick(augroup, 'StatusLineDiffMinus', { fg = '@diff.minus' })
+		hl.pick(augroup, 'StatusLineDiffPlus', { fg = '@diff.plus' })
+		hl.pick(augroup, 'StatusLineError', { fg = 'DiagnosticError' })
+		hl.pick(augroup, 'StatusLineFlag', { fg = '@boolean' })
+		hl.pick(augroup, 'StatusLineHint', { fg = 'DiagnosticHint' })
+		hl.pick(augroup, 'StatusLineInfo', { fg = 'DiagnosticInfo' })
+		hl.pick(augroup, 'StatusLineLsp', { fg = '@tag' })
+		hl.pick(augroup, 'StatusLineMacro', { fg = '@keyword' })
+		hl.pick(augroup, 'StatusLineModified', { fg = '@diff.plus' })
+		hl.pick(augroup, 'StatusLineNormal', { fg = 'Normal' })
+		hl.pick(augroup, 'StatusLineWarn', { fg = 'DiagnosticWarn' })
+		hl.pick(augroup, 'TabLineDirectory', { fg = 'Directory' })
+		hl.pick(augroup, 'TabLineFile', { fg = 'Normal' })
+		hl.pick(augroup, 'TabLineModified', { fg = '@diff.plus' })
 
-		local function hl_fg(hl_name)
-			return function(...)
-				local hl_name_r = func.value(hl_name, ...)
-				return hl_name_r and { fg = hl.attr(hl_name_r, 'fg') } or nil
-			end
-		end
+		local Space = { provider = ' ', hl = { fg = 'NONE' } }
 
 		---@param decorate fun(c: table): table
 		local function Decorated(decorate)
@@ -69,7 +78,7 @@ return {
 		end
 
 		local Buffer = {
-			update = { 'BufEnter', 'DirChanged', 'FileType' },
+			update = { 'BufEnter', 'DirChanged', 'FileType', 'BufModifiedSet' },
 
 			condition = function()
 				return vim.bo.buflisted
@@ -88,9 +97,9 @@ return {
 			end,
 
 			AppendAll(Space, 'left') {
-				{ provider = '', hl = 'Directory' },
+				{ provider = '', hl = 'TabLineDirectory' },
 				{
-					hl = 'Directory',
+					hl = 'TabLineDirectory',
 					provider = function(self)
 						return string.format('%s ', self.dir)
 					end,
@@ -99,6 +108,7 @@ return {
 					end,
 				},
 				{
+					hl = 'TabLineFile',
 					provider = function(self)
 						return self.name
 					end,
@@ -113,6 +123,13 @@ return {
 						end
 						self.provider = icon or ''
 						self.hl = icon_hl
+					end,
+				},
+				{
+					provider = '+',
+					hl = 'TabLineModified',
+					condition = function()
+						return vim.bo.modified
 					end,
 				},
 			},
@@ -131,7 +148,7 @@ return {
 					return string.format(' %%%dT%s%%T', self.tabnr, title)
 				end,
 				hl = function(self)
-					return self.is_active and 'Directory' or nil
+					return self.is_active and 'TabLineDirectory' or nil
 				end,
 			},
 		}
@@ -144,7 +161,7 @@ return {
 				local icon = is_focused and '' or ''
 				self.provider = string.format('%s %s', icon, cwd)
 			end,
-			hl = 'Directory',
+			hl = 'TabLineDirectory',
 		}
 
 		local ViMode = {
@@ -187,23 +204,23 @@ return {
 					t = 'terminal',
 				},
 				mode_hls = {
-					i = '@diff.plus',
-					c = 'DiagnosticInfo',
-					R = '@diff.delta',
-					r = '@diff.delta',
-					['!'] = '@diff.minus',
-					t = 'DiagnosticWarn',
+					i = 'StatusLineModified',
+					c = 'StatusLineInfo',
+					R = 'StatusLineDiffDelta',
+					r = 'StatusLineDiffDelta',
+					['!'] = 'StatusLineDiffMinus',
+					t = 'StatusLineWarn',
 				},
 			},
 
-			{ provider = ' ', hl = hl_fg '@diff.plus' },
+			{ provider = ' ', hl = 'StatusLineModified' },
 			{
 				provider = function(self)
 					return self.mode_names[self.mode] or self.mode
 				end,
-				hl = hl_fg(function(self)
-					return self.mode_hls[self.mode:sub(1, 1)]
-				end),
+				hl = function(self)
+					return self.mode_hls[self.mode:sub(1, 1)] or 'StatusLineNormal'
+				end,
 			},
 
 			update = {
@@ -214,17 +231,14 @@ return {
 		}
 
 		local MacroRec = {
+			update = { 'RecordingEnter', 'RecordingLeave' },
+			hl = 'StatusLineMacro',
 			condition = function()
 				return vim.fn.reg_recording() ~= '' and vim.o.cmdheight == 0
 			end,
-
-			hl = '@keyword',
-
 			provider = function()
-				return ' ' .. vim.fn.reg_recording()
+				return string.format(' %s', vim.fn.reg_recording())
 			end,
-
-			update = { 'RecordingEnter', 'RecordingLeave' },
 		}
 
 		local search_shown = false
@@ -263,7 +277,7 @@ return {
 				end
 			end,
 
-			hl = 'DiagnosticInfo',
+			hl = 'StatusLineInfo',
 		}
 
 		---@class line_counter
@@ -286,7 +300,7 @@ return {
 					.iter(counters)
 					:map(function(counter)
 						return {
-							hl = hl_fg(counter.hl),
+							hl = counter.hl,
 							update = update,
 							condition = function()
 								return counter.count() > 0
@@ -304,9 +318,9 @@ return {
 			nil,
 			vim
 				.iter({
-					{ key = 'add', sign = '+', hl = '@diff.plus' },
-					{ key = 'delete', sign = '-', hl = '@diff.minus' },
-					{ key = 'change', sign = '~', hl = '@diff.delta' },
+					{ key = 'add', sign = '+', hl = 'StatusLineDiffPlus' },
+					{ key = 'delete', sign = '-', hl = 'StatusLineDiffMinus' },
+					{ key = 'change', sign = '~', hl = 'StatusLineDiffDelta' },
 				})
 				:map(function(count)
 					return {
@@ -324,10 +338,10 @@ return {
 			{ 'DiagnosticChanged', 'BufEnter' },
 			vim
 				.iter({
-					{ severity = vim.diagnostic.severity.ERROR, hl = 'DiagnosticError' },
-					{ severity = vim.diagnostic.severity.WARN, hl = 'DiagnosticWarn' },
-					{ severity = vim.diagnostic.severity.INFO, hl = 'DiagnosticInfo' },
-					{ severity = vim.diagnostic.severity.HINT, hl = 'DiagnosticHint' },
+					{ severity = vim.diagnostic.severity.ERROR, hl = 'StatusLineError' },
+					{ severity = vim.diagnostic.severity.WARN, hl = 'StatusLineWarn' },
+					{ severity = vim.diagnostic.severity.INFO, hl = 'StatusLineInfo' },
+					{ severity = vim.diagnostic.severity.HINT, hl = 'StatusLineHint' },
 				})
 				:map(function(count)
 					return {
@@ -343,7 +357,7 @@ return {
 
 		local StatusModifiedFlag = {
 			provider = '+',
-			hl = hl_fg '@diff.plus',
+			hl = 'StatusLineModified',
 			condition = function()
 				return vim.bo.buftype ~= 'prompt' and vim.bo.modified
 			end,
@@ -402,12 +416,12 @@ return {
 					:join ' '
 			end,
 
-			hl = '@tag',
+			hl = 'StatusLineLsp',
 		}
 
 		local SpellFlag = {
 			provider = '󰸟',
-			hl = '@boolean',
+			hl = 'StatusLineFlag',
 			condition = function()
 				return vim.wo.spell
 			end,
@@ -415,7 +429,7 @@ return {
 
 		local FormatBeforeWriteFlag = {
 			provider = '',
-			hl = '@boolean',
+			hl = 'StatusLineFlag',
 			condition = function()
 				return vim.g.format_on_write
 			end,

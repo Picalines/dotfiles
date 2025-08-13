@@ -35,42 +35,6 @@ function M.get(hl_name, opts)
 	return hl
 end
 
----@class attr_opts
----@field ns_id? integer
----@field follow_link? boolean
----@field fallback_hl? string
----@field default_value? string
-
----@param hl_name string
----@param attribute 'fg' | 'bg'
----@param opts? attr_opts
-function M.attr(hl_name, attribute, opts)
-	opts = vim.tbl_deep_extend('keep', opts or {}, {
-		ns_id = 0,
-		follow_link = true,
-		fallback_hl = 'Normal',
-		default_value = nil,
-	})
-
-	local hl = M.get(hl_name, {
-		ns_id = opts.ns_id,
-		follow_link = opts.follow_link,
-		fallback_hl = opts.fallback_hl,
-	})
-
-	if hl and hl[attribute] then
-		return hl[attribute]
-	end
-
-	if opts.default_value ~= nil then
-		return opts.default_value
-	elseif vim.o.background == 'dark' then
-		return attribute == 'fg' and 'white' or 'NONE'
-	else
-		return attribute == 'fg' and 'black' or 'NONE'
-	end
-end
-
 ---@class link_opts
 ---@field ns_id? integer
 
@@ -126,6 +90,36 @@ function M.clear(target_hl, attrs, opts)
 
 	---@diagnostic disable-next-line: param-type-mismatch
 	vim.api.nvim_set_hl(opts.ns_id, target_hl, vim.tbl_deep_extend('force', hl, new_attrs))
+end
+
+---@class picked_opts
+---@field ns_id? integer
+---@field follow_link? boolean
+
+---@param augroup AutocmdGroup
+---@param target_hl string
+---@param attrs? table<string, string> {attr: hl}
+---@param opts? picked_opts
+function M.pick(augroup, target_hl, attrs, opts)
+	opts = vim.tbl_deep_extend('keep', opts or {}, {
+		ns_id = 0,
+		follow_link = true,
+	})
+
+	local function init_colorscheme()
+		local target_attrs = vim.iter(attrs):fold({}, function(acc, attr, source_hl)
+			local source_attrs = M.get(source_hl, { ns_id = opts.ns_id, follow_link = opts.follow_link })
+			if source_attrs and source_attrs[attr] then
+				acc[attr] = source_attrs[attr]
+			end
+			return acc
+		end)
+
+		vim.api.nvim_set_hl(opts.ns_id, target_hl, target_attrs)
+	end
+
+	augroup:on_user('ColorSchemeInit', init_colorscheme)
+	init_colorscheme()
 end
 
 ---@class on_background_map
