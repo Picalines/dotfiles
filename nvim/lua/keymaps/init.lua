@@ -8,7 +8,6 @@ else
 	require 'keymaps.ui.buffer'
 	require 'keymaps.ui.lsp'
 	require 'keymaps.ui.quickfix'
-	require 'keymaps.ui.spell'
 	require 'keymaps.ui.tab'
 	require 'keymaps.ui.window'
 

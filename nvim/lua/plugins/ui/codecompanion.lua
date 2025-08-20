@@ -67,6 +67,11 @@ return {
 				handle:finish()
 			end
 		end)
+
+		vim.cmd [[
+			silent spellgood! 
+			silent spellgood! 
+		]]
 	end,
 
 	opts = function()
@@ -96,6 +101,7 @@ return {
 							breakindent = false,
 							linebreak = true,
 							winfixbuf = true,
+							spell = true,
 						},
 					},
 				},
