@@ -27,6 +27,17 @@ vim.go.listchars = 'tab:   ,trail:,extends:,precedes:,nbsp:'
 
 vim.go.tabclose = 'left'
 
+vim.go.wrap = true
+vim.go.breakindent = true
+vim.go.showbreak = '󱞩'
+vim.go.linebreak = true
+
+keymap {
+	[{ 'n', desc = 'UI: %s' }] = {
+		['<leader>uw'] = { '<Cmd>set wrap!<CR>', 'toggle wrap' },
+	},
+}
+
 augroup:on('TextYankPost', '*', function()
 	vim.highlight.on_yank()
 end)

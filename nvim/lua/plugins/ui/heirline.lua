@@ -403,6 +403,7 @@ return {
 					ts_ls = '',
 					vimls = '',
 					vtsls = '',
+					vectorcode_server = '󰕣',
 				},
 			},
 
@@ -419,6 +420,14 @@ return {
 			hl = 'StatusLineLsp',
 		}
 
+		local WrapFlag = {
+			provider = '󱞱',
+			hl = 'StatusLineFlag',
+			condition = function()
+				return vim.wo.wrap
+			end,
+		}
+
 		local SpellFlag = {
 			provider = '󰸟',
 			hl = 'StatusLineFlag',
@@ -431,7 +440,7 @@ return {
 			provider = '',
 			hl = 'StatusLineFlag',
 			condition = function()
-				return vim.g.format_on_write
+				return vim.bo.buftype == '' and vim.g.format_on_write
 			end,
 		}
 
@@ -445,6 +454,7 @@ return {
 		}
 
 		local RightStatusline = AppendAll(Space, 'left') {
+			WrapFlag,
 			SpellFlag,
 			FormatBeforeWriteFlag,
 			LSPActive,

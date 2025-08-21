@@ -4,7 +4,6 @@ require 'settings.system'
 require 'settings.text-editing'
 require 'settings.ui.search'
 require 'settings.ui.window'
-require 'settings.ui.wrapping'
 
 if app.client() ~= 'vscode' then
 	require 'settings.ui.buflisted'

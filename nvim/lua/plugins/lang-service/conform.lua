@@ -24,7 +24,6 @@ return {
 					desc = 'toggle on write',
 					function()
 						vim.g.format_on_write = not vim.g.format_on_write
-						vim.notify('format before write ' .. (vim.g.format_on_write and 'on' or 'off'))
 					end,
 				},
 			},
