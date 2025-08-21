@@ -1,18 +1,19 @@
 local app = require 'util.app'
 
-require 'settings.system'
-require 'settings.text-editing'
-require 'settings.ui.search'
-require 'settings.ui.window'
+require 'settings.global'
+require 'settings.tab'
+require 'settings.window'
+require 'settings.buffer'
+require 'settings.quickfix'
 
-if app.client() ~= 'vscode' then
-	require 'settings.ui.buflisted'
-	require 'settings.ui.colorscheme'
-	require 'settings.ui.guicursor'
-	require 'settings.ui.lsp'
-	require 'settings.ui.spell'
+if app.client() == 'vscode' then
+	require 'settings.vscode'
+else
+	require 'settings.colorscheme'
+	require 'settings.lsp'
+	require 'settings.spell'
 end
 
 if app.client() == 'neovide' then
-	require 'settings.ui.neovide'
+	require 'settings.neovide'
 end

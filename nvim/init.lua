@@ -42,4 +42,3 @@ augroup:on('ColorScheme', '*', 'doautocmd User ColorSchemePatch')
 
 pcall(require, 'plugins')
 pcall(require, 'settings')
-pcall(require, 'keymaps')

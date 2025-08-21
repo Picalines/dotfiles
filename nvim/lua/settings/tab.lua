@@ -1,5 +1,8 @@
 local keymap = require 'util.keymap'
 
+-- go to left tab when closing
+vim.go.tabclose = 'left'
+
 -- NOTE: <Tab> is same as <C-i> in a TUI
 -- Please, don't make this commit again
 

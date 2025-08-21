@@ -1,19 +1,10 @@
 local autocmd = require 'util.autocmd'
-local keymap = require 'util.keymap'
 local options = require 'util.options'
 
-local go = vim.opt_global
-
 -- NOTE: netrw is needed. Without it, neovim doesn't show the download prompt at startup
-go.spelllang = { 'en_us', 'ru_yo' }
-go.spellfile = (vim.fn.stdpath 'config') .. '/spell/custom.utf-8.add'
-go.spelloptions = { 'camel' }
-
-keymap {
-	[{ 'n', desc = 'UI: %s' }] = {
-		['<leader>us'] = { '<Cmd>set spell!<CR>', 'toggle spell' },
-	},
-}
+vim.opt_global.spelllang = { 'en_us', 'ru_yo' }
+vim.opt_global.spellfile = (vim.fn.stdpath 'config') .. '/spell/custom.utf-8.add'
+vim.opt_global.spelloptions = { 'camel' }
 
 local augroup = autocmd.group 'spell'
 

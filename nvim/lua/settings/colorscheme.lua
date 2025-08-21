@@ -2,7 +2,19 @@
 
 local autocmd = require 'util.autocmd'
 local hl = require 'util.highlight'
+local keymap = require 'util.keymap'
 local signal = require 'util.signal'
+
+keymap {
+	[{ 'n', desc = 'UI: %s' }] = {
+		['<leader>ul'] = {
+			desc = 'toggle background',
+			function()
+				vim.o.background = vim.o.background == 'dark' and 'light' or 'dark'
+			end,
+		},
+	},
+}
 
 local function colorscheme_init()
 	for _, hl_group in ipairs {
