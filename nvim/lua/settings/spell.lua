@@ -10,11 +10,10 @@ local augroup = autocmd.group 'spell'
 
 augroup:on('BufWinEnter', '*', function(event)
 	local bo, wo = options.buflocal(event.buf)
-
-	if bo.buftype == '' then
-		wo.spell = true
-	end
+	wo.spell = bo.buftype == ''
 end)
+
+augroup:on('TermOpen', '*', 'set nospell')
 
 augroup:on({ 'DirChanged', 'VimEnter' }, '*', function()
 	local cwd = vim.fs.basename(vim.fn.getcwd(-1))

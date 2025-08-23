@@ -30,7 +30,6 @@ augroup:on('FileType', 'qf', function(event)
 	local wo = vim.wo[vim.fn.bufwinid(event.buf)]
 
 	wo.winbar = ' quickfix %{g:quickfix_scroll()}'
-	wo.spell = false
 
 	keymap {
 		[{ 'n', remap = true, silent = true, buffer = event.buf, desc = 'Quickfix: %s' }] = {
