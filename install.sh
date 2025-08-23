@@ -13,6 +13,7 @@ symlink-from-to() {
 
 symlink-from-to ./.bashrc ~/.bashrc
 symlink-from-to ./.zshrc ~/.zshrc
+symlink-from-to ./.gitconfig ~/.gitconfig
 
 if command-exists nvim
 then

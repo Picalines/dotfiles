@@ -1,0 +1,34 @@
+[include]
+	path = ~/.gitconfig.local
+[alias]
+	st = status -sb
+	co = checkout
+	cb = checkout -b
+	cm = commit
+	cmm = commit --amend --no-edit
+	lol = log --oneline --graph --all
+[init]
+	defaultBranch = main
+[push]
+	autoSetupRemote = true
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+[commit]
+	verbose = true
+[pull]
+	rebase = true
+	autoSquash = true
+	autoStash = true
+[merge]
+	autoStash = true
