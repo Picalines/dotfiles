@@ -19,9 +19,11 @@ return {
 
 			['<C-n>'] = {
 				function(cmp)
+					if vim.api.nvim_get_mode().mode == 's' then
+						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-g>"_c', true, false, true), 's', true)
+					end
 					if not cmp.is_menu_visible() then
-						cmp.show()
-						return true
+						return cmp.show()
 					end
 				end,
 				'select_next',
