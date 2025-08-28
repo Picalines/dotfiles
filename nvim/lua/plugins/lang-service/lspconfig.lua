@@ -50,6 +50,7 @@ return {
 					'lua_ls',
 					'stylua',
 					'vim-language-server',
+					'vectorcode',
 				}
 
 				local ensure_installed_by_executable = {

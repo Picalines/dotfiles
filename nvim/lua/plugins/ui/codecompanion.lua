@@ -6,6 +6,11 @@ return {
 	dependencies = {
 		'j-hui/fidget.nvim',
 		'echasnovski/mini.diff',
+		{
+			'Davidyz/VectorCode',
+			version = '*',
+			dependencies = { 'nvim-lua/plenary.nvim' },
+		},
 	},
 
 	cmd = { 'CodeCompanion', 'CodeCompanionActions', 'CodeCompanionChat' },
@@ -157,6 +162,28 @@ return {
 					},
 					['cmd_runner'] = {
 						opts = { requires_approval = true },
+					},
+				},
+			},
+
+			extensions = {
+				---@module 'vectorcode'
+				vectorcode = {
+					opts = {
+						tool_group = { enabled = true, extras = {}, collapse = false },
+						tool_opts = {
+							---@type VectorCode.CodeCompanion.ToolOpts
+							['*'] = { include_in_toolbox = true },
+							---@type VectorCode.CodeCompanion.QueryToolOpts
+							query = {
+								max_num = { chunk = -1, document = -1 },
+								default_num = { chunk = 50, document = 10 },
+								include_stderr = false,
+								use_lsp = false,
+								no_duplicate = true,
+								chunk_mode = false,
+							},
+						},
 					},
 				},
 			},
