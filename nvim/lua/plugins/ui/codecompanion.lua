@@ -5,7 +5,7 @@ return {
 
 	dependencies = {
 		'j-hui/fidget.nvim',
-		'echasnovski/mini.diff',
+		'nvim-mini/mini.diff',
 		{
 			'Davidyz/VectorCode',
 			version = '*',
