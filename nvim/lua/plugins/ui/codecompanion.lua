@@ -76,15 +76,15 @@ return {
 	end,
 
 	opts = function()
-		local ok, private_adapters = pcall(require, 'settings.ui.codecompanion.private-providers')
+		local ok, local_adapters = pcall(require, 'local.codecompanion')
 		if not ok then
-			private_adapters = {}
+			local_adapters = {}
 		end
 
-		local default_adapter = private_adapters.default
+		local default_adapter = local_adapters.default
 
 		local opts = {
-			adapters = private_adapters.adapters,
+			adapters = local_adapters.adapters,
 
 			display = {
 				chat = {
