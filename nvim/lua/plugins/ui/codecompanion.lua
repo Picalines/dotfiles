@@ -71,6 +71,7 @@ return {
 		vim.cmd [[
 			silent spellgood! 
 			silent spellgood! 
+			silent spellgood! buf
 		]]
 	end,
 
