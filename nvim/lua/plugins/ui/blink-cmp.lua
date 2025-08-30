@@ -29,14 +29,23 @@ return {
 				'select_next',
 			},
 
+			['<C-k>'] = {
+				function(cmp)
+					if cmp.is_menu_visible() then
+						return cmp.accept()
+					end
+				end,
+				'fallback_to_mappings',
+			},
+
 			['<C-S-n>'] = { 'select_prev' },
 			['<C-y>'] = { 'accept' },
-			['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
-			['<C-d>'] = { 'scroll_documentation_down', 'hide', 'fallback' },
+			['<C-u>'] = { 'scroll_documentation_up', 'fallback_to_mappings' },
+			['<C-d>'] = { 'scroll_documentation_down', 'hide', 'fallback_to_mappings' },
 		},
 
 		sources = {
-			default = { 'lsp', 'path', 'buffer' },
+			default = { 'lsp', 'path', 'buffer', 'snippets' },
 		},
 
 		fuzzy = {
