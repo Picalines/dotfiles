@@ -76,6 +76,8 @@ return {
 		vim.cmd [[
 			silent spellgood! 
 			silent spellgood! 
+			silent spellgood! 
+			silent spellgood! 
 			silent spellgood! buf
 		]]
 	end,
@@ -109,6 +111,10 @@ return {
 							winfixbuf = true,
 							spell = true,
 						},
+					},
+					icons = {
+						buffer_pin = ' ',
+						buffer_watch = ' ',
 					},
 				},
 				diff = {
