@@ -13,6 +13,9 @@ return {
 		options = {
 			throttle = 0,
 
+			enable_on_insert = true,
+			enable_on_select = true,
+
 			use_icons_from_diagnostic = true,
 			show_all_diags_on_cursorline = true,
 

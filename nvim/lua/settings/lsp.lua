@@ -33,13 +33,7 @@ keymap {
 
 vim.diagnostic.config {
 	update_in_insert = true,
-
 	severity_sort = true,
-
-	virtual_lines = false,
-	virtual_text = {
-		current_line = true,
-	},
 
 	signs = {
 		text = {
