@@ -44,7 +44,7 @@ return {
 
 	opts = function()
 		local web_formatters = {
-			'biome',
+			'biome-check',
 			'prettierd',
 			'prettier',
 			stop_after_first = true,
@@ -61,46 +61,27 @@ return {
 			},
 
 			formatters_by_ft = {
-				lua = { 'stylua' },
-				python = { 'isort', 'black' },
-
+				cs = { 'csharpier' },
+				css = web_formatters,
+				go = { 'gofmt' },
+				graphql = web_formatters,
+				html = web_formatters,
 				javascript = web_formatters,
 				javascriptreact = web_formatters,
+				json = web_formatters,
+				kotlin = { 'ktlint' },
+				lua = { 'stylua' },
+				python = { 'isort', 'black' },
+				svelte = web_formatters,
 				typescript = web_formatters,
 				typescriptreact = web_formatters,
-				json = web_formatters,
-				html = web_formatters,
-				css = web_formatters,
-				svelte = web_formatters,
 				vue = web_formatters,
-				graphql = web_formatters,
-
-				go = { 'gofmt' },
-				cs = { 'csharpier' },
-
-				kotlin = { 'ktlint' },
 			},
 
 			formatters = {
 				isort = {
 					command = 'isort',
 					args = { '--profile', 'black', '--quiet', '-' },
-				},
-
-				biome = {
-					require_cwd = true,
-					stdin = true,
-					args = {
-						'check',
-						'--write',
-						'--formatter-enabled=true',
-						'--organize-imports-enabled=true',
-						'--graphql-formatter-enabled=true',
-						'--css-formatter-enabled=true',
-						'--linter-enabled=true',
-						'--stdin-file-path',
-						'$FILENAME',
-					},
 				},
 			},
 		}
