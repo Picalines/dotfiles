@@ -5,7 +5,7 @@
   "auto-dark-mode.nvim": { "branch": "master", "commit": "e300259ec777a40b4b9e3c8e6ade203e78d15881" },
   "blink.cmp": { "branch": "main", "commit": "bae4bae0eedd1fa55f34b685862e94a222d5c6f8" },
   "catppuccin": { "branch": "main", "commit": "30fa4d122d9b22ad8b2e0ab1b533c8c26c4dde86" },
-  "codecompanion.nvim": { "branch": "main", "commit": "d2cb3128188620d0a4f140c9ddc915ef4db171cf" },
+  "codecompanion.nvim": { "branch": "main", "commit": "4bc03c40b8f7f5e5d3c324479a893c6589471446" },
   "colorful-menu.nvim": { "branch": "master", "commit": "bc3e82609f2fcf7dad7ca87c20e65e51d5d9d87c" },
   "conform.nvim": { "branch": "master", "commit": "b4aab989db276993ea5dcb78872be494ce546521" },
   "evergarden": { "branch": "main", "commit": "4041ce92cf1387f19a8006c1e36969bfb5371c50" },

@@ -135,7 +135,6 @@ return {
 					},
 
 					keymaps = {
-						auto_tool_mode = { modes = { n = '<LocalLeader>t' } },
 						change_adapter = { modes = { n = '<LocalLeader>m' } },
 						clear = { modes = { n = '<LocalLeader>x' } },
 						close = { modes = { n = '<Nul>' } },
@@ -147,7 +146,8 @@ return {
 						stop = { modes = { n = '<LocalLeader>s' } },
 						system_prompt = { modes = { n = '<LocalLeader>ps' } },
 						watch = { modes = { n = '<LocalLeader>w' } },
-						yank_code = { modes = { n = '<LocalLeader>y' } },
+						yank_code = { modes = { n = '<Nul>' } },
+						yolo_mode = { modes = { n = '<LocalLeader>y' } },
 					},
 				},
 				inline = {
