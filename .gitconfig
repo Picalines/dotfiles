@@ -1,5 +1,7 @@
 [include]
 	path = ~/.gitconfig.local
+[core]
+	excludesFile = ~/.gitignore
 [alias]
 	st = status -sb
 	co = checkout

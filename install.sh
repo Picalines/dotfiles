@@ -14,6 +14,7 @@ symlink-from-to() {
 symlink-from-to ./.bashrc ~/.bashrc
 symlink-from-to ./.zshrc ~/.zshrc
 symlink-from-to ./.gitconfig ~/.gitconfig
+symlink-from-to ./.gitignore.global ~/.gitignore
 
 if command-exists nvim
 then
