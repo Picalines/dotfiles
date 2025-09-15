@@ -39,6 +39,10 @@ return {
 				f = spec_treesitter { a = '@call.outer', i = '@call.inner' },
 
 				F = spec_treesitter { a = '@function.outer', i = '@function.inner' },
+
+				t = spec_treesitter { a = '@tag.outer', i = '@tag.inner' },
+
+				T = spec_treesitter { a = '@tag.name', i = '@tag.name' },
 			},
 		}
 	end,
