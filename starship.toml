@@ -1,4 +1,4 @@
-format = "[](dimmed yellow) $directory$cmd_duration$status [❯](blue) "
+format = "[](dimmed yellow) $directory$cmd_duration$python$status [❯](blue) "
 
 add_newline = false
 
@@ -9,36 +9,31 @@ username = '#47c158'
 dir = 'bright-blue'
 duration = '#cbcb41'
 status = '#b487f4'
+python = 'bright-green'
 
 [directory]
-style = 'fg:dir'
 format = '[$path]($style)'
+style = 'fg:dir'
 use_os_path_sep = false
 truncation_length = 3
+truncate_to_repo = false
 truncation_symbol = '/'
 
 [cmd_duration]
-style = 'fg:duration'
 format = '[ $duration]($style)'
+style = 'fg:duration'
 
 [status]
-style = 'fg:status'
 format = '[ $int]($style)'
+style = 'fg:status'
 disabled = false
 
+[python]
+format = '[ 󰌠( $virtualenv)]($style)'
+style = 'fg:python'
+detect_folders = ['venv']
+
 [directory.substitutions]
-"Projects" = ''
-"Repos" = ''
+"Repos" = ''
 "Documents" = ''
 "Downloads" = ''
-"Music" = ''
-"Python" = ''
-"Java" = ''
-"JS" = ''
-"CSharp" = ''
-"Cpp" = ''
-"Unity" = ''
-"University" = ''
-"node_modules" = ''
-".github" = ''
-".git" = ''
