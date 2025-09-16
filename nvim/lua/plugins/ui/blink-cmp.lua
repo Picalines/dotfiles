@@ -40,8 +40,8 @@ return {
 
 			['<C-S-n>'] = { 'select_prev' },
 			['<C-y>'] = { 'accept' },
-			['<C-u>'] = { 'scroll_documentation_up', 'fallback_to_mappings' },
-			['<C-d>'] = { 'scroll_documentation_down', 'hide', 'fallback_to_mappings' },
+			['<C-u>'] = { 'scroll_documentation_up', 'scroll_signature_up', 'fallback_to_mappings' },
+			['<C-d>'] = { 'scroll_documentation_down', 'scroll_documentation_down', 'hide', 'fallback_to_mappings' },
 		},
 
 		sources = {
@@ -116,23 +116,20 @@ return {
 
 		cmdline = {
 			enabled = true,
-			keymap = { preset = 'inherit' },
+			keymap = {
+				preset = 'inherit',
+
+				['<Tab>'] = { 'show_and_insert', 'select_next' },
+				['<C-n>'] = { 'show_and_insert', 'select_next' },
+			},
 		},
 	},
 
 	opts_extend = { 'sources.default' },
 
 	init = function()
-		local keymap = require 'util.keymap'
-
-		keymap {
-			[{ 'c' }] = {
-				['<Tab>'] = { '<C-n>', remap = true },
-			},
-		}
-
 		local autocmd = require 'util.autocmd'
-		local augroup = autocmd.group 'cmp'
+		local augroup = autocmd.group 'blink-cmp'
 
 		augroup:on_user('Dismiss', function()
 			require('blink-cmp').hide()
