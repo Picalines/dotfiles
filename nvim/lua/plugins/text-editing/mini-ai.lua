@@ -34,7 +34,9 @@ return {
 					i = { '@parameter.inner', '@attribute.inner' },
 				},
 
-				c = spec_treesitter { a = '@comment.outer', i = '@comment.inner' },
+				c = spec_treesitter { a = '@class.outer', i = '@class.inner' },
+
+				C = spec_treesitter { a = '@comment.outer', i = '@comment.inner' },
 
 				f = spec_treesitter { a = '@call.outer', i = '@call.inner' },
 
