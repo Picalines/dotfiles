@@ -24,8 +24,8 @@ return {
 				around_last = '',
 				inside_last = '',
 
-				goto_left = 'g[',
-				goto_right = 'g]',
+				goto_left = '[a',
+				goto_right = ']a',
 			},
 
 			custom_textobjects = {
