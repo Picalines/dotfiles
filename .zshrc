@@ -8,40 +8,18 @@ command-exists() {
   command -v "$1" &> /dev/null
 }
 
-if command-exists nvim
-then
-  export EDITOR="$(which nvim)"
-  alias vim=nvim
-  alias nv=nvim
-fi
+command-exists cargo && source "$HOME/.cargo/env"
+command-exists starship && source <(starship init zsh)
+command-exists fzf && source <(fzf --zsh)
+command-exists pnpm && source <(pnpm completion zsh)
+command-exists nvim && export EDITOR="$(which nvim)"
 
-if [[ -f ~/.zsh_aliases ]]; then
-    source ~/.zsh_aliases
-fi
+autoload -Uz compinit && compinit
 
-# starship
-if command-exists starship
-then
-    eval "$(starship init zsh)"
-fi
-
-# fzf
-if command-exists fzf
-then
-  source <(fzf --zsh)
-fi
-
-# cargo
-if [ -f "$HOME/.cargo/env" ];
-then
-  source "$HOME/.cargo/env"
-fi
-
-# arc
-if command-exists arc
-then
-  export ARC_TOKEN="$(arc token show)"
-fi
+alias vi=nvim
+alias vim=nvim
+alias nv=nvim
+alias python=python3
 
 # terminal title
 update-term-title() {
@@ -51,12 +29,6 @@ update-term-title() {
 
 add-zsh-hook chpwd update-term-title
 update-term-title
-
-# pnpm completion
-if command-exists pnpm
-then
-  eval "$(pnpm completion zsh)"
-fi
 
 # auto .nvmrc
 load-nvmrc() {
