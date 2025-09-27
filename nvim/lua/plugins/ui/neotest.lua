@@ -36,19 +36,12 @@ return {
 			},
 
 			status = {
-				enabled = true,
 				signs = true,
 				virtual_text = false,
 			},
 
 			output = {
-				enabled = true,
 				open_on_run = false,
-			},
-
-			---@diagnostic disable-next-line: missing-fields
-			summary = {
-				enabled = false,
 			},
 
 			icons = {
