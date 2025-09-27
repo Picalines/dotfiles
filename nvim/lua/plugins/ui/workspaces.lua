@@ -1,10 +1,10 @@
 return {
 	'natecraddock/workspaces.nvim',
 
-	lazy = false,
+	event = 'VeryLazy',
 
 	init = function()
-		local workspaces = require 'workspaces'
+		local autocmd = require 'util.autocmd'
 		local keymap = require 'util.keymap'
 
 		keymap {
@@ -13,15 +13,21 @@ return {
 			},
 		}
 
-		if #workspaces.get() == 0 then
-			local default_repos_dir = vim.fn.expand '~/Repos'
+		local augroup = autocmd.group 'workspaces'
 
-			if vim.fn.isdirectory(default_repos_dir) == 1 then
-				workspaces.add_dir(default_repos_dir)
+		augroup:on('UIEnter', '*', function()
+			local workspaces = require 'workspaces'
+
+			if #workspaces.get() == 0 then
+				local default_repos_dir = vim.fn.expand '~/Repos'
+
+				if vim.fn.isdirectory(default_repos_dir) == 1 then
+					workspaces.add_dir(default_repos_dir)
+				end
 			end
-		end
 
-		workspaces.sync_dirs()
+			workspaces.sync_dirs()
+		end)
 	end,
 
 	opts = {
