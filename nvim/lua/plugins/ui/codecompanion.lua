@@ -5,7 +5,6 @@ return {
 
 	dependencies = {
 		'j-hui/fidget.nvim',
-		'nvim-mini/mini.diff',
 		{
 			'Davidyz/VectorCode',
 			version = '*',
@@ -119,7 +118,12 @@ return {
 				},
 				diff = {
 					enabled = true,
-					provider = 'mini_diff',
+					provider = 'inline',
+					provider_opts = {
+						inline = {
+							layout = 'buffer',
+						},
+					},
 				},
 			},
 
