@@ -10,26 +10,8 @@ return {
 	lazy = true,
 	cmd = 'Neotest',
 
-	init = function()
-		local keymap = require 'util.keymap'
-
-		keymap {
-			[{ 'n', desc = 'Unit: %s' }] = {
-				['<leader>ur'] = { "<Cmd>lua require('neotest').run.run()<CR>", 'run nearest' },
-				['<leader>uR'] = { "<Cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", 'run suite' },
-				['<leader>uc'] = { "<Cmd>lua require('neotest').run.stop(vim.fn.expand('%'))<CR>", 'cancel suite' },
-				['<leader>uo'] = { "<Cmd>lua require('neotest').output_panel.open()<CR>", 'output' },
-			},
-		}
-	end,
-
-	config = function()
-		local autocmd = require 'util.autocmd'
-		local keymap = require 'util.keymap'
-		local neotest = require 'neotest'
-
-		---@diagnostic disable-next-line: missing-fields
-		neotest.setup {
+	opts = function()
+		return {
 			adapters = {
 				require('plugins.ui.neotest-jest').neotest_adapter(),
 				require('plugins.ui.neotest-vitest').neotest_adapter(),
@@ -59,10 +41,48 @@ return {
 				skipped = 'DiagnosticSignWarn',
 			},
 		}
+	end,
+
+	init = function()
+		local autocmd = require 'util.autocmd'
+		local keymap = require 'util.keymap'
+
+		keymap {
+			[{ 'n', desc = 'Unit: %s' }] = {
+				['<leader>ur'] = {
+					desc = 'run nearest',
+					function()
+						require('neotest').run.run()
+					end,
+				},
+
+				['<leader>uR'] = {
+					desc = 'run suite',
+					function()
+						require('neotest').run.run(vim.fn.expand '%')
+					end,
+				},
+
+				['<leader>uc'] = {
+					desc = 'cancel suite',
+					function()
+						require('neotest').run.stop(vim.fn.expand '%')
+					end,
+				},
+
+				['<leader>uo'] = {
+					desc = 'output',
+					function()
+						require('neotest').output_panel.open()
+					end,
+				},
+			},
+		}
 
 		local augroup = autocmd.group 'neotest'
 
 		augroup:on('BufWinEnter', 'Neotest Output Panel', function(event)
+			local neotest = require 'neotest'
 			local winid = vim.fn.bufwinid(event.buf)
 
 			vim.wo[winid].winbar = ' output'
