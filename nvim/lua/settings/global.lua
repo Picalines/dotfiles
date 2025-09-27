@@ -10,7 +10,15 @@ vim.go.clipboard = 'unnamedplus'
 vim.go.undofile = true
 
 -- prefer powershell on windows
-vim.go.shell = (vim.fn.executable 'powershell' == 1) and 'powershell -nologo' or vim.go.shell
+if vim.fn.executable 'powershell' == 1 then
+	vim.cmd [[
+		let &shell = executable('pwsh') ? 'pwsh' : 'powershell'
+		let &shellcmdflag = '-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[''Out-File:Encoding'']=''utf8'';$PSStyle.OutputRendering=''plaintext'';Remove-Alias -Force -ErrorAction SilentlyContinue tee;'
+		let &shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+		let &shellpipe  = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
+		set shellquote= shellxquote=
+	]]
+end
 
 -- auto refresh files
 vim.go.autoread = true
