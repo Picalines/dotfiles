@@ -51,6 +51,13 @@ return {
 				failed = '',
 				passed = '󰄴',
 			},
+
+			highlights = {
+				failed = 'DiagnosticSignError',
+				passed = 'DiagnosticSignOk',
+				running = 'DiagnosticSignInfo',
+				skipped = 'DiagnosticSignWarn',
+			},
 		}
 
 		local augroup = autocmd.group 'neotest'
