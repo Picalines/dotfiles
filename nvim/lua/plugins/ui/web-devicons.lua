@@ -1,7 +1,8 @@
 return {
 	'nvim-tree/nvim-web-devicons',
 
-	priority = 1000,
+	lazy = true,
+	event = 'VeryLazy',
 
 	opts = {
 		override_by_extension = {

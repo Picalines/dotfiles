@@ -1,16 +1,10 @@
 return {
 	'ggandor/leap.nvim',
 
-	lazy = false,
+	event = 'VeryLazy',
 
 	config = function()
-		local autocmd = require 'util.autocmd'
-		local hl = require 'util.highlight'
-		local keymap = require 'util.keymap'
-
 		local leap = require 'leap'
-
-		leap.setup {}
 
 		leap.opts.case_sensitive = false
 		leap.opts.highlight_unlabeled_phase_one_targets = true
@@ -21,10 +15,14 @@ return {
 		leap.opts.special_keys.prev_group = { '<S-Tab>' }
 
 		leap.opts.labels = 'sjklhodweimbuyvrgtaqpcxzSFJKLHODWEIMBUYVRGTAQPCXZ'
-		leap.opts.safe_labels = 'sutSFLHMUGTZ'
+		leap.opts.safe_labels = 'fFtThHlLMuUG' -- "I never press X right after jump"
 
 		leap.opts.vim_opts['go.hlsearch'] = false
 		leap.opts.vim_opts['wo.spell'] = false
+	end,
+
+	init = function()
+		local keymap = require 'util.keymap'
 
 		local function select_node()
 			require('leap.treesitter').select {
@@ -45,18 +43,5 @@ return {
 				['an'] = { select_node, 'Leap treesitter node' },
 			},
 		}
-
-		local function setup_highlights()
-			hl.clear('LeapBackdrop', 'all')
-			hl.link('LeapMatch', 'CurSearch')
-			hl.link('LeapLabel', 'Search')
-			leap.init_hl()
-		end
-
-		setup_highlights()
-
-		local augroup = autocmd.group 'leap'
-
-		augroup:on('ColorScheme', '*', setup_highlights)
 	end,
 }
