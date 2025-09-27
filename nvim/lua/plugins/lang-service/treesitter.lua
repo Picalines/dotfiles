@@ -5,55 +5,11 @@ return {
 	branch = 'main',
 	build = ':TSUpdate',
 
-	dependencies = {
-		{
-			'nvim-treesitter/nvim-treesitter-textobjects',
-			branch = 'main',
-		},
-		{
-			'windwp/nvim-ts-autotag',
-			event = 'InsertEnter',
-			opts = {
-				opts = {
-					enable_close = true,
-					enable_rename = true,
-					enable_close_on_slash = true,
-				},
-			},
-		},
-		{ 'JoosepAlviste/nvim-ts-context-commentstring' },
-	},
-
-	init = function()
+	config = function()
 		local autocmd = require 'util.autocmd'
 		local nvim_treesitter = require 'nvim-treesitter'
 
-		local augroup = autocmd.group 'nvim-treesitter'
-
-		augroup:on('UIEnter', '*', function()
-			local always_installed_parsers = {
-				'editorconfig',
-				'git_config',
-				'git_rebase',
-				'gitattributes',
-				'gitcommit',
-				'gitignore',
-				'json',
-				'json5',
-				'jsonc',
-				'lua',
-				'luadoc',
-				'markdown',
-				'markdown_linline',
-				'toml',
-				'vim',
-				'vimdoc',
-				'xml',
-				'yaml',
-			}
-
-			vim.iter(always_installed_parsers):each(nvim_treesitter.install)
-		end)
+		nvim_treesitter.setup()
 
 		local parsers_by_filetype = vim
 			.iter({
@@ -78,30 +34,53 @@ return {
 				return acc
 			end)
 
-		local function install_parsers(filetypes)
-			vim
+		local function install_by_filetype(filetypes)
+			nvim_treesitter.install(vim
 				.iter(filetypes)
 				:map(function(filetype)
 					return parsers_by_filetype[filetype]
 				end)
-				:flatten()
-				:each(nvim_treesitter.install)
+				:flatten())
 		end
 
+		local augroup = autocmd.group 'nvim-treesitter'
+
 		augroup:on('UIEnter', '*', function()
-			local filetypes = vim.fn.uniq(vim
+			nvim_treesitter.install {
+				'editorconfig',
+				'git_config',
+				'git_rebase',
+				'gitattributes',
+				'gitcommit',
+				'gitignore',
+				'json',
+				'json5',
+				'jsonc',
+				'lua',
+				'luadoc',
+				'markdown',
+				'markdown_linline',
+				'toml',
+				'vim',
+				'vimdoc',
+				'xml',
+				'yaml',
+			}
+
+			local recent_filetypes = vim.fn.uniq(vim
 				.iter(vim.v.oldfiles)
+				:take(8)
 				:map(function(oldfile)
 					local filetype = vim.filetype.match { filename = oldfile }
 					return filetype
 				end)
 				:totable())
 
-			install_parsers(filetypes)
+			install_by_filetype(recent_filetypes)
 		end)
 
 		augroup:on('FileType', '*', function(event)
-			install_parsers { event.match }
+			install_by_filetype { event.match }
 
 			local language = vim.treesitter.language.get_lang(event.match)
 			if language and vim.treesitter.language.add(language) then

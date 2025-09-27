@@ -3,6 +3,10 @@ return {
 
 	ft = 'lua',
 
+	dependencies = {
+		'mason-org/mason.nvim',
+	},
+
 	opts = {
 		library = {
 			'LazyVim',

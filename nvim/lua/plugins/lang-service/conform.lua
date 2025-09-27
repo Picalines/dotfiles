@@ -3,6 +3,10 @@ return {
 
 	lazy = true,
 
+	dependencies = {
+		'mason-org/mason.nvim',
+	},
+
 	init = function()
 		local autocmd = require 'util.autocmd'
 		local keymap = require 'util.keymap'
