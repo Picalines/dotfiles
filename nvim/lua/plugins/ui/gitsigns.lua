@@ -1,11 +1,5 @@
-local arc_plugin_path = vim.fn.expand '~/Arcadia/junk/a-matveev9/gitsigns.arc.nvim'
-local arc_plugin_exists = vim.fn.isdirectory(arc_plugin_path) == 1
-local is_in_arcadia = vim.startswith(vim.fn.getcwd() or '', vim.fn.expand '~/Arcadia')
-local should_use_arc = arc_plugin_exists and is_in_arcadia
-
 return {
-	not should_use_arc and 'lewis6991/gitsigns.nvim' or nil,
-	dir = should_use_arc and arc_plugin_path or nil,
+	'lewis6991/gitsigns.nvim',
 
 	event = { 'BufReadPre', 'BufNewFile' },
 
