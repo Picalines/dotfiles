@@ -77,6 +77,17 @@ return {
 			end
 		end
 
+		local Cwd = {
+			update = { 'BufEnter', 'DirChanged' },
+			hl = 'TabLineDirectory',
+			init = function(self)
+				local is_focused = vim.bo.filetype == 'neo-tree'
+				local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+				local icon = is_focused and '' or ''
+				self.provider = string.format('%s %s', icon, cwd)
+			end,
+		}
+
 		local Buffer = {
 			update = { 'BufEnter', 'DirChanged', 'FileType', 'BufModifiedSet' },
 
@@ -86,6 +97,7 @@ return {
 
 			init = function(self)
 				self.is_on_disk = vim.fn.expand '%:p' ~= ''
+				self.is_in_cwd = vim.fs.relpath(vim.fn.getcwd(), vim.fn.expand '%') ~= nil
 				if vim.bo.buftype == '' and self.is_on_disk then
 					local dir_path = vim.fn.expand '%:~:.:h'
 					self.dir = dir_path == '.' and '' or dir_path
@@ -97,7 +109,18 @@ return {
 			end,
 
 			AppendAll(Space, 'left') {
-				{ provider = '', hl = 'TabLineDirectory' },
+				{
+					hl = 'TabLineFile',
+					init = function(self)
+						if not self.is_on_disk then
+							self.provider = ''
+						elseif not self.is_in_cwd then
+							self.provider = ''
+						else
+							self.provider = ''
+						end
+					end,
+				},
 				{
 					hl = 'TabLineDirectory',
 					provider = function(self)
@@ -151,17 +174,6 @@ return {
 					return self.is_active and 'TabLineDirectory' or nil
 				end,
 			},
-		}
-
-		local Cwd = {
-			update = { 'BufEnter', 'DirChanged' },
-			init = function(self)
-				local is_focused = vim.bo.filetype == 'neo-tree'
-				local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
-				local icon = is_focused and '' or ''
-				self.provider = string.format('%s %s', icon, cwd)
-			end,
-			hl = 'TabLineDirectory',
 		}
 
 		local ViMode = {
