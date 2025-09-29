@@ -26,7 +26,7 @@ return {
 			items = {
 				section('Files', {
 					{ 'Open Workspace 󰣩', 'WorkspacesOpen' },
-					{ 'Explore Files ', 'Neotree filesystem current' },
+					{ 'Explore Files ', 'lua vim.cmd.edit(vim.fn.getcwd())' },
 					{ 'Find Files ', 'lua Snacks.picker.files()' },
 				}),
 				section('Editor', {

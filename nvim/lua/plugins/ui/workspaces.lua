@@ -42,12 +42,9 @@ return {
 		auto_dir = false,
 
 		hooks = {
-			open = {
-				'Neotree current filesystem',
-				function(w_name)
-					vim.t.tab_label = w_name
-				end,
-			},
+			open = function()
+				vim.cmd.edit(vim.fn.getcwd())
+			end,
 		},
 	},
 }
