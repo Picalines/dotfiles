@@ -81,7 +81,7 @@ return {
 			update = { 'BufEnter', 'DirChanged' },
 			hl = 'TabLineDirectory',
 			init = function(self)
-				local is_focused = vim.bo.filetype == 'neo-tree'
+				local is_focused = vim.bo.filetype == 'minifiles'
 				local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
 				local icon = is_focused and '' or ''
 				self.provider = string.format('%s %s', icon, cwd)
