@@ -41,7 +41,7 @@ return {
 						if not MiniFiles.close() then
 							local buf_name = vim.api.nvim_buf_get_name(0)
 							local file_path = vim.fn.filereadable(buf_name) == 1 and buf_name or nil
-							MiniFiles.open(file_path, true)
+							MiniFiles.open(file_path or MiniFiles.get_latest_path(), true)
 							MiniFiles.reveal_cwd()
 						end
 					end,
