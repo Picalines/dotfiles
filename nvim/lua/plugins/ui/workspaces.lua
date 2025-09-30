@@ -25,8 +25,6 @@ return {
 					workspaces.add_dir(default_repos_dir)
 				end
 			end
-
-			workspaces.sync_dirs()
 		end)
 	end,
 
