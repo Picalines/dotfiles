@@ -55,15 +55,15 @@ ctrl-alt-cmd-shift-m = 'workspace M --auto-back-and-forth'
 esc = ['reload-config', 'mode main']
 enter = ['reload-config', 'mode main']
 
-h = 'move left'
-j = 'move down'
-k = 'move up'
-l = 'move right'
+h = ['move left', 'mode main']
+j = ['move down', 'mode main']
+k = ['move up', 'mode main']
+l = ['move right', 'mode main']
 
-shift-h = 'join-with left'
-shift-j = 'join-with down'
-shift-k = 'join-with up'
-shift-l = 'join-with right'
+shift-h = ['join-with left', 'mode main']
+shift-j = ['join-with down', 'mode main']
+shift-k = ['join-with up', 'mode main']
+shift-l = ['join-with right', 'mode main']
 
 f = ['layout floating tiling', 'mode main']
 
