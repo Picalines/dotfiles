@@ -8,8 +8,8 @@ return {
 		local keymap = require 'util.keymap'
 
 		keymap {
-			[{ 'n', desc = 'Page: %s' }] = {
-				['<leader>pw'] = { '<Cmd>tabnew | WorkspacesOpen<Cr>', 'new in workspace' },
+			[{ 'n', desc = 'Workspace: %s' }] = {
+				['<leader>o'] = { '<Cmd>WorkspacesOpen<Cr>', 'open' },
 			},
 		}
 
@@ -44,6 +44,11 @@ return {
 		hooks = {
 			open = function()
 				vim.cmd.edit(vim.fn.getcwd())
+			end,
+			open_pre = function()
+				if vim.bo.filetype ~= 'ministarter' then
+					vim.cmd.tabnew()
+				end
 			end,
 		},
 	},
