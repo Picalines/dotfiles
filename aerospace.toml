@@ -67,13 +67,13 @@ shift-l = 'join-with right'
 
 f = ['layout floating tiling', 'mode main']
 
-t = 'layout tiles horizontal vertical'
-a = 'layout accordion horizontal vertical'
+t = ['layout tiles horizontal vertical', 'mode main']
+a = ['layout accordion horizontal vertical', 'mode main']
 
-ctrl-h = 'move-workspace-to-monitor left'
-ctrl-j = 'move-workspace-to-monitor down'
-ctrl-k = 'move-workspace-to-monitor up'
-ctrl-l = 'move-workspace-to-monitor right'
+ctrl-h = ['move-workspace-to-monitor left', 'mode main']
+ctrl-j = ['move-workspace-to-monitor down', 'mode main']
+ctrl-k = ['move-workspace-to-monitor up', 'mode main']
+ctrl-l = ['move-workspace-to-monitor right', 'mode main']
 
 z = ['move-node-to-workspace Z', 'workspace Z', 'mode main']
 x = ['move-node-to-workspace X', 'workspace X', 'mode main']
