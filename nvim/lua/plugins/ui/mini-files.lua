@@ -13,7 +13,7 @@ return {
 			mark_goto = "'",
 			mark_set = 'm',
 			reset = '<BS>',
-			reveal_cwd = '@',
+			reveal_cwd = '',
 			show_help = 'g?',
 			synchronize = '=',
 			trim_left = '<',
@@ -58,6 +58,20 @@ return {
 					['f'] = { 'q<leader>ff', 'find' },
 					['<leader>w'] = { '=', 'synchronize' },
 					['<CR>'] = { 'l', 'open' },
+
+					['@'] = {
+						desc = 'go to cwd',
+						function()
+							MiniFiles.open(vim.fn.getcwd(), false)
+						end,
+					},
+
+					['gx'] = {
+						desc = 'system open',
+						function()
+							vim.ui.open(MiniFiles.get_fs_entry().path)
+						end,
+					},
 				},
 			}
 		end)
