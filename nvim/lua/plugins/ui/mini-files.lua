@@ -54,6 +54,7 @@ return {
 		augroup:on_user('MiniFilesBufferCreate', function(event)
 			keymap {
 				[{ 'n', buffer = event.data.buf_id, desc = 'Files: %s', remap = true }] = {
+					['<Esc>'] = { 'q', 'close' },
 					['f'] = { 'q<leader>ff', 'find' },
 					['<leader>w'] = { '=', 'synchronize' },
 					['<CR>'] = { 'l', 'open' },
