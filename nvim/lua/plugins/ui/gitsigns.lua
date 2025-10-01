@@ -41,6 +41,7 @@ return {
 		current_line_blame_opts = {
 			virt_text = true,
 			virt_text_pos = 'eol',
+			virt_text_priority = 5000,
 			delay = 500,
 			ignore_whitespace = true,
 		},
