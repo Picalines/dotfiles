@@ -11,6 +11,8 @@
 	lol = log --oneline --graph --all
 [init]
 	defaultBranch = main
+[status]
+	showUntrackedFiles = all
 [push]
 	autoSetupRemote = true
 [fetch]
