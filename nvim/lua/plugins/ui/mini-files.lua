@@ -59,6 +59,18 @@ return {
 					['<leader>w'] = { '=', 'synchronize' },
 					['<CR>'] = { 'l', 'open' },
 
+					['.'] = {
+						desc = 'set cwd',
+						function()
+							local path = (MiniFiles.get_fs_entry() or {}).path
+							if path then
+								local cwd = vim.fs.dirname(path)
+								vim.fn.chdir(cwd)
+								MiniFiles.open(cwd, false)
+							end
+						end,
+					},
+
 					['@'] = {
 						desc = 'go to cwd',
 						function()
