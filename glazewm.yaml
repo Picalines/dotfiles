@@ -168,10 +168,12 @@ window_rules:
       - window_process: { equals: 'WindowsTerminal' }
   - commands: ['move --workspace B']
     match:
-      - { window_title: { regex: 'Zen Browser$' } }
+      - window_class: { equals: 'MozillaWindowClass' }
+        window_title: { regex: 'Zen Browser$' }
   - commands: ['move --workspace M']
     match:
-      - { window_title: { equals: 'Steam' } }
+      - window_title: { regex: '^Telegram' }
+      - window_title: { equals: 'Steam' }
 
   - commands: ['set-floating']
     match:
