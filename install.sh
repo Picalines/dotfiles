@@ -7,9 +7,9 @@ command-exists() {
 }
 
 symlink-from-to() {
-    echo $1 $2
+    echo "linking '$1' to '$2'"
     if [[ -n $WINDIR ]]; then
-        powershell "New-Item -Type SymbolicLink -Path $2 -Value $1 -Force"
+        powershell "New-Item -Type SymbolicLink -Path $2 -Value $1 -Force" > /dev/null
     else
         mkdir -p "$(dirname $2)"
         ln -snf "$PWD/$1" "$2"
