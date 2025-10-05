@@ -27,3 +27,4 @@ command-exists alacritty && symlink-from-to "alacritty.toml" "~/.config/alacritt
 command-exists ghostty && symlink-from-to "ghostty.config" "~/.config/ghostty/config"
 command-exists neovide && symlink-from-to "neovide.toml" "~/.config/neovide/config.toml"
 command-exists starship && symlink-from-to "starship.toml" "~/.config/starship.toml"
+[ -d ~/.glzr/glazewm ] && symlink-from-to "glazewm.yaml" "~/.glzr/glazewm/config.yaml"
