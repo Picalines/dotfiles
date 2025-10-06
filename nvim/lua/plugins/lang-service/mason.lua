@@ -25,6 +25,7 @@ return {
 				'stylua',
 				'vim-language-server',
 				'vectorcode',
+				'gh-actions-language-server',
 			}
 
 			local ensure_installed_by_executable = {

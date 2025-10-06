@@ -403,6 +403,7 @@ return {
 					csharp_ls = '󰌛',
 					cssls = '',
 					eslint = '󰱺',
+					gh_actions_ls = '',
 					graphql = '󰡷',
 					harper_ls = '',
 					jsonls = '',
@@ -413,9 +414,9 @@ return {
 					svelte = '',
 					tailwindcss = '󱏿',
 					ts_ls = '',
+					vectorcode_server = '󰕣',
 					vimls = '',
 					vtsls = '',
-					vectorcode_server = '󰕣',
 				},
 			},
 
