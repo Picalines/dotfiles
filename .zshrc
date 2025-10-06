@@ -2,6 +2,8 @@
 
 if [[ -f "/opt/homebrew/bin/brew" ]] then
   eval "$(/opt/homebrew/bin/brew shellenv)"
+
+  export PATH="$(brew --prefix)/opt/python@3.12/libexec/bin:$PATH"
 fi
 
 autoload -U add-zsh-hook
