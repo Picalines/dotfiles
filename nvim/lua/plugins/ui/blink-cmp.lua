@@ -45,7 +45,10 @@ return {
 		},
 
 		sources = {
-			default = { 'lsp', 'path', 'buffer', 'snippets' },
+			default = { 'lsp', 'buffer', 'snippets' },
+			per_filetype = {
+				markdown = { inherit_defaults = true, 'path' },
+			},
 		},
 
 		fuzzy = {
