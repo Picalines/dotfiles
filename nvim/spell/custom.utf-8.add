@@ -155,3 +155,11 @@ CSRF
 backend
 CBV
 urls
+postgresql
+varchar
+брендов
+автоинкрементом
+бренда
+postgre
+автоинкремент
+автоинкремента
