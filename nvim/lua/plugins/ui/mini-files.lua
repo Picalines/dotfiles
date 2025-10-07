@@ -53,11 +53,21 @@ return {
 
 		augroup:on_user('MiniFilesBufferCreate', function(event)
 			keymap {
-				[{ 'n', buffer = event.data.buf_id, desc = 'Files: %s', remap = true }] = {
+				[{ 'n', buffer = event.data.buf_id, desc = 'Files: %s', remap = true, nowait = true }] = {
 					['<Esc>'] = { 'q', 'close' },
-					['f'] = { 'q<leader>ff', 'find' },
-					['<leader>w'] = { '=', 'synchronize' },
 					['<CR>'] = { 'l', 'open' },
+
+					['w'] = { '=', 'synchronize' },
+					['f'] = { 'q<Cmd>silent! WhichKey<CR><leader>f', 'pick' },
+
+					['cd'] = { ':cd ', 'cd' },
+
+					['gc'] = {
+						desc = 'go to cwd',
+						function()
+							MiniFiles.open(vim.fn.getcwd(), false)
+						end,
+					},
 
 					['.'] = {
 						desc = 'set cwd',
@@ -68,13 +78,6 @@ return {
 								vim.fn.chdir(cwd)
 								MiniFiles.open(cwd, false)
 							end
-						end,
-					},
-
-					['@'] = {
-						desc = 'go to cwd',
-						function()
-							MiniFiles.open(vim.fn.getcwd(), false)
 						end,
 					},
 
