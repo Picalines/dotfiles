@@ -123,7 +123,6 @@ return {
 				preset = 'inherit',
 
 				['<Tab>'] = { 'show_and_insert', 'select_next' },
-				['<C-n>'] = { 'show_and_insert', 'select_next' },
 			},
 		},
 	},
