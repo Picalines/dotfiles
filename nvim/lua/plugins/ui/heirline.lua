@@ -418,11 +418,16 @@ return {
 					vimls = '',
 					vtsls = '',
 				},
+
+				skip_clients = { 'stylua' },
 			},
 
 			provider = function(self)
 				return vim
 					.iter(vim.lsp.get_clients { bufnr = 0 })
+					:filter(function(client)
+						return not vim.tbl_contains(self.skip_clients, client.name)
+					end)
 					:map(function(client)
 						local name = (self.client_icons[client.name] or client.name):gsub('_language_server$', ''):gsub('_ls$', '')
 						return name
