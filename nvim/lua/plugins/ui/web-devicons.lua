@@ -24,6 +24,12 @@ return {
 				cterm_color = '76',
 				name = 'NestController',
 			},
+			['resolver.ts'] = {
+				icon = '',
+				color = '#90d402',
+				cterm_color = '76',
+				name = 'NestResolver',
+			},
 		},
 
 		override_by_filename = {
