@@ -7,21 +7,18 @@ local client_modules = {
 	terminal = {
 		'core',
 		'colorschemes',
-		'lang-service',
-		'text-editing',
+		'edit',
 		'ui',
 	},
 	neovide = {
 		'core',
 		'colorschemes',
-		'lang-service',
-		'text-editing',
+		'edit',
 		'ui',
 	},
 	vscode = {
 		'core',
-		'text-editing',
-		'lang-service',
+		'edit',
 	},
 }
 
