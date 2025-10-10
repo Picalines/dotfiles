@@ -24,6 +24,13 @@ return {
 			permanent_delete = true,
 			use_as_default_explorer = true,
 		},
+
+		content = {
+			prefix = function(fs_entry)
+				local icon, hl = MiniFiles.default_prefix(fs_entry)
+				return ' ' .. icon, hl
+			end,
+		},
 	},
 
 	config = function(_, opts)
