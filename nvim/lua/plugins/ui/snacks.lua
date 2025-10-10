@@ -64,6 +64,9 @@ return {
 					},
 				},
 			},
+			sources = {
+				files = { hidden = true },
+			},
 		},
 
 		input = {
