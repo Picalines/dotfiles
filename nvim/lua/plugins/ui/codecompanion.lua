@@ -71,14 +71,6 @@ return {
 				handle:finish()
 			end
 		end)
-
-		vim.cmd [[
-			silent spellgood! 
-			silent spellgood! 
-			silent spellgood! 
-			silent spellgood! 
-			silent spellgood! buf
-		]]
 	end,
 
 	opts = function()
