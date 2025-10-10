@@ -58,6 +58,7 @@ return {
 					['<CR>'] = { 'l', 'open' },
 
 					['w'] = { '=', 'synchronize' },
+					['<leader>f'] = { 'q<leader>f', 'pick' },
 					['f'] = { 'q<Cmd>silent! WhichKey<CR><leader>f', 'pick' },
 
 					['cd'] = { ':cd ', 'cd' },
