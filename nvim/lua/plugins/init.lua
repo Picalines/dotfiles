@@ -5,18 +5,21 @@ local client = app.client()
 
 local client_modules = {
 	terminal = {
+		'core',
 		'colorschemes',
 		'lang-service',
 		'text-editing',
 		'ui',
 	},
 	neovide = {
+		'core',
 		'colorschemes',
 		'lang-service',
 		'text-editing',
 		'ui',
 	},
 	vscode = {
+		'core',
 		'text-editing',
 		'lang-service',
 	},

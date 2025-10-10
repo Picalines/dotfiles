@@ -16,7 +16,7 @@ command-exists cargo && source "$HOME/.cargo/env"
 command-exists starship && source <(starship init zsh)
 command-exists fzf && source <(fzf --zsh)
 command-exists pnpm && source <(pnpm completion zsh)
-command-exists nvim && export EDITOR="$(which nvim)"
+command-exists nvim && export VISUAL="nvim --cmd 'let g:flatten_wait=1'" && export MANPAGER="nvim +Man!"
 
 autoload -Uz compinit && compinit
 
