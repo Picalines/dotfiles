@@ -7,7 +7,7 @@ return {
 		mappings = {
 			toggle = 'gj',
 			split = '',
-			join = ''
-		}
-	}
+			join = '',
+		},
+	},
 }
