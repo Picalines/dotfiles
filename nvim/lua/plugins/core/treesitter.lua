@@ -5,6 +5,10 @@ return {
 	branch = 'main',
 	build = ':TSUpdate',
 
+	init = function()
+		vim.go.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+	end,
+
 	config = function()
 		local autocmd = require 'util.autocmd'
 		local nvim_treesitter = require 'nvim-treesitter'
