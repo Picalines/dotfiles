@@ -40,14 +40,32 @@ return {
 		auto_dir = false,
 
 		hooks = {
-			open = function()
-				vim.cmd.edit(vim.fn.getcwd())
-			end,
-			open_pre = function()
-				if vim.bo.filetype ~= 'ministarter' then
+			open_pre = {
+				function(_, workspace_dir)
+					if vim.bo.filetype == 'ministarter' then
+						return true
+					end
+
+					workspace_dir = vim.fs.normalize(workspace_dir)
+
+					local tabpage = vim.iter(vim.api.nvim_list_tabpages()):find(function(tabpage)
+						local tabnr = vim.api.nvim_tabpage_get_number(tabpage)
+						local tab_dir = (vim.fn.getcwd(-1, tabnr))
+						local eq = vim.fs.normalize(tab_dir) == workspace_dir
+						return eq
+					end)
+
+					if tabpage then
+						vim.api.nvim_set_current_tabpage(tabpage)
+						return false
+					end
+
 					vim.cmd.tabnew()
-				end
-			end,
+				end,
+				function(_, workspace_dir)
+					vim.cmd.edit(workspace_dir)
+				end,
+			},
 		},
 	},
 }
