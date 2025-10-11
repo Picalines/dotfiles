@@ -33,8 +33,17 @@ vim.go.linebreak = true
 vim.go.showbreak = '󱞩'
 vim.go.listchars = 'tab:   ,trail:,extends:,precedes:,nbsp:'
 
--- no ~ at the end
-vim.go.fillchars = 'eob: '
+-- fold
+vim.go.foldmethod = 'expr'
+vim.go.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.go.foldlevelstart = 9999
+vim.go.foldtext = ''
+
+-- fill chars
+vim.opt.fillchars = {
+	eob = ' ', -- no ~ at the end
+	fold = ' ',
+}
 
 keymap {
 	[{ 'n', desc = 'Window: %s' }] = {
