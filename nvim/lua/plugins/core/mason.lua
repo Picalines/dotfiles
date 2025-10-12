@@ -20,12 +20,13 @@ return {
 
 		opts = function()
 			local ensure_installed = {
+				'bash-language-server',
+				'gh-actions-language-server',
 				'jsonls',
 				'lua_ls',
 				'stylua',
-				'vim-language-server',
 				'vectorcode',
-				'gh-actions-language-server',
+				'vim-language-server',
 			}
 
 			local ensure_installed_by_executable = {
