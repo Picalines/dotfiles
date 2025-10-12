@@ -3,6 +3,9 @@ local keymap = require 'util.keymap'
 
 local augroup = autocmd.group 'global'
 
+-- time before the swap file is written
+vim.go.updatetime = 250
+
 -- sync with system clipboard
 vim.go.clipboard = 'unnamedplus'
 
