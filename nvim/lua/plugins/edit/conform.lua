@@ -13,14 +13,14 @@ return {
 
 		keymap {
 			[{ 'n', desc = 'Format: %s' }] = {
-				['<leader>F'] = {
+				['<LocalLeader>f'] = {
 					desc = 'buffer',
 					function()
 						require('conform').format { async = vim.fn.reg_executing() == '' }
 					end,
 				},
 
-				['<leader>uf'] = {
+				['<LocalLeader>F'] = {
 					desc = 'toggle on write',
 					function()
 						vim.g.format_on_write = not vim.g.format_on_write

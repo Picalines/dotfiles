@@ -11,15 +11,8 @@ return {
 		keymap {
 			[{ desc = 'Git: %s' }] = {
 				[{ 'n' }] = {
-					['<leader>gs'] = { '<Cmd>Gitsigns stage_hunk<CR>', 'toggle stage hunk' },
-					['<leader>gS'] = { '<Cmd>Gitsigns stage_buffer<CR>', 'stage file' },
-					['<leader>gr'] = { '<Cmd>Gitsigns reset_hunk<CR>', 'reset hunk' },
-					['<leader>gb'] = { '<Cmd>Gitsigns blame_line full=true<CR>', 'blame line' },
-					['<leader>gB'] = { '<Cmd>Gitsigns blame<CR>', 'blame buffer' },
-				},
-
-				[{ 'x' }] = {
-					['<leader>gs'] = { ':Gitsigns stage_hunk<CR>', 'stage selected' },
+					['<LocalLeader>b'] = { '<Cmd>Gitsigns blame_line full=true<CR>', 'blame line' },
+					['<LocalLeader>B'] = { '<Cmd>Gitsigns blame<CR>', 'blame buffer' },
 				},
 			},
 		}

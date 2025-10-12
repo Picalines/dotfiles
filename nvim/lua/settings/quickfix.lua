@@ -10,12 +10,6 @@ keymap {
 				return string.format('<Cmd>botright copen | resize %d<CR>', math.floor(vim.go.lines / 3))
 			end,
 		},
-
-		[']q'] = { '<Cmd>cnext<CR>zz', 'next item' },
-		['[q'] = { '<Cmd>cprevious<CR>zz', 'prev item' },
-
-		[']Q'] = { '<Cmd>cnewer<CR>', 'newer list' },
-		['[Q'] = { '<Cmd>colder<CR>', 'older list' },
 	},
 }
 

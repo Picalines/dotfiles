@@ -35,7 +35,7 @@ return {
 
 		keymap {
 			[{ 'n', desc = 'Git: %s' }] = {
-				['<leader>gd'] = { diff.toggle_overlay, 'diff' },
+				['<LocalLeader>d'] = { diff.toggle_overlay, 'diff' },
 			},
 		}
 	end,

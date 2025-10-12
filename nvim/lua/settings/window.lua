@@ -62,9 +62,9 @@ keymap {
 	},
 
 	[{ 'n', desc = 'UI: toggle %s' }] = {
-		['<leader>un'] = { '<Cmd>set relativenumber!<CR>', 'relativenumber' },
-		['<leader>uw'] = { '<Cmd>set wrap!<CR>', 'wrap' },
-		['<leader>us'] = { '<Cmd>set spell!<CR>', 'spell' },
+		['<LocalLeader>n'] = { '<Cmd>set relativenumber!<CR>', 'relativenumber' },
+		['<LocalLeader>w'] = { '<Cmd>set wrap!<CR>', 'wrap' },
+		['<LocalLeader>s'] = { '<Cmd>set spell!<CR>', 'spell' },
 	},
 }
 

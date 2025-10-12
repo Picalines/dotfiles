@@ -49,28 +49,28 @@ return {
 
 		keymap {
 			[{ 'n', desc = 'Unit: %s' }] = {
-				['<leader>ur'] = {
+				['<LocalLeader>ur'] = {
 					desc = 'run nearest',
 					function()
 						require('neotest').run.run()
 					end,
 				},
 
-				['<leader>uR'] = {
+				['<LocalLeader>uR'] = {
 					desc = 'run suite',
 					function()
 						require('neotest').run.run(vim.fn.expand '%')
 					end,
 				},
 
-				['<leader>uc'] = {
+				['<LocalLeader>uc'] = {
 					desc = 'cancel suite',
 					function()
 						require('neotest').run.stop(vim.fn.expand '%')
 					end,
 				},
 
-				['<leader>uo'] = {
+				['<LocalLeader>uo'] = {
 					desc = 'output',
 					function()
 						require('neotest').output_panel.open()
@@ -91,7 +91,7 @@ return {
 			keymap {
 				[{ 'n', buffer = event.buf }] = {
 					['q'] = { neotest.output_panel.close, 'Close panel' },
-					['<leader>uo'] = { neotest.output_panel.close, 'Close panel' },
+					['<LocalLeader>uo'] = { neotest.output_panel.close, 'Close panel' },
 				},
 			}
 

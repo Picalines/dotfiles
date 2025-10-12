@@ -13,7 +13,7 @@ return {
 
 		keymap {
 			[{ 'n', desc = 'UI: %s' }] = {
-				['<leader>um'] = { '<Cmd>Noice all<CR>', 'Open messages' },
+				['<leader>m'] = { '<Cmd>Noice all<CR>', 'messages' },
 			},
 		}
 

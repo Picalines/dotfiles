@@ -1,28 +1,14 @@
-local func = require 'util.func'
 local keymap = require 'util.keymap'
 
 keymap {
 	[{ 'n', desc = 'LSP: %s' }] = {
-		['K'] = { '<Cmd>lua vim.lsp.buf.hover()<CR>', 'hover' },
-		['<C-w>d'] = { '<Cmd>lua vim.diagnostic.open_float()<CR>', 'diagnostic' },
-
-		['<leader>r'] = { '<Cmd>lua vim.lsp.buf.rename()<CR>', 'rename' },
-		['<leader>a'] = { '<Cmd>lua vim.lsp.buf.code_action()<CR>', 'action' },
-
-		['<leader>li'] = { '<Cmd>LspInfo<CR>', 'info' },
-		['<leader>lr'] = { '<Cmd>echo "Restarting LSP" | LspRestart<CR>', 'restart' },
-		['<leader>ll'] = { '<Cmd>LspLog<CR>', 'logs' },
-	},
-
-	[{ 'n' }] = {
-		[{ silent = true }] = {
-			['[d'] = { func.partial(vim.diagnostic.jump, { count = -1, float = false }), 'previous diagnostic' },
-			[']d'] = { func.partial(vim.diagnostic.jump, { count = 1, float = false }), 'next diagnostic' },
-		},
+		-- built-in: K, <C-w>d, ]d, [d
+		['<LocalLeader>r'] = { '<Cmd>lua vim.lsp.buf.rename()<CR>', 'rename' },
+		['<LocalLeader>a'] = { '<Cmd>lua vim.lsp.buf.code_action()<CR>', 'action' },
 	},
 
 	[{ 'n', desc = 'UI: %s' }] = {
-		['<leader>ui'] = {
+		['<Leader>i'] = {
 			desc = 'toggle inlay hints',
 			function()
 				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
