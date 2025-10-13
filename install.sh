@@ -28,4 +28,5 @@ command-exists ghostty && symlink-to-home "ghostty/config" ".config/ghostty/conf
 command-exists ghostty && symlink-to-home "ghostty/shaders" ".config/ghostty/shaders"
 command-exists neovide && symlink-to-home "neovide.toml" ".config/neovide/config.toml"
 command-exists starship && symlink-to-home "starship.toml" ".config/starship.toml"
+command-exists zellij && symlink-to-home "zellij/config.kdl" ".config/zellij/config.kdl"
 [ -d ~/.glzr/glazewm ] && symlink-to-home "glazewm.yaml" ".glzr/glazewm/config.yaml"
