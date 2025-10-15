@@ -25,19 +25,19 @@ return {
 
 			items = {
 				section('Files', {
-					{ 'Open Workspace 󰣩', 'WorkspacesOpen' },
-					{ 'Explore Files ', 'lua vim.cmd.edit(vim.fn.getcwd())' },
-					{ 'Find Files ', 'lua Snacks.picker.files()' },
+					{ 'Explore ', 'e .' },
+					{ 'Find ', 'lua Snacks.picker.files()' },
+					{ 'New 󱇨', 'enew' },
+					{ 'Git ', 'Neogit' },
 				}),
 				section('Editor', {
-					{ 'New Buffer 󱇨', 'enew' },
+					{ 'Health ', 'checkhealth' },
 					{ 'Theme 󰸌', 'lua Snacks.picker.colorschemes()' },
 					{ 'Quit ', 'wa | qa!' },
 				}),
 				section('Manage', {
-					{ 'Lazy 󰒲', 'Lazy' },
 					{ 'Mason 󰏗', 'Mason' },
-					{ 'Health ', 'checkhealth' },
+					{ 'Lazy 󰒲', 'Lazy' },
 				}),
 			},
 
