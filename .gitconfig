@@ -3,12 +3,15 @@
 [core]
 	excludesFile = ~/.gitignore
 [alias]
+	af = !git add $(fzf)
 	st = status -sb
 	co = checkout
 	cb = checkout -b
 	cm = commit
 	cma = commit --amend
 	cmm = commit --amend --no-edit
+	d = diff
+	ds = diff --staged
 	lol = log --oneline --graph --all
 [init]
 	defaultBranch = main
@@ -40,3 +43,5 @@
 	autoStash = true
 [merge]
 	autoStash = true
+[advice]
+	addEmptyPathspec = false
