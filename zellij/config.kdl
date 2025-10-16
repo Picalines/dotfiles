@@ -8,13 +8,12 @@ theme "kanagawa"
 default_layout "compact"
 
 mouse_mode true
-advanced_mouse_actions true
+advanced_mouse_actions false
+copy_command "pbcopy"
+copy_on_select true
 
 pane_frames false
 stacked_resize true
-
-copy_clipboard "system"
-copy_on_select false
 
 auto_layout false
 
