@@ -376,7 +376,7 @@ return {
 		}
 
 		local Location = {
-			provider = '%04l/%04L:%04c',
+			provider = '%04l/%04L:%04v',
 		}
 
 		local ScrollProgress = {
