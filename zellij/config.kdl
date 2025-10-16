@@ -141,6 +141,7 @@ keybinds clear-defaults=true {
         bind "u" { HalfPageScrollUp; }
         bind "g" { ScrollToTop; }
         bind "G" { ScrollToBottom; }
+        bind "e" "v" { EditScrollback; SwitchToMode "normal"; }
     }
     shared_among "tmux" "scroll" {
         bind "/" { SwitchToMode "entersearch"; SearchInput 0; }

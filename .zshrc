@@ -17,7 +17,7 @@ command-exists cargo && source "$HOME/.cargo/env"
 command-exists starship && source <(starship init zsh)
 command-exists fzf && source <(fzf --zsh)
 command-exists pnpm && source <(pnpm completion zsh)
-command-exists nvim && export VISUAL="nvim --cmd 'let g:flatten_wait=1'" && export MANPAGER="nvim +Man!"
+command-exists nvim && export VISUAL="nvim -b" && export MANPAGER="nvim +Man!"
 command-exists zoxide && source <(zoxide init zsh)
 
 alias vi=nvim

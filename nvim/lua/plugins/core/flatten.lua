@@ -11,6 +11,10 @@ return {
 		},
 
 		hooks = {
+			should_block = function(argv)
+				return vim.tbl_contains(argv, '-b')
+			end,
+
 			post_open = function(args)
 				local autocmd = require 'util.autocmd'
 				local keymap = require 'util.keymap'
