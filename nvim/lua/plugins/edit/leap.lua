@@ -19,6 +19,7 @@ return {
 
 		leap.opts.vim_opts['go.hlsearch'] = false
 		leap.opts.vim_opts['wo.spell'] = false
+		leap.opts.vim_opts['wo.conceallevel'] = nil -- for mini.files
 	end,
 
 	init = function()
