@@ -40,8 +40,9 @@ return {
 
 			['<C-S-n>'] = { 'select_prev' },
 			['<C-y>'] = { 'accept' },
-			['<C-u>'] = { 'scroll_documentation_up', 'scroll_signature_up', 'fallback_to_mappings' },
-			['<C-d>'] = { 'scroll_documentation_down', 'scroll_documentation_down', 'hide', 'fallback_to_mappings' },
+			['<C-S-u>'] = { 'scroll_documentation_up', 'scroll_signature_up', 'fallback_to_mappings' },
+			['<C-S-d>'] = { 'scroll_documentation_down', 'scroll_signature_down', 'fallback_to_mappings' },
+			['<C-d>'] = { 'hide_signature', 'hide', 'fallback_to_mappings' },
 		},
 
 		sources = {
