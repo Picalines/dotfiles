@@ -5,7 +5,7 @@ general:
   config_reload_commands: []
 
   focus_follows_cursor: false
-  toggle_workspace_on_refocus: false
+  toggle_workspace_on_refocus: true
 
   cursor_jump:
     enabled: true
@@ -50,9 +50,6 @@ window_effects:
 window_behavior:
   initial_state: 'tiling'
 
-  # Sets the default options for when a new window is created. This also
-  # changes the defaults for when the state change commands, like
-  # `set-floating`, are used without any flags.
   state_defaults:
     floating:
       centered: true
@@ -72,76 +69,46 @@ workspaces:
   - name: 'M'
 
 keybindings:
-  - bindings: ['alf+shift+q']
-    commands: ['wm-exit']
-  - bindings: ['alt+shift+r']
-    commands: ['wm-reload-config']
-  - bindings: ['alt+p']
-    commands: ['wm-toggle-pause']
+  - { bindings: ['alf+shift+q'], commands: ['wm-exit'] }
+  - { bindings: ['alt+shift+r'], commands: ['wm-reload-config'] }
+  - { bindings: ['alt+p'], commands: ['wm-toggle-pause'] }
 
-  - bindings: ['alt+w']
-    commands: ['wm-enable-binding-mode --name win']
+  - { bindings: ['alt+w'], commands: ['wm-enable-binding-mode --name win'] }
 
-  - bindings: ['alt+h']
-    commands: ['focus --direction left']
-  - bindings: ['alt+l']
-    commands: ['focus --direction right']
-  - bindings: ['alt+k']
-    commands: ['focus --direction up']
-  - bindings: ['alt+j']
-    commands: ['focus --direction down']
+  - { bindings: ['alt+h'], commands: ['focus --direction left'] }
+  - { bindings: ['alt+l'], commands: ['focus --direction right'] }
+  - { bindings: ['alt+k'], commands: ['focus --direction up'] }
+  - { bindings: ['alt+j'], commands: ['focus --direction down'] }
 
-  - bindings: ['alt+f']
-    commands: ['toggle-fullscreen']
+  - { bindings: ['alt+f'], commands: ['toggle-fullscreen'] }
 
-  - bindings: ['alt+z']
-    commands: ['focus --workspace Z']
-  - bindings: ['alt+x']
-    commands: ['focus --workspace X']
-  - bindings: ['alt+c']
-    commands: ['focus --workspace C']
-  - bindings: ['alt+v']
-    commands: ['focus --workspace V']
-  - bindings: ['alt+b']
-    commands: ['focus --workspace B']
-  - bindings: ['alt+n']
-    commands: ['focus --workspace N']
-  - bindings: ['alt+m']
-    commands: ['focus --workspace M']
+  - { bindings: ['alt+z'], commands: ['focus --workspace Z'] }
+  - { bindings: ['alt+x'], commands: ['focus --workspace X'] }
+  - { bindings: ['alt+c'], commands: ['focus --workspace C'] }
+  - { bindings: ['alt+v'], commands: ['focus --workspace V'] }
+  - { bindings: ['alt+b'], commands: ['focus --workspace B'] }
+  - { bindings: ['alt+n'], commands: ['focus --workspace N'] }
+  - { bindings: ['alt+m'], commands: ['focus --workspace M'] }
 
 binding_modes:
   - name: win
     keybindings:
-      - bindings: ['escape']
-        commands: ['wm-disable-binding-mode --name win']
-      - bindings: ['h']
-        commands: ['move --direction left', 'wm-disable-binding-mode --name win']
-      - bindings: ['l']
-        commands: ['move --direction right', 'wm-disable-binding-mode --name win']
-      - bindings: ['k']
-        commands: ['move --direction up', 'wm-disable-binding-mode --name win']
-      - bindings: ['j']
-        commands: ['move --direction down', 'wm-disable-binding-mode --name win']
+      - { bindings: ['escape'], commands: ['wm-disable-binding-mode --name win'] }
+      - { bindings: ['h'], commands: ['move --direction left', 'wm-disable-binding-mode --name win'] }
+      - { bindings: ['l'], commands: ['move --direction right', 'wm-disable-binding-mode --name win'] }
+      - { bindings: ['k'], commands: ['move --direction up', 'wm-disable-binding-mode --name win'] }
+      - { bindings: ['j'], commands: ['move --direction down', 'wm-disable-binding-mode --name win'] }
 
-      - bindings: ['f']
-        commands: ['toggle-floating', 'wm-disable-binding-mode --name win']
-      - bindings: ['t']
-        commands: ['toggle-tiling-direction', 'wm-disable-binding-mode --name win']
+      - { bindings: ['f'], commands: ['toggle-floating', 'wm-disable-binding-mode --name win'] }
+      - { bindings: ['t'], commands: ['toggle-tiling-direction', 'wm-disable-binding-mode --name win'] }
 
-      - bindings: ['z']
-        commands: ['move --workspace Z', 'focus --workspace Z', 'wm-disable-binding-mode --name win']
-      - bindings: ['x']
-        commands: ['move --workspace X', 'focus --workspace X', 'wm-disable-binding-mode --name win']
-      - bindings: ['c']
-        commands: ['move --workspace C', 'focus --workspace C', 'wm-disable-binding-mode --name win']
-      - bindings: ['v']
-        commands: ['move --workspace V', 'focus --workspace V', 'wm-disable-binding-mode --name win']
-      - bindings: ['b']
-        commands: ['move --workspace B', 'focus --workspace B', 'wm-disable-binding-mode --name win']
-      - bindings: ['n']
-        commands: ['move --workspace N', 'focus --workspace N', 'wm-disable-binding-mode --name win']
-      - bindings: ['m']
-        commands: ['move --workspace M', 'focus --workspace M', 'wm-disable-binding-mode --name win']
+      - { bindings: ['z'], commands: ['move --workspace Z', 'focus --workspace Z', 'wm-disable-binding-mode --name win'] }
+      - { bindings: ['x'], commands: ['move --workspace X', 'focus --workspace X', 'wm-disable-binding-mode --name win'] }
+      - { bindings: ['c'], commands: ['move --workspace C', 'focus --workspace C', 'wm-disable-binding-mode --name win'] }
+      - { bindings: ['v'], commands: ['move --workspace V', 'focus --workspace V', 'wm-disable-binding-mode --name win'] }
+      - { bindings: ['b'], commands: ['move --workspace B', 'focus --workspace B', 'wm-disable-binding-mode --name win'] }
+      - { bindings: ['n'], commands: ['move --workspace N', 'focus --workspace N', 'wm-disable-binding-mode --name win'] }
+      - { bindings: ['m'], commands: ['move --workspace M', 'focus --workspace M', 'wm-disable-binding-mode --name win'] }
 
 window_rules:
   - commands: ['ignore']
@@ -164,8 +131,11 @@ window_rules:
         window_class: { not_regex: 'PPTFrameClass' }
 
   - commands: ['move --workspace C']
-    match: 
+    match:
       - window_process: { equals: 'WindowsTerminal' }
+  - commands: ['move --workspace V']
+    match:
+      - window_process: { regex: 'Godot' }
   - commands: ['move --workspace B']
     match:
       - window_class: { equals: 'MozillaWindowClass' }
@@ -177,4 +147,6 @@ window_rules:
 
   - commands: ['set-floating']
     match:
-      - { window_class: { equals: 'TaskManagerWindow' } }
+      - window_process: { equals: 'Taskmgr' }
+        window_class: { equals: 'TaskManagerWindow' }
+      - window_process: { regex: 'Godot' }
