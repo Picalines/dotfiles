@@ -23,6 +23,7 @@
   "mini.cursorword": { "branch": "main", "commit": "d843392f739fcfd85969e2dadeb71c8e0221afb5" },
   "mini.diff": { "branch": "main", "commit": "a2df2a9a485328c20252b7cadb11feb717020e45" },
   "mini.files": { "branch": "main", "commit": "51db5ded1b7ac4dd8ca4c22c66f156dac5309304" },
+  "mini.hues": { "branch": "main", "commit": "b0889fedbc39e7ceedf3be79bb0340b537a4c906" },
   "mini.move": { "branch": "main", "commit": "f33406ae7d95b931c6a0d3ba11e50983fe800afb" },
   "mini.operators": { "branch": "main", "commit": "1d0d1e1570e5bd22e6df3bcb068d0a2ac0d30710" },
   "mini.splitjoin": { "branch": "main", "commit": "b0d57bb5d1ed154e5902ae2745f1a320a7642443" },
