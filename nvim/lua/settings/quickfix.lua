@@ -3,7 +3,7 @@ local keymap = require 'util.keymap'
 
 keymap {
 	[{ 'n', silent = true, desc = 'Quickfix: %s' }] = {
-		['<leader>q'] = {
+		['<Leader>q'] = {
 			expr = true,
 			desc = 'open',
 			function()
@@ -28,7 +28,7 @@ augroup:on('FileType', 'qf', function(event)
 	keymap {
 		[{ 'n', remap = true, silent = true, buffer = event.buf, desc = 'Quickfix: %s' }] = {
 			['q'] = { '<Cmd>cclose<CR>', 'close' },
-			['<leader>q'] = { '<Cmd>cclose<CR>', 'close' },
+			['<Leader>q'] = { '<Cmd>cclose<CR>', 'close' },
 		},
 	}
 end)

@@ -15,10 +15,10 @@ keymap {
 		[']b'] = { '<Cmd>bn<CR>', 'next' },
 		['[b'] = { '<Cmd>bp<CR>', 'previous' },
 		['<ledaer>b]'] = { '<Cmd>bn<CR>', 'next' },
-		['<leader>b['] = { '<Cmd>bp<CR>', 'previous' },
+		['<Leader>b['] = { '<Cmd>bp<CR>', 'previous' },
 
-		['<leader>bn'] = { '<Cmd>enew<CR>', 'new' },
-		['<leader>br'] = { '<Cmd>e<CR>', 'reload' },
+		['<Leader>bn'] = { '<Cmd>enew<CR>', 'new' },
+		['<Leader>br'] = { '<Cmd>e<CR>', 'reload' },
 	},
 }
 

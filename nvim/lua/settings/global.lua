@@ -56,7 +56,7 @@ augroup:on_user(
 
 keymap {
 	[{ 'n' }] = {
-		['<leader><leader>q'] = { '<Cmd>wqa<CR>', 'write all and quit' },
+		['<Leader><Leader>q'] = { '<Cmd>wqa<CR>', 'write all and quit' },
 		['<Esc>'] = { '<Cmd>doautocmd User Dismiss<CR>', 'dismiss' },
 
 		['u'] = { '<Cmd>undo<CR>', 'undo' },

@@ -9,7 +9,7 @@ return {
 
 		keymap {
 			[{ 'n' }] = {
-				['<leader>?'] = { '<Cmd>WhichKey<CR>', 'keymap help' },
+				['<Leader>?'] = { '<Cmd>WhichKey<CR>', 'keymap help' },
 			},
 		}
 	end,

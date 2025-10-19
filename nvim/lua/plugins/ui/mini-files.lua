@@ -42,7 +42,7 @@ return {
 
 		keymap {
 			[{ 'n', desc = 'Files: %s' }] = {
-				['<leader>e'] = {
+				['<Leader>e'] = {
 					desc = 'open',
 					function()
 						if not MiniFiles.close() then
@@ -65,7 +65,7 @@ return {
 					['<CR>'] = { 'l', 'open' },
 
 					['w'] = { '=', 'synchronize' },
-					['<leader>'] = { 'q<Cmd>silent! WhichKey<CR><leader>' },
+					['<Leader>'] = { 'q<Cmd>silent! WhichKey<CR><Leader>' },
 
 					['cd'] = { ':cd ', 'cd' },
 

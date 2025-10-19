@@ -10,7 +10,7 @@ return {
 
 		keymap {
 			[{ 'n', desc = 'Terminal: %s' }] = {
-				['<leader>t'] = { '<Cmd>TermFocus<CR>', 'toggle' },
+				['<Leader>t'] = { '<Cmd>TermFocus<CR>', 'toggle' },
 
 				[']t'] = { '<Cmd>TermCycleNext<CR>', 'next' },
 				['[t'] = { '<Cmd>TermCyclePrev<CR>', 'prev' },
@@ -24,7 +24,7 @@ return {
 		augroup:on('TermOpen', 'term://*', function(event)
 			keymap {
 				[{ 'n', buffer = event.buf, desc = 'Terminal: %s' }] = {
-					['<leader>t'] = { '<C-w>c', 'close' },
+					['<Leader>t'] = { '<C-w>c', 'close' },
 					['q'] = { '<C-w>c', 'close' },
 
 					['o'] = { '<Cmd>TermNewTab<CR>', 'new tab' },

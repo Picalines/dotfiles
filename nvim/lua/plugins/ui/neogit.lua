@@ -12,7 +12,7 @@ return {
 
 		keymap {
 			[{ 'n', desc = 'Git: %s' }] = {
-				['<leader>g'] = { '<Cmd>Neogit<CR>', 'status' },
+				['<Leader>g'] = { '<Cmd>Neogit<CR>', 'status' },
 			},
 		}
 	end,

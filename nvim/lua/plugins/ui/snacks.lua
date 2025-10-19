@@ -13,24 +13,24 @@ return {
 			},
 
 			[{ 'n', desc = 'Buffer: %s' }] = {
-				['<leader>bb'] = { '<Cmd>lua Snacks.picker.buffers()<CR>', 'find' },
-				['<leader>bd'] = { '<Cmd>lua Snacks.bufdelete()<CR>', 'delete' },
-				['<leader>bD'] = { '<Cmd>lua Snacks.bufdelete.all()<CR>', 'delete all' },
-				['<leader>bo'] = { '<Cmd>lua Snacks.bufdelete.other()<CR>', 'delete other' },
+				['<Leader>bb'] = { '<Cmd>lua Snacks.picker.buffers()<CR>', 'find' },
+				['<Leader>bd'] = { '<Cmd>lua Snacks.bufdelete()<CR>', 'delete' },
+				['<Leader>bD'] = { '<Cmd>lua Snacks.bufdelete.all()<CR>', 'delete all' },
+				['<Leader>bo'] = { '<Cmd>lua Snacks.bufdelete.other()<CR>', 'delete other' },
 			},
 
 			[{ 'n', desc = 'Find: %s' }] = {
-				['<leader>ff'] = { '<Cmd>lua Snacks.picker.files()<CR>', 'files' },
-				['<leader>fo'] = { '<Cmd>lua Snacks.picker.recent()<CR>', 'recent' },
-				['<leader>fb'] = { '<Cmd>lua Snacks.picker.buffers()<CR>', 'buffer' },
-				['<leader>fg'] = { '<Cmd>lua Snacks.picker.grep()<CR>', 'grep' },
-				['<leader>fh'] = { '<Cmd>lua Snacks.picker.help()<CR>', 'help' },
-				['<leader>fr'] = { '<Cmd>lua Snacks.picker.resume()<CR>', 'resume' },
-				['<leader>ft'] = { ':set filetype=', 'filetype' },
+				['<Leader>ff'] = { '<Cmd>lua Snacks.picker.files()<CR>', 'files' },
+				['<Leader>fo'] = { '<Cmd>lua Snacks.picker.recent()<CR>', 'recent' },
+				['<Leader>fb'] = { '<Cmd>lua Snacks.picker.buffers()<CR>', 'buffer' },
+				['<Leader>fg'] = { '<Cmd>lua Snacks.picker.grep()<CR>', 'grep' },
+				['<Leader>fh'] = { '<Cmd>lua Snacks.picker.help()<CR>', 'help' },
+				['<Leader>fr'] = { '<Cmd>lua Snacks.picker.resume()<CR>', 'resume' },
+				['<Leader>ft'] = { ':set filetype=', 'filetype' },
 			},
 
 			[{ 'n', desc = 'UI: %s' }] = {
-				['<leader><leader>c'] = { '<Cmd>lua Snacks.picker.colorschemes()<CR>', 'colorscheme' },
+				['<Leader><Leader>c'] = { '<Cmd>lua Snacks.picker.colorschemes()<CR>', 'colorscheme' },
 			},
 		}
 	end,

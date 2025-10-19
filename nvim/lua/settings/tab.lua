@@ -8,14 +8,14 @@ vim.go.tabclose = 'left'
 
 keymap {
 	[{ 'n', silent = true, desc = 'Page: %s' }] = {
-		['<leader>pn'] = { '<Cmd>tabnew<CR>', 'new' },
-		['<leader>pd'] = { '<Cmd>tabclose<CR>', 'close' },
+		['<Leader>pn'] = { '<Cmd>tabnew<CR>', 'new' },
+		['<Leader>pd'] = { '<Cmd>tabclose<CR>', 'close' },
 
 		[']p'] = { '<Cmd>tabnext<CR>', 'next' },
 		['[p'] = { '<Cmd>tabprev<CR>', 'prev' },
-		['<leader>p]'] = { '<Cmd>tabnext<CR>', 'next' },
-		['<leader>p['] = { '<Cmd>tabprev<CR>', 'prev' },
+		['<Leader>p]'] = { '<Cmd>tabnext<CR>', 'next' },
+		['<Leader>p['] = { '<Cmd>tabprev<CR>', 'prev' },
 
-		['<leader>po'] = { '<Cmd>tabonly<CR>', 'only' },
+		['<Leader>po'] = { '<Cmd>tabonly<CR>', 'only' },
 	},
 }

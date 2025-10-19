@@ -57,7 +57,7 @@ keymap {
 			['<D-->'] = { func.partial(zoom, -0.1), 'zoom out' },
 		},
 
-		['<leader>ug'] = { toggle_opacity, 'toggle opacity' },
+		['<Leader>ug'] = { toggle_opacity, 'toggle opacity' },
 
 		[{ os = 'macos' }] = {
 			['<D-w>'] = { '<Cmd>wa | qa!<CR>', 'write all and quit' },
