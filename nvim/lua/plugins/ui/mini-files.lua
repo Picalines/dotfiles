@@ -12,7 +12,7 @@ return {
 			go_out_plus = '',
 			mark_goto = "'",
 			mark_set = 'm',
-			reset = '<BS>',
+			reset = '',
 			reveal_cwd = '',
 			show_help = 'g?',
 			synchronize = '=',
@@ -56,6 +56,10 @@ return {
 			},
 		}
 
+		vim.api.nvim_create_user_command('MiniFilesCwd', function()
+			MiniFiles.open(vim.fn.getcwd(), false)
+		end, {})
+
 		local augroup = autocmd.group 'mini.files'
 
 		augroup:on_user('MiniFilesBufferCreate', function(event)
@@ -67,14 +71,10 @@ return {
 					['w'] = { '=', 'synchronize' },
 					['<Leader>'] = { 'q<Cmd>silent! WhichKey<CR><Leader>' },
 
-					['cd'] = { ':cd ', 'cd' },
+					['cd'] = { ':MiniFilesCwd<C-b>tcd  | <S-Left><Left>', 'cd' },
+					['cz'] = { 'q:<C-b>Tz ', 'zoxide' },
 
-					['gc'] = {
-						desc = 'go to cwd',
-						function()
-							MiniFiles.open(vim.fn.getcwd(), false)
-						end,
-					},
+					['<BS>'] = { '<Cmd>MiniFilesCwd<CR>', 'go to cwd' },
 
 					['.'] = {
 						desc = 'set cwd',
@@ -82,7 +82,7 @@ return {
 							local path = (MiniFiles.get_fs_entry() or {}).path
 							if path then
 								local cwd = vim.fs.dirname(path)
-								vim.fn.chdir(cwd)
+								vim.cmd.tcd(cwd)
 								MiniFiles.open(cwd, false)
 							end
 						end,
@@ -97,5 +97,7 @@ return {
 				},
 			}
 		end)
+
+		augroup:on_user('ZoxideDirChanged', 'MiniFilesCwd')
 	end,
 }
