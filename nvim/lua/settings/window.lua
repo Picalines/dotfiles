@@ -63,7 +63,7 @@ keymap {
 
 	[{ 'n', desc = 'UI: toggle %s' }] = {
 		['<LocalLeader>n'] = { '<Cmd>set relativenumber!<CR>', 'relativenumber' },
-		['<LocalLeader>w'] = { '<Cmd>set wrap!<CR>', 'wrap' },
+		['<LocalLeader>b'] = { '<Cmd>set wrap!<CR>', 'break lines' },
 		['<LocalLeader>s'] = { '<Cmd>set spell!<CR>', 'spell' },
 	},
 }
