@@ -4,7 +4,7 @@ show_release_notes true
 default_mode "normal"
 
 simplified_ui false
-theme "kanagawa"
+theme "menace"
 default_layout "compact"
 
 mouse_mode true
