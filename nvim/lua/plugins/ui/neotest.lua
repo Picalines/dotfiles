@@ -40,6 +40,10 @@ return {
 				running = 'DiagnosticSignInfo',
 				skipped = 'DiagnosticSignWarn',
 			},
+
+			discovery = { enabled = false },
+			jump = { enabled = false },
+			summary = { enabled = false },
 		}
 	end,
 
