@@ -32,16 +32,16 @@ return {
 		end
 
 		keymap {
-			[{ 'n', 'x', 'o', desc = 'leap %s' }] = {
-				['f'] = { '<Plug>(leap-forward-to)', 'to' },
-				['F'] = { '<Plug>(leap-backward-to)', 'backward to' },
+			[{ 'n', 'x', 'o', desc = 'Leap: %s' }] = {
+				['f'] = { '<Plug>(leap-forward)', 'to' },
+				['F'] = { '<Plug>(leap-backward)', 'backward to' },
 
 				['t'] = { '<Plug>(leap-forward-till)', 'till' },
 				['T'] = { '<Plug>(leap-backward-till)', 'backward till' },
 			},
 
-			[{ 'x', 'o' }] = {
-				['an'] = { select_node, 'Leap treesitter node' },
+			[{ 'x', 'o', desc = 'Leap: %s' }] = {
+				['an'] = { select_node, 'treesitter node' },
 			},
 		}
 	end,
