@@ -22,7 +22,7 @@ return {
 		},
 
 		exchange = {
-			prefix = '',
+			prefix = 'cx',
 		},
 	},
 }
