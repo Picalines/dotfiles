@@ -31,6 +31,10 @@ return {
 			}
 		end
 
+		local function remote_action()
+			require('leap.remote').action()
+		end
+
 		keymap {
 			[{ 'n', 'x', 'o', desc = 'Leap: %s' }] = {
 				['f'] = { '<Plug>(leap-forward)', 'to' },
@@ -42,6 +46,10 @@ return {
 
 			[{ 'x', 'o', desc = 'Leap: %s' }] = {
 				['an'] = { select_node, 'treesitter node' },
+			},
+
+			[{ 'n', desc = 'Leap: %s' }] = {
+				['R'] = { remote_action, 'remote' },
 			},
 		}
 	end,
