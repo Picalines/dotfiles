@@ -412,6 +412,7 @@ return {
 					lua_ls = '',
 					omnisharp = '󰈸',
 					pyright = '󰌠',
+					rust_analyzer = '',
 					svelte = '',
 					tailwindcss = '󱏿',
 					ts_ls = '',
