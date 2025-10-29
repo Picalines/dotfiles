@@ -18,8 +18,8 @@ return {
 			add = 's',
 			delete = 'ds',
 			replace = 'cs',
-			find = 'sn',
-			find_left = 'sN',
+			find = '',
+			find_left = '',
 
 			highlight = '',
 			suffix_last = '',
