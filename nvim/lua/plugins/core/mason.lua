@@ -25,7 +25,6 @@ return {
 				'jsonls',
 				'lua_ls',
 				'stylua',
-				'vectorcode',
 				'vim-language-server',
 			}
 
