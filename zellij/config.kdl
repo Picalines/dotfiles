@@ -7,8 +7,8 @@ simplified_ui false
 theme "menace"
 default_layout "compact"
 
-mouse_mode true
-advanced_mouse_actions false
+// mouse_mode true
+// advanced_mouse_actions false
 copy_command "pbcopy"
 copy_on_select true
 
@@ -46,7 +46,6 @@ keybinds clear-defaults=true {
         bind "p" { SwitchToMode "pane"; }
         bind "s" { SwitchToMode "scroll"; }
         bind "t" { SwitchToMode "tab"; }
-        bind "o" { SwitchToMode "session"; }
 
         bind "f" { ToggleFloatingPanes; SwitchToMode "normal"; }
         bind "F" { ToggleFocusFullscreen; SwitchToMode "normal"; }
@@ -64,7 +63,7 @@ keybinds clear-defaults=true {
 
         bind "d" { Detach; }
 
-        bind "w" {
+        bind "o" {
             LaunchOrFocusPlugin "session-manager" {
                 floating true
                 move_to_focused_tab true
