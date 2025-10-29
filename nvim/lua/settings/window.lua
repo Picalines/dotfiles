@@ -4,40 +4,46 @@ local win = require 'util.window'
 
 local augroup = autocmd.group 'window'
 
-vim.go.mouse = 'a'
-vim.go.termguicolors = true
+vim.o.mouse = 'a'
+vim.o.termguicolors = true
 
 -- splits
-vim.go.splitright = true
-vim.go.splitbelow = true
-vim.go.equalalways = false
+vim.o.splitright = true
+vim.o.splitbelow = true
+vim.o.equalalways = false
 
 -- keep space ahead when scrolling
-vim.go.scrolloff = 8
-vim.go.sidescrolloff = 16
+vim.o.scrolloff = 8
+vim.o.sidescrolloff = 16
 
 -- global status line
-vim.go.laststatus = 3
-vim.go.showtabline = 0
+vim.o.laststatus = 3
+vim.o.showtabline = 0
 
 -- left columns
-vim.go.number = true
-vim.go.relativenumber = true
-vim.go.signcolumn = 'yes'
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.signcolumn = 'yes'
 
 -- wrapping
-vim.go.list = true
-vim.go.wrap = true
-vim.go.breakindent = true
-vim.go.linebreak = true
-vim.go.showbreak = '󱞩'
-vim.go.listchars = 'tab:   ,trail:,extends:,precedes:,nbsp:'
+vim.o.list = true
+vim.o.wrap = true
+vim.o.breakindent = true
+vim.o.linebreak = true
+vim.o.showbreak = '󱞩'
+vim.opt.listchars = {
+	tab = '   ',
+	trail = '',
+	extends = '',
+	precedes = '',
+	nbsp = '',
+}
 
 -- fold
-vim.go.foldmethod = 'expr'
-vim.go.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-vim.go.foldlevelstart = 9999
-vim.go.foldtext = ''
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.o.foldlevelstart = 9999
+vim.o.foldtext = ''
 
 -- fill chars
 vim.opt.fillchars = {
