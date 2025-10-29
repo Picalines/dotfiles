@@ -12,7 +12,7 @@ return {
 		local autocmd = require 'util.autocmd'
 		local devicons = require 'nvim-web-devicons'
 		local func = require 'util.func'
-		local h_conditions = require 'heirline.conditions'
+		local conditions = require 'heirline.conditions'
 		local h_util = require 'heirline.utils'
 		local heirline = require 'heirline'
 		local hl = require 'util.highlight'
@@ -31,9 +31,9 @@ return {
 		hl.pick(augroup, 'StatusLineModified', { fg = '@diff.plus' })
 		hl.pick(augroup, 'StatusLineNormal', { fg = 'Normal' })
 		hl.pick(augroup, 'StatusLineWarn', { fg = 'DiagnosticWarn' })
-		hl.pick(augroup, 'TabLineDirectory', { fg = 'Directory' })
-		hl.pick(augroup, 'TabLineFile', { fg = 'Normal' })
-		hl.pick(augroup, 'TabLineModified', { fg = '@diff.plus' })
+		hl.pick(augroup, 'WinBarDirectory', { fg = 'Directory' })
+		hl.pick(augroup, 'WinBarFile', { fg = 'Normal' })
+		hl.pick(augroup, 'WinBarModified', { fg = '@diff.plus' })
 
 		local Space = { provider = ' ', hl = { fg = 'NONE' } }
 
@@ -79,7 +79,7 @@ return {
 
 		local Cwd = {
 			update = { 'BufEnter', 'DirChanged' },
-			hl = 'TabLineDirectory',
+			hl = 'WinBarDirectory',
 			init = function(self)
 				local is_focused = vim.bo.filetype == 'minifiles'
 				local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
@@ -89,8 +89,6 @@ return {
 		}
 
 		local Buffer = {
-			update = { 'BufEnter', 'DirChanged', 'FileType', 'BufModifiedSet' },
-
 			condition = function()
 				return vim.bo.buflisted
 			end,
@@ -108,53 +106,51 @@ return {
 				end
 			end,
 
-			AppendAll(Space, 'left') {
-				{
-					hl = 'TabLineFile',
-					init = function(self)
-						if not self.is_on_disk then
-							self.provider = ''
-						elseif not self.is_in_cwd then
-							self.provider = ''
-						else
-							self.provider = ''
-						end
-					end,
-				},
-				{
-					hl = 'TabLineDirectory',
-					provider = function(self)
-						return string.format('%s ', self.dir)
-					end,
-					condition = function(self)
-						return #self.dir > 0
-					end,
-				},
-				{
-					hl = 'TabLineFile',
-					provider = function(self)
-						return self.name
-					end,
-				},
-				{
-					init = function(self)
-						local icon, icon_hl
-						if self.is_on_disk then
-							icon, icon_hl = devicons.get_icon(vim.fn.expand '%:.:t')
-						else
-							icon, icon_hl = devicons.get_icon_by_filetype(vim.bo.filetype)
-						end
-						self.provider = icon or ''
-						self.hl = icon_hl
-					end,
-				},
-				{
-					provider = '+',
-					hl = 'TabLineModified',
-					condition = function()
-						return vim.bo.modified
-					end,
-				},
+			{
+				hl = 'WinBarFile',
+				init = function(self)
+					if not self.is_on_disk then
+						self.provider = ''
+					elseif not self.is_in_cwd then
+						self.provider = ''
+					else
+						self.provider = ''
+					end
+				end,
+			},
+			{
+				hl = 'WinBarDirectory',
+				provider = function(self)
+					return string.format(' %s ', self.dir)
+				end,
+				condition = function(self)
+					return #self.dir > 0
+				end,
+			},
+			{
+				hl = 'WinBarFile',
+				provider = function(self)
+					return ' ' .. self.name
+				end,
+			},
+			{
+				init = function(self)
+					local icon, icon_hl
+					if self.is_on_disk then
+						icon, icon_hl = devicons.get_icon(vim.fn.expand '%:.:t')
+					else
+						icon, icon_hl = devicons.get_icon_by_filetype(vim.bo.filetype)
+					end
+					self.provider = ' ' .. (icon or '')
+					self.hl = icon_hl
+				end,
+			},
+			{
+				provider = ' +',
+				hl = 'WinBarModified',
+				condition = function()
+					return vim.bo.modified
+				end,
 			},
 		}
 
@@ -162,16 +158,13 @@ return {
 			condition = function()
 				return #vim.api.nvim_list_tabpages() >= 2
 			end,
+			{ provider = '󰗚', hl = 'StatusLineModified' },
 			h_util.make_tablist {
 				provider = function(self)
-					if self.is_active then
-						return ' 󰨐'
-					end
-					local title = vim.fn.fnamemodify(vim.fn.getcwd(-1, self.tabnr), ':t')
-					return string.format(' %%%dT%s%%T', self.tabnr, title)
+					return string.format(' %d', self.tabnr)
 				end,
 				hl = function(self)
-					return self.is_active and 'TabLineDirectory' or nil
+					return self.is_active and 'StatusLineModified' or nil
 				end,
 			},
 		}
@@ -367,14 +360,6 @@ return {
 				:totable()
 		)
 
-		local StatusModifiedFlag = {
-			provider = '+',
-			hl = 'StatusLineModified',
-			condition = function()
-				return vim.bo.buftype ~= 'prompt' and vim.bo.modified
-			end,
-		}
-
 		local Location = {
 			provider = '%04l/%04L:%04v',
 		}
@@ -394,7 +379,7 @@ return {
 		}
 
 		local LSPActive = {
-			condition = h_conditions.lsp_attached,
+			condition = conditions.lsp_attached,
 			update = { 'LspAttach', 'LspDetach', 'BufEnter' },
 
 			static = {
@@ -465,10 +450,11 @@ return {
 		}
 
 		local LeftStatusline = AppendAll(Space, 'right') {
+			TabPageList,
+			Cwd,
 			ViMode,
 			DiffCounts,
 			DiagnosticCounts,
-			StatusModifiedFlag,
 			MacroRec,
 			SearchCount,
 		}
@@ -493,12 +479,18 @@ return {
 				RightStatusline,
 			},
 			---@diagnostic disable-next-line: missing-fields
-			tabline = {
-				hl = 'TabLine',
-				Cwd,
+			winbar = {
+				hl = 'WinBar',
+				fallthrough = false,
 				Buffer,
-				Align,
-				TabPageList,
+			},
+			opts = {
+				disable_winbar_cb = function(args)
+					return conditions.buffer_matches({
+						buftype = { 'nofile', 'prompt', 'help', 'quickfix' },
+						filetype = { '^git.*' },
+					}, args.buf)
+				end,
 			},
 		}
 
@@ -506,6 +498,5 @@ return {
 
 		-- https://github.com/rebelot/heirline.nvim/issues/203#issuecomment-2208395807
 		vim.cmd [[:au VimLeavePre * set stl=]]
-		vim.cmd [[:au VimLeavePre * set tabline=]]
 	end,
 }

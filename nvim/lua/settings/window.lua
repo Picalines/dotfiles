@@ -18,7 +18,7 @@ vim.go.sidescrolloff = 16
 
 -- global status line
 vim.go.laststatus = 3
-vim.go.showtabline = 2
+vim.go.showtabline = 0
 
 -- left columns
 vim.go.number = true
