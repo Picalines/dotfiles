@@ -3,6 +3,8 @@
 # old custom prompt. Simpler times :)
 # PS1="\e[36m\w\$(__git_ps1 ' \e[32m(%s)') \e[33m→\e[39m "
 
+export PATH="$HOME/.local/bin:$PATH"
+
 command-exists() {
   command -v "$1" &> /dev/null
 }
