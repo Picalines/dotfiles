@@ -90,13 +90,13 @@ return {
 
 		local Buffer = {
 			condition = function()
-				return vim.bo.buflisted
+				return vim.bo.buftype == '' and vim.bo.buflisted
 			end,
 
 			init = function(self)
 				self.is_on_disk = vim.fn.expand '%:p' ~= ''
 				self.is_in_cwd = vim.fs.relpath(vim.fn.getcwd(), vim.fn.expand '%') ~= nil
-				if vim.bo.buftype == '' and self.is_on_disk then
+				if self.is_on_disk then
 					local dir_path = vim.fn.expand '%:~:.:h'
 					self.dir = dir_path == '.' and '' or dir_path
 					self.name = vim.fn.expand '%:~:.:t:r'
@@ -152,6 +152,14 @@ return {
 					return vim.bo.modified
 				end,
 			},
+		}
+
+		local Terminal = {
+			condition = function()
+				return vim.bo.buftype == 'terminal'
+			end,
+
+			provider = ' %{b:term_title}',
 		}
 
 		local TabPageList = {
@@ -483,6 +491,7 @@ return {
 				hl = 'WinBar',
 				fallthrough = false,
 				Buffer,
+				Terminal,
 			},
 			opts = {
 				disable_winbar_cb = function(args)
