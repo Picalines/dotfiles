@@ -7,7 +7,7 @@ local signal = require 'util.signal'
 
 keymap {
 	[{ 'n', desc = 'UI: %s' }] = {
-		['<Leader>l'] = {
+		['<Leader>ob'] = {
 			desc = 'toggle background',
 			function()
 				vim.o.background = vim.o.background == 'dark' and 'light' or 'dark'

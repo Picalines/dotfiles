@@ -8,7 +8,7 @@ keymap {
 	},
 
 	[{ 'n', desc = 'UI: %s' }] = {
-		['<Leader>i'] = {
+		['<Leader>oi'] = {
 			desc = 'toggle inlay hints',
 			function()
 				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())

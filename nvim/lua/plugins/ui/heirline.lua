@@ -453,7 +453,7 @@ return {
 			provider = '',
 			hl = 'StatusLineFlag',
 			condition = function()
-				return vim.bo.buftype == '' and vim.g.format_on_write
+				return vim.bo.buftype == '' and vim.g.format_on_write and vim.b.format_on_write
 			end,
 		}
 

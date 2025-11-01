@@ -20,16 +20,27 @@ return {
 					end,
 				},
 
-				['<LocalLeader>F'] = {
+				['<Leader>of'] = {
 					desc = 'toggle on write',
 					function()
 						vim.g.format_on_write = not vim.g.format_on_write
+					end,
+				},
+
+				['<LocalLeader>of'] = {
+					desc = 'toggle on write',
+					function()
+						vim.b.format_on_write = not vim.b.format_on_write
 					end,
 				},
 			},
 		}
 
 		local augroup = autocmd.group 'conform'
+
+		augroup:on('BufNew', '*', function(event)
+			vim.b[event.buf].format_on_write = true
+		end)
 
 		augroup:on('BufRead', { '*lock.json', '*lock.yaml' }, function(event)
 			vim.b[event.buf].format_on_write = false
