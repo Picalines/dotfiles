@@ -17,6 +17,7 @@ keymap {
 
 		['<LocalLeader>bn'] = { '<Cmd>enew<CR>', 'new' },
 		['<LocalLeader>br'] = { '<Cmd>e<CR>', 'reload' },
+		['<LocalLeader>bt'] = { '<Cmd>term<CR>', 'terminal' },
 	},
 }
 
@@ -26,7 +27,6 @@ local unlisted_buftypes = {
 	'help',
 	'prompt',
 	'quickfix',
-	'terminal',
 }
 
 augroup:on({ 'BufNew', 'BufAdd', 'BufWinEnter', 'TermOpen' }, '*', function(event)

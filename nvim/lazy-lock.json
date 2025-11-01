@@ -52,7 +52,6 @@
   "render-markdown.nvim": { "branch": "main", "commit": "10126effbafb74541b69219711dfb2c631e7ebf8" },
   "scope.nvim": { "branch": "main", "commit": "228aabdb1b9cc74f0c0ccec88e79873857236e49" },
   "snacks.nvim": { "branch": "main", "commit": "5eea5f94280ef9034c7da8bbb5ec12dc71b6916f" },
-  "terminal.nvim": { "branch": "master", "commit": "2bd1545caf89d075b6bc2a1a5c56ff177edcf3f6" },
   "vim-sleuth": { "branch": "master", "commit": "be69bff86754b1aa5adcbb527d7fcd1635a84080" },
   "vscode_modern_theme.nvim": { "branch": "main", "commit": "e9f166f954b53eda5fb251b3bde9e0802a20958d" },
   "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" },
