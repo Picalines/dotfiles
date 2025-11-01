@@ -19,10 +19,10 @@ auto_layout false
 
 session_serialization true
 serialize_pane_viewport true
-scrollback_lines_to_serialize 10000
-serialization_interval 10000
+scrollback_lines_to_serialize 100
+serialization_interval 60
 disable_session_metadata false
-scroll_buffer_size 10000
+scroll_buffer_size 1000
 on_force_close "detach"
 
 plugins {
