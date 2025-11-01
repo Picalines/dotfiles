@@ -14,11 +14,9 @@ keymap {
 	[{ 'n', silent = true, desc = 'Buffer: %s' }] = {
 		[']b'] = { '<Cmd>bn<CR>', 'next' },
 		['[b'] = { '<Cmd>bp<CR>', 'previous' },
-		['<ledaer>b]'] = { '<Cmd>bn<CR>', 'next' },
-		['<Leader>b['] = { '<Cmd>bp<CR>', 'previous' },
 
-		['<Leader>bn'] = { '<Cmd>enew<CR>', 'new' },
-		['<Leader>br'] = { '<Cmd>e<CR>', 'reload' },
+		['<LocalLeader>bn'] = { '<Cmd>enew<CR>', 'new' },
+		['<LocalLeader>br'] = { '<Cmd>e<CR>', 'reload' },
 	},
 }
 
