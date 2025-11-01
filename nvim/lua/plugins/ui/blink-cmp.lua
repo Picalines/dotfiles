@@ -129,13 +129,4 @@ return {
 	},
 
 	opts_extend = { 'sources.default' },
-
-	init = function()
-		local autocmd = require 'util.autocmd'
-		local augroup = autocmd.group 'blink-cmp'
-
-		augroup:on_user('Dismiss', function()
-			require('blink-cmp').hide()
-		end)
-	end,
 }
