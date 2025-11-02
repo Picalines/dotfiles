@@ -254,20 +254,9 @@ return {
 			end,
 		}
 
-		local search_shown = false
-
-		augroup:on('CmdlineEnter', { '/', '?' }, function()
-			search_shown = true
-		end)
-
-		augroup:on_user('Dismiss', function()
-			search_shown = false
-			vim.cmd.redrawstatus()
-		end)
-
 		local SearchCount = {
 			condition = function()
-				return search_shown
+				return vim.v.hlsearch == 1
 			end,
 
 			init = function(self)
@@ -504,6 +493,13 @@ return {
 		}
 
 		augroup:on('ColorScheme', '*', func.partial(h_util.on_colorscheme, {}))
+
+		augroup:on_user(
+			'Dismiss',
+			vim.schedule_wrap(function()
+				vim.cmd.redrawstatus()
+			end)
+		)
 
 		-- https://github.com/rebelot/heirline.nvim/issues/203#issuecomment-2208395807
 		vim.cmd [[:au VimLeavePre * set stl=]]
