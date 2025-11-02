@@ -78,13 +78,11 @@ return {
 		end
 
 		local Cwd = {
-			update = { 'BufEnter', 'DirChanged' },
+			update = { 'DirChanged' },
 			hl = 'WinBarDirectory',
 			init = function(self)
-				local is_focused = vim.bo.filetype == 'minifiles'
 				local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
-				local icon = is_focused and '' or ''
-				self.provider = string.format('%s %s', icon, cwd)
+				self.provider = string.format(' %s', cwd)
 			end,
 		}
 
