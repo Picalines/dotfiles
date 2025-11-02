@@ -14,7 +14,7 @@ command-exists() {
 command-exists starship && source <(starship init bash)
 command-exists pnpm && source <(pnpm completion bash)
 command-exists fzf && source <(fzf --bash)
-command-exists nvim && export VISUAL="nvim -b" && export MANPAGER="nvim +Man!"
+command-exists nvim && export EDITOR="nvim -b" && export VISUAL="nvim -b" && export MANPAGER="nvim +Man!"
 command-exists zoxide && source <(zoxide init bash)
 
 alias vi=nvim
