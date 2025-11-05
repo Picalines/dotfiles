@@ -135,7 +135,10 @@ window_rules:
       - window_process: { equals: 'WindowsTerminal' }
   - commands: ['move --workspace V']
     match:
+      - window_process: { regex: 'Affinity' }
       - window_process: { regex: 'Godot' }
+      - window_process: { regex: 'Resolve' }
+      - window_process: { regex: 'blender' }
   - commands: ['move --workspace B']
     match:
       - window_class: { equals: 'MozillaWindowClass' }
