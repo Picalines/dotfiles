@@ -25,7 +25,7 @@ return {
 				['<Leader>fg'] = { '<Cmd>lua Snacks.picker.grep()<CR>', 'grep' },
 				['<Leader>fh'] = { '<Cmd>lua Snacks.picker.help()<CR>', 'help' },
 				['<Leader>fr'] = { '<Cmd>lua Snacks.picker.resume()<CR>', 'resume' },
-				['<Leader>ft'] = { ':set filetype=', 'filetype' },
+				['<LocalLeader>ft'] = { ':set filetype=', 'filetype' },
 			},
 
 			[{ 'n', desc = 'UI: %s' }] = {
