@@ -1,5 +1,7 @@
 local M = {}
 
+-- Not used, but I'm afraid to remove this
+
 ---@param s string
 ---@param len integer
 ---@param char? string
