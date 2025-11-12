@@ -35,3 +35,12 @@ augroup:on({ 'BufNew', 'BufAdd', 'BufWinEnter', 'TermOpen' }, '*', function(even
 		bo.buflisted = false
 	end
 end)
+
+augroup:on('FileType', 'qf', function(event)
+	keymap {
+		[{ 'n', remap = true, buffer = event.buf, desc = 'Quickfix: %s' }] = {
+			['q'] = { '<Cmd>cclose<CR>', 'close' },
+			['<Leader>q'] = { '<Cmd>cclose<CR>', 'close' },
+		},
+	}
+end)

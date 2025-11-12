@@ -160,6 +160,17 @@ return {
 			provider = ' %{b:term_title}',
 		}
 
+		local Quickfix = {
+			condition = function()
+				return vim.bo.buftype == 'quickfix'
+			end,
+
+			provider = function()
+				local qf_info = vim.fn.getqflist { idx = 0, size = 0 }
+				return string.format(' %s/%s', qf_info.idx, qf_info.size)
+			end,
+		}
+
 		local TabPageList = {
 			condition = function()
 				return #vim.api.nvim_list_tabpages() >= 2
@@ -479,11 +490,12 @@ return {
 				fallthrough = false,
 				Buffer,
 				Terminal,
+				Quickfix,
 			},
 			opts = {
 				disable_winbar_cb = function(args)
 					return conditions.buffer_matches({
-						buftype = { 'nofile', 'prompt', 'help', 'quickfix' },
+						buftype = { 'nofile', 'prompt', 'help' },
 						filetype = { '^git.*' },
 					}, args.buf)
 				end,

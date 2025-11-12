@@ -4,7 +4,6 @@ require 'settings.global'
 require 'settings.tab'
 require 'settings.window'
 require 'settings.buffer'
-require 'settings.quickfix'
 
 if app.client() == 'vscode' then
 	require 'settings.vscode'

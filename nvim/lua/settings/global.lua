@@ -115,4 +115,8 @@ keymap {
 		['<C-p>'] = { '<C-\\><C-n>pi', 'paste' },
 		['<Esc>'] = { '<C-\\><C-n>', 'exit terminal' },
 	},
+
+	[{ 'n', desc = 'Quickfix: %s', silent = true }] = {
+		['<Leader>q'] = { ':botright copen | resize <C-r>=&lines / 3<CR><CR>', 'open' },
+	},
 }
