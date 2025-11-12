@@ -3,13 +3,7 @@ local keymap = require 'util.keymap'
 
 keymap {
 	[{ 'n', silent = true, desc = 'Quickfix: %s' }] = {
-		['<Leader>q'] = {
-			expr = true,
-			desc = 'open',
-			function()
-				return string.format('<Cmd>botright copen | resize %d<CR>', math.floor(vim.go.lines / 3))
-			end,
-		},
+		['<Leader>q'] = { ':botright copen | resize <C-r>=&lines / 3<CR><CR>', 'open' },
 	},
 }
 
