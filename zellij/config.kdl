@@ -50,10 +50,10 @@ keybinds clear-defaults=true {
         bind "f" { ToggleFloatingPanes; SwitchToMode "normal"; }
         bind "F" { ToggleFocusFullscreen; SwitchToMode "normal"; }
 
-        bind "h" { MoveFocusOrTab "left"; SwitchToMode "normal"; }
+        bind "h" { MoveFocus "left"; SwitchToMode "normal"; }
         bind "j" { MoveFocus "down"; SwitchToMode "normal"; }
         bind "k" { MoveFocus "up"; SwitchToMode "normal"; }
-        bind "l" { MoveFocusOrTab "right"; SwitchToMode "normal"; }
+        bind "l" { MoveFocus "right"; SwitchToMode "normal"; }
 
         bind "H" "Ctrl h" { GoToPreviousTab; SwitchToMode "normal"; }
         bind "L" "Ctrl l" { GoToNextTab; SwitchToMode "normal"; }
