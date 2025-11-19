@@ -24,7 +24,9 @@ return {
 				['<Leader>fo'] = { '<Cmd>lua Snacks.picker.recent()<CR>', 'recent' },
 				['<Leader>fg'] = { '<Cmd>lua Snacks.picker.grep()<CR>', 'grep' },
 				['<Leader>fh'] = { '<Cmd>lua Snacks.picker.help()<CR>', 'help' },
+				['<Leader>fs'] = { '<Cmd>lua Snacks.picker.lsp_workspace_symbols()<CR>', 'symbols' },
 				['<Leader>fr'] = { '<Cmd>lua Snacks.picker.resume()<CR>', 'resume' },
+				['<LocalLeader>fs'] = { '<Cmd>lua Snacks.picker.lsp_symbols()<CR>', 'symbols' },
 				['<LocalLeader>ft'] = { ':set filetype=', 'filetype' },
 			},
 
@@ -35,48 +37,69 @@ return {
 	end,
 
 	---@module 'snacks'
-	---@type snacks.Config
-	opts = {
-		indent = {
-			enabled = true,
-			hl = 'Whitespace',
-			filter = function(buf)
-				local bo = vim.bo[buf]
-				return bo.buftype == '' and bo.filetype ~= 'markdown'
-			end,
-		},
+	---@return snacks.Config
+	opts = function()
+		local ts_workspace_symbol_kinds = {
+			'Class',
+			'Variable', -- exported constants are also variables :/
+			'Constant',
+			'Enum',
+			'Function',
+			'Interface',
+			'Module',
+			'Namespace',
+		}
 
-		picker = {
-			ui_select = true,
-			layout = {
-				preset = 'select',
-				layout = { row = 2 },
+		return {
+			indent = {
+				enabled = true,
+				hl = 'Whitespace',
+				filter = function(buf)
+					local bo = vim.bo[buf]
+					return bo.buftype == '' and bo.filetype ~= 'markdown'
+				end,
 			},
-			win = {
-				input = {
-					keys = {
-						['<Esc>'] = { 'close', mode = { 'n', 'i' } },
-						['<c-b>'] = false,
-						['<c-p>'] = false,
-						['<C-n>'] = { 'list_down', mode = { 'n', 'i' } },
-						['<C-S-n>'] = { 'list_up', mode = { 'n', 'i' } },
+
+			picker = {
+				ui_select = true,
+				layout = {
+					preset = 'select',
+					layout = { row = 2 },
+				},
+				win = {
+					input = {
+						keys = {
+							['<Esc>'] = { 'close', mode = { 'n', 'i' } },
+							['<c-b>'] = false,
+							['<c-p>'] = false,
+							['<C-n>'] = { 'list_down', mode = { 'n', 'i' } },
+							['<C-S-n>'] = { 'list_up', mode = { 'n', 'i' } },
+						},
+					},
+				},
+				sources = {
+					files = { hidden = true },
+					lsp_workspace_symbols = {
+						filter = {
+							typescript = ts_workspace_symbol_kinds,
+							typescriptreact = ts_workspace_symbol_kinds,
+							javascript = ts_workspace_symbol_kinds,
+							javascriptreact = ts_workspace_symbol_kinds,
+						},
 					},
 				},
 			},
-			sources = {
-				files = { hidden = true },
-			},
-		},
 
-		input = {
-			enabled = true,
-			icon_pos = 'title',
-			icon = '󰙏',
-			win = {
-				relative = 'cursor',
-				title_pos = 'left',
-				row = 1,
+			input = {
+				enabled = true,
+				icon_pos = 'title',
+				icon = '󰙏',
+				win = {
+					relative = 'cursor',
+					title_pos = 'left',
+					row = 1,
+				},
 			},
-		},
-	},
+		}
+	end,
 }
