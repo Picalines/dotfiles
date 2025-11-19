@@ -100,6 +100,11 @@ return {
 					row = 1,
 				},
 			},
+
+			image = {
+				enabled = true,
+				formats = { 'png' },
+			},
 		}
 	end,
 }
