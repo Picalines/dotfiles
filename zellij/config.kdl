@@ -43,11 +43,11 @@ keybinds clear-defaults=true {
     tmux {
         bind "q" { Quit; }
 
-        bind "p" { SwitchToMode "pane"; }
-        bind "s" { SwitchToMode "scroll"; }
-        bind "t" { SwitchToMode "tab"; }
+        bind "p" "Ctrl p" { SwitchToMode "pane"; }
+        bind "s" "Ctrl s" { SwitchToMode "scroll"; }
+        bind "t" "Ctrl t" { SwitchToMode "tab"; }
 
-        bind "f" { ToggleFloatingPanes; SwitchToMode "normal"; }
+        bind "f" "Ctrl f" { ToggleFloatingPanes; SwitchToMode "normal"; }
         bind "F" { ToggleFocusFullscreen; SwitchToMode "normal"; }
 
         bind "h" { MoveFocus "left"; SwitchToMode "normal"; }
