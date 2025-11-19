@@ -74,6 +74,30 @@ return {
 							['<c-p>'] = false,
 							['<C-n>'] = { 'list_down', mode = { 'n', 'i' } },
 							['<C-S-n>'] = { 'list_up', mode = { 'n', 'i' } },
+							['<C-f>'] = { 'fullscreen', mode = { 'i' } },
+							['<C-d>'] = { 'preview_scroll_down', mode = { 'n', 'i' } },
+							['<C-u>'] = { 'preview_scroll_up', mode = { 'n', 'i' } },
+						},
+					},
+				},
+				actions = {
+					fullscreen = function(picker)
+						picker:set_layout 'fullscreen'
+					end,
+				},
+				layouts = {
+					fullscreen = {
+						layout = {
+							box = 'vertical',
+							backdrop = false,
+							width = 0.9,
+							height = 0.9,
+							border = true,
+							title = '{title}',
+							title_pos = 'center',
+							{ win = 'preview', height = 0.75 },
+							{ win = 'input', height = 1, border = 'top' },
+							{ win = 'list', border = 'top' },
 						},
 					},
 				},
