@@ -103,15 +103,6 @@ keymap {
 		['p'] = '"_dP',
 	},
 
-	[{ 'n' }] = {
-		['g/'] = { ':%s//g<Left><Left>', 'substitute' },
-		['g:'] = { ':%g//<left>', 'global command' },
-	},
-	[{ 'x' }] = {
-		['g/'] = { ':s//g<Left><Left>', 'substitute' },
-		['g:'] = { ':g//<left>', 'global command' },
-	},
-
 	[{ 't' }] = {
 		['<C-p>'] = { '<C-\\><C-n>pi', 'paste' },
 		['<Esc>'] = { '<C-\\><C-n>', 'exit terminal' },
