@@ -51,15 +51,6 @@ return {
 		}
 
 		return {
-			indent = {
-				enabled = true,
-				hl = 'Whitespace',
-				filter = function(buf)
-					local bo = vim.bo[buf]
-					return bo.buftype == '' and bo.filetype ~= 'markdown'
-				end,
-			},
-
 			picker = {
 				ui_select = true,
 				layout = {
