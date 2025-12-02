@@ -13,7 +13,7 @@ return {
 
 		keymap {
 			[{ 'n', desc = 'Format: %s' }] = {
-				['<LocalLeader>f'] = {
+				['<LocalLeader>F'] = {
 					desc = 'buffer',
 					function()
 						require('conform').format { async = vim.fn.reg_executing() == '' }
