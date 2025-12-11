@@ -156,4 +156,7 @@ keybinds clear-defaults=true {
         bind "Ctrl G" { ScrollToBottom; }
         bind "Esc" { ScrollToBottom; SwitchToMode "normal"; }
     }
+    shared_among "renametab" "renamepane" {
+        bind "Enter" { SwitchToMode "normal"; }
+    }
 }
