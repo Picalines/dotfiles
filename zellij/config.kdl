@@ -148,6 +148,8 @@ keybinds clear-defaults=true {
     entersearch {
         bind "Ctrl j" "Down" { ScrollDown; }
         bind "Ctrl k" "Up" { ScrollUp; }
+        bind "Ctrl n" { Search "down"; }
+        bind "Ctrl N" { Search "up"; }
         bind "Ctrl d" { HalfPageScrollDown; }
         bind "Ctrl u" { HalfPageScrollUp; }
         bind "Ctrl g" { ScrollToTop; }
