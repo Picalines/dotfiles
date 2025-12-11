@@ -31,7 +31,7 @@ return {
 			},
 
 			[{ 'n', desc = 'UI: %s' }] = {
-				['<Leader>oc'] = { '<Cmd>lua Snacks.picker.colorschemes()<CR>', 'colorscheme' },
+				['<Leader>oC'] = { '<Cmd>lua Snacks.picker.colorschemes()<CR>', 'colorscheme' },
 			},
 		}
 	end,
