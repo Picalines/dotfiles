@@ -152,5 +152,6 @@ keybinds clear-defaults=true {
         bind "Ctrl u" { HalfPageScrollUp; }
         bind "Ctrl g" { ScrollToTop; }
         bind "Ctrl G" { ScrollToBottom; }
+        bind "Esc" { ScrollToBottom; SwitchToMode "normal"; }
     }
 }
