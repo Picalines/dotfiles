@@ -29,3 +29,4 @@ command-exists neovide && symlink-to-home "neovide.toml" ".config/neovide/config
 command-exists starship && symlink-to-home "starship.toml" ".config/starship.toml"
 command-exists zellij && symlink-to-home "zellij" ".config/zellij"
 [ -d ~/.glzr/glazewm ] && symlink-to-home "glazewm.yaml" ".glzr/glazewm/config.yaml"
+symlink-to-home "tmux" ".config/tmux"
