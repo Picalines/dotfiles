@@ -47,7 +47,6 @@ keybinds clear-defaults=true {
         bind "t" "Ctrl t" { SwitchToMode "tab"; }
 
         bind "f" "Ctrl f" { ToggleFloatingPanes; SwitchToMode "normal"; }
-        bind "F" { ToggleFocusFullscreen; SwitchToMode "normal"; }
 
         bind "h" { MoveFocus "left"; SwitchToMode "normal"; }
         bind "j" { MoveFocus "down"; SwitchToMode "normal"; }
