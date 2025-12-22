@@ -30,7 +30,7 @@ return {
 
 			local ensure_installed_by_executable = {
 				[{ 'node' }] = {
-					{ 'biome', version = '1.9.4' },
+					{ 'biome', version = '2.3.8' },
 					'graphql-language-service-cli',
 					'prettierd',
 					'svelte-language-server',
