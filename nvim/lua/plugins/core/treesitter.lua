@@ -17,7 +17,6 @@ return {
 
 		local parsers_by_filetype = vim
 			.iter({
-				[{ 'bash', 'zsh' }] = { 'bash' },
 				[{ 'c', 'cpp', 'cs' }] = { 'c', 'cpp', 'c_sharp' },
 				[{ 'css' }] = { 'css' },
 				[{ 'dockerfile' }] = { 'dockerfile' },
@@ -51,6 +50,7 @@ return {
 
 		augroup:on('UIEnter', '*', function()
 			nvim_treesitter.install {
+				'bash',
 				'editorconfig',
 				'git_config',
 				'git_rebase',
@@ -69,6 +69,7 @@ return {
 				'vimdoc',
 				'xml',
 				'yaml',
+				'zsh',
 			}
 
 			local recent_filetypes = vim.fn.uniq(vim
