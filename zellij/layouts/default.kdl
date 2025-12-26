@@ -2,13 +2,13 @@ layout {
     default_tab_template {
         pane size=1 borderless=true {
             plugin location="zjstatus" {
-                format_left  "#[fg=$fg3]{mode} {tabs}"
-                format_right "#[fg=$fg3] {session}"
-                format_space ""
+                format_left  "#[fg=$fg,bg=$bg]{mode} {tabs}"
+                format_right "#[fg=$fg,bg=$bg] {session}"
+                format_space "#[bg=$bg]"
 
-                tab_normal "#[fg=$fg1]{name}"
-                tab_active "#[fg=$fg2,underscore]{name}"
-                tab_separator " "
+                tab_normal "#[fg=$fg,bg=$bg]{name}"
+                tab_active "#[fg=$fg,bg=$bg,bold]{name}"
+                tab_separator "#[bg=$bg] "
 
                 mode_normal       ""
                 mode_tmux         ""
@@ -19,9 +19,8 @@ layout {
                 mode_rename_tab   ""
                 mode_session      ""
 
-                color_fg1 "#163e73"
-                color_fg2 "#4e55d9"
-                color_fg3 "#f27c39"
+                color_bg "#4e55d9"
+                color_fg "#f4aa51"
             }
         }
         children
