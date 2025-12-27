@@ -1,9 +1,12 @@
+// In a very likely case where I will forget how to configure this:
+// https://github.com/zellij-org/zellij/blob/main/zellij-utils/assets/layouts/default.swap.kdl
+
 layout {
     default_tab_template {
         pane size=1 borderless=true {
             plugin location="zjstatus" {
                 format_left  "#[fg=$fg,bg=$bg]{mode} {tabs}"
-                format_right "#[fg=$fg,bg=$bg] {session}"
+                format_right "#[fg=$fg,bg=$bg]{swap_layout} {session}"
                 format_space "#[bg=$bg]"
 
                 tab_normal "#[fg=$fg,bg=$bg]{name}"
@@ -24,5 +27,21 @@ layout {
             }
         }
         children
+    }
+
+    swap_tiled_layout name="side-right" {
+        tab max_panes=5 {
+            pane split_direction="vertical" {
+                pane size="60%"
+                pane split_direction="horizontal" { children; }
+            }
+        }
+
+        tab min_panes=6 {
+            pane split_direction="vertical" {
+                pane size="60%"
+                pane stacked=true { children; }
+            }
+        }
     }
 }

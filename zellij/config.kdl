@@ -15,7 +15,7 @@ copy_on_select true
 pane_frames false
 stacked_resize true
 
-auto_layout false
+auto_layout true
 
 session_serialization true
 serialize_pane_viewport true
@@ -59,6 +59,8 @@ keybinds clear-defaults=true {
 
         bind "=" "+" { Resize "Increase"; }
         bind "-" "_" { Resize "Decrease"; }
+
+        bind "Space" { NextSwapLayout; SwitchToMode "normal"; }
 
         bind "d" { Detach; }
 
