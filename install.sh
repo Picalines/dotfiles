@@ -16,11 +16,14 @@ symlink-to-home() {
     fi
 }
 
-symlink-to-home ".bashrc" ".bashrc"
-symlink-to-home ".gitconfig" ".gitconfig"
-symlink-to-home ".gitignore.global" ".gitignore"
+if command-exists brew; then
+    brew bundle --file=./Brewfile
+fi
 
+command-exists bash && symlink-to-home ".bashrc" ".bashrc"
 command-exists zsh && symlink-to-home ".zshrc" ".zshrc"
+command-exists git && symlink-to-home ".gitconfig" ".gitconfig"
+command-exists git && symlink-to-home ".gitignore.global" ".gitignore"
 command-exists nvim && symlink-to-home "nvim" ".config/nvim"
 command-exists aerospace && symlink-to-home "aerospace.toml" ".config/aerospace/aerospace.toml"
 command-exists alacritty && symlink-to-home "alacritty.toml" ".config/alacritty/alacritty.toml"
