@@ -1,0 +1,10 @@
+[settings]
+trusted_config_paths = ["~/.config"]
+
+idiomatic_version_file_enable_tools = ["node", "python"]
+
+python_venv_auto_create = true
+
+[tools]
+node = "lts"
+python = "3.14"

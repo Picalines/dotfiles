@@ -12,6 +12,7 @@ command-exists() {
 [ -f ~/.bash_aliases ] &&  source ~/.bash_aliases
 [ -f ~/.cargo/env ] && source ~/.cargo/env
 command-exists starship && source <(starship init bash)
+command-exists mise && source <(mise activate zsh)
 command-exists pnpm && source <(pnpm completion bash)
 command-exists fzf && source <(fzf --bash)
 command-exists zoxide && source <(zoxide init bash)

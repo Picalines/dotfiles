@@ -27,5 +27,6 @@ command-exists alacritty && symlink-to-home "alacritty.toml" ".config/alacritty/
 command-exists ghostty && symlink-to-home "ghostty" ".config/ghostty"
 command-exists neovide && symlink-to-home "neovide.toml" ".config/neovide/config.toml"
 command-exists starship && symlink-to-home "starship.toml" ".config/starship.toml"
+command-exists mise && symlink-to-home "mise" ".config/mise"
 command-exists zellij && symlink-to-home "zellij" ".config/zellij"
 [ -d ~/.glzr/glazewm ] && symlink-to-home "glazewm.yaml" ".glzr/glazewm/config.yaml"

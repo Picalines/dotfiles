@@ -18,6 +18,7 @@ command-exists() {
 command-exists cargo && source "$HOME/.cargo/env"
 command-exists starship && source <(starship init zsh)
 command-exists fzf && source <(fzf --zsh)
+command-exists mise && source <(mise activate zsh)
 command-exists pnpm && source <(pnpm completion zsh)
 command-exists zoxide && source <(zoxide init zsh)
 
@@ -41,42 +42,3 @@ update-term-title() {
 
 add-zsh-hook chpwd update-term-title
 update-term-title
-
-# auto .nvmrc
-load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
-
-# auto venv
-load-venv() {
-  if [[ -z "$VIRTUAL_ENV" ]]; then
-    if [[ -f ./venv/bin/activate ]]; then
-      source ./venv/bin/activate
-    fi
-  else
-    local parentdir="$(dirname "$VIRTUAL_ENV")"
-    if [[ "$PWD"/ != "$parentdir"/* ]]; then
-      deactivate
-    fi
-  fi
-}
-
-add-zsh-hook chpwd load-venv
-load-venv
