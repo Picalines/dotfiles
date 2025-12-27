@@ -60,6 +60,9 @@ keybinds clear-defaults=true {
         bind "=" "+" { Resize "Increase"; }
         bind "-" "_" { Resize "Decrease"; }
 
+        bind "n" { NewPane; SwitchToMode "normal"; }
+        bind "N" "Ctrl n" { NewTab; SwitchToMode "normal"; }
+
         bind "Space" { NextSwapLayout; SwitchToMode "normal"; }
 
         bind "d" { Detach; }
