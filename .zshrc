@@ -1,12 +1,12 @@
 #!/bin/zsh
 
-export PATH="$HOME/.local/bin:$PATH"
-
-if [[ -f "/opt/homebrew/bin/brew" ]] then
+if [ -x /opt/homebrew/bin/brew ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
-
-  export PATH="$(brew --prefix)/opt/python@3.12/libexec/bin:$PATH"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
 fi
+
+export PATH="$HOME/.local/bin:$PATH"
 
 autoload -U add-zsh-hook
 autoload -Uz compinit && compinit
