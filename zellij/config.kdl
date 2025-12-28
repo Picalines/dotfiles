@@ -105,6 +105,8 @@ keybinds clear-defaults=true {
         bind "b" { TogglePaneFrames; SwitchToMode "normal"; }
 
         bind "t" { BreakPane; SwitchToMode "normal"; }
+
+        bind "r" { SwitchToMode "renamepane"; PaneNameInput 0; }
     }
     tab {
         bind "x" { CloseTab; SwitchToMode "normal"; }
