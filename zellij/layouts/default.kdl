@@ -5,25 +5,28 @@ layout {
     default_tab_template {
         pane size=1 borderless=true {
             plugin location="zjstatus" {
-                format_left  "#[fg=$fg,bg=$bg]{mode} {tabs}"
-                format_right "#[fg=$fg,bg=$bg]{swap_layout} {session}"
+                format_left  "#[bg=$bg,fg=$fg]{mode}#[bg=$bg] {tabs}"
+                format_right "#[bg=$bg,fg=$fg]{swap_layout}#[bg=$bg,fg=$fg] {session}"
                 format_space "#[bg=$bg]"
 
-                tab_normal "#[fg=$fg,bg=$bg]{name}"
-                tab_active "#[fg=$fg,bg=$bg,bold]{name}"
+                tab_normal "#[bg=$bg,fg=$fg]{name}"
+                tab_active "#[bg=$bg,fg=$focus,bold]{name}"
                 tab_separator "#[bg=$bg] "
 
-                mode_normal       ""
-                mode_tmux         ""
-                mode_pane         ""
-                mode_tab          "󰓩"
-                mode_scroll       "󰹹"
-                mode_enter_search ""
-                mode_rename_tab   ""
-                mode_session      ""
+                swap_layout_format "#[bg=$bg,fg=$focus]{name}"
+
+                mode_normal       "#[bg=$bg,fg=$fg]"
+                mode_tmux         "#[bg=$bg,fg=$focus]"
+                mode_pane         "#[bg=$bg,fg=$focus]"
+                mode_tab          "#[bg=$bg,fg=$focus]󰓩"
+                mode_scroll       "#[bg=$bg,fg=$focus]󰹹"
+                mode_enter_search "#[bg=$bg,fg=$focus]"
+                mode_rename_tab   "#[bg=$bg,fg=$focus]"
+                mode_session      "#[bg=$bg,fg=$focus]"
 
                 color_bg "#4e55d9"
                 color_fg "#f4aa51"
+                color_focus "#8deed4"
             }
         }
         children
