@@ -8,6 +8,8 @@ fi
 
 export PATH="$HOME/.local/bin:$PATH"
 
+set -o emacs
+
 autoload -U add-zsh-hook
 autoload -Uz compinit && compinit
 

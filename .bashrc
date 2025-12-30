@@ -5,6 +5,8 @@
 
 export PATH="$HOME/.local/bin:$PATH"
 
+set -o emacs
+
 command-exists() {
   command -v "$1" &> /dev/null
 }
