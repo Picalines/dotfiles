@@ -22,6 +22,12 @@ return {
 		},
 
 		init = function()
+			vim.lsp.config('lua_ls', {
+				settings = {
+					Lua = { telemetry = { enable = false } },
+				},
+			})
+
 			vim.lsp.config('vtsls', {
 				settings = {
 					typescript = {
@@ -29,12 +35,6 @@ return {
 							preferTypeOnlyAutoImports = true,
 						},
 					},
-				},
-			})
-
-			vim.lsp.config('lua_ls', {
-				settings = {
-					Lua = { telemetry = { enable = false } },
 				},
 			})
 
