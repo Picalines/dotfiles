@@ -1,8 +1,14 @@
 // === THEME ===
 // upstream: https://github.com/rose-pine/surfingkeys/blob/main/dist/rose-pine.conf
 
-const hintsCss =
-  "font-size: 13pt; font-family: 'JetBrains Mono NL', 'Cascadia Code', 'Helvetica Neue', Helvetica, Arial, sans-serif; border: 0px; color: #e0def4 !important; background: #191724; background-color: #191724";
+const hintsCss = `
+  font-size: 13pt;
+  font-family: 'Iosevka Nerd Font Mono', 'JetBrains Mono NL', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  border: 0px;
+  color: #e0def4 !important;
+  background: #191724;
+  background-color: #191724
+`;
 
 api.Hints.style(hintsCss);
 api.Hints.style(hintsCss, "text");
