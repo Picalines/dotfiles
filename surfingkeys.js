@@ -1,3 +1,10 @@
+// === SETTINGS ===
+
+api.unmap("h");
+api.unmap("j");
+api.unmap("k");
+api.unmap("l");
+
 // === THEME ===
 // upstream: https://github.com/rose-pine/surfingkeys/blob/main/dist/rose-pine.conf
 
