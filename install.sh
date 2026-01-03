@@ -20,6 +20,10 @@ if command-exists brew; then
     brew bundle --file=./Brewfile
 fi
 
+if command-exists scoop; then
+    scoop import ./scoop.json
+fi
+
 command-exists bash && symlink-to-home ".bashrc" ".bashrc"
 command-exists zsh && symlink-to-home ".zshrc" ".zshrc"
 command-exists git && symlink-to-home ".gitconfig" ".gitconfig"
