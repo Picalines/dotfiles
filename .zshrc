@@ -20,7 +20,7 @@ command-exists() {
 command-exists cargo && source "$HOME/.cargo/env"
 command-exists starship && source <(starship init zsh)
 command-exists fzf && source <(fzf --zsh)
-command-exists mise && source <(mise activate zsh)
+command-exists mise && source <(mise activate zsh --shims)
 command-exists pnpm && source <(pnpm completion zsh)
 command-exists zoxide && source <(zoxide init zsh)
 
