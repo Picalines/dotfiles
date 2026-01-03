@@ -9,7 +9,7 @@ command-exists() {
 symlink-to-home() {
     echo "linking '$1' to '~/$2'"
     if [[ -n $WINDIR ]]; then
-        powershell "New-Item -Type SymbolicLink -Path ~/$2 -Value $1 -Force" > /dev/null
+        powershell "New-Item -Type SymbolicLink -Path ~/$2 -Value $1 -Force"
     else
         mkdir -p "$(dirname "$HOME/$2")"
         ln -snf "$PWD/$1" "$HOME/$2"
