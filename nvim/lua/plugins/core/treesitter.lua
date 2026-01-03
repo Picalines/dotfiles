@@ -5,51 +5,37 @@ return {
 	branch = 'main',
 	build = ':TSUpdate',
 
-	init = function()
-		vim.go.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-	end,
-
 	config = function()
 		local autocmd = require 'util.autocmd'
 		local nvim_treesitter = require 'nvim-treesitter'
 
 		nvim_treesitter.setup()
 
-		local parsers_by_filetype = vim
-			.iter({
-				[{ 'c', 'cpp', 'cs' }] = { 'c', 'cpp', 'c_sharp' },
-				[{ 'css' }] = { 'css' },
-				[{ 'dockerfile' }] = { 'dockerfile' },
-				[{ 'go' }] = { 'go', 'templ' },
-				[{ 'graphql' }] = { 'graphql' },
-				[{ 'html' }] = { 'html' },
-				[{ 'http' }] = { 'http' },
-				[{ 'javascript', 'typescript' }] = { 'javascript', 'typescript', 'jsdoc', 'css' },
-				[{ 'javascriptreact', 'typescriptreact' }] = { 'jsx', 'tsx', 'graphql', 'css' },
-				[{ 'python' }] = { 'python' },
-				[{ 'svelte' }] = { 'svelte' },
-				[{ 'vue' }] = { 'vue' },
-			})
-			:fold({}, function(acc, filetypes, parsers)
-				for _, filetype in ipairs(filetypes) do
-					acc[filetype] = parsers
-				end
-				return acc
-			end)
+		-- TODO: probably should be called after the async install
+		local function setup_treesitter_start_autocmd()
+			local start_autocmd = autocmd.group 'treesitter-start'
 
-		local function install_by_filetype(filetypes)
-			nvim_treesitter.install(vim
-				.iter(filetypes)
-				:map(function(filetype)
-					return parsers_by_filetype[filetype]
+			local filetypes_with_installed_parser = vim
+				.iter(nvim_treesitter.get_installed())
+				:map(function(lang)
+					return vim.treesitter.language.get_filetypes(lang)
 				end)
-				:flatten())
+				:flatten()
+				:totable()
+
+			start_autocmd:on('FileType', filetypes_with_installed_parser, function(event)
+				vim.treesitter.start(event.buf)
+
+				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			end)
 		end
 
-		local augroup = autocmd.group 'nvim-treesitter'
+		setup_treesitter_start_autocmd()
 
-		augroup:on('UIEnter', '*', function()
-			nvim_treesitter.install {
+		local install_augroup = autocmd.group 'nvim-treesitter'
+
+		install_augroup:on('UIEnter', '*', function()
+			local parsers_to_install = {
 				'bash',
 				'editorconfig',
 				'git_config',
@@ -71,6 +57,28 @@ return {
 				'zsh',
 			}
 
+			local parsers_by_filetype = vim
+				.iter({
+					[{ 'c', 'cpp', 'cs' }] = { 'c', 'cpp', 'c_sharp' },
+					[{ 'css' }] = { 'css' },
+					[{ 'dockerfile' }] = { 'dockerfile' },
+					[{ 'go' }] = { 'go', 'templ' },
+					[{ 'graphql' }] = { 'graphql' },
+					[{ 'html' }] = { 'html' },
+					[{ 'http' }] = { 'http' },
+					[{ 'javascript', 'typescript' }] = { 'javascript', 'typescript', 'jsdoc', 'css' },
+					[{ 'javascriptreact', 'typescriptreact' }] = { 'jsx', 'tsx', 'graphql', 'css' },
+					[{ 'python' }] = { 'python' },
+					[{ 'svelte' }] = { 'svelte' },
+					[{ 'vue' }] = { 'vue' },
+				})
+				:fold({}, function(acc, filetypes, parsers)
+					for _, filetype in ipairs(filetypes) do
+						acc[filetype] = parsers
+					end
+					return acc
+				end)
+
 			local recent_filetypes = vim.fn.uniq(vim
 				.iter(vim.v.oldfiles)
 				:take(8)
@@ -80,16 +88,19 @@ return {
 				end)
 				:totable())
 
-			install_by_filetype(recent_filetypes)
-		end)
+			local parsers_by_recent_filetypes = vim
+				.iter(recent_filetypes)
+				:map(function(filetype)
+					return parsers_by_filetype[filetype]
+				end)
+				:flatten()
+				:totable()
 
-		augroup:on('FileType', '*', function(event)
-			install_by_filetype { event.match }
+			vim.list_extend(parsers_to_install, parsers_by_recent_filetypes)
+			---@diagnostic disable-next-line: cast-local-type
+			parsers_to_install = vim.fn.uniq(parsers_to_install)
 
-			local language = vim.treesitter.language.get_lang(event.match)
-			if language and vim.treesitter.language.add(language) then
-				vim.treesitter.start(event.buf, language)
-			end
+			nvim_treesitter.install(parsers_to_install)
 		end)
 	end,
 }
