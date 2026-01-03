@@ -12,6 +12,10 @@ vim.go.clipboard = 'unnamedplus'
 -- persist undo history
 vim.go.undofile = true
 
+-- unix line endings
+vim.opt_global.fileformats = { 'unix' }
+vim.go.fileformat = 'unix'
+
 -- prefer powershell on windows
 if vim.fn.executable 'powershell' == 1 then
 	vim.cmd [[
