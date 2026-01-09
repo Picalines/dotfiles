@@ -37,3 +37,5 @@ command-exists starship && symlink-to-home "starship.toml" ".config/starship.tom
 command-exists mise && symlink-to-home "mise" ".config/mise"
 command-exists zellij && symlink-to-home "zellij" ".config/zellij"
 [ -d ~/.glzr/glazewm ] && symlink-to-home "glazewm.yaml" ".glzr/glazewm/config.yaml"
+
+[ -d ~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState ] && symlink-to-home "windows-terminal/settings.json" "AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json"
