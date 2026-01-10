@@ -1,0 +1,31 @@
+// Intended to be used with my zjstatus plugin
+
+themes {
+    brittle-hollow {
+        frame_unselected {
+            base 78 85 217
+            background 0
+            emphasis_0 0
+            emphasis_1 0
+            emphasis_2 0
+            emphasis_3 0
+        }
+        frame_selected {
+            // base 244 170 81
+            base 78 85 217
+            background 0
+            emphasis_0 0
+            emphasis_1 0
+            emphasis_2 0
+            emphasis_3 0
+        }
+        frame_highlight {
+            base 141 238 212
+            background 0
+            emphasis_0 0
+            emphasis_1 0
+            emphasis_2 0
+            emphasis_3 0
+        }
+    }
+}
