@@ -8,3 +8,4 @@ python_venv_auto_create = true
 [tools]
 node = "lts"
 python = "3.14"
+uv = "latest"
