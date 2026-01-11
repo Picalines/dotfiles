@@ -403,6 +403,7 @@ return {
 					lua_ls = '',
 					omnisharp = '󰈸',
 					pyright = '󰌠',
+					ruff = '󱐋',
 					rust_analyzer = '',
 					svelte = '',
 					tailwindcss = '󱏿',
