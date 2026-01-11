@@ -25,32 +25,22 @@ return {
 				'jsonls',
 				'lua_ls',
 				'stylua',
+				'tree-sitter-cli',
 				'vim-language-server',
 			}
 
 			local ensure_installed_by_executable = {
 				[{ 'node' }] = {
-					{ 'biome', version = '2.3.8' },
 					'graphql-language-service-cli',
-					'prettierd',
 					'svelte-language-server',
 					'tailwindcss-language-server',
 					'vtsls',
-					{ 'eslint-lsp', version = '4.8.0' },
 				},
-
-				[{ 'python', 'python3' }] = { 'black', 'isort', 'pyright' },
-
-				[{ 'dotnet' }] = { 'csharpier' },
-
+				[{ 'python', 'python3' }] = { 'pyright' },
 				[{ 'docker' }] = { 'docker-compose-language-service', 'dockerfile-language-server' },
-
 				[{ 'go' }] = { 'gopls' },
-
 				[{ 'rustc' }] = { 'rust-analyzer' },
-
-				[{ 'kotlin' }] = { 'kotlin-language-server', 'ktfmt', 'ktlint' },
-
+				[{ 'kotlin' }] = { 'kotlin-language-server' },
 				[{ 'gradle' }] = { 'gradle-language-server' },
 			}
 

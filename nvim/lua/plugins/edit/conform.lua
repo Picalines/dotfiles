@@ -54,12 +54,26 @@ return {
 	end,
 
 	opts = function()
-		local web_formatters = {
-			'biome-check',
-			'prettierd',
-			'prettier',
-			stop_after_first = true,
-		}
+		local conform = require 'conform'
+		local conform_util = require 'conform.util'
+
+		local function web_formatter(bufnr)
+			if conform.get_formatter_info('biome-check', bufnr) then
+				return { 'biome-check' }
+			end
+			return { 'prettierd', 'prettier', stop_after_first = true }
+		end
+
+		local function python_formatter(bufnr)
+			if conform.get_formatter_info('ruff_format', bufnr).available then
+				return { 'ruff_organize_imports', 'ruff_format' }
+			end
+			return { 'isort', 'black' }
+		end
+
+		local function from_python_venv(cmd)
+			return conform_util.find_executable({ '.venv/bin/' .. cmd, 'venv/bin/' .. cmd }, cmd)
+		end
 
 		return {
 			notify_on_error = true,
@@ -73,25 +87,28 @@ return {
 
 			formatters_by_ft = {
 				cs = { 'csharpier' },
-				css = web_formatters,
+				css = web_formatter,
 				go = { 'gofmt' },
-				graphql = web_formatters,
-				html = web_formatters,
-				javascript = web_formatters,
-				javascriptreact = web_formatters,
-				json = web_formatters,
+				graphql = web_formatter,
+				html = web_formatter,
+				javascript = web_formatter,
+				javascriptreact = web_formatter,
+				json = web_formatter,
 				kotlin = { 'ktlint' },
 				lua = { 'stylua' },
-				python = { 'isort', 'black' },
-				svelte = web_formatters,
-				typescript = web_formatters,
-				typescriptreact = web_formatters,
-				vue = web_formatters,
+				python = python_formatter,
+				svelte = web_formatter,
+				typescript = web_formatter,
+				typescriptreact = web_formatter,
+				vue = web_formatter,
 			},
 
 			formatters = {
+				black = { command = from_python_venv 'black' },
+				ruff_format = { command = from_python_venv 'ruff' },
+				ruff_organize_imports = { command = from_python_venv 'ruff' },
 				isort = {
-					command = 'isort',
+					command = from_python_venv 'isort',
 					args = { '--profile', 'black', '--quiet', '-' },
 				},
 			},
