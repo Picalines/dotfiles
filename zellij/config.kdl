@@ -29,6 +29,7 @@ plugins {
     about location="zellij:about"
     configuration location="zellij:configuration"
     session-manager location="zellij:session-manager"
+    plugin-manager location="zellij:plugin-manager"
 
     zjstatus location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm"
 }
@@ -75,10 +76,19 @@ keybinds clear-defaults=true {
             SwitchToMode "normal"
         }
 
-        bind "i" {
-            LaunchOrFocusPlugin "zellij:about" {
+        bind "m" {
+            LaunchOrFocusPlugin "plugin-manager" {
                 floating true
                 move_to_focused_tab true
+            }
+            SwitchToMode "normal"
+        }
+
+        bind "i" {
+            LaunchOrFocusPlugin "about" {
+                floating true
+                move_to_focused_tab true
+                
             }
             SwitchToMode "normal"
         }
