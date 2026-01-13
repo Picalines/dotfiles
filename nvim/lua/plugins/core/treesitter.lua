@@ -69,6 +69,7 @@ return {
 					[{ 'javascript', 'typescript' }] = { 'javascript', 'typescript', 'jsdoc', 'css' },
 					[{ 'javascriptreact', 'typescriptreact' }] = { 'jsx', 'tsx', 'graphql', 'css' },
 					[{ 'python' }] = { 'python' },
+					[{ 'rust' }] = { 'rust' },
 					[{ 'svelte' }] = { 'svelte' },
 					[{ 'vue' }] = { 'vue' },
 				})
