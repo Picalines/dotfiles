@@ -101,6 +101,27 @@
                 "hidden": true,
                 "name": "Azure Cloud Shell",
                 "source": "Windows.Terminal.Azure"
+            },
+            {
+                "altGrAliasing": true,
+                "antialiasingMode": "grayscale",
+                "closeOnExit": "automatic",
+                "colorScheme": "Campbell",
+                "commandline": "%USERPROFILE%/scoop/apps/git/current/usr/bin/bash.exe -l -i",
+                "cursorShape": "bar",
+                "elevate": true,
+                "font": {
+                    "size": 12
+                },
+                "guid": "{8cb69ac5-b02a-4929-b770-c9ad687f30cd}",
+                "hidden": false,
+                "historySize": 9001,
+                "icon": "%USERPROFILE%/scoop/apps/git/current/usr/share/git/git-for-windows.ico",
+                "name": "bash (admin)",
+                "padding": "8, 8, 8, 8",
+                "snapOnInput": true,
+                "startingDirectory": "%USERPROFILE%",
+                "useAcrylic": true
             }
         ]
     },
