@@ -1,103 +1,112 @@
 {
-	"$help": "https://aka.ms/terminal-documentation",
-	"$schema": "https://aka.ms/terminal-profiles-schema",
-	"actions": [
-		{
-			"command": {
-				"action": "newTab"
-			},
-			"id": "User.newTab.5DEADB41"
-		}
-	],
-	"copyFormatting": "none",
-	"copyOnSelect": false,
-	"defaultProfile": "{fbed9105-eab1-4ae5-a2a3-8283f6760749}",
-	"keybindings": [
-		{
-			"id": "Terminal.CopyToClipboard",
-			"keys": "ctrl+shift+c"
-		},
-		{
-			"id": null,
-			"keys": "ctrl+shift+k"
-		},
-		{
-			"id": "User.newTab.5DEADB41",
-			"keys": "ctrl+shift+tab"
-		},
-		{
-			"id": "Terminal.PasteFromClipboard",
-			"keys": "ctrl+shift+v"
-		},
-		{
-			"id": "Terminal.DuplicatePaneAuto",
-			"keys": "ctrl+shift+d"
-		}
-	],
-	"newTabMenu": [
-		{
-			"type": "remainingProfiles"
-		}
-	],
-	"profiles": {
-		"defaults": {
-			"colorScheme": "Dimidium",
-			"experimental.retroTerminalEffect": false,
-			"font": {
-				"builtinGlyphs": true,
-				"colorGlyphs": true,
-				"face": "Iosevka Nerd Font Mono"
-			}
-		},
-		"list": [
-			{
-				"altGrAliasing": true,
-				"antialiasingMode": "grayscale",
-				"closeOnExit": "automatic",
-				"colorScheme": "Campbell",
-				"commandline": "%USERPROFILE%/scoop/apps/git/current/usr/bin/bash.exe -l -i",
-				"cursorShape": "bar",
-				"font": {
-					"size": 12
-				},
-				"guid": "{fbed9105-eab1-4ae5-a2a3-8283f6760749}",
-				"hidden": false,
-				"historySize": 9001,
-				"icon": "%USERPROFILE%/scoop/apps/git/current/usr/share/git/git-for-windows.ico",
-				"name": "bash",
-				"padding": "8, 8, 8, 8",
-				"snapOnInput": true,
-				"startingDirectory": "%USERPROFILE%",
-				"useAcrylic": true
-			},
-			{
-				"guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-				"hidden": false,
-				"name": "powershell",
-				"source": "Windows.Terminal.PowershellCore"
-			},
-			{
-				"commandline": "%SystemRoot%\\System32\\cmd.exe",
-				"guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-				"hidden": false,
-				"name": "cmd"
-			},
-			{
-				"commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-				"guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-				"hidden": true,
-				"name": "Windows PowerShell"
-			},
-			{
-				"guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-				"hidden": true,
-				"name": "Azure Cloud Shell",
-				"source": "Windows.Terminal.Azure"
-			}
-		]
-	},
-	"schemes": [],
-	"theme": "system",
-	"themes": []
+    "$help": "https://aka.ms/terminal-documentation",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "actions": [
+        {
+            "command": {
+                "action": "newTab"
+            },
+            "id": "User.newTab.5DEADB41"
+        }
+    ],
+    "copyFormatting": "none",
+    "copyOnSelect": false,
+    "defaultProfile": "{fbed9105-eab1-4ae5-a2a3-8283f6760749}",
+    "disableAnimations": true,
+    "initialCols": 200,
+    "initialRows": 40,
+    "keybindings": [
+        {
+            "id": "Terminal.CopyToClipboard",
+            "keys": "ctrl+shift+c"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+k"
+        },
+        {
+            "id": "User.newTab.5DEADB41",
+            "keys": "ctrl+shift+tab"
+        },
+        {
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+shift+v"
+        },
+        {
+            "id": "Terminal.DuplicatePaneAuto",
+            "keys": "ctrl+shift+d"
+        }
+    ],
+    "newTabMenu": [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
+    "profiles": {
+        "defaults": {
+            "bellStyle": "audible",
+            "closeOnExit": "graceful",
+            "colorScheme": "Dimidium",
+            "experimental.retroTerminalEffect": false,
+            "font": {
+                "builtinGlyphs": true,
+                "colorGlyphs": true,
+                "face": "Iosevka Nerd Font Mono"
+            },
+            "opacity": 95,
+            "showMarksOnScrollbar": true,
+            "useAcrylic": true
+        },
+        "list": [
+            {
+                "altGrAliasing": true,
+                "antialiasingMode": "grayscale",
+                "closeOnExit": "automatic",
+                "colorScheme": "Campbell",
+                "commandline": "%USERPROFILE%/scoop/apps/git/current/usr/bin/bash.exe -l -i",
+                "cursorShape": "bar",
+                "font": {
+                    "size": 12
+                },
+                "guid": "{fbed9105-eab1-4ae5-a2a3-8283f6760749}",
+                "hidden": false,
+                "historySize": 9001,
+                "icon": "%USERPROFILE%/scoop/apps/git/current/usr/share/git/git-for-windows.ico",
+                "name": "bash",
+                "padding": "8, 8, 8, 8",
+                "snapOnInput": true,
+                "startingDirectory": "%USERPROFILE%",
+                "useAcrylic": true
+            },
+            {
+                "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+                "hidden": false,
+                "name": "powershell",
+                "source": "Windows.Terminal.PowershellCore"
+            },
+            {
+                "commandline": "%SystemRoot%\\System32\\cmd.exe",
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "hidden": false,
+                "name": "cmd"
+            },
+            {
+                "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "hidden": true,
+                "name": "Windows PowerShell"
+            },
+            {
+                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+                "hidden": true,
+                "name": "Azure Cloud Shell",
+                "source": "Windows.Terminal.Azure"
+            }
+        ]
+    },
+    "schemes": [],
+    "tabWidthMode": "titleLength",
+    "theme": "system",
+    "themes": [],
+    "useAcrylicInTabRow": false
 }
-
