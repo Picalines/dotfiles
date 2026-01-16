@@ -11,6 +11,9 @@ return {
 
 		nvim_treesitter.setup()
 
+		local disabled_highlight_filetypes = {}
+		local disabled_indent_filetypes = { 'cs' }
+
 		-- TODO: probably should be called after the async install
 		local function setup_treesitter_start_autocmd()
 			local start_autocmd = autocmd.group 'treesitter-start'
@@ -20,12 +23,24 @@ return {
 				:map(function(lang)
 					return vim.treesitter.language.get_filetypes(lang)
 				end)
+				:filter(function(ftype)
+					return not vim.list_contains(disabled_highlight_filetypes, ftype)
+				end)
 				:flatten()
+				:totable()
+
+			local indentexpr_filetypes = vim
+				.iter(filetypes_with_installed_parser)
+				:filter(function(ftype)
+					return not vim.list_contains(disabled_indent_filetypes, ftype)
+				end)
 				:totable()
 
 			start_autocmd:on('FileType', filetypes_with_installed_parser, function(event)
 				vim.treesitter.start(event.buf)
+			end)
 
+			start_autocmd:on('FileType', indentexpr_filetypes, function()
 				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 			end)
 		end
