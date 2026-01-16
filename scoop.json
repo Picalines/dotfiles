@@ -15,13 +15,6 @@
 			"Source": "main"
 		},
 		{
-			"Version": "0.67.0",
-			"Name": "fzf",
-			"Info": "",
-			"Updated": "2026-01-04T00:39:58.6563566+03:00",
-			"Source": "main"
-		},
-		{
 			"Version": "15.2.0",
 			"Name": "gcc",
 			"Info": "",
@@ -57,13 +50,6 @@
 			"Source": "nerd-fonts"
 		},
 		{
-			"Version": "1.8.1",
-			"Name": "jq",
-			"Info": "",
-			"Updated": "2026-01-04T00:37:20.959404+03:00",
-			"Source": "main"
-		},
-		{
 			"Version": "4.4.1",
 			"Name": "make",
 			"Info": "",
@@ -78,38 +64,10 @@
 			"Source": "main"
 		},
 		{
-			"Version": "0.11.5",
-			"Name": "neovim",
-			"Info": "",
-			"Updated": "2025-11-04T19:00:08.5898262+03:00",
-			"Source": "main"
-		},
-		{
-			"Version": "15.1.0",
-			"Name": "ripgrep",
-			"Info": "",
-			"Updated": "2025-11-04T19:00:09.833387+03:00",
-			"Source": "main"
-		},
-		{
 			"Version": "1.28.2",
 			"Name": "rustup",
 			"Info": "",
 			"Updated": "2025-09-27T00:55:48.8755828+03:00",
-			"Source": "main"
-		},
-		{
-			"Version": "1.24.2",
-			"Name": "starship",
-			"Info": "",
-			"Updated": "2026-01-04T00:40:13.5887448+03:00",
-			"Source": "main"
-		},
-		{
-			"Version": "0.26.3",
-			"Name": "tree-sitter",
-			"Info": "",
-			"Updated": "2026-01-04T00:25:49.6206319+03:00",
 			"Source": "main"
 		},
 		{
@@ -124,13 +82,6 @@
 			"Name": "zig",
 			"Info": "",
 			"Updated": "2025-11-04T19:00:42.940568+03:00",
-			"Source": "main"
-		},
-		{
-			"Version": "0.9.8",
-			"Name": "zoxide",
-			"Info": "",
-			"Updated": "2025-10-18T16:58:36.8760287+03:00",
 			"Source": "main"
 		}
 	],

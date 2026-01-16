@@ -7,5 +7,16 @@ python_venv_auto_create = true
 
 [tools]
 node = "lts"
+pnpm = "latest"
 python = "3.14"
 uv = "latest"
+
+fzf = "latest"
+jq = "latest"
+just = "latest"
+opencode = "latest"
+ripgrep = "latest"
+starship = "latest"
+tree-sitter = "latest"
+zoxide = "latest"
+neovim = "latest"
