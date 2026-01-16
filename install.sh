@@ -22,6 +22,8 @@ if command-exists scoop; then
     scoop import ./scoop.json
 fi
 
+symlink-to-home ".inputrc" ".inputrc"
+
 command-exists bash && symlink-to-home ".bashrc" ".bashrc"
 command-exists zsh && symlink-to-home ".zshrc" ".zshrc"
 command-exists git && symlink-to-home ".gitconfig" ".gitconfig"
@@ -34,6 +36,6 @@ command-exists neovide && symlink-to-home "neovide.toml" ".config/neovide/config
 command-exists starship && symlink-to-home "starship.toml" ".config/starship.toml"
 command-exists mise && symlink-to-home "mise" ".config/mise"
 command-exists zellij && symlink-to-home "zellij" ".config/zellij"
-[ -d ~/.glzr/glazewm ] && symlink-to-home "glazewm.yaml" ".glzr/glazewm/config.yaml"
 
+[ -d ~/.glzr/glazewm ] && symlink-to-home "glazewm.yaml" ".glzr/glazewm/config.yaml"
 [ -d ~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState ] && symlink-to-home "windows-terminal/settings.json" "AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json"
