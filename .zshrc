@@ -49,3 +49,5 @@ update-term-title() {
 
 add-zsh-hook chpwd update-term-title
 update-term-title
+
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
