@@ -1,7 +1,7 @@
 theme = "light:Raycast Light,dark:Raycast Dark"
 macos-icon = xray
 
-font-family = "Iosevka Nerd Font Mono"
+font-family = "IosevkaTerm Nerd Font Mono"
 font-size = 20
 
 custom-shader = shaders/cursor_smear.glsl
