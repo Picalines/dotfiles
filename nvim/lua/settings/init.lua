@@ -9,6 +9,7 @@ if app.client() == 'vscode' then
 	require 'settings.vscode'
 else
 	require 'settings.colorscheme'
+	require 'settings.diff'
 	require 'settings.lsp'
 	require 'settings.spell'
 end
