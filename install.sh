@@ -30,6 +30,7 @@ fi
 symlink-to-home ".inputrc" ".inputrc"
 
 command-exists bash && symlink-to-home ".bashrc" ".bashrc"
+command-exists zsh && symlink-to-home ".zprofile" ".zprofile"
 command-exists zsh && symlink-to-home ".zshrc" ".zshrc"
 command-exists git && symlink-to-home ".gitconfig" ".gitconfig"
 command-exists git && symlink-to-home ".gitignore.global" ".gitignore"
