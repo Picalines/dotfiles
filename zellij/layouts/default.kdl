@@ -48,6 +48,16 @@ layout {
         }
     }
 
+    swap_tiled_layout name="columns" {
+        tab max_panes=4 {
+            pane split_direction="vertical" {
+                pane
+                pane
+                pane
+            }
+        }
+    }
+
     swap_floating_layout name="columns" {
         floating_panes exact_panes=1 {
             pane x="20%" y="20%" width="60%" height="60%"
