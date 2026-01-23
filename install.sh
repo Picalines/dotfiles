@@ -29,6 +29,7 @@ fi
 
 symlink-to-home ".inputrc" ".inputrc"
 
+command-exists bash && symlink-to-home ".bash_profile" ".bash_profile"
 command-exists bash && symlink-to-home ".bashrc" ".bashrc"
 command-exists zsh && symlink-to-home ".zprofile" ".zprofile"
 command-exists zsh && symlink-to-home ".zshrc" ".zshrc"
