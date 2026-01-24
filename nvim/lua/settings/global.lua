@@ -84,8 +84,6 @@ keymap {
 				['k'] = "v:count == 0 ? 'gk' : 'k'",
 				['j'] = "v:count == 0 ? 'gj' : 'j'",
 			},
-
-			['<C-x>'] = { '"_', 'send to void' },
 		},
 	},
 
