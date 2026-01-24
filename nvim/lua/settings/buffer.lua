@@ -18,6 +18,9 @@ keymap {
 		['<LocalLeader>bn'] = { '<Cmd>enew<CR>', 'new' },
 		['<LocalLeader>br'] = { '<Cmd>e<CR>', 'reload' },
 		['<LocalLeader>bt'] = { '<Cmd>term<CR>', 'terminal' },
+
+		['<LocalLeader>w'] = { '<Cmd>silent w<CR>', 'write' },
+		['<Leader>w'] = { '<Cmd>silent wa!<CR>', 'write all' },
 	},
 }
 

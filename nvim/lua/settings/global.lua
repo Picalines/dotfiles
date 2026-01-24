@@ -67,9 +67,6 @@ keymap {
 		['u'] = { '<Cmd>undo<CR>', 'undo' },
 		['U'] = { '<Cmd>redo<CR>', 'redo' },
 
-		['<LocalLeader>w'] = { '<Cmd>silent w<CR>', 'write' },
-		['<Leader>w'] = { '<Cmd>silent wa!<CR>', 'write all' },
-
 		['y<C-g>'] = { '<Cmd>eval setreg(v:register, @%) | echo @% . " -> " . v:register<CR>', 'yank buffer path' },
 
 		[{ 'x' }] = {
