@@ -1,0 +1,38 @@
+snippet dl "debug log"
+    console.log("!DEBUG!", $1)
+
+snippet /* "jsdoc"
+    /*
+     * ${1:documentation}
+     */
+
+snippet doc "jsdoc"
+    /*
+     * ${1:documentation}
+     */
+
+snippet cd "const { } ="
+    const { ${2} } = ${1}
+
+snippet af "() => ..."
+    ($1) => ${2:()}
+
+snippet afb "() => { ... }"
+    ($1) => {
+        $2
+    }
+
+snippet desc "describe(...)"
+    describe('$1', () => {
+        $2
+    })
+
+snippet test "test(...)"
+    test('$1', () => {
+        $2
+    })
+
+snippet itsh "it('should ...')"
+    it('should $1', () => {
+        $2
+    })

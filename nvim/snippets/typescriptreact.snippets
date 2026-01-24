@@ -1,0 +1,10 @@
+extends javascriptreact, typescript
+
+snippet rcp "props & component"
+    type Props = {
+        $2
+    }
+    
+    export const ${1:Component} = ({ $3 }: Props) => {
+        return ${4:<></>}
+    }

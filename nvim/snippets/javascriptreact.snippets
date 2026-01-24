@@ -1,0 +1,24 @@
+extends javascript
+
+snippet descr "describe(... & render)"
+    describe('$1', () => {
+        it('should $2', () => {
+            render(<$1/>)
+
+            $3
+        })
+    })
+
+snippet testr "test(... & render)"
+    test('$1', () => {
+        render($2)
+
+        $3
+    })
+
+snippet itshr "it('should ...' & render)"
+    it('should $1', () => {
+        render($2)
+
+        $3
+    })
