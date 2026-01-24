@@ -49,6 +49,7 @@ vim.o.foldtext = ''
 vim.opt.fillchars = {
 	eob = ' ', -- no ~ at the end
 	fold = ' ',
+	diff = '╱',
 }
 
 keymap {

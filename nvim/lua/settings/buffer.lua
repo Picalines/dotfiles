@@ -11,7 +11,7 @@ vim.go.expandtab = true
 vim.go.matchpairs = vim.go.matchpairs .. ',<:>'
 
 keymap {
-	[{ 'n', silent = true, desc = 'Buffer: %s' }] = {
+	[{ 'n', desc = 'Buffer: %s' }] = {
 		[']b'] = { '<Cmd>bn<CR>', 'next' },
 		['[b'] = { '<Cmd>bp<CR>', 'previous' },
 
@@ -21,6 +21,14 @@ keymap {
 
 		['<LocalLeader>w'] = { '<Cmd>silent w<CR>', 'write' },
 		['<Leader>w'] = { '<Cmd>silent wa!<CR>', 'write all' },
+
+		['<LocalLeader>s'] = { ':%s///g<Left><Left><Left>', 'substitute' },
+		['<LocalLeader>gn'] = { ':%g//norm <Left><Left><Left><Left><Left><Left>', 'g norm' },
+	},
+
+	[{ 'x', desc = 'Buffer: %s' }] = {
+		['<LocalLeader>s'] = { ':s///g<Left><Left><Left>', 'substitute' },
+		['<LocalLeader>gn'] = { ':g//norm <Left><Left><Left><Left><Left><Left>', 'g norm' },
 	},
 }
 
