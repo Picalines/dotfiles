@@ -25,4 +25,6 @@ if command-exists nvim; then
   alias e=nvim
 fi
 
+command-exists yazi && alias f=yazi
+
 alias python=python3
