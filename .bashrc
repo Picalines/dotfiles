@@ -9,8 +9,8 @@ command-exists() {
 
 [ -f ~/.bash_aliases ] &&  source ~/.bash_aliases
 [ -f ~/.cargo/env ] && source ~/.cargo/env
-command-exists starship && eval "$(starship init bash)"
 command-exists mise && eval "$(mise activate bash --shims)"
+command-exists starship && eval "$(starship init bash)"
 command-exists pnpm && eval "$(pnpm completion bash)"
 command-exists fzf && eval "$(fzf --bash)"
 command-exists zoxide && eval "$(zoxide init bash)"
