@@ -8,11 +8,11 @@ command-exists() {
 }
 
 command-exists cargo && source "$HOME/.cargo/env"
-command-exists starship && source <(starship init zsh)
+command-exists starship && eval "$(starship init zsh)"
 command-exists fzf && source <(fzf --zsh)
-command-exists mise && source <(mise activate zsh --shims)
-command-exists pnpm && source <(pnpm completion zsh)
-command-exists zoxide && source <(zoxide init zsh)
+command-exists mise && eval "$(mise activate zsh --shims)"
+command-exists pnpm && eval "$(pnpm completion zsh)"
+command-exists zoxide && eval "$(zoxide init zsh)"
 
 if command-exists nvim; then
   export VISUAL="nvim -b"

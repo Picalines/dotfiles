@@ -9,11 +9,11 @@ command-exists() {
 
 [ -f ~/.bash_aliases ] &&  source ~/.bash_aliases
 [ -f ~/.cargo/env ] && source ~/.cargo/env
-command-exists starship && source <(starship init bash)
-command-exists mise && source <(mise activate bash --shims)
-command-exists pnpm && source <(pnpm completion bash)
-command-exists fzf && source <(fzf --bash)
-command-exists zoxide && source <(zoxide init bash)
+command-exists starship && eval "$(starship init bash)"
+command-exists mise && eval "$(mise activate bash --shims)"
+command-exists pnpm && eval "$(pnpm completion bash)"
+command-exists fzf && eval "$(fzf --bash)"
+command-exists zoxide && eval "$(zoxide init bash)"
 
 if command-exists nvim; then
   export VISUAL="nvim -b"
