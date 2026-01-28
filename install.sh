@@ -27,12 +27,12 @@ if command-exists mise; then
     mise install
 fi
 
-symlink-to-home ".inputrc" ".inputrc"
+symlink-to-home "./sh/.inputrc" ".inputrc"
 
-command-exists bash && symlink-to-home ".bash_profile" ".bash_profile"
-command-exists bash && symlink-to-home ".bashrc" ".bashrc"
-command-exists zsh && symlink-to-home ".zprofile" ".zprofile"
-command-exists zsh && symlink-to-home ".zshrc" ".zshrc"
+command-exists bash && symlink-to-home "./sh/.bash_profile" ".bash_profile"
+command-exists bash && symlink-to-home "./sh/.bashrc" ".bashrc"
+command-exists zsh && symlink-to-home "./sh/.zprofile" ".zprofile"
+command-exists zsh && symlink-to-home "./sh/.zshrc" ".zshrc"
 command-exists git && symlink-to-home ".gitconfig" ".gitconfig"
 command-exists git && symlink-to-home ".gitignore.global" ".gitignore"
 command-exists nvim && symlink-to-home "nvim" ".config/nvim"
