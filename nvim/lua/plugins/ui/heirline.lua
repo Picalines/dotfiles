@@ -19,23 +19,25 @@ return {
 
 		local augroup = autocmd.group 'heirline'
 
-		hl.pick(augroup, 'StatusLineDiffDelta', { fg = '@diff.delta' })
-		hl.pick(augroup, 'StatusLineDiffMinus', { fg = '@diff.minus' })
-		hl.pick(augroup, 'StatusLineDiffPlus', { fg = '@diff.plus' })
-		hl.pick(augroup, 'StatusLineError', { fg = 'DiagnosticError' })
-		hl.pick(augroup, 'StatusLineFlag', { fg = '@boolean' })
-		hl.pick(augroup, 'StatusLineHint', { fg = 'DiagnosticHint' })
-		hl.pick(augroup, 'StatusLineInfo', { fg = 'DiagnosticInfo' })
-		hl.pick(augroup, 'StatusLineLsp', { fg = '@tag' })
-		hl.pick(augroup, 'StatusLineMacro', { fg = '@keyword' })
-		hl.pick(augroup, 'StatusLineModified', { fg = '@diff.plus' })
-		hl.pick(augroup, 'StatusLineNormal', { fg = 'Normal' })
-		hl.pick(augroup, 'StatusLineWarn', { fg = 'DiagnosticWarn' })
-		hl.pick(augroup, 'WinBarDirectory', { fg = 'Directory' })
-		hl.pick(augroup, 'WinBarFile', { fg = 'Normal' })
-		hl.pick(augroup, 'WinBarModified', { fg = '@diff.plus' })
+		hl.pick(augroup, 'StatusLineDiffDelta', { fg = '@diff.delta', bg = 'StatusLine' })
+		hl.pick(augroup, 'StatusLineDiffMinus', { fg = '@diff.minus', bg = 'StatusLine' })
+		hl.pick(augroup, 'StatusLineDiffPlus', { fg = '@diff.plus', bg = 'StatusLine' })
+		hl.pick(augroup, 'StatusLineError', { fg = 'DiagnosticError', bg = 'StatusLine' })
+		hl.pick(augroup, 'StatusLineFlag', { fg = '@boolean', bg = 'StatusLine' })
+		hl.pick(augroup, 'StatusLineHint', { fg = 'DiagnosticHint', bg = 'StatusLine' })
+		hl.pick(augroup, 'StatusLineInfo', { fg = 'DiagnosticInfo', bg = 'StatusLine' })
+		hl.pick(augroup, 'StatusLineLsp', { fg = '@tag', bg = 'StatusLine' })
+		hl.pick(augroup, 'StatusLineMacro', { fg = '@keyword', bg = 'StatusLine' })
+		hl.pick(augroup, 'StatusLineModified', { fg = '@diff.plus', bg = 'StatusLine' })
+		hl.pick(augroup, 'StatusLineNormal', { fg = 'Normal', bg = 'StatusLine' })
+		hl.pick(augroup, 'StatusLineWarn', { fg = 'DiagnosticWarn', bg = 'StatusLine' })
+		hl.pick(augroup, 'StatusLineDirectory', { fg = 'Directory', bg = 'StatusLine' })
+		hl.pick(augroup, 'WinBarDirectory', { fg = 'Directory', bg = 'WinBar' })
+		hl.pick(augroup, 'WinBarFile', { fg = 'Normal', bg = 'WinBar' })
+		hl.pick(augroup, 'WinBarModified', { fg = '@diff.plus', bg = 'WinBar' })
 
 		local Space = { provider = ' ', hl = { fg = 'NONE' } }
+		local Align = { provider = '%=', hl = { fg = 'NONE' } }
 
 		---@param decorate fun(c: table): table
 		local function Decorated(decorate)
@@ -79,14 +81,14 @@ return {
 
 		local Cwd = {
 			update = { 'DirChanged' },
-			hl = 'WinBarDirectory',
+			hl = 'StatusLineDirectory',
 			init = function(self)
 				local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
 				self.provider = string.format(' %s', cwd)
 			end,
 		}
 
-		local Buffer = {
+		local BufferWinBar = {
 			condition = function()
 				return vim.bo.buftype == '' and vim.bo.buflisted
 			end,
@@ -150,17 +152,20 @@ return {
 					return vim.bo.modified
 				end,
 			},
+			Align,
 		}
 
-		local Terminal = {
+		local TerminalWinBar = {
 			condition = function()
 				return vim.bo.buftype == 'terminal'
 			end,
 
 			provider = ' %{b:term_title}',
+
+			Align,
 		}
 
-		local Quickfix = {
+		local QuickfixWinBar = {
 			condition = function()
 				return vim.bo.buftype == 'quickfix'
 			end,
@@ -169,6 +174,8 @@ return {
 				local qf_info = vim.fn.getqflist { idx = 0, size = 0 }
 				return string.format(' %s/%s', qf_info.idx, qf_info.size)
 			end,
+
+			Align,
 		}
 
 		local TabPageList = {
@@ -456,7 +463,7 @@ return {
 			end,
 		}
 
-		local LeftStatusline = AppendAll(Space, 'right') {
+		local LeftStatusLine = AppendAll(Space, 'right') {
 			TabPageList,
 			Cwd,
 			ViMode,
@@ -466,7 +473,7 @@ return {
 			SearchCount,
 		}
 
-		local RightStatusline = AppendAll(Space, 'left') {
+		local RightStatusLine = AppendAll(Space, 'left') {
 			WrapFlag,
 			SpellFlag,
 			FormatBeforeWriteFlag,
@@ -475,23 +482,19 @@ return {
 			ScrollProgress,
 		}
 
-		local Align = { provider = '%=', hl = { fg = 'NONE' } }
-
 		heirline.setup {
 			---@diagnostic disable-next-line: missing-fields
 			statusline = {
-				hl = 'StatusLine',
-				LeftStatusline,
+				LeftStatusLine,
 				Align,
-				RightStatusline,
+				RightStatusLine,
 			},
 			---@diagnostic disable-next-line: missing-fields
 			winbar = {
-				hl = 'WinBar',
 				fallthrough = false,
-				Buffer,
-				Terminal,
-				Quickfix,
+				BufferWinBar,
+				TerminalWinBar,
+				QuickfixWinBar,
 			},
 			opts = {
 				disable_winbar_cb = function(args)
@@ -511,6 +514,9 @@ return {
 				vim.cmd.redrawstatus()
 			end)
 		)
+
+		vim.opt.showmode = false
+		vim.opt.showcmd = false
 
 		-- https://github.com/rebelot/heirline.nvim/issues/203#issuecomment-2208395807
 		vim.cmd [[:au VimLeavePre * set stl=]]
