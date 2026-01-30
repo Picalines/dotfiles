@@ -14,6 +14,7 @@ augroup:on('BufWinEnter', '*', function(event)
 end)
 
 augroup:on('TermOpen', '*', 'set nospell')
+augroup:on('BufWinEnter', '*.snippets', 'set nospell')
 
 augroup:on({ 'DirChanged', 'VimEnter' }, '*', function()
 	local cwd = vim.fs.basename(vim.fn.getcwd(-1))
