@@ -42,6 +42,7 @@ command-exists ghostty && symlink-to-home "ghostty" ".config/ghostty"
 command-exists neovide && symlink-to-home "neovide.toml" ".config/neovide/config.toml"
 command-exists starship && symlink-to-home "starship.toml" ".config/starship.toml"
 command-exists zellij && symlink-to-home "zellij" ".config/zellij"
+command-exists qutebrowser && symlink-to-home "qutebrowser" ".qutebrowser"
 
 [ -d ~/.glzr/glazewm ] && symlink-to-home "glazewm.yaml" ".glzr/glazewm/config.yaml"
 [ -d ~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState ] && symlink-to-home "windows-terminal/settings.json" "AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json"

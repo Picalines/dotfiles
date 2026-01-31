@@ -115,6 +115,10 @@ if.app-id = 'ru.yandex.desktop.yandex-browser'
 run = ['layout tiling', 'move-node-to-workspace B']
 
 [[on-window-detected]]
+if.app-id = 'org.qutebrowser.qutebrowser'
+run = ['layout tiling', 'move-node-to-workspace B']
+
+[[on-window-detected]]
 if.app-id = 'com.neovide.neovide'
 run = ['layout tiling', 'move-node-to-workspace C']
 
