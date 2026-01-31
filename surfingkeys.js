@@ -1,9 +1,11 @@
+// https://raw.githubusercontent.com/Picalines/dotfiles/refs/heads/main/surfingkeys.js
+
 // === SETTINGS ===
 
-api.unmap("h");
-api.unmap("j");
-api.unmap("k");
-api.unmap("l");
+api.unmap("h", /youtube\.com/);
+api.unmap("j", /youtube\.com/);
+api.unmap("k", /youtube\.com/);
+api.unmap("l", /youtube\.com/);
 
 // === THEME ===
 // upstream: https://github.com/rose-pine/surfingkeys/blob/main/dist/rose-pine.conf
