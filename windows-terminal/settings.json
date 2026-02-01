@@ -321,7 +321,7 @@
                 "antialiasingMode": "grayscale",
                 "closeOnExit": "automatic",
                 "colorScheme": "Campbell",
-                "commandline": "%USERPROFILE%/scoop/apps/git/current/usr/bin/bash.exe -l -i",
+                "commandline": "%USERPROFILE%/scoop/apps/git/current/bin/bash.exe -l -i",
                 "cursorShape": "bar",
                 "font": {
                     "size": 12
@@ -365,7 +365,7 @@
                 "antialiasingMode": "grayscale",
                 "closeOnExit": "automatic",
                 "colorScheme": "Campbell",
-                "commandline": "%USERPROFILE%/scoop/apps/git/current/usr/bin/bash.exe -l -i",
+                "commandline": "%USERPROFILE%/scoop/apps/git/current/bin/bash.exe -l -i",
                 "cursorShape": "bar",
                 "elevate": true,
                 "font": {

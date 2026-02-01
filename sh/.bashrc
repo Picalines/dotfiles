@@ -9,7 +9,16 @@ command-exists() {
 
 [ -f ~/.bash_aliases ] &&  source ~/.bash_aliases
 [ -f ~/.cargo/env ] && source ~/.cargo/env
-command-exists mise && eval "$(mise activate bash --shims)"
+
+if command-exists mise; then
+  if [[ "$OSTYPE" == "msys" ]]; then
+    # https://github.com/jdx/mise/discussions/3961
+    eval "$(mise activate bash --shims | sed -e 's/="C:\\/="\/c\//')"
+  else
+    eval "$(mise activate bash --shims)"
+  fi
+fi
+
 command-exists starship && eval "$(starship init bash)"
 command-exists pnpm && eval "$(pnpm completion bash)"
 command-exists fzf && eval "$(fzf --bash)"
