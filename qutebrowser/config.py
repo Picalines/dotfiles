@@ -1,3 +1,5 @@
+from themes import catppuccin
+
 config.load_autoconfig()
 
 c.statusbar.position = 'bottom'
@@ -12,4 +14,4 @@ c.tabs.title.format_pinned = '[P]{audio}{current_title}'
 
 config.bind('<Escape>', 'mode-leave ;; jseval -q document.activeElement.blur()', mode='insert')
 
-config.source('gruvbox.py')
+catppuccin.setup(c, 'macchiato', samecolorrows=False)
