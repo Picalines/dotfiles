@@ -22,6 +22,31 @@ snippet afb "() => { ... }"
         $2
     }
 
+snippet if "if (...) { ... }"
+    if (${1:true}) {
+        $0
+    }
+
+snippet ifn "if (!...) { ... }"
+    if (!${1:true}) {
+        $0
+    }
+
+snippet ifnr "if (!...) { return ... }"
+    if (!${1:true}) {
+        return $0
+    }
+
+snippet forin "for (const key in object)"
+    for (const ${2:key} in ${1:object}) {
+        $0
+    }
+
+snippet forof "for (const item of collection)"
+    for (const ${2:item} of ${1:collection}) {
+        $0
+    }
+
 snippet desc "describe(...)"
     describe('$1', () => {
         $2
