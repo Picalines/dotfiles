@@ -1,14 +1,8 @@
 local autocmd = require 'util.autocmd'
 local keymap = require 'util.keymap'
 
--- tabs
-vim.go.tabstop = 4
-vim.go.softtabstop = 4
-vim.go.shiftwidth = 4
-vim.go.expandtab = true
-
 -- highlight <>
-vim.go.matchpairs = vim.go.matchpairs .. ',<:>'
+vim.o.matchpairs = vim.go.matchpairs .. ',<:>'
 
 keymap {
 	[{ 'n', desc = 'Buffer: %s' }] = {
