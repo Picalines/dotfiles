@@ -1,19 +1,22 @@
 theme = "light:Raycast Light,dark:Raycast Dark"
-macos-icon = xray
-
 font-family = "IosevkaTerm Nerd Font Mono"
 font-size = 20
 
 custom-shader = shaders/cursor_smear.glsl
+cursor-invert-fg-bg = true
+unfocused-split-opacity = 1
 
 window-padding-color = extend
 window-padding-x = 10
 window-padding-y = 10
-unfocused-split-opacity = 1
+window-save-state = never
+quick-terminal-position = center
+quick-terminal-size = 60%
+quick-terminal-screen = mouse
+quick-terminal-animation-duration = 0
 
+macos-icon = xray
 macos-titlebar-style = hidden
 macos-option-as-alt = true
-
-cursor-invert-fg-bg = true
 
 keybind = global:cmd+option+ctrl+shift+t=toggle_quick_terminal
