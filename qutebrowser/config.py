@@ -22,7 +22,7 @@ c.fonts.tabs.selected = "bold"
 c.tabs.title.format = "{audio}{current_title}"
 c.tabs.title.format_pinned = c.tabs.title.format
 
-c.hints.selectors["button"] = [
+c.hints.selectors["buttons"] = [
     "select",
     "button",
     "[onclick]",
@@ -71,7 +71,7 @@ keymaps = {
     "normal": {
         "<Escape>": to_default,
         "<Ctrl-z>": then_default("fake-key <Ctrl-z>"),
-        "p": "mode-enter passthrough",
+        "<Ctrl-v>": "mode-enter passthrough",
         ":": "cmd-set-text :",
         ";": "cmd-set-text :",
         "h": then_default("tab-prev"),
@@ -95,7 +95,6 @@ keymaps = {
         "d": then_default("devtools right"),
         "D": then_default("devtools window"),
         "s": "cmd-set-text -s :set",
-        "i": then_default("hint inputs --first"),
         "t<Escape>": to_default,
         "tp": then_default("config-cycle tabs.position left top"),
         "to": then_default("tab-only"),
@@ -107,18 +106,17 @@ keymaps = {
         "tW": "cmd-set-text -s :tab-take",
         "tm": then_default("tab-mute"),
         "T": "cmd-set-text -s :tab-select",
-        "f<Escape>": to_default,
         **{
-            f"f{g}{a}": f"hint {group} {action}"
+            f"{g}{a}": f"hint {group} {action}"
             for g, group in (
-                ("", "links"),
-                ("b", "button"),
-                ("i", "images"),
-                ("t", "inputs"),
+                ("a", "links"),
+                ("i", "inputs"),
+                ("b", "buttons"),
+                ("p", "images"),
             )
             for a, action in (
+                ("f", "normal"),
                 ("c", "normal"),
-                ("o", "current"),
                 ("O", "tab-fg"),
                 ("d", "download"),
                 ("r", "right-click"),
