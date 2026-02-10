@@ -96,7 +96,6 @@ keymaps = {
         "s": "cmd-set-text -s :set",
         "i": then_default("hint inputs --first"),
         "t<Escape>": to_default,
-        "tt": "cmd-set-text -s :tab-select",
         "tp": then_default("config-cycle tabs.position left top"),
         "to": then_default("tab-only"),
         "th": "tab-move - ;; mode-enter normal ;; fake-key -g t",
@@ -106,6 +105,7 @@ keymaps = {
         "tw": then_default("tab-give"),
         "tW": "cmd-set-text -s :tab-take",
         "tm": then_default("tab-mute"),
+        "T": "cmd-set-text -s :tab-select",
         "f<Escape>": to_default,
         **{
             f"f{g}{a}": f"hint {group} {action}"
