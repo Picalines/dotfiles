@@ -182,6 +182,10 @@ run = ['layout tiling', 'move-node-to-workspace Z']
 if.app-id = 'com.apple.FaceTime'
 run = ['layout tiling', 'move-node-to-workspace Z']
 
+[[on-window-detected ]]
+if.app-id = 'com.hnc.Discord'
+run = ['layout tiling', 'move-node-to-workspace Z']
+
 [[on-window-detected]]
 if.app-id = 'com.microsoft.Word'
 run = ['layout tiling', 'move-node-to-workspace V']
