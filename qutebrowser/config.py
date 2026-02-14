@@ -48,20 +48,32 @@ c.bindings.default["insert"].clear()
 c.bindings.default["hint"].clear()
 
 
+def bind_keymaps(keymaps, prefix="", mode=None):
+    for key, value in keymaps.items():
+        if key.startswith("[") and key.endswith("]"):
+            modes = key[1:-1].split("+")
+            for mode in modes:
+                bind_keymaps(value, prefix, mode)
+        elif isinstance(value, dict):
+            bind_keymaps(value, prefix + key, mode)
+        else:
+            config.bind(prefix + key, value, mode=mode)
+
+
 then_default = lambda cmd: cmd + " ;; mode-enter insert"
 to_default = then_default("nop")
 
 keymaps = {
-    "insert": {
+    "[insert]": {
         "<Ctrl-z>": "mode-enter normal",
     },
-    "passthrough": {
+    "[passthrough]": {
         "<Shift+Escape>": to_default,
     },
-    "command+prompt+yesno+register+hint": {
+    "[command+prompt+yesno+register+hint]": {
         "<Escape>": then_default("mode-leave"),
     },
-    "normal+insert": {
+    "[normal+insert]": {
         "<Ctrl-d>": "scroll-page 0 0.5",
         "<Ctrl-u>": "scroll-page 0 -0.5",
         "<Ctrl-i>": "forward",
@@ -69,7 +81,7 @@ keymaps = {
         "<back>": "back",
         "<forward>": "forward",
     },
-    "normal": {
+    "[normal]": {
         "<Escape>": to_default,
         "<Ctrl-z>": then_default("fake-key <Ctrl-z>"),
         "<Ctrl-v>": "mode-enter passthrough",
@@ -95,20 +107,20 @@ keymaps = {
         "-": "zoom-out",
         "_": "zoom-out",
         "m": "quickmark-save",
-        "d": then_default("devtools right"),
-        "D": then_default("devtools window"),
         "s": "cmd-set-text -s :set",
-        "t<Escape>": to_default,
-        "tp": then_default("config-cycle tabs.position left top"),
-        "to": then_default("tab-only"),
-        "th": "tab-move - ;; mode-enter normal ;; fake-key -g t",
-        "tj": "tab-move + ;; mode-enter normal ;; fake-key -g t",
-        "tk": "tab-move - ;; mode-enter normal ;; fake-key -g t",
-        "tl": "tab-move + ;; mode-enter normal ;; fake-key -g t",
-        "tw": then_default("tab-give"),
-        "tW": "cmd-set-text -s :tab-take",
-        "tm": then_default("tab-mute"),
         "T": "cmd-set-text -s :tab-select",
+        "t": {
+            "<Escape>": to_default,
+            "p": then_default("config-cycle tabs.position left top"),
+            "o": then_default("tab-only"),
+            "h": "tab-move - ;; mode-enter normal ;; fake-key -g t",
+            "j": "tab-move + ;; mode-enter normal ;; fake-key -g t",
+            "k": "tab-move - ;; mode-enter normal ;; fake-key -g t",
+            "l": "tab-move + ;; mode-enter normal ;; fake-key -g t",
+            "w": then_default("tab-give"),
+            "W": "cmd-set-text -s :tab-take",
+            "m": then_default("tab-mute"),
+        },
         **{
             f"{g}{a}": f"hint {group} {action}"
             for g, group in (
@@ -126,27 +138,31 @@ keymaps = {
                 ("h", "hover"),
             )
         },
-        "g<Escape>": to_default,
-        "go": "cmd-set-text :open {url:pretty}",
-        "gg": then_default("scroll top"),
-        "gh": "cmd-set-text -s :help -t",
-        "gc": then_default("config-source"),
-        "y<Escape>": to_default,
-        "yy": then_default("yank"),
-        "yt": then_default("yank title"),
-        "yd": then_default("yank domain"),
-        "yp": then_default("yank inline {url:port}"),
+        "g": {
+            "<Escape>": to_default,
+            "o": "cmd-set-text :open {url:pretty}",
+            "g": then_default("scroll top"),
+            "h": "cmd-set-text -s :help -t",
+            "c": then_default("config-source"),
+        },
+        "y": {
+            "<Escape>": to_default,
+            "y": then_default("yank"),
+            "t": then_default("yank title"),
+            "d": then_default("yank domain"),
+            "p": then_default("yank inline {url:port}"),
+        },
+        "w": {
+            "<Escape>": to_default,
+            "d": then_default("devtools right"),
+            "D": then_default("devtools window"),
+        },
     },
-    "hint": {
+    "[hint]": {
         "<Return>": "hint-follow",
     },
 }
 
-
-for modes, mode_keymaps in keymaps.items():
-    for mode in modes.split("+"):
-        for keys, command in mode_keymaps.items():
-            config.bind(keys, command, mode=mode)
-
+bind_keymaps(keymaps)
 
 catppuccin.setup(c, "macchiato", samecolorrows=False)
