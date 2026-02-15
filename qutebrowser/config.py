@@ -1,7 +1,5 @@
 from themes import catppuccin
 
-config.load_autoconfig()
-
 c.input.forward_unbound_keys = "none"
 c.input.insert_mode.auto_enter = True
 c.input.insert_mode.auto_leave = False
@@ -22,6 +20,8 @@ c.fonts.tabs.selected = "bold"
 
 c.tabs.title.format = "{audio}{current_title}"
 c.tabs.title.format_pinned = c.tabs.title.format
+
+config.load_autoconfig()
 
 c.hints.selectors["buttons"] = [
     "select",
