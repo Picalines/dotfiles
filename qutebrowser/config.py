@@ -10,7 +10,7 @@ c.tabs.mode_on_change = "persist"
 c.input.mode_override = ""
 
 c.statusbar.position = "bottom"
-c.statusbar.widgets = ["search_match", "url", "history"]
+c.statusbar.widgets = ["search_match", "progress", "url", "history"]
 c.tabs.position = "top"
 c.tabs.show = "multiple"
 c.tabs.width = "17%"
