@@ -83,6 +83,13 @@
 			"Info": "",
 			"Updated": "2025-11-04T19:00:42.940568+03:00",
 			"Source": "main"
+		},
+		{
+			"Version": "26.02.11",
+			"Name": "winutil",
+			"Info": "",
+			"Updated": "2025-11-04T19:00:42.940568+03:00",
+			"Source": "extras"
 		}
 	],
 	"buckets": [
