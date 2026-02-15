@@ -2,6 +2,8 @@
 	path = ~/.gitconfig.local
 [core]
 	excludesFile = ~/.gitignore
+	autocrlf = false
+	eol = lf
 [alias]
 	af = !git add $(fzf)
 	st = status -sb
