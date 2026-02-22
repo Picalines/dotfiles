@@ -28,21 +28,24 @@ if command-exists mise; then
 fi
 
 symlink-to-home "./shell/.inputrc" ".inputrc"
-
 command-exists bash && symlink-to-home "./shell/.bash_profile" ".bash_profile"
 command-exists bash && symlink-to-home "./shell/.bashrc" ".bashrc"
 command-exists zsh && symlink-to-home "./shell/.zprofile" ".zprofile"
 command-exists zsh && symlink-to-home "./shell/.zshrc" ".zshrc"
 command-exists starship && symlink-to-home "./shell/starship.toml" ".config/starship.toml"
+
 command-exists git && symlink-to-home "./git/.gitconfig" ".gitconfig"
 command-exists git && symlink-to-home "./git/.gitignore.global" ".gitignore"
-command-exists nvim && symlink-to-home "nvim" ".config/nvim"
+
 command-exists aerospace && symlink-to-home "./wm/aerospace.toml" ".config/aerospace/aerospace.toml"
+[ -d ~/.glzr/glazewm ] && symlink-to-home "./wm/glazewm.yaml" ".glzr/glazewm/config.yaml"
+command-exists zellij && symlink-to-home "./wm/zellij" ".config/zellij"
+
 command-exists alacritty && symlink-to-home "./tty/alacritty.toml" ".config/alacritty/alacritty.toml"
 command-exists ghostty && symlink-to-home "./tty/ghostty" ".config/ghostty"
-command-exists neovide && symlink-to-home "./nvim/neovide.toml" ".config/neovide/config.toml"
-command-exists zellij && symlink-to-home "./wm/zellij" ".config/zellij"
-command-exists qutebrowser && symlink-to-home "qutebrowser" ".qutebrowser"
-
-[ -d ~/.glzr/glazewm ] && symlink-to-home "./wm/glazewm.yaml" ".glzr/glazewm/config.yaml"
 [ -d ~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState ] && symlink-to-home "./tty/windows-terminal/settings.json" "AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json"
+
+command-exists nvim && symlink-to-home "./nvim" ".config/nvim"
+command-exists neovide && symlink-to-home "./nvim/neovide.toml" ".config/neovide/config.toml"
+
+command-exists qutebrowser && symlink-to-home "qutebrowser" ".qutebrowser"
