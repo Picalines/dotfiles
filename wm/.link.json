@@ -3,17 +3,25 @@
     {
       "from": "aerospace.toml",
       "to": "~/.config/aerospace/aerospace.toml",
-      "if": {"executable-exists": "aerospace"}
+      "if": {
+        "executable-exists": "aerospace",
+        "os": "macos"
+      }
     },
     {
       "from": "glazewm.yaml",
       "to": "~/.glzr/glazewm/config.yaml",
-      "if": {"path-exists": "~/.glzr/glazewm"}
+      "if": {
+        "path-exists": "~/.glzr/glazewm",
+        "os": "windows"
+      }
     },
     {
       "from": "zellij",
       "to": "~/.config/zellij",
-      "if": {"executable-exists": "zellij"}
+      "if": {
+        "executable-exists": "zellij"
+      }
     }
   ]
 }

@@ -7,6 +7,9 @@ import platform
 import shutil
 
 
+OS_NAMES = {"windows": "Windows", "macos": "Darwin", "linux": "Linux"}
+
+
 def color(text, code):
     if not sys.stdout.isatty():
         return text
@@ -54,6 +57,14 @@ def resolve_condition(condition):
                 return False
         elif cond_type == "path-exists":
             if not path_exists(cond_value):
+                return False
+        elif cond_type == "os":
+            negate = cond_value.startswith("!")
+            os_name = cond_value.lstrip("!")
+            if os_name not in OS_NAMES:
+                raise KeyError(f"unknown os: {os_name}")
+            matched = platform.system() == OS_NAMES[os_name]
+            if matched == negate:
                 return False
         else:
             raise KeyError(f"unknown condition: {cond_type}")
