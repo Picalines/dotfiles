@@ -27,12 +27,13 @@ if command-exists mise; then
     mise install
 fi
 
-symlink-to-home "./sh/.inputrc" ".inputrc"
+symlink-to-home "./shell/.inputrc" ".inputrc"
 
-command-exists bash && symlink-to-home "./sh/.bash_profile" ".bash_profile"
-command-exists bash && symlink-to-home "./sh/.bashrc" ".bashrc"
-command-exists zsh && symlink-to-home "./sh/.zprofile" ".zprofile"
-command-exists zsh && symlink-to-home "./sh/.zshrc" ".zshrc"
+command-exists bash && symlink-to-home "./shell/.bash_profile" ".bash_profile"
+command-exists bash && symlink-to-home "./shell/.bashrc" ".bashrc"
+command-exists zsh && symlink-to-home "./shell/.zprofile" ".zprofile"
+command-exists zsh && symlink-to-home "./shell/.zshrc" ".zshrc"
+command-exists starship && symlink-to-home "./shell/starship.toml" ".config/starship.toml"
 command-exists git && symlink-to-home "./git/.gitconfig" ".gitconfig"
 command-exists git && symlink-to-home "./git/.gitignore.global" ".gitignore"
 command-exists nvim && symlink-to-home "nvim" ".config/nvim"
@@ -40,7 +41,6 @@ command-exists aerospace && symlink-to-home "./wm/aerospace.toml" ".config/aeros
 command-exists alacritty && symlink-to-home "./tty/alacritty.toml" ".config/alacritty/alacritty.toml"
 command-exists ghostty && symlink-to-home "./tty/ghostty" ".config/ghostty"
 command-exists neovide && symlink-to-home "neovide.toml" ".config/neovide/config.toml"
-command-exists starship && symlink-to-home "starship.toml" ".config/starship.toml"
 command-exists zellij && symlink-to-home "./wm/zellij" ".config/zellij"
 command-exists qutebrowser && symlink-to-home "qutebrowser" ".qutebrowser"
 
