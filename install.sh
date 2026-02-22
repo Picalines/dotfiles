@@ -15,15 +15,15 @@ symlink-to-home() {
 }
 
 if command-exists brew; then
-    brew bundle --file=./Brewfile
+    brew bundle --file=./packages/Brewfile
 fi
 
 if command-exists scoop; then
-    scoop import ./scoop.json
+    scoop import ./packages/scoop.json
 fi
 
 if command-exists mise; then
-    symlink-to-home "mise" ".config/mise"
+    symlink-to-home "./packages/mise.toml" ".config/mise/config.toml"
     mise install
 fi
 
