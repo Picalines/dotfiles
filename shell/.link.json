@@ -1,0 +1,33 @@
+{
+  "links": [
+    {
+      "from": ".inputrc",
+      "to": "~/.inputrc"
+    },
+    {
+      "from": ".bash_profile",
+      "to": "~/.bash_profile",
+      "if": {"executable-exists": "bash"}
+    },
+    {
+      "from": ".bashrc",
+      "to": "~/.bashrc",
+      "if": {"executable-exists": "bash"}
+    },
+    {
+      "from": ".zprofile",
+      "to": "~/.zprofile",
+      "if": {"executable-exists": "zsh"}
+    },
+    {
+      "from": ".zshrc",
+      "to": "~/.zshrc",
+      "if": {"executable-exists": "zsh"}
+    },
+    {
+      "from": "starship.toml",
+      "to": "~/.config/starship.toml",
+      "if": {"executable-exists": "starship"}
+    }
+  ]
+}

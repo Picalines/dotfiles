@@ -1,0 +1,9 @@
+{
+  "links": [
+    {
+      "from": ".",
+      "to": "~/.qutebrowser",
+      "if": {"executable-exists": "qutebrowser"}
+    }
+  ]
+}

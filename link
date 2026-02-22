@@ -1,0 +1,114 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import json
+import platform
+import shutil
+
+
+def color(text, code):
+    if not sys.stdout.isatty():
+        return text
+    return f"\033[{code}m{text}\033[0m"
+
+
+def is_windows():
+    return platform.system() == "Windows" or "WINDIR" in os.environ
+
+
+def executable_exists(name):
+    return shutil.which(name) is not None
+
+
+def path_exists(path):
+    return os.path.exists(os.path.expanduser(path))
+
+
+def create_symlink(source_path, target_path, force=True):
+    source_path = os.path.abspath(source_path)
+    target_path = os.path.expanduser(target_path)
+
+    parent_dir = os.path.dirname(target_path)
+    if parent_dir:
+        os.makedirs(parent_dir, exist_ok=True)
+
+    if force and os.path.lexists(target_path):
+        if os.path.isdir(target_path) and not os.path.islink(target_path):
+            shutil.rmtree(target_path)
+        else:
+            os.remove(target_path)
+
+    # Windows requires target_is_directory=True for directory symlinks
+    target_is_directory = False
+    if os.path.exists(source_path):
+        target_is_directory = os.path.isdir(source_path)
+
+    os.symlink(source_path, target_path, target_is_directory=target_is_directory)
+
+
+def resolve_condition(condition):
+    for cond_type, cond_value in condition.items():
+        if cond_type == "executable-exists":
+            if not executable_exists(cond_value):
+                return False
+        elif cond_type == "path-exists":
+            if not path_exists(cond_value):
+                return False
+        else:
+            raise KeyError(f"unknown condition: {cond_type}")
+    return True
+
+
+def process_link_file(link_file_path):
+    base_dir = os.path.dirname(link_file_path)
+    
+    with open(link_file_path, 'r') as f:
+        config = json.load(f)
+    
+    if 'if' in config and not resolve_condition(config['if']):
+        print("skip: file condition not met")
+        return
+    
+    for link in config['links']:
+        source = link['from']
+        target = link['to']
+
+        source_path = os.path.normpath(os.path.join(base_dir, source))
+
+        if 'if' in link and not resolve_condition(link['if']):
+            print(f"{color('skipped', 36)} {source} -> {target}")
+            continue
+
+        print(f"{color('linking', 33)} {source} -> {target}")
+        
+        create_symlink(source_path, target)
+
+
+def start():
+    link_files = sys.argv[1:]
+    number_of_link_files = len(link_files)
+
+    if number_of_link_files == 0:
+        print(f"usage: {sys.argv[0]} <path-to-link-files>...")
+        return 1
+
+    for link_file in link_files:
+        if number_of_link_files > 1:
+            print(color(f'# {link_file}', 32))
+        process_link_file(link_file)
+
+    return 0
+
+
+def main():
+    try:
+        return start()
+    except Exception as error:
+        print(f"\nerror: {type(error)} exception")
+        print(error)
+        return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

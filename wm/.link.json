@@ -1,0 +1,19 @@
+{
+  "links": [
+    {
+      "from": "aerospace.toml",
+      "to": "~/.config/aerospace/aerospace.toml",
+      "if": {"executable-exists": "aerospace"}
+    },
+    {
+      "from": "glazewm.yaml",
+      "to": "~/.glzr/glazewm/config.yaml",
+      "if": {"path-exists": "~/.glzr/glazewm"}
+    },
+    {
+      "from": "zellij",
+      "to": "~/.config/zellij",
+      "if": {"executable-exists": "zellij"}
+    }
+  ]
+}

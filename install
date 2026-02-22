@@ -4,16 +4,6 @@ command-exists() {
   command -v "$1" &> /dev/null
 }
 
-symlink-to-home() {
-    echo "linking '$1' to '~/$2'"
-    if [[ -n $WINDIR ]]; then
-        powershell "New-Item -Type SymbolicLink -Path ~/$2 -Value $1 -Force"
-    else
-        mkdir -p "$(dirname "$HOME/$2")"
-        ln -snf "$PWD/$1" "$HOME/$2"
-    fi
-}
-
 if command-exists brew; then
     brew bundle --file=./packages/Brewfile
 fi
@@ -22,30 +12,14 @@ if command-exists scoop; then
     scoop import ./packages/scoop.json
 fi
 
+if ! command-exists python3 && command-exists mise; then
+    mise use --global python
+fi
+
+./link ./packages/.link.json
+
 if command-exists mise; then
-    symlink-to-home "./packages/mise.toml" ".config/mise/config.toml"
     mise install
 fi
 
-symlink-to-home "./shell/.inputrc" ".inputrc"
-command-exists bash && symlink-to-home "./shell/.bash_profile" ".bash_profile"
-command-exists bash && symlink-to-home "./shell/.bashrc" ".bashrc"
-command-exists zsh && symlink-to-home "./shell/.zprofile" ".zprofile"
-command-exists zsh && symlink-to-home "./shell/.zshrc" ".zshrc"
-command-exists starship && symlink-to-home "./shell/starship.toml" ".config/starship.toml"
-
-command-exists git && symlink-to-home "./git/.gitconfig" ".gitconfig"
-command-exists git && symlink-to-home "./git/.gitignore.global" ".gitignore"
-
-command-exists aerospace && symlink-to-home "./wm/aerospace.toml" ".config/aerospace/aerospace.toml"
-[ -d ~/.glzr/glazewm ] && symlink-to-home "./wm/glazewm.yaml" ".glzr/glazewm/config.yaml"
-command-exists zellij && symlink-to-home "./wm/zellij" ".config/zellij"
-
-command-exists alacritty && symlink-to-home "./tty/alacritty.toml" ".config/alacritty/alacritty.toml"
-command-exists ghostty && symlink-to-home "./tty/ghostty" ".config/ghostty"
-[ -d ~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState ] && symlink-to-home "./tty/windows-terminal/settings.json" "AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json"
-
-command-exists nvim && symlink-to-home "./nvim" ".config/nvim"
-command-exists neovide && symlink-to-home "./nvim/neovide.toml" ".config/neovide/config.toml"
-
-command-exists qutebrowser && symlink-to-home "qutebrowser" ".qutebrowser"
+./link ./*/.link.json

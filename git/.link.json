@@ -1,0 +1,13 @@
+{
+  "if": {"executable-exists": "git"},
+  "links": [
+    {
+      "from": ".gitconfig",
+      "to": "~/.gitconfig"
+    },
+    {
+      "from": ".gitignore.global",
+      "to": "~/.gitignore"
+    }
+  ]
+}
