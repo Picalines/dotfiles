@@ -40,7 +40,7 @@ command-exists nvim && symlink-to-home "nvim" ".config/nvim"
 command-exists aerospace && symlink-to-home "./wm/aerospace.toml" ".config/aerospace/aerospace.toml"
 command-exists alacritty && symlink-to-home "./tty/alacritty.toml" ".config/alacritty/alacritty.toml"
 command-exists ghostty && symlink-to-home "./tty/ghostty" ".config/ghostty"
-command-exists neovide && symlink-to-home "neovide.toml" ".config/neovide/config.toml"
+command-exists neovide && symlink-to-home "./nvim/neovide.toml" ".config/neovide/config.toml"
 command-exists zellij && symlink-to-home "./wm/zellij" ".config/zellij"
 command-exists qutebrowser && symlink-to-home "qutebrowser" ".qutebrowser"
 
