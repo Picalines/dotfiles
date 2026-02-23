@@ -13,7 +13,10 @@
     {
       "from": "windows-terminal/settings.json",
       "to": "~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json",
-      "if": {"path-exists": "~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState"}
+      "if": {
+        "os": "windows",
+        "path-exists": "~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState"
+      }
     }
   ]
 }
