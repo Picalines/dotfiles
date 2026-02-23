@@ -1,5 +1,7 @@
 {
-  "if": {"executable-exists": "nvim"},
+  "if": {
+    "executable-exists": "nvim"
+  },
   "links": [
     {
       "from": ".",
@@ -8,7 +10,9 @@
     {
       "from": "./neovide.toml",
       "to": "~/.config/neovide/config.toml",
-      "if": {"executable-exists": "neovide"}
+      "if": {
+        "executable-exists": "neovide"
+      }
     }
   ]
 }

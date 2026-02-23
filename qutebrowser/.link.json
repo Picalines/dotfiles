@@ -3,12 +3,18 @@
     {
       "from": ".",
       "to": "~/AppData/Roaming/qutebrowser/config",
-      "if": {"executable-exists": "qutebrowser", "os": "windows"}
+      "if": {
+        "executable-exists": "qutebrowser",
+        "os": "windows"
+      }
     },
     {
       "from": ".",
       "to": "~/.qutebrowser",
-      "if": {"executable-exists": "qutebrowser", "os": "!windows"}
+      "if": {
+        "executable-exists": "qutebrowser",
+        "os": "!windows"
+      }
     }
   ]
 }

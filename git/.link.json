@@ -1,5 +1,7 @@
 {
-  "if": {"executable-exists": "git"},
+  "if": {
+    "executable-exists": "git"
+  },
   "links": [
     {
       "from": ".gitconfig",

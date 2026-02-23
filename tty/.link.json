@@ -3,12 +3,16 @@
     {
       "from": "alacritty.toml",
       "to": "~/.config/alacritty/alacritty.toml",
-      "if": {"executable-exists": "alacritty"}
+      "if": {
+        "executable-exists": "alacritty"
+      }
     },
     {
       "from": "ghostty",
       "to": "~/.config/ghostty",
-      "if": {"executable-exists": "ghostty"}
+      "if": {
+        "executable-exists": "ghostty"
+      }
     },
     {
       "from": "windows-terminal/settings.json",
