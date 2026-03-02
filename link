@@ -29,9 +29,6 @@ def path_exists(path):
 
 
 def create_symlink(source_path, target_path, force=True):
-    source_path = os.path.abspath(source_path)
-    target_path = os.path.expanduser(target_path)
-
     parent_dir = os.path.dirname(target_path)
     if parent_dir:
         os.makedirs(parent_dir, exist_ok=True)
@@ -49,6 +46,22 @@ def create_symlink(source_path, target_path, force=True):
 
     os.symlink(source_path, target_path, target_is_directory=target_is_directory)
 
+
+def create_copy(source_path, target_path):
+    parent_dir = os.path.dirname(target_path)
+    if parent_dir:
+        os.makedirs(parent_dir, exist_ok=True)
+
+    if os.path.isdir(source_path):
+        shutil.copytree(source_path, target_path, dirs_exist_ok=True)
+    else:
+        shutil.copy2(source_path, target_path)
+
+
+LINK_METHODS = {
+    "symlink": (create_symlink, "linking"),
+    "copy": (create_copy, "copying")
+}
 
 def resolve_condition(condition):
     for cond_type, cond_value in condition.items():
@@ -84,16 +97,18 @@ def process_link_file(link_file_path):
     for link in config['links']:
         source = link['from']
         target = link['to']
-
-        source_path = os.path.normpath(os.path.join(base_dir, source))
+        method = link.get('method', 'symlink')
 
         if 'if' in link and not resolve_condition(link['if']):
             print(f"{color('skipped', 36)} {source} -> {target}")
             continue
 
-        print(f"{color('linking', 33)} {source} -> {target}")
-        
-        create_symlink(source_path, target)
+        source_path = os.path.abspath(os.path.join(base_dir, source))
+        target_path = os.path.expanduser(target)
+
+        func, label = LINK_METHODS[method]
+        print(f"{color(label, 33)} {source} -> {target}")
+        func(source_path, target_path)
 
 
 def start():
