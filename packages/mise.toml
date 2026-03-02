@@ -3,12 +3,10 @@ trusted_config_paths = ["~/.config"]
 
 idiomatic_version_file_enable_tools = ["node", "python"]
 
-python_venv_auto_create = true
-
 [tools]
 deno = "latest"
 node = "latest"
-python = "3.14"
+python = { version = "3.14", _.python.venv = { path = ".venv", create = true } }
 uv = "latest"
 
 fzf = "latest"
