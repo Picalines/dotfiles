@@ -23,6 +23,8 @@ c.tabs.title.format_pinned = c.tabs.title.format
 
 config.load_autoconfig()
 
+c.content.blocking.enabled = False
+
 c.hints.selectors["buttons"] = [
     "select",
     "button",
