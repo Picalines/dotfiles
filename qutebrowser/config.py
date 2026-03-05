@@ -62,7 +62,7 @@ def bind_keymaps(keymaps, prefix="", mode=None):
             config.bind(prefix + key, value, mode=mode)
 
 
-then_default = lambda cmd: cmd + " ;; mode-enter insert"
+then_default = lambda cmd: cmd + " ;; cmd-later 5 mode-enter insert"
 to_default = then_default("nop")
 
 keymaps = {
