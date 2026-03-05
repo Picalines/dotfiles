@@ -30,8 +30,7 @@ plugins {
     configuration location="zellij:configuration"
     session-manager location="zellij:session-manager"
     plugin-manager location="zellij:plugin-manager"
-
-    zjstatus location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm"
+    compact-bar location="zellij:compact-bar"
 }
 
 keybinds clear-defaults=true {
@@ -166,5 +165,134 @@ keybinds clear-defaults=true {
     }
     shared_among "renametab" "renamepane" {
         bind "Enter" { SwitchToMode "normal"; }
+    }
+}
+
+themes {
+    brittle-hollow {
+        // #fe8827 - (254 136 39)
+        // #fddfcd - (253 223 205)
+        // #301d4b - (48 29 75)
+
+        // #8a8b85 - (138 139 133) | #e6e7de - (230 231 222)
+        // #be814e - (190 129 78)  | #ffb06b - (255 176 107)
+        // #1755a2 - (23 85 162)   | #2c8cff - (44 140 255)
+        // #3b9565 - (59 149 101)  | #6bffb0 - (107 255 176)
+        // #59439b - (89 67 155)   | #9a75ff - (154 117 255)
+
+        // #bf5452 - (191 84 82)   | #ff7370 - (255 115 112)
+
+        text_unselected {
+            base 253 223 205
+            background 48 29 75
+            emphasis_0 107 255 176
+            emphasis_1 44 140 255
+            emphasis_2 255 176 107
+            emphasis_3 154 117 255
+        }
+        text_selected {
+            base 253 223 205
+            background 48 29 75
+            emphasis_0 107 255 176
+            emphasis_1 44 140 255
+            emphasis_2 255 176 107
+            emphasis_3 154 117 255
+        }
+        frame_unselected {
+            base 89 67 155
+            background 0
+            emphasis_0 0
+            emphasis_1 0
+            emphasis_2 0
+            emphasis_3 0
+        }
+        frame_selected {
+            base 154 117 255
+            background 0
+            emphasis_0 0
+            emphasis_1 0
+            emphasis_2 0
+            emphasis_3 0
+        }
+        frame_highlight {
+            base 107 255 176
+            background 0
+            emphasis_0 0
+            emphasis_1 0
+            emphasis_2 0
+            emphasis_3 0
+        }
+        ribbon_unselected {
+            base 48 29 75
+            background 254 136 39
+            emphasis_0 48 29 75
+            emphasis_1 253 223 205
+            emphasis_2 44 140 255
+            emphasis_3 154 117 255
+        }
+        ribbon_selected {
+            base 48 29 75
+            background 253 223 205
+            emphasis_0 48 29 75
+            emphasis_1 255 176 107
+            emphasis_2 154 117 255
+            emphasis_3 44 140 255
+        }
+        table_title {
+            base 138 139 133
+            background 0
+            emphasis_0 255 176 107
+            emphasis_1 44 140 255
+            emphasis_2 107 255 176
+            emphasis_3 154 117 255
+        }
+        table_cell_unselected {
+            base 138 139 133
+            background 0
+            emphasis_0 255 176 107
+            emphasis_1 44 140 255
+            emphasis_2 107 255 176
+            emphasis_3 154 117 255
+        }
+        table_cell_selected {
+            base 230 231 222
+            background 48 29 75
+            emphasis_0 255 176 107
+            emphasis_1 44 140 255
+            emphasis_2 107 255 176
+            emphasis_3 154 117 255
+        }
+        list_unselected {
+            base 247 134 50
+            background 0
+            emphasis_0 255 176 107
+            emphasis_1 44 140 255
+            emphasis_2 107 255 176
+            emphasis_3 154 117 255
+        }
+        list_selected {
+            base 230 231 222
+            background 48 29 75
+            emphasis_0 255 176 107
+            emphasis_1 44 140 255
+            emphasis_2 107 255 176
+            emphasis_3 154 117 255
+        }
+        exit_code_success {
+            base 107 255 176
+            background 0
+            emphasis_0 0
+            emphasis_1 0
+            emphasis_2 0
+            emphasis_3 0
+        }
+        exit_code_error {
+            base 255 115 112
+            background 0
+            emphasis_0 0
+            emphasis_1 0
+            emphasis_2 0
+            emphasis_3 0
+        }
     }
 }
