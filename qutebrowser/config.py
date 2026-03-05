@@ -11,7 +11,7 @@ c.statusbar.position = "bottom"
 c.statusbar.widgets = ["search_match", "progress", "url", "history"]
 c.tabs.position = "top"
 c.tabs.show = "multiple"
-c.tabs.width = "17%"
+c.tabs.width = "12%"
 
 c.fonts.default_family = "IosevkaTerm Nerd Font Mono"
 c.fonts.default_size = "18pt"
