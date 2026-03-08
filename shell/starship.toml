@@ -6,7 +6,7 @@ palette = 'custom'
 
 [palettes.custom]
 prompt = 'yellow'
-directory = 'blue'
+directory = 'bright-blue'
 duration = 'yellow'
 status = 'purple'
 python = 'green'
