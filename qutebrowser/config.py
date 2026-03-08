@@ -1,3 +1,5 @@
+import os
+
 from themes import catppuccin
 
 c.input.forward_unbound_keys = "none"
@@ -62,12 +64,24 @@ def bind_keymaps(keymaps, prefix="", mode=None):
             config.bind(prefix + key, value, mode=mode)
 
 
+def is_executable(path):
+    return os.path.isfile(path) and os.access(path, os.X_OK)
+
+
+def switch_to_us():
+    if is_executable(macism_path := "/opt/homebrew/bin/macism"):
+        return f"spawn {macism_path} com.apple.keylayout.US"
+
+    return "nop"
+
+
 then_default = lambda cmd: cmd + " ;; cmd-later 5 mode-enter insert"
 to_default = then_default("nop")
 
 keymaps = {
     "[insert]": {
         "<Ctrl-z>": "mode-enter normal",
+        "<Ctrl-я>": f"mode-enter normal ;; {switch_to_us()}",
     },
     "[passthrough]": {
         "<Shift+Escape>": to_default,
