@@ -1,0 +1,43 @@
+import sys
+
+
+def switch_to_us_mac():
+    import subprocess
+
+    subprocess.run(["/opt/homebrew/bin/macism", "com.apple.keylayout.US"])
+
+
+def switch_to_us_windows():
+    import ctypes
+
+    WM_INPUTLANGCHANGEREQUEST = 0x0050
+    KLF_ACTIVATE = 0x00000001
+    ENGLISH_US_LAYOUT_ID = "00000409"
+    
+    layout_handle = ctypes.windll.user32.LoadKeyboardLayoutW(
+        ENGLISH_US_LAYOUT_ID,
+        KLF_ACTIVATE
+    )
+    
+    if not layout_handle:
+        print("error: could not load the English US layout")
+        return
+    
+    if active_window := ctypes.windll.user32.GetForegroundWindow():
+        ctypes.windll.user32.PostMessageW(
+            active_window,
+            WM_INPUTLANGCHANGEREQUEST,
+            0,
+            layout_handle
+        )
+
+
+def switch_to_us():
+    if sys.platform == "win32":
+        switch_to_us_windows()
+    elif sys.platform == "darwin":
+        switch_to_us_mac()
+
+
+if __name__ == "__main__":
+    switch_to_us()
