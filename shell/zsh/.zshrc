@@ -32,6 +32,14 @@ alias vim=nvim
 alias nv=nvim
 alias e=nvim
 
+function f() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  command yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd < "$tmp"
+  rm -f -- "$tmp"
+  [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd" || return 1
+}
+
 # Edit command in the editor
 autoload -Uz edit-command-line
 zle -N edit-command-line
