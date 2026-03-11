@@ -14,19 +14,23 @@ command-exists fzf && source <(fzf --zsh)
 command-exists pnpm && eval "$(pnpm completion zsh)"
 command-exists zoxide && eval "$(zoxide init zsh)"
 
-if command-exists nvim; then
-  export VISUAL="nvim -b"
-  export EDITOR="nvim -b"
+function f() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  command yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd < "$tmp"
+  rm -f -- "$tmp"
+  [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd" || return 1
+}
 
-  alias vi=nvim
-  alias vim=nvim
-  alias nv=nvim
-  alias e=nvim
-fi
-
-command-exists yazi && alias f=yazi
+export VISUAL="nvim -b"
+export EDITOR="nvim -b"
 
 alias python=python3
+
+alias vi=nvim
+alias vim=nvim
+alias nv=nvim
+alias e=nvim
 
 # Edit command in the editor
 autoload -Uz edit-command-line

@@ -1,0 +1,13 @@
+# vim: ft=sh
+
+export VISUAL="nvim -b"
+export EDITOR="nvim -b"
+
+alias vi=nvim
+alias vim=nvim
+alias nv=nvim
+alias e=nvim
+
+alias f=yazi
+
+alias python=python3

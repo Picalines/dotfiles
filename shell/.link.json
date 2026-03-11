@@ -5,28 +5,28 @@
       "to": "~/.inputrc"
     },
     {
-      "from": ".bash_profile",
+      "from": "bash/.bash_profile",
       "to": "~/.bash_profile",
       "if": {
         "executable-exists": "bash"
       }
     },
     {
-      "from": ".bashrc",
+      "from": "bash/.bashrc",
       "to": "~/.bashrc",
       "if": {
         "executable-exists": "bash"
       }
     },
     {
-      "from": ".zprofile",
+      "from": "zsh/.zprofile",
       "to": "~/.zprofile",
       "if": {
         "executable-exists": "zsh"
       }
     },
     {
-      "from": ".zshrc",
+      "from": "zsh/.zshrc",
       "to": "~/.zshrc",
       "if": {
         "executable-exists": "zsh"
