@@ -7,7 +7,6 @@ command-exists() {
   command -v "$1" &> /dev/null
 }
 
-[ -f ~/.bash_aliases ] &&  source ~/.bash_aliases
 [ -f ~/.cargo/env ] && source ~/.cargo/env
 
 if command-exists mise; then
