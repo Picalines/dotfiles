@@ -1,0 +1,8 @@
+{
+  "links": [
+    {
+      "from": "keyboard-layout",
+      "to": "~/bin/keyboard-layout"
+    }
+  ]
+}

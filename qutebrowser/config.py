@@ -65,7 +65,7 @@ def bind_keymaps(keymaps, prefix="", mode=None):
 then_default = lambda cmd: cmd + " ;; cmd-later 5 mode-enter insert"
 to_default = then_default("nop")
 
-switch_to_us_layout = f"spawn -d -- python3 {(config.configdir / "switch_to_us_layout.py").as_posix()}"
+switch_to_us_layout = "spawn -d -- ~/bin/keyboard-layout us"
 
 keymaps = {
     "[insert]": {

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 
 
@@ -13,22 +15,18 @@ def switch_to_us_windows():
     WM_INPUTLANGCHANGEREQUEST = 0x0050
     KLF_ACTIVATE = 0x00000001
     ENGLISH_US_LAYOUT_ID = "00000409"
-    
+
     layout_handle = ctypes.windll.user32.LoadKeyboardLayoutW(
-        ENGLISH_US_LAYOUT_ID,
-        KLF_ACTIVATE
+        ENGLISH_US_LAYOUT_ID, KLF_ACTIVATE
     )
-    
+
     if not layout_handle:
         print("error: could not load the English US layout")
         return
-    
+
     if active_window := ctypes.windll.user32.GetForegroundWindow():
         ctypes.windll.user32.PostMessageW(
-            active_window,
-            WM_INPUTLANGCHANGEREQUEST,
-            0,
-            layout_handle
+            active_window, WM_INPUTLANGCHANGEREQUEST, 0, layout_handle
         )
 
 
@@ -39,5 +37,19 @@ def switch_to_us():
         switch_to_us_mac()
 
 
-if __name__ == "__main__":
+def main():
+    if len(sys.argv) != 2:
+        print("usage: keyboard-layout <layout>")
+        return 1
+
+    layout = sys.argv[1]
+
+    if layout != "us":
+        return 1
+
     switch_to_us()
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
