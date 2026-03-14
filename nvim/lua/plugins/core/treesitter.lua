@@ -52,6 +52,7 @@ return {
 		install_augroup:on('UIEnter', '*', function()
 			local parsers_to_install = {
 				'bash',
+				'diff',
 				'editorconfig',
 				'git_config',
 				'git_rebase',
