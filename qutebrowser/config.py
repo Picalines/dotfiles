@@ -1,4 +1,4 @@
-from themes import catppuccin
+from themes import brittle_hollow
 
 c.input.forward_unbound_keys = "none"
 c.input.insert_mode.auto_enter = True
@@ -177,4 +177,4 @@ keymaps = {
 
 bind_keymaps(keymaps)
 
-catppuccin.setup(c, "macchiato", samecolorrows=False)
+brittle_hollow.setup(c)
