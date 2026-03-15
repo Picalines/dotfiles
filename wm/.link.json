@@ -15,13 +15,6 @@
         "path-exists": "~/.glzr/glazewm",
         "os": "windows"
       }
-    },
-    {
-      "from": "zellij",
-      "to": "~/.config/zellij",
-      "if": {
-        "executable-exists": "zellij"
-      }
     }
   ]
 }

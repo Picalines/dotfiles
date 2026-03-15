@@ -1,0 +1,11 @@
+{
+  "links": [
+    {
+      "from": ".",
+      "to": "~/.config/zellij",
+      "if": {
+        "executable-exists": "zellij"
+      }
+    }
+  ]
+}
