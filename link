@@ -63,25 +63,47 @@ LINK_METHODS = {
     "copy": (create_copy, "copying")
 }
 
+
+def path_exists_condition(value: str):
+    if not path_exists(value):
+        return False, f"path {value} does not exist"
+    return True, None
+
+
+def executable_exists_condition(value: str):
+    if not executable_exists(value):
+        return False, f"{value} is not executable"
+    return True, None
+
+
+def os_condition(value: str):
+    negate = value.startswith("!")
+    os_name = value.lstrip("!")
+    matched = platform.system() == OS_NAMES.get(os_name, None)
+    if matched == negate:
+        return False, f"os is not {value}"
+    return True, None
+
+
+CONDITION_FUNCS = {
+    'path-exists': path_exists_condition,
+    'executable-exists': executable_exists_condition,
+    'os': os_condition,
+}
+
+
 def resolve_condition(condition):
     for cond_type, cond_value in condition.items():
-        if cond_type == "executable-exists":
-            if not executable_exists(cond_value):
-                return False
-        elif cond_type == "path-exists":
-            if not path_exists(cond_value):
-                return False
-        elif cond_type == "os":
-            negate = cond_value.startswith("!")
-            os_name = cond_value.lstrip("!")
-            if os_name not in OS_NAMES:
-                raise KeyError(f"unknown os: {os_name}")
-            matched = platform.system() == OS_NAMES[os_name]
-            if matched == negate:
-                return False
-        else:
-            raise KeyError(f"unknown condition: {cond_type}")
-    return True
+        condition_func = CONDITION_FUNCS.get(cond_type, None)
+
+        if not condition_func:
+            return False, f"not implemented condition {cond_type}"
+
+        condition_met, reason = condition_func(cond_value)
+        if not condition_met:
+            return False, str(reason)
+
+    return True, None
 
 
 def process_link_file(link_file_path):
@@ -90,18 +112,22 @@ def process_link_file(link_file_path):
     with open(link_file_path, 'r') as f:
         config = json.load(f)
     
-    if 'if' in config and not resolve_condition(config['if']):
-        print("skip: file condition not met")
-        return
+    if file_condition := config.get('if', None):
+        condition_met, reason = resolve_condition(file_condition)
+        if not condition_met:
+            print(f"skip: {reason}")
+            return
     
     for link in config['links']:
         source = link['from']
         target = link['to']
         method = link.get('method', 'symlink')
 
-        if 'if' in link and not resolve_condition(link['if']):
-            print(f"{color('skipped', 36)} {source} -> {target}")
-            continue
+        if link_condition := link.get('if', None):
+            condition_met, reason = resolve_condition(link_condition)
+            if not condition_met:
+                print(f"{color('skipped', 36)} {source} {color(f"({reason})", 35)}")
+                continue
 
         source_path = os.path.abspath(os.path.join(base_dir, source))
         target_path = os.path.expanduser(target)
