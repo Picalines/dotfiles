@@ -71,6 +71,8 @@ keymaps = {
     "[insert]": {
         "<Ctrl-z>": f"mode-enter normal ;; {switch_to_us_layout}",
         "<Ctrl-я>": f"mode-enter normal ;; {switch_to_us_layout}",
+        "<Ctrl-n>": "search-next",
+        "<Ctrl-Shift-n>": "search-prev",
     },
     "[passthrough]": {
         "<Shift+Escape>": to_default,
