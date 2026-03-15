@@ -89,6 +89,7 @@ keymaps = {
     "[command]": {
         "<Ctrl-n>": "fake-key -g <Down>",
         "<Ctrl-Shift-n>": "fake-key -g <Up>",
+        "<Return>": then_default("command-accept"),
     },
     "[normal]": {
         "<Escape>": to_default,
