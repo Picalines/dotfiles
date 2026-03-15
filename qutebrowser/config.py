@@ -86,6 +86,10 @@ keymaps = {
         "<back>": "back",
         "<forward>": "forward",
     },
+    "[command]": {
+        "<Ctrl-n>": "fake-key -g <Down>",
+        "<Ctrl-Shift-n>": "fake-key -g <Up>",
+    },
     "[normal]": {
         "<Escape>": to_default,
         "<Ctrl-z>": then_default("fake-key <Ctrl-z>"),
