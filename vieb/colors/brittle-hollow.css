@@ -1,0 +1,11 @@
+body {
+	font: 14px "IosevkaTerm Nerd Font Mono", "Courier", monospace;
+}
+
+#mode-container {
+	width: 10ch;
+}
+
+#mode-container * {
+	text-transform: lowercase;
+}

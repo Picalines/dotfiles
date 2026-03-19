@@ -1,0 +1,133 @@
+" vim: ft=vim
+
+set adblocker=off
+set devtoolsposition=vsplit
+set notimeout
+set splitbelow
+set splitright
+set suggesttopsites=0
+set tabclosefocus=right
+
+set mouse=pageininsert,notification,toexplore,closetab,history,menupage
+
+set containercolors={"me":"lightcoral","work":"lightblue","university":"lightgreen"}
+
+command! tabonly <:rclose><:lclose>
+command! zoomin <zoomIn>
+command! zoomout <zoomOut>
+command! zoomreset <zoomReset>
+
+mapclear!
+
+map <M-q> <:quitall>
+map <Esc> <toInsertMode>
+inoremap <Esc> <:nohlsearch><Esc>
+imap <C-z> <toNormalMode>
+imap <C-я> <toCommandMode><:!keyboard-layout us><toNormalMode>
+
+nmap gc <:reloadconfig><toInsertMode>
+
+nmap : <toCommandMode>
+nmap ; <toCommandMode>
+nmap s <toCommandMode>set<Space>
+
+nmap r <refreshTab><toInsertMode>
+nmap R <refreshTabWithoutCache><toInsertMode>
+nmap d <:devtools><toInsertMode>
+
+nmap <C-h> <previousTab><toInsertMode>
+nmap <C-j> <nextTab><toInsertMode>
+nmap <C-k> <previousTab><toInsertMode>
+nmap <C-l> <nextTab><toInsertMode>
+
+nmap H <moveTabBackward>
+nmap J <moveTabForward>
+nmap K <moveTabBackward>
+nmap L <moveTabForward>
+
+nmap ws <:split>
+nmap wv <:vsplit>
+nmap wr <rotateSplitWindowForward><toInsertMode>
+nmap wR <rotateSplitWindowBackward><toInsertMode>
+nmap h <toLeftSplitWindow><toInsertMode>
+nmap j <toBottomSplitWindow><toInsertMode>
+nmap k <toTopSplitWindow><toInsertMode>
+nmap l <toRightSplitWindow><toInsertMode>
+
+nmap o <toExploreMode><BS>
+nmap go <toExploreMode><Right>
+nmap O <:tabnew><toExploreMode>
+nmap x <:close><toInsertMode>
+nmap u <reopenTab><toInsertMode>
+
+nmap t <pointer.startVisualSelect>
+vmap o <:tabonly><toInsertMode>
+vmap h <previousTab><pointer.startVisualSelect>
+vmap j <nextTab><pointer.startVisualSelect>
+vmap k <previousTab><pointer.startVisualSelect>
+vmap l <nextTab><pointer.startVisualSelect>
+vmap H <moveTabBackward>
+vmap J <moveTabForward>
+vmap K <moveTabBackward>
+vmap L <moveTabForward>
+vmap x <:close><pointer.startVisualSelect>
+vmap u <reopenTab><pointer.startVisualSelect>
+
+nmap gg <scrollTop><toInsertMode>
+nmap G <scrollBottom><toInsertMode>
+map <C-d> <scrollPageDownHalf>
+map <C-u> <scrollPageUpHalf>
+nmap = <:zoomin>
+nmap + <:zoomin>
+nmap - <:zoomout>
+nmap _ <:zoomout>
+
+nmap / <toSearchMode><BS>
+nmap n <nextSearchMatch>
+nmap N <previousSearchMatch>
+imap <C-n> <nextSearchMatch>
+imap <C-N> <previousSearchMatch>
+
+nmap cm <:set containernewtab=me><:tabnew><:set containernewtab=s:usecurrent><toExploreMode>
+nmap cw <:set containernewtab=work><:tabnew><:set containernewtab=s:usecurrent><toExploreMode>
+nmap cu <:set containernewtab=university><:tabnew><:set containernewtab=s:usecurrent><toExploreMode>
+
+imap <M-f> <toSearchMode>
+imap <C-o> <backInHistory>
+nmap <C-o> <backInHistory>
+imap <C-i> <forwardInHistory>
+nmap <C-i> <forwardInHistory>
+
+smap <CR> <useEnteredData>
+emap <CR> <useEnteredData><toInsertMode>
+cmap <CR> <useEnteredData><toInsertMode>
+
+cmap <Up> <commandHistoryPrevious>
+cmap <Down> <commandHistoryNext>
+cmap <C-n> <nextSuggestion>
+cmap <C-N> <prevSuggestion>
+emap <C-n> <nextSuggestion>
+emap <C-N> <prevSuggestion>
+
+nmap a <:set followelementpointer=url><pointer.start><startFollowCurrentTab>
+nmap b <:set followelementpointer=onclick><pointer.start><startFollowCurrentTab>
+nmap i <:set followelementpointer=inputs-insert,inputs-click><pointer.start><startFollowCurrentTab>
+nmap p <:set followelementpointer=inputs-insert,inputs-click><pointer.start><startFollowCurrentTab>
+
+pmap h <pointer.moveLeft>
+pmap <Left> <pointer.moveLeft>
+pmap j <pointer.moveDown>
+pmap <Down> <pointer.moveDown>
+pmap k <pointer.moveUp>
+pmap <Up> <pointer.moveUp>
+pmap l <pointer.moveRight>
+pmap <Right> <pointer.moveRight>
+
+pmap <CR> <pointer.leftClick><toInsertMode>
+pmap i <pointer.insertAtPosition>
+pmap c <pointer.leftClick><toInsertMode>
+pmap r <pointer.rightClick><toInsertMode>
+pmap d <pointer.downloadLink><toInsertMode>
+pmap t <pointer.newtabLink><toInsertMode>
+pmap p <pointer.newtabImage><toInsertMode>
+
