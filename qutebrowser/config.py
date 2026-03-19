@@ -70,17 +70,19 @@ to_default = then_default("nop")
 switch_to_us_layout = "spawn -d -- ~/bin/keyboard-layout us"
 
 keymaps = {
-    "[insert]": {
-        "<Ctrl-z>": f"mode-enter normal ;; {switch_to_us_layout}",
-        "<Ctrl-я>": f"mode-enter normal ;; {switch_to_us_layout}",
-        "<Ctrl-n>": "search-next",
-        "<Ctrl-Shift-n>": "search-prev",
-    },
     "[passthrough]": {
         "<Shift+Escape>": to_default,
     },
     "[command+prompt+yesno+register+hint]": {
         "<Escape>": then_default("mode-leave"),
+    },
+    "[insert]": {
+        "<Ctrl-z>": f"mode-enter normal ;; {switch_to_us_layout}",
+        "<Ctrl-я>": f"mode-enter normal ;; {switch_to_us_layout}",
+        "<Ctrl-n>": "search-next",
+        "<Ctrl-Shift-n>": "search-prev",
+        "<Meta-f>": "cmd-set-text /",
+        "<Meta-r>": "reload",
     },
     "[normal+insert]": {
         "<Ctrl-d>": "scroll-page 0 0.5",
