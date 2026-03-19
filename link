@@ -98,22 +98,62 @@ def os_condition(value: str) -> ConditionResult:
     return True, None
 
 
-CONDITION_FUNCS: dict[str, ConditionFunc] = {
+
+def any_condition(conditions: list[Condition]) -> ConditionResult:
+    reasons: list[str] = []
+    for sub in conditions:
+        met, reason = resolve_condition(sub)
+        if met:
+            return True, None
+        reasons.append(str(reason))
+    return False, f"any: [{', '.join(reasons)}]" if reasons else "no subconditions"
+
+
+def all_condition(conditions: list[Condition]) -> ConditionResult:
+    for sub in conditions:
+        met, reason = resolve_condition(sub)
+        if not met:
+            return False, str(reason)
+    return True, None
+
+
+ValueConditionFunc = Callable[[str], ConditionResult]
+CombinatorConditionFunc = Callable[[list["Condition"]], ConditionResult]
+
+VALUE_CONDITION_FUNCS: dict[str, ValueConditionFunc] = {
     'path-exists': path_exists_condition,
     'executable-exists': executable_exists_condition,
     'os': os_condition,
 }
 
+COMBINATOR_CONDITION_FUNCS: dict[str, CombinatorConditionFunc] = {
+    "any": any_condition,
+    "all": all_condition,
+}
 
-def resolve_condition(condition: dict[str, str]) -> ConditionResult:
+
+def resolve_condition(condition: Condition) -> ConditionResult:
     for cond_type, cond_value in condition.items():
-        condition_func = CONDITION_FUNCS.get(cond_type, None)
+        combinator_condition_func = COMBINATOR_CONDITION_FUNCS.get(cond_type, None)
+        if combinator_condition_func:
+            if not isinstance(cond_value, list):
+                return False, f"list of subconditions expected for '{cond_type}'"
 
-        if not condition_func:
-            return False, f"not implemented condition {cond_type}"
+            met, reason = combinator_condition_func(cond_value)
+            if not met:
+                return False, str(reason)
 
-        condition_met, reason = condition_func(cond_value)
-        if not condition_met:
+            continue
+
+        value_condition_func = VALUE_CONDITION_FUNCS.get(cond_type, None)
+        if not value_condition_func:
+            return False, f"not implemented condition '{cond_type}'"
+
+        if not isinstance(cond_value, str):
+            return False, f"string value expected for '{cond_type}'"
+
+        met, reason = value_condition_func(cond_value)
+        if not met:
             return False, str(reason)
 
     return True, None
