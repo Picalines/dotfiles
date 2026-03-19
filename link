@@ -1,34 +1,41 @@
 #!/usr/bin/env python3
+"""
+Declarative symlink/copy manager for dotfiles.
+Reads .link.json files and creates symlinks or copies accordingly.
+See .link.json files in subdirectories for config examples.
+"""
 
 import os
 import sys
 import json
 import platform
 import shutil
+from typing import Callable, Literal
 
 
 OS_NAMES = {"windows": "Windows", "macos": "Darwin", "linux": "Linux"}
 
 
-def color(text, code):
+
+def color(text: str, code: int) -> str:
     if not sys.stdout.isatty():
         return text
     return f"\033[{code}m{text}\033[0m"
 
 
-def is_windows():
+def is_windows() -> bool:
     return platform.system() == "Windows" or "WINDIR" in os.environ
 
 
-def executable_exists(name):
+def executable_exists(name: str) -> bool:
     return shutil.which(name) is not None
 
 
-def path_exists(path):
+def path_exists(path: str) -> bool:
     return os.path.exists(os.path.expanduser(path))
 
 
-def create_symlink(source_path, target_path, force=True):
+def create_symlink(source_path: str, target_path: str, force: bool = True) -> None:
     parent_dir = os.path.dirname(target_path)
     if parent_dir:
         os.makedirs(parent_dir, exist_ok=True)
@@ -47,7 +54,7 @@ def create_symlink(source_path, target_path, force=True):
     os.symlink(source_path, target_path, target_is_directory=target_is_directory)
 
 
-def create_copy(source_path, target_path):
+def create_copy(source_path: str, target_path: str) -> None:
     parent_dir = os.path.dirname(target_path)
     if parent_dir:
         os.makedirs(parent_dir, exist_ok=True)
@@ -58,25 +65,31 @@ def create_copy(source_path, target_path):
         shutil.copy2(source_path, target_path)
 
 
-LINK_METHODS = {
+LinkMethod = tuple[Callable[[str, str], None], str]
+
+LINK_METHODS: dict[str, LinkMethod] = {
     "symlink": (create_symlink, "linking"),
-    "copy": (create_copy, "copying")
+    "copy": (create_copy, "copying"),
 }
 
 
-def path_exists_condition(value: str):
+Condition = dict[str, "str | list[Condition]"]
+ConditionResult = tuple[Literal[True], None] | tuple[Literal[False], str]
+
+
+def path_exists_condition(value: str) -> ConditionResult:
     if not path_exists(value):
         return False, f"path {value} does not exist"
     return True, None
 
 
-def executable_exists_condition(value: str):
+def executable_exists_condition(value: str) -> ConditionResult:
     if not executable_exists(value):
         return False, f"{value} is not executable"
     return True, None
 
 
-def os_condition(value: str):
+def os_condition(value: str) -> ConditionResult:
     negate = value.startswith("!")
     os_name = value.lstrip("!")
     matched = platform.system() == OS_NAMES.get(os_name, None)
@@ -85,14 +98,14 @@ def os_condition(value: str):
     return True, None
 
 
-CONDITION_FUNCS = {
+CONDITION_FUNCS: dict[str, ConditionFunc] = {
     'path-exists': path_exists_condition,
     'executable-exists': executable_exists_condition,
     'os': os_condition,
 }
 
 
-def resolve_condition(condition):
+def resolve_condition(condition: dict[str, str]) -> ConditionResult:
     for cond_type, cond_value in condition.items():
         condition_func = CONDITION_FUNCS.get(cond_type, None)
 
@@ -106,7 +119,7 @@ def resolve_condition(condition):
     return True, None
 
 
-def process_link_file(link_file_path):
+def process_link_file(link_file_path: str) -> None:
     base_dir = os.path.dirname(link_file_path)
     
     with open(link_file_path, 'r') as f:
@@ -137,7 +150,7 @@ def process_link_file(link_file_path):
         func(source_path, target_path)
 
 
-def start():
+def start() -> int:
     link_files = sys.argv[1:]
     number_of_link_files = len(link_files)
 
@@ -153,7 +166,7 @@ def start():
     return 0
 
 
-def main():
+def main() -> int:
     try:
         return start()
     except Exception as error:
