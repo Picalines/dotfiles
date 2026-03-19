@@ -51,15 +51,17 @@ c.bindings.default["hint"].clear()
 
 
 def bind_keymaps(keymaps, prefix="", mode=None):
-    for key, value in keymaps.items():
-        if key.startswith("[") and key.endswith("]"):
-            modes = key[1:-1].split("+")
-            for mode in modes:
-                bind_keymaps(value, prefix, mode)
-        elif isinstance(value, dict):
-            bind_keymaps(value, prefix + key, mode)
-        else:
-            config.bind(prefix + key, value, mode=mode)
+    for keys, value in keymaps.items():
+        keys = (keys,) if isinstance(keys, str) else keys
+        for key in keys:
+            if key.startswith("[") and key.endswith("]"):
+                modes = key[1:-1].split("+")
+                for mode in modes:
+                    bind_keymaps(value, prefix, mode)
+            elif isinstance(value, dict):
+                bind_keymaps(value, prefix + key, mode)
+            else:
+                config.bind(prefix + key, value, mode=mode)
 
 
 then_default = lambda cmd: cmd + " ;; cmd-later 5 mode-enter insert"
@@ -97,13 +99,12 @@ keymaps = {
         "<Escape>": to_default,
         "<Ctrl-z>": then_default("fake-key <Ctrl-z>"),
         "<Ctrl-v>": "mode-enter passthrough",
-        ":": "cmd-set-text :",
-        ";": "cmd-set-text :",
-        "h": then_default("tab-prev"),
-        "j": then_default("tab-next"),
-        "k": then_default("tab-prev"),
-        "l": then_default("tab-next"),
-        "r": then_default("reload"),
+        (":", ";"): "cmd-set-text :",
+        ("h", "<Ctrl-h>"): then_default("tab-prev"),
+        ("j", "<Ctrl-j>"): then_default("tab-next"),
+        ("k", "<Ctrl-k>"): then_default("tab-prev"),
+        ("l", "<Ctrl-l>"): then_default("tab-next"),
+        ("r", "<Ctrl-r>"): then_default("reload"),
         "R": then_default("reload -f"),
         "o": "cmd-set-text -s :open",
         "O": "cmd-set-text -s :open -t",
@@ -115,10 +116,8 @@ keymaps = {
         "n": "search-next",
         "N": "search-prev",
         "G": then_default("scroll bottom"),
-        "+": "zoom-in",
-        "=": "zoom-in",
-        "-": "zoom-out",
-        "_": "zoom-out",
+        ("+", "="): "zoom-in",
+        ("-", "_"): "zoom-out",
         "m": "quickmark-save",
         "s": "cmd-set-text -s :set",
         "T": "cmd-set-text -s :tab-select",
