@@ -128,7 +128,7 @@ def process_link_file(link_file_path: str) -> None:
     if file_condition := config.get('if', None):
         condition_met, reason = resolve_condition(file_condition)
         if not condition_met:
-            print(f"skip: {reason}")
+            print(f"{color('skipped', 36)} {color(f"({reason})", 35)}")
             return
     
     for link in config['links']:
