@@ -156,6 +156,7 @@ keymaps = {
                 ("d", "download"),
                 ("r", "right-click"),
                 ("h", "hover"),
+                ("y", "yank"),
             )
         },
         "g": {
