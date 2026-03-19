@@ -170,6 +170,10 @@ keymaps = {
             "d": then_default("yank domain"),
             "p": then_default("yank inline {url:port}"),
         },
+        "d": {
+            "o": then_default("download-open"),
+            "c": then_default("download-clear"),
+        },
         "w": {
             "<Escape>": to_default,
             "d": then_default("devtools right"),
