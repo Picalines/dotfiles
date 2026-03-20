@@ -11,7 +11,6 @@ def setup(c):
     other_dark, other_light = "#8a8b85", "#e6e7de"
 
     space_fg = "#d3d4d6"
-    space_hl = "#ffffff"
     menu_fg = space_dark
 
     quantum_darker = "#2e3261"
@@ -75,7 +74,7 @@ def setup(c):
     c.colors.statusbar.command.bg = space_light
     c.colors.statusbar.caret.bg = space_light
     c.colors.statusbar.caret.selection.bg = space_light
-    c.colors.statusbar.progress.bg = space_light
+    c.colors.statusbar.progress.bg = strange_light
     c.colors.statusbar.passthrough.bg = space_dark
 
     c.colors.statusbar.normal.fg = ash_light
