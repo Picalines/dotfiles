@@ -122,7 +122,7 @@ keymaps = {
         ("-", "_"): "zoom-out",
         "m": "quickmark-save",
         "s": "cmd-set-text -s :set",
-        "T": "cmd-set-text -s :tab-select",
+        "f": "cmd-set-text -s :tab-select",
         "t": {
             "<Escape>": to_default,
             "p": then_default("config-cycle tabs.position left top"),
