@@ -99,7 +99,6 @@ keymaps = {
     },
     "[normal]": {
         "<Escape>": to_default,
-        "<Ctrl-z>": then_default("fake-key <Ctrl-z>"),
         "<Ctrl-v>": "mode-enter passthrough",
         (":", ";"): "cmd-set-text :",
         ("h", "<Ctrl-h>"): then_default("tab-prev"),
