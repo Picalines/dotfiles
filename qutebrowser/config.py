@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from themes import brittle_hollow
 
 c.input.forward_unbound_keys = "none"
@@ -67,7 +69,7 @@ def bind_keymaps(keymaps, prefix="", mode=None):
 then_default = lambda cmd: cmd + " ;; cmd-later 5 mode-enter insert"
 to_default = then_default("nop")
 
-switch_to_us_layout = "spawn -d -- ~/bin/keyboard-layout us"
+switch_to_us_layout = f"spawn -d -- python3 {Path("~/bin/keyboard-layout").expanduser().as_posix()} us"
 
 keymaps = {
     "[passthrough]": {
