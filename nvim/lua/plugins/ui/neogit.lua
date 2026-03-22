@@ -8,12 +8,13 @@ return {
 	},
 
 	init = function()
-		local keymap = require 'util.keymap'
+		local keymap = require 'mappet'
+		local map = keymap.map
 
-		keymap {
-			[{ 'n', desc = 'Git: %s' }] = {
-				['<Leader>g'] = { '<Cmd>Neogit<CR>', 'status' },
-			},
+		local keys = keymap.group 'plugins.ui.neogit'
+
+		keys('Git: %s', { 'n' }) {
+			map('<Leader>g', 'status') '<Cmd>Neogit<CR>',
 		}
 	end,
 

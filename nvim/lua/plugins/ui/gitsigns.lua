@@ -6,17 +6,13 @@ return {
 	cmd = { 'Gitsigns' },
 
 	init = function()
-		local keymap = require 'util.keymap'
+		local keys = require 'mappet'
 
-		keymap {
-			[{ desc = 'Git: %s' }] = {
-				[{ 'n' }] = {
-					['<LocalLeader>gb'] = { '<Cmd>Gitsigns blame_line full=true<CR>', 'blame line' },
-					['<LocalLeader>gB'] = { '<Cmd>Gitsigns blame<CR>', 'blame buffer' },
-					['<LocalLeader>gs'] = { '<Cmd>Gitsigns stage_hunk<CR>', 'stage hunk' },
-					['<LocalLeader>gr'] = { '<Cmd>Gitsigns reset_hunk<CR>', 'reset hunk' },
-				},
-			},
+		keys.group 'plugins.ui.gitsigns' 'Git: %s' {
+			keys.map('<LocalLeader>gb', 'blame line') '<Cmd>Gitsigns blame_line full=true<CR>',
+			keys.map('<LocalLeader>gB', 'blame buffer') '<Cmd>Gitsigns blame<CR>',
+			keys.map('<LocalLeader>gs', 'stage hunk') '<Cmd>Gitsigns stage_hunk<CR>',
+			keys.map('<LocalLeader>gr', 'reset hunk') '<Cmd>Gitsigns reset_hunk<CR>',
 		}
 	end,
 

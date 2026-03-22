@@ -17,11 +17,14 @@ return {
 
 			post_open = function(args)
 				local autocmd = require 'util.autocmd'
-				local keymap = require 'util.keymap'
+				local keymap = require 'mappet'
+				local map = keymap.map
 
 				vim.api.nvim_set_current_win(args.winnr)
 
 				if args.is_blocking then
+					local keys = keymap.buffer('plugins.core.flatten.blocking', args.bufnr)
+
 					autocmd.buffer(args.bufnr):on(
 						'BufWritePost',
 						vim.schedule_wrap(function()
@@ -29,10 +32,8 @@ return {
 						end)
 					)
 
-					keymap {
-						[{ 'n', buffer = args.bufnr }] = {
-							['<CR>'] = { '<Cmd>w<CR>' },
-						},
+					keys { 'n' } {
+						map '<CR>' '<Cmd>w<CR>',
 					}
 				end
 			end,

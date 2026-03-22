@@ -1,7 +1,10 @@
 local autocmd = require 'util.autocmd'
-local keymap = require 'util.keymap'
+local keymap = require 'mappet'
+
+local map, sub = keymap.map, keymap.sub
 
 local augroup = autocmd.group 'global'
+local keys = keymap.group 'settings.global'
 
 -- time before the swap file is written
 vim.go.updatetime = 250
@@ -59,55 +62,55 @@ augroup:on_user(
 	end)
 )
 
-keymap {
-	[{ 'n' }] = {
-		['<Leader><Leader>q'] = { '<Cmd>wqa<CR>', 'write all and quit' },
-		['<Esc>'] = { '<Cmd>doautocmd User Dismiss<CR>', 'dismiss' },
+keys { 'n' } {
+	map('<Leader><Leader>q', 'write all and quit') '<Cmd>wqa<CR>',
+	map('<Esc>', 'dismiss') '<Cmd>doautocmd User Dismiss<CR>',
 
-		['u'] = { '<Cmd>undo<CR>', 'undo' },
-		['U'] = { '<Cmd>redo<CR>', 'redo' },
+	map('u', 'undo') '<Cmd>undo<CR>',
+	map('U', 'redo') '<Cmd>redo<CR>',
 
-		['y<C-g>'] = { '<Cmd>eval setreg(v:register, @%) | echo @% . " -> " . v:register<CR>', 'yank buffer path' },
+	map('y<C-g>', 'yank buffer path') {
+		'<Cmd>eval setreg(v:register, @%) | echo @% . " -> " . v:register<CR>',
+	},
 
-		[{ 'x' }] = {
-			['<Space>'] = '<Nop>',
+	sub { 'x' } {
+		map '<Space>' '<Nop>',
 
-			['<C-u>'] = '<C-u>zz',
-			['<C-d>'] = '<C-d>zz',
-			['n'] = 'nzzzv',
-			['N'] = 'Nzzzv',
+		map '<C-u>' '<C-u>zz',
+		map '<C-d>' '<C-d>zz',
+		map 'n' 'nzzzv',
+		map 'N' 'Nzzzv',
 
-			[{ expr = true }] = {
-				['k'] = "v:count == 0 ? 'gk' : 'k'",
-				['j'] = "v:count == 0 ? 'gj' : 'j'",
-			},
+		sub { expr = true } {
+			map 'k' "v:count == 0 ? 'gk' : 'k'",
+			map 'j' "v:count == 0 ? 'gj' : 'j'",
 		},
 	},
+}
 
-	[{ 'i' }] = {
-		['<C-d>'] = { '<Cmd>doautocmd User Dismiss<CR>', 'dismiss' },
+keys { 'i' } {
+	map('<C-d>', 'dismiss') '<Cmd>doautocmd User Dismiss<CR>',
 
-		['<C-b>'] = '<C-o>b',
-		['<C-e>'] = '<Esc><Cmd>norm! e<CR>a',
-		['<C-w>'] = '<C-o>w',
+	map '<C-b>' '<C-o>b',
+	map '<C-e>' '<Esc><Cmd>norm! e<CR>a',
+	map '<C-w>' '<C-o>w',
 
-		[{ 'c' }] = {
-			['<C-l>'] = '<Right>',
-			['<C-h>'] = '<Left>',
-			['<C-p>'] = { '<C-r><C-o>*', 'paste' },
-		},
+	sub { 'c' } {
+		map '<C-l>' '<Right>',
+		map '<C-h>' '<Left>',
+		map('<C-p>', 'paste') '<C-r><C-o>*',
 	},
+}
 
-	[{ 'x' }] = {
-		['p'] = '"_dP',
-	},
+keys { 'x' } {
+	map 'p' '"_dP',
+}
 
-	[{ 't' }] = {
-		['<C-p>'] = { '<C-\\><C-n>pi', 'paste' },
-		['<Esc>'] = { '<C-\\><C-n>', 'exit terminal' },
-	},
+keys { 't' } {
+	map('<C-p>', 'paste') '<C-\\><C-n>pi',
+	map('<Esc>', 'exit terminal') '<C-\\><C-n>',
+}
 
-	[{ 'n', desc = 'Quickfix: %s', silent = true }] = {
-		['<Leader>q'] = { ':botright copen | resize <C-r>=&lines / 3<CR><CR>', 'open' },
-	},
+keys('Quickfix: %s', { silent = true }) {
+	map('<Leader>q', 'open') ':botright copen | resize <C-r>=&lines / 3<CR><CR>',
 }

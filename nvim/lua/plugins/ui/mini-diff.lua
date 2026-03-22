@@ -5,7 +5,8 @@ return {
 
 	config = function()
 		local diff = require 'mini.diff'
-		local keymap = require 'util.keymap'
+		local keymap = require 'mappet'
+		local map = keymap.map
 
 		diff.setup {
 			source = {
@@ -33,10 +34,10 @@ return {
 			},
 		}
 
-		keymap {
-			[{ 'n', desc = 'Git: %s' }] = {
-				['<LocalLeader>d'] = { diff.toggle_overlay, 'diff' },
-			},
+		local keys = keymap.group 'plugins.ui.mini-diff'
+
+		keys('Git: %s', { 'n' }) {
+			map('<LocalLeader>d', 'diff') { diff.toggle_overlay },
 		}
 	end,
 }

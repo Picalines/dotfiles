@@ -1,19 +1,18 @@
-local keymap = require 'util.keymap'
+local keymap = require 'mappet'
+local map = keymap.map
 
-keymap {
-	[{ 'n', desc = 'LSP: %s' }] = {
-		-- built-in: K, <C-w>d, ]d, [d
-		['<LocalLeader>r'] = { '<Cmd>lua vim.lsp.buf.rename()<CR>', 'rename' },
-		['<LocalLeader>a'] = { '<Cmd>lua vim.lsp.buf.code_action()<CR>', 'action' },
-	},
+local keys = keymap.group 'settings.lsp'
 
-	[{ 'n', desc = 'UI: %s' }] = {
-		['<Leader>oi'] = {
-			desc = 'toggle inlay hints',
-			function()
-				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-			end,
-		},
+keys 'LSP: %s' {
+	map('<LocalLeader>r', 'rename') '<Cmd>lua vim.lsp.buf.rename()<CR>',
+	map('<LocalLeader>a', 'action') '<Cmd>lua vim.lsp.buf.code_action()<CR>',
+}
+
+keys('UI: %s', { 'n' }) {
+	map('<Leader>oi', 'toggle inlay hints') {
+		function()
+			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+		end,
 	},
 }
 

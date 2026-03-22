@@ -5,12 +5,13 @@ return {
 	cmd = 'WhichKey',
 
 	init = function()
-		local keymap = require 'util.keymap'
+		local keymap = require 'mappet'
+		local map = keymap.map
 
-		keymap {
-			[{ 'n' }] = {
-				['<Leader>?'] = { '<Cmd>WhichKey<CR>', 'keymap help' },
-			},
+		local keys = keymap.group 'plugins.ui.which-key'
+
+		keys { 'n' } {
+			map('<Leader>?', 'keymap help') '<Cmd>WhichKey<CR>',
 		}
 	end,
 

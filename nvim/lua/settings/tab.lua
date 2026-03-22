@@ -1,4 +1,7 @@
-local keymap = require 'util.keymap'
+local keymap = require 'mappet'
+local map = keymap.map
+
+local keys = keymap.group 'settings.tab'
 
 -- go to left tab when closing
 vim.go.tabclose = 'left'
@@ -6,14 +9,12 @@ vim.go.tabclose = 'left'
 -- NOTE: <Tab> is same as <C-i> in a TUI
 -- Please, don't make this commit again
 
-keymap {
-	[{ 'n', silent = true, desc = 'Page: %s' }] = {
-		['<Leader>tn'] = { '<Cmd>tabnew<CR>', 'new' },
-		['<Leader>td'] = { '<Cmd>tabclose<CR>', 'close' },
+keys('Page: %s', { silent = true }) {
+	map('<Leader>tn', 'new') '<Cmd>tabnew<CR>',
+	map('<Leader>td', 'close') '<Cmd>tabclose<CR>',
 
-		[']t'] = { '<Cmd>tabnext<CR>', 'next' },
-		['[t'] = { '<Cmd>tabprev<CR>', 'prev' },
+	map(']t', 'next') '<Cmd>tabnext<CR>',
+	map('[t', 'prev') '<Cmd>tabprev<CR>',
 
-		['<Leader>to'] = { '<Cmd>tabonly<CR>', 'only' },
-	},
+	map('<Leader>to', 'only') '<Cmd>tabonly<CR>',
 }

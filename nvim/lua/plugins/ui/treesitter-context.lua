@@ -9,12 +9,13 @@ return {
 	},
 
 	init = function()
-		local keymap = require 'util.keymap'
+		local keymap = require 'mappet'
+		local map = keymap.map
 
-		keymap {
-			[{ 'n', desc = 'UI: %s' }] = {
-				['<Leader>oc'] = { '<Cmd>TSContext toggle<CR>', 'toggle TS context' },
-			},
+		local keys = keymap.group 'plugins.ui.treesitter-context'
+
+		keys('UI: %s', { 'n' }) {
+			map('<Leader>oc', 'toggle TS context') '<Cmd>TSContext toggle<CR>',
 		}
 	end,
 }

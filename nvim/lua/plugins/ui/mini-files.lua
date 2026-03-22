@@ -36,23 +36,54 @@ return {
 	config = function(_, opts)
 		local autocmd = require 'util.autocmd'
 		local MiniFiles = require 'mini.files'
-		local keymap = require 'util.keymap'
+		local keymap = require 'mappet'
+
+		local map = keymap.map
+		local keys = keymap.group 'plugins.ui.mini.files'
+		local file_keys = keymap.template()
 
 		MiniFiles.setup(opts)
 
-		keymap {
-			[{ 'n', desc = 'Files: %s' }] = {
-				['<Leader>e'] = {
-					desc = 'open',
-					function()
-						if not MiniFiles.close() then
-							local buf_name = vim.api.nvim_buf_get_name(0)
-							local file_path = vim.fn.filereadable(buf_name) == 1 and buf_name or nil
-							MiniFiles.open(file_path or MiniFiles.get_latest_path(), true)
-							MiniFiles.reveal_cwd()
-						end
-					end,
-				},
+		keys('Files: %s', { 'n' }) {
+			map('<Leader>e', 'open') {
+				function()
+					if not MiniFiles.close() then
+						local buf_name = vim.api.nvim_buf_get_name(0)
+						local file_path = vim.fn.filereadable(buf_name) == 1 and buf_name or nil
+						MiniFiles.open(file_path or MiniFiles.get_latest_path(), true)
+						MiniFiles.reveal_cwd()
+					end
+				end,
+			},
+		}
+
+		file_keys('Files: %s', { 'n', remap = true, nowait = true }) {
+			map('<Esc>', 'close') 'q',
+			map('<CR>', 'open') 'l',
+
+			map('w', 'synchronize') '=',
+			map('<Leader>', 'leader passthrough') 'q<Cmd>silent! WhichKey<CR><Leader>',
+
+			map('cd', 'cd') ':MiniFilesCwd<C-b>tcd  | <S-Left><Left>',
+			map('cz', 'zoxide') 'q:<C-b>Tz ',
+
+			map('<BS>', 'go to cwd') '<Cmd>MiniFilesCwd<CR>',
+
+			map('.', 'set cwd') {
+				function()
+					local path = (MiniFiles.get_fs_entry() or {}).path
+					if path then
+						local cwd = vim.fs.dirname(path)
+						vim.cmd.tcd(cwd)
+						MiniFiles.open(cwd, false)
+					end
+				end,
+			},
+
+			map('gx', 'system open') {
+				function()
+					vim.ui.open(MiniFiles.get_fs_entry().path)
+				end,
 			},
 		}
 
@@ -63,39 +94,7 @@ return {
 		local augroup = autocmd.group 'mini.files'
 
 		augroup:on_user('MiniFilesBufferCreate', function(event)
-			keymap {
-				[{ 'n', buffer = event.data.buf_id, desc = 'Files: %s', remap = true, nowait = true }] = {
-					['<Esc>'] = { 'q', 'close' },
-					['<CR>'] = { 'l', 'open' },
-
-					['w'] = { '=', 'synchronize' },
-					['<Leader>'] = { 'q<Cmd>silent! WhichKey<CR><Leader>' },
-
-					['cd'] = { ':MiniFilesCwd<C-b>tcd  | <S-Left><Left>', 'cd' },
-					['cz'] = { 'q:<C-b>Tz ', 'zoxide' },
-
-					['<BS>'] = { '<Cmd>MiniFilesCwd<CR>', 'go to cwd' },
-
-					['.'] = {
-						desc = 'set cwd',
-						function()
-							local path = (MiniFiles.get_fs_entry() or {}).path
-							if path then
-								local cwd = vim.fs.dirname(path)
-								vim.cmd.tcd(cwd)
-								MiniFiles.open(cwd, false)
-							end
-						end,
-					},
-
-					['gx'] = {
-						desc = 'system open',
-						function()
-							vim.ui.open(MiniFiles.get_fs_entry().path)
-						end,
-					},
-				},
-			}
+			file_keys:apply(keymap.buffer('mini.files', event.data.buf_id))
 		end)
 
 		augroup:on_user('ZoxideDirChanged', 'MiniFilesCwd')

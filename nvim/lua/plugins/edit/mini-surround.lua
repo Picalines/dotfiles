@@ -31,12 +31,13 @@ return {
 	},
 
 	init = function()
-		local keymap = require 'util.keymap'
+		local keymap = require 'mappet'
+		local map = keymap.map
 
-		keymap {
-			[{ 'n', desc = 'surround %s' }] = {
-				['ss'] = { 's_', 'line', remap = true },
-			},
+		local keys = keymap.group 'plugins.edit.mini-surround'
+
+		keys('surround %s', { 'n' }) {
+			map('ss', 'line') { remap = true, 's_' },
 		}
 	end,
 }

@@ -2,17 +2,17 @@
 
 local autocmd = require 'util.autocmd'
 local hl = require 'util.highlight'
-local keymap = require 'util.keymap'
+local keymap = require 'mappet'
 local signal = require 'util.signal'
 
-keymap {
-	[{ 'n', desc = 'UI: %s' }] = {
-		['<Leader>ob'] = {
-			desc = 'toggle background',
-			function()
-				vim.o.background = vim.o.background == 'dark' and 'light' or 'dark'
-			end,
-		},
+local map = keymap.map
+local keys = keymap.group 'settings.colorscheme'
+
+keys('UI: %s', { 'n' }) {
+	map('<Leader>ob', 'toggle background') {
+		function()
+			vim.o.background = vim.o.background == 'dark' and 'light' or 'dark'
+		end,
 	},
 }
 

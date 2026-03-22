@@ -1,6 +1,11 @@
 local autocmd = require 'util.autocmd'
-local keymap = require 'util.keymap'
+local keymap = require 'mappet'
 local win = require 'util.window'
+
+local map = keymap.map
+local sub = keymap.sub
+local keys = keymap.group 'settings.window'
+local help_keys = keymap.template()
 
 local augroup = autocmd.group 'window'
 
@@ -53,37 +58,37 @@ vim.opt.fillchars = {
 	diff = '╱',
 }
 
-keymap {
-	[{ 'n', desc = 'Window: %s' }] = {
-		['<C-j>'] = { '<C-w>j', 'go down' },
-		['<C-k>'] = { '<C-w>k', 'go up' },
-		['<C-h>'] = { '<C-w>h', 'go left' },
-		['<C-l>'] = { '<C-w>l', 'go right' },
-
-		['<S-Down>'] = { '5<C-w>-', 'decrease height' },
-		['<S-Up>'] = { '5<C-w>+', 'increase height' },
-		['<S-Left>'] = { '5<C-w><', 'decrease width' },
-		['<S-Right>'] = { '5<C-w>>', 'increase width' },
-
-		['+'] = { '<Cmd>WinGrow 6<CR>', 'increase size' },
-		['_'] = { '<Cmd>WinShrink 6<CR>', 'decrease size' },
+keys('Window: %s', { 'n' }) {
+	sub 'go %s' {
+		map('<C-j>', 'down') '<C-w>j',
+		map('<C-k>', 'up') '<C-w>k',
+		map('<C-h>', 'left') '<C-w>h',
+		map('<C-l>', 'right') '<C-w>l',
 	},
 
-	[{ 'n', desc = 'UI: toggle %s' }] = {
-		['<LocalLeader>on'] = { '<Cmd>set relativenumber!<CR>', 'relativenumber' },
-		['<LocalLeader>ow'] = { '<Cmd>set wrap!<CR>', 'wrap' },
-		['<LocalLeader>os'] = { '<Cmd>set spell!<CR>', 'spell' },
-	},
+	map('<S-Down>', 'decrease height') '5<C-w>-',
+	map('<S-Up>', 'increase height') '5<C-w>+',
+	map('<S-Left>', 'decrease width') '5<C-w><',
+	map('<S-Right>', 'increase width') '5<C-w>>',
+
+	map('+', 'increase size') '<Cmd>WinGrow 6<CR>',
+	map('_', 'decrease size') '<Cmd>WinShrink 6<CR>',
+}
+
+keys('UI: toggle %s', { 'n' }) {
+	map('<LocalLeader>on', 'relativenumber') '<Cmd>set relativenumber!<CR>',
+	map('<LocalLeader>ow', 'wrap') '<Cmd>set wrap!<CR>',
+	map('<LocalLeader>os', 'spell') '<Cmd>set spell!<CR>',
+}
+
+help_keys { 'n' } {
+	map('q', 'close') '<C-w>c',
 }
 
 -- open help in vertical split
 augroup:on('FileType', 'help', function(event)
 	autocmd.buffer(event.buf):on('BufWinEnter', 'wincmd L')
-	keymap {
-		[{ 'n', buffer = event.buf }] = {
-			['q'] = { '<C-w>c', 'close' },
-		},
-	}
+	help_keys:apply(keymap.buffer('settings.window.help', event.buf))
 end)
 
 -- go to previous window when closing

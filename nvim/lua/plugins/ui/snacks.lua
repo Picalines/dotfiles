@@ -2,37 +2,38 @@ return {
 	'folke/snacks.nvim',
 
 	init = function()
-		local keymap = require 'util.keymap'
+		local keymap = require 'mappet'
+		local map = keymap.map
 
-		keymap {
-			[{ 'n', desc = 'LSP: %s' }] = {
-				['gD'] = { '<Cmd>lua Snacks.picker.lsp_definitions()<CR>', 'definitions' },
-				['gR'] = { '<Cmd>lua Snacks.picker.lsp_references()<CR>', 'references' },
-				['gI'] = { '<Cmd>lua Snacks.picker.lsp_implementations()<CR>', 'implementations' },
-				['gT'] = { '<Cmd>lua Snacks.picker.lsp_type_definitions()<CR>', 'type definitions' },
-			},
+		local keys = keymap.group 'plugins.ui.snacks'
 
-			[{ 'n', desc = 'Buffer: %s' }] = {
-				['<Leader>b'] = { '<Cmd>lua Snacks.picker.buffers()<CR>', 'find' },
-				['<LocalLeader>bd'] = { '<Cmd>lua Snacks.bufdelete()<CR>', 'delete' },
-				['<LocalLeader>bD'] = { '<Cmd>lua Snacks.bufdelete.all()<CR>', 'delete all' },
-				['<LocalLeader>bo'] = { '<Cmd>lua Snacks.bufdelete.other()<CR>', 'delete other' },
-			},
+		keys 'LSP: %s' {
+			map('gD', 'definitions') '<Cmd>lua Snacks.picker.lsp_definitions()<CR>',
+			map('gR', 'references') '<Cmd>lua Snacks.picker.lsp_references()<CR>',
+			map('gI', 'implementations') '<Cmd>lua Snacks.picker.lsp_implementations()<CR>',
+			map('gT', 'type definitions') '<Cmd>lua Snacks.picker.lsp_type_definitions()<CR>',
+		}
 
-			[{ 'n', desc = 'Find: %s' }] = {
-				['<Leader>ff'] = { '<Cmd>lua Snacks.picker.files()<CR>', 'files' },
-				['<Leader>fo'] = { '<Cmd>lua Snacks.picker.recent()<CR>', 'recent' },
-				['<Leader>fg'] = { '<Cmd>lua Snacks.picker.grep()<CR>', 'grep' },
-				['<Leader>fh'] = { '<Cmd>lua Snacks.picker.help()<CR>', 'help' },
-				['<Leader>fs'] = { '<Cmd>lua Snacks.picker.lsp_workspace_symbols()<CR>', 'symbols' },
-				['<Leader>fr'] = { '<Cmd>lua Snacks.picker.resume()<CR>', 'resume' },
-				['<LocalLeader>fs'] = { '<Cmd>lua Snacks.picker.lsp_symbols()<CR>', 'symbols' },
-				['<LocalLeader>ft'] = { ':set filetype=', 'filetype' },
-			},
+		keys 'Buffer: %s' {
+			map('<Leader>b', 'find') '<Cmd>lua Snacks.picker.buffers()<CR>',
+			map('<LocalLeader>bd', 'delete') '<Cmd>lua Snacks.bufdelete()<CR>',
+			map('<LocalLeader>bD', 'delete all') '<Cmd>lua Snacks.bufdelete.all()<CR>',
+			map('<LocalLeader>bo', 'delete other') '<Cmd>lua Snacks.bufdelete.other()<CR>',
+		}
 
-			[{ 'n', desc = 'UI: %s' }] = {
-				['<Leader>oC'] = { '<Cmd>lua Snacks.picker.colorschemes()<CR>', 'colorscheme' },
-			},
+		keys 'Find: %s' {
+			map('<Leader>ff', 'files') '<Cmd>lua Snacks.picker.files()<CR>',
+			map('<Leader>fo', 'recent') '<Cmd>lua Snacks.picker.recent()<CR>',
+			map('<Leader>fg', 'grep') '<Cmd>lua Snacks.picker.grep()<CR>',
+			map('<Leader>fh', 'help') '<Cmd>lua Snacks.picker.help()<CR>',
+			map('<Leader>fs', 'symbols') '<Cmd>lua Snacks.picker.lsp_workspace_symbols()<CR>',
+			map('<Leader>fr', 'resume') '<Cmd>lua Snacks.picker.resume()<CR>',
+			map('<LocalLeader>fs', 'symbols') '<Cmd>lua Snacks.picker.lsp_symbols()<CR>',
+			map('<LocalLeader>ft', 'filetype') ':set filetype=',
+		}
+
+		keys 'UI: %s' {
+			map('<Leader>oC', 'colorscheme') '<Cmd>lua Snacks.picker.colorschemes()<CR>',
 		}
 	end,
 

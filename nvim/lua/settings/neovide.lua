@@ -1,6 +1,10 @@
+local app = require 'util.app'
 local func = require 'util.func'
-local keymap = require 'util.keymap'
+local keymap = require 'mappet'
 local signal = require 'util.signal'
+
+local map, sub = keymap.map, keymap.sub
+local keys = keymap.group 'settings.neovide'
 
 vim.g.neovide_theme = 'auto'
 
@@ -50,18 +54,18 @@ local function toggle_opacity()
 	neovide_opacity(neovide_opacity() == 1 and 0.95 or 1)
 end
 
-keymap {
-	[{ 'n', desc = 'Neovide: %s' }] = {
-		[{ 'n', 'i', 'x', 'c' }] = {
-			['<D-=>'] = { func.partial(zoom, 0.1), 'zoom in' },
-			['<D-->'] = { func.partial(zoom, -0.1), 'zoom out' },
-		},
+keys 'Neovide: %s' {
+	sub { 'n', 'i', 'x', 'c' } {
+		map('<D-=>', 'zoom in') { func.partial(zoom, 0.1) },
+		map('<D-->', 'zoom out') { func.partial(zoom, -0.1) },
+	},
 
-		['<Leader>ug'] = { toggle_opacity, 'toggle opacity' },
+	map('<Leader>ug', 'toggle opacity') { toggle_opacity },
 
-		[{ os = 'macos' }] = {
-			['<D-w>'] = { '<Cmd>wa | qa!<CR>', 'write all and quit' },
-			['<D-n>'] = { '<Cmd>silent !open --new -b com.neovide.neovide<CR>', 'new window' },
+	sub { when = app.os() == 'macos' } {
+		map('<D-w>', 'write all and quit') '<Cmd>wa | qa!<CR>',
+		map('<D-n>', 'new window') {
+			'<Cmd>silent !open --new -b com.neovide.neovide<CR>',
 		},
 	},
 }

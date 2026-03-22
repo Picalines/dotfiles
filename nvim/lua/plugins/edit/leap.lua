@@ -23,33 +23,33 @@ return {
 	end,
 
 	init = function()
-		local keymap = require 'util.keymap'
+		local keymap = require 'mappet'
+		local map, sub = keymap.map, keymap.sub
 
-		local function select_node()
-			require('leap.treesitter').select {
-				opts = require('leap.user').with_traversal_keys('n', 'N'),
-			}
-		end
+		local keys = keymap.group 'plugins.edit.leap'
 
-		local function remote_action()
-			require('leap.remote').action()
-		end
-
-		keymap {
-			[{ 'n', 'x', 'o', desc = 'Leap: %s' }] = {
-				['f'] = { '<Plug>(leap-forward)', 'to' },
-				['F'] = { '<Plug>(leap-backward)', 'backward to' },
-
-				['t'] = { '<Plug>(leap-forward-till)', 'till' },
-				['T'] = { '<Plug>(leap-backward-till)', 'backward till' },
+		keys('Leap: %s', { 'n' }) {
+			sub { 'x', 'o' } {
+				map('f', 'to') '<Plug>(leap-forward)',
+				map('F', 'backward to') '<Plug>(leap-backward)',
+				map('t', 'till') '<Plug>(leap-forward-till)',
+				map('T', 'backward till') '<Plug>(leap-backward-till)',
 			},
 
-			[{ 'x', 'o', desc = 'Leap: %s' }] = {
-				['an'] = { select_node, 'treesitter node' },
+			map('R', 'remote') {
+				function()
+					require('leap.remote').action()
+				end,
 			},
+		}
 
-			[{ 'n', desc = 'Leap: %s' }] = {
-				['R'] = { remote_action, 'remote' },
+		keys('Leap: %s', { 'x', 'o' }) {
+			map('an', 'treesitter node') {
+				function()
+					require('leap.treesitter').select {
+						opts = require('leap.user').with_traversal_keys('n', 'N'),
+					}
+				end,
 			},
 		}
 	end,

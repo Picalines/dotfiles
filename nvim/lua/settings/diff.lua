@@ -1,4 +1,7 @@
-local keymap = require 'util.keymap'
+local keymap = require 'mappet'
+local map = keymap.map
+
+local keys = keymap.group 'settings.diff'
 
 local is_diff_mode = vim.iter(vim.v.argv):any(function(arg)
 	return arg == '-d' or arg == '--diff'
@@ -18,13 +21,11 @@ if is_diff_mode then
 	vim.opt_global.equalalways = true
 	vim.opt_global.eadirection = 'ver'
 
-	keymap {
-		[{ 'n', desc = 'Merge diff: %s' }] = {
-			['<Leader>do'] = { '<Cmd>diffget 1<CR>', 'ours' },
-			['<Leader>db'] = { '<Cmd>diffget 2<CR>', 'base' },
-			['<Leader>dt'] = { '<Cmd>diffget 3<CR>', 'theirs' },
-			['<Leader>dc'] = { '<Cmd>cquit<CR>', 'cancel' },
-		},
+	keys 'Merge diff: %s' {
+		map('<Leader>do', 'ours') '<Cmd>diffget 1<CR>',
+		map('<Leader>db', 'base') '<Cmd>diffget 2<CR>',
+		map('<Leader>dt', 'theirs') '<Cmd>diffget 3<CR>',
+		map('<Leader>dc', 'cancel') '<Cmd>cquit<CR>',
 	}
 
 	vim.schedule(function()

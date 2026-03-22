@@ -6,26 +6,27 @@ return {
 	build = 'make install_jsregexp',
 
 	init = function()
-		local keymap = require 'util.keymap'
+		local keymap = require 'mappet'
+		local map = keymap.map
+		local keys = keymap.group 'plugins.edit.luasnip'
 
-		local function expand_or_jump()
-			local luasnip = require 'luasnip'
-			if luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			end
-		end
+		keys('Snippet: %s', { 'i', 's' }) {
+			map('<C-k>', 'expand or jump') {
+				function()
+					local luasnip = require 'luasnip'
+					if luasnip.expand_or_jumpable() then
+						luasnip.expand_or_jump()
+					end
+				end,
+			},
 
-		local function jump_back()
-			local luasnip = require 'luasnip'
-			if luasnip.jumpable(-1) then
-				luasnip.jump(-1)
-			end
-		end
-
-		keymap {
-			[{ 'i', 's', desc = 'Snippet: %s' }] = {
-				['<C-k>'] = { expand_or_jump, 'expand / jump' },
-				['<C-j>'] = { jump_back, 'jump back' },
+			map('<C-j>', 'jump back') {
+				function()
+					local luasnip = require 'luasnip'
+					if luasnip.jumpable(-1) then
+						luasnip.jump(-1)
+					end
+				end,
 			},
 		}
 	end,

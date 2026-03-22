@@ -1,29 +1,37 @@
 local autocmd = require 'util.autocmd'
-local keymap = require 'util.keymap'
+
+local keymap = require 'mappet'
+local map = keymap.map
+
+local keys = keymap.group 'settings.buffer'
+local qf_keys = keymap.template()
 
 -- highlight <>
 vim.o.matchpairs = vim.go.matchpairs .. ',<:>'
 
-keymap {
-	[{ 'n', desc = 'Buffer: %s' }] = {
-		[']b'] = { '<Cmd>bn<CR>', 'next' },
-		['[b'] = { '<Cmd>bp<CR>', 'previous' },
+keys 'Buffer: %s' {
+	map(']b', 'next') '<Cmd>bn<CR>',
+	map('[b', 'previous') '<Cmd>bp<CR>',
 
-		['<LocalLeader>bn'] = { '<Cmd>enew<CR>', 'new' },
-		['<LocalLeader>br'] = { '<Cmd>e<CR>', 'reload' },
-		['<LocalLeader>bt'] = { '<Cmd>term<CR>', 'terminal' },
+	map('<LocalLeader>bn', 'new') '<Cmd>enew<CR>',
+	map('<LocalLeader>br', 'reload') '<Cmd>e<CR>',
+	map('<LocalLeader>bt', 'terminal') '<Cmd>term<CR>',
 
-		['<LocalLeader>w'] = { '<Cmd>silent w<CR>', 'write' },
-		['<Leader>w'] = { '<Cmd>silent wa!<CR>', 'write all' },
+	map('<LocalLeader>w', 'write') '<Cmd>silent w<CR>',
+	map('<Leader>w', 'write all') '<Cmd>silent wa!<CR>',
 
-		['<LocalLeader>s'] = { ':%s///g<Left><Left><Left>', 'substitute' },
-		['<LocalLeader>gn'] = { ':%g//norm <Left><Left><Left><Left><Left><Left>', 'g norm' },
-	},
+	map('<LocalLeader>s', 'substitute') ':%s///g<Left><Left><Left>',
+	map('<LocalLeader>gn', 'g norm') ':%g//norm <Left><Left><Left><Left><Left><Left>',
+}
 
-	[{ 'x', desc = 'Buffer: %s' }] = {
-		['<LocalLeader>s'] = { ':s///g<Left><Left><Left>', 'substitute' },
-		['<LocalLeader>gn'] = { ':g//norm <Left><Left><Left><Left><Left><Left>', 'g norm' },
-	},
+keys('Buffer: %s', { 'x' }) {
+	map('<LocalLeader>s', 'substitute') ':s///g<Left><Left><Left>',
+	map('<LocalLeader>gn', 'g norm') ':g//norm <Left><Left><Left><Left><Left><Left>',
+}
+
+qf_keys('Quickfix: %s', { remap = true }) {
+	map('q', 'close') '<Cmd>cclose<CR>',
+	map('<Leader>q', 'close') '<Cmd>cclose<CR>',
 }
 
 local augroup = autocmd.group 'buffer'
@@ -42,10 +50,6 @@ augroup:on({ 'BufNew', 'BufAdd', 'BufWinEnter', 'TermOpen' }, '*', function(even
 end)
 
 augroup:on('FileType', 'qf', function(event)
-	keymap {
-		[{ 'n', remap = true, buffer = event.buf, desc = 'Quickfix: %s' }] = {
-			['q'] = { '<Cmd>cclose<CR>', 'close' },
-			['<Leader>q'] = { '<Cmd>cclose<CR>', 'close' },
-		},
-	}
+	local buffer_keys = keymap.buffer('quickfix', event.buf)
+	qf_keys:apply(buffer_keys)
 end)

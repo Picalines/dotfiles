@@ -9,12 +9,13 @@ return {
 
 	init = function()
 		local autocmd = require 'util.autocmd'
-		local keymap = require 'util.keymap'
+		local keymap = require 'mappet'
+		local map = keymap.map
 
-		keymap {
-			[{ 'n', desc = 'UI: %s' }] = {
-				['<Leader>m'] = { '<Cmd>Noice all<CR>', 'messages' },
-			},
+		local keys = keymap.group 'plugins.ui.noice'
+
+		keys('UI: %s', { 'n' }) {
+			map('<Leader>m', 'messages') '<Cmd>Noice all<CR>',
 		}
 
 		local augroup = autocmd.group 'noice'

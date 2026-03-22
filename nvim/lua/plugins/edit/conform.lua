@@ -5,34 +5,31 @@ return {
 
 	init = function()
 		local autocmd = require 'util.autocmd'
-		local keymap = require 'util.keymap'
+		local keymap = require 'mappet'
+		local map = keymap.map
 
 		vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-
 		vim.g.format_on_write = true
 
-		keymap {
-			[{ 'n', desc = 'Format: %s' }] = {
-				['<LocalLeader>F'] = {
-					desc = 'buffer',
-					function()
-						require('conform').format { async = vim.fn.reg_executing() == '' }
-					end,
-				},
+		local keys = keymap.group 'plugins.edit.conform'
 
-				['<Leader>of'] = {
-					desc = 'toggle on write',
-					function()
-						vim.g.format_on_write = not vim.g.format_on_write
-					end,
-				},
+		keys('Format: %s', { 'n' }) {
+			map('<LocalLeader>F', 'buffer') {
+				function()
+					require('conform').format { async = vim.fn.reg_executing() == '' }
+				end,
+			},
 
-				['<LocalLeader>of'] = {
-					desc = 'toggle on write',
-					function()
-						vim.b.format_on_write = not vim.b.format_on_write
-					end,
-				},
+			map('<Leader>of', 'toggle on write') {
+				function()
+					vim.g.format_on_write = not vim.g.format_on_write
+				end,
+			},
+
+			map('<LocalLeader>of', 'toggle on write') {
+				function()
+					vim.b.format_on_write = not vim.b.format_on_write
+				end,
 			},
 		}
 
