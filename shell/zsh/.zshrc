@@ -14,14 +14,6 @@ command-exists fzf && source <(fzf --zsh)
 command-exists pnpm && eval "$(pnpm completion zsh)"
 command-exists zoxide && eval "$(zoxide init zsh)"
 
-function f() {
-  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-  command yazi "$@" --cwd-file="$tmp"
-  IFS= read -r -d '' cwd < "$tmp"
-  rm -f -- "$tmp"
-  [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd" || return 1
-}
-
 export VISUAL="nvim -b"
 export EDITOR="nvim -b"
 
