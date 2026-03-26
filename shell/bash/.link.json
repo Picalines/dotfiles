@@ -1,0 +1,23 @@
+{
+  "if": {
+    "executable-exists": "bash"
+  },
+  "links": [
+    {
+      "from": ".bash_profile",
+      "to": "~/.bash_profile"
+    },
+    {
+      "from": ".bash_profile.core",
+      "to": "~/.config/bash/profile.d/00-core.bash"
+    },
+    {
+      "from": ".bashrc",
+      "to": "~/.bashrc"
+    },
+    {
+      "from": ".bashrc.core",
+      "to": "~/.config/bash/rc.d/00-core.bash"
+    }
+  ]
+}

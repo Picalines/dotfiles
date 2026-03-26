@@ -1,0 +1,23 @@
+{
+  "if": {
+    "executable-exists": "zsh"
+  },
+  "links": [
+    {
+      "from": ".zprofile",
+      "to": "~/.zprofile"
+    },
+    {
+      "from": ".zprofile.core",
+      "to": "~/.config/zsh/profile.d/00-core.zsh"
+    },
+    {
+      "from": ".zshrc",
+      "to": "~/.zshrc"
+    },
+    {
+      "from": ".zshrc.core",
+      "to": "~/.config/zsh/rc.d/00-core.zsh"
+    }
+  ]
+}

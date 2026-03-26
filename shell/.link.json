@@ -1,36 +1,12 @@
 {
+  "include": [
+    "bash",
+    "zsh"
+  ],
   "links": [
     {
       "from": ".inputrc",
       "to": "~/.inputrc"
-    },
-    {
-      "from": "bash/.bash_profile",
-      "to": "~/.bash_profile",
-      "if": {
-        "executable-exists": "bash"
-      }
-    },
-    {
-      "from": "bash/.bashrc",
-      "to": "~/.bashrc",
-      "if": {
-        "executable-exists": "bash"
-      }
-    },
-    {
-      "from": "zsh/.zprofile",
-      "to": "~/.zprofile",
-      "if": {
-        "executable-exists": "zsh"
-      }
-    },
-    {
-      "from": "zsh/.zshrc",
-      "to": "~/.zshrc",
-      "if": {
-        "executable-exists": "zsh"
-      }
     },
     {
       "from": "starship.toml",
