@@ -10,20 +10,27 @@ import sys
 import json
 import platform
 import shutil
+from functools import partial
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable, Literal
-from dataclasses import dataclass
-
 
 OS_NAMES = {"windows": "Windows", "macos": "Darwin", "linux": "Linux"}
 LINK_FILE_NAME = ".link.json"
-
 
 
 def color(text: str, code: int) -> str:
     if not sys.stdout.isatty():
         return text
     return f"\033[{code}m{text}\033[0m"
+
+
+red = partial(color, code=31)
+green = partial(color, code=32)
+yellow = partial(color, code=33)
+blue = partial(color, code=34)
+magenta = partial(color, code=35)
+cyan = partial(color, code=36)
 
 
 def is_windows() -> bool:
@@ -95,7 +102,6 @@ def os_condition(value: str) -> ConditionResult:
     return True, None
 
 
-
 def any_condition(conditions: list[Condition]) -> ConditionResult:
     reasons: list[str] = []
     for sub in conditions:
@@ -118,9 +124,9 @@ ValueConditionFunc = Callable[[str], ConditionResult]
 CombinatorConditionFunc = Callable[[list["Condition"]], ConditionResult]
 
 VALUE_CONDITION_FUNCS: dict[str, ValueConditionFunc] = {
-    'path-exists': path_exists_condition,
-    'executable-exists': executable_exists_condition,
-    'os': os_condition,
+    "path-exists": path_exists_condition,
+    "executable-exists": executable_exists_condition,
+    "os": os_condition,
 }
 
 COMBINATOR_CONDITION_FUNCS: dict[str, CombinatorConditionFunc] = {
@@ -249,22 +255,22 @@ def discover_link_files_root(link_dirs: list[str]) -> list[LinkFileDiscovery]:
 
 
 def process_link_file(link_file: LinkFile) -> None:
-    for link in link_file.config['links']:
-        source = link['from']
-        target = link['to']
-        method = link.get('method', 'symlink')
+    for link in link_file.config["links"]:
+        source = link["from"]
+        target = link["to"]
+        method = link.get("method", "symlink")
 
-        if link_condition := link.get('if', None):
+        if link_condition := link.get("if", None):
             condition_met, reason = resolve_condition(link_condition)
             if not condition_met:
-                print(f"{color('skipped', 36)} {source} {color(f"({reason})", 35)}")
+                print(f"{cyan('skipped')} {source} {magenta(f'({reason})')}")
                 continue
 
         source_path = (link_file.path.parent / source).resolve()
         target_path = Path(target).expanduser()
 
         func, label = LINK_METHODS[method]
-        print(f"{color(label, 33)} {source} {color('->', 32)} {target}")
+        print(f"{yellow(label)} {source} {green('->')} {target}")
         func(source_path, target_path)
 
 
@@ -281,13 +287,13 @@ def start() -> int:
 
     for discovery in link_file_discoveries:
         if number_of_link_files > 1 or discovery.skip_reason is not None:
-            print(color(f"# {display_path(discovery.file.path)}", 32))
+            print(green(f"# {display_path(discovery.file.path)}"))
 
         if discovery.skip_reason is not None:
             for included_link_file_path in get_included_link_file_paths(discovery.file):
-                print(color(f"# ↳ {display_path(included_link_file_path)}", 32))
+                print(green(f"# ↳ {display_path(included_link_file_path)}"))
 
-            print(f"{color('skipped', 36)} {color(f'({discovery.skip_reason})', 35)}")
+            print(f"{cyan('skipped')} {magenta(f'({discovery.skip_reason})')}")
             continue
 
         process_link_file(discovery.file)
