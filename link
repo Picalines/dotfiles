@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Declarative symlink/copy manager for dotfiles.
-Reads .link.json files and creates symlinks or copies accordingly.
-See .link.json files in subdirectories for config examples.
+Reads .link.json files from provided directories.
+Configs may include nested subdirectories with more .link.json files.
 """
 
 import os
@@ -10,10 +10,13 @@ import sys
 import json
 import platform
 import shutil
-from typing import Callable, Literal
+from pathlib import Path
+from typing import Any, Callable, Literal
+from dataclasses import dataclass
 
 
 OS_NAMES = {"windows": "Windows", "macos": "Darwin", "linux": "Linux"}
+LINK_FILE_NAME = ".link.json"
 
 
 
@@ -32,40 +35,34 @@ def executable_exists(name: str) -> bool:
 
 
 def path_exists(path: str) -> bool:
-    return os.path.exists(os.path.expanduser(path))
+    return Path(path).expanduser().exists()
 
 
-def create_symlink(source_path: str, target_path: str, force: bool = True) -> None:
-    parent_dir = os.path.dirname(target_path)
-    if parent_dir:
-        os.makedirs(parent_dir, exist_ok=True)
+def create_symlink(source_path: Path, target_path: Path, force: bool = True) -> None:
+    target_path.parent.mkdir(parents=True, exist_ok=True)
 
-    if force and os.path.lexists(target_path):
-        if os.path.isdir(target_path) and not os.path.islink(target_path):
+    if force and (target_path.exists() or target_path.is_symlink()):
+        if target_path.is_dir() and not target_path.is_symlink():
             shutil.rmtree(target_path)
         else:
-            os.remove(target_path)
+            target_path.unlink()
 
     # Windows requires target_is_directory=True for directory symlinks
-    target_is_directory = False
-    if os.path.exists(source_path):
-        target_is_directory = os.path.isdir(source_path)
+    target_is_directory = source_path.exists() and source_path.is_dir()
 
     os.symlink(source_path, target_path, target_is_directory=target_is_directory)
 
 
-def create_copy(source_path: str, target_path: str) -> None:
-    parent_dir = os.path.dirname(target_path)
-    if parent_dir:
-        os.makedirs(parent_dir, exist_ok=True)
+def create_copy(source_path: Path, target_path: Path) -> None:
+    target_path.parent.mkdir(parents=True, exist_ok=True)
 
-    if os.path.isdir(source_path):
+    if source_path.is_dir():
         shutil.copytree(source_path, target_path, dirs_exist_ok=True)
     else:
         shutil.copy2(source_path, target_path)
 
 
-LinkMethod = tuple[Callable[[str, str], None], str]
+LinkMethod = tuple[Callable[[Path, Path], None], str]
 
 LINK_METHODS: dict[str, LinkMethod] = {
     "symlink": (create_symlink, "linking"),
@@ -159,19 +156,100 @@ def resolve_condition(condition: Condition) -> ConditionResult:
     return True, None
 
 
-def process_link_file(link_file_path: str) -> None:
-    base_dir = os.path.dirname(link_file_path)
-    
-    with open(link_file_path, 'r') as f:
-        config = json.load(f)
-    
-    if file_condition := config.get('if', None):
+LinkConfig = dict[str, Any]
+
+
+@dataclass(frozen=True)
+class LinkFile:
+    config: LinkConfig
+    path: Path
+
+
+@dataclass(frozen=True)
+class LinkFileDiscovery:
+    file: LinkFile
+    skip_reason: str | None = None
+
+
+def display_path(path: Path) -> str:
+    relative_path = os.path.relpath(path)
+    return relative_path if not relative_path.startswith("..") else str(path)
+
+
+def normalize_link_file_path(path: Path) -> Path:
+    normalized_path = Path(os.path.abspath(path))
+    if normalized_path != normalized_path.resolve():
+        raise RuntimeError(
+            f"link file path must not go through a symlink: {normalized_path}"
+        )
+
+    return normalized_path
+
+
+def get_included_link_file_paths(link_file: LinkFile) -> list[Path]:
+    return [
+        link_file.path.parent / include_dir / LINK_FILE_NAME
+        for include_dir in link_file.config.get("include", [])
+    ]
+
+
+def discover_link_files(
+    link_file_path: Path,
+    visited_link_files: set[Path],
+) -> list[LinkFileDiscovery]:
+    link_file_path = normalize_link_file_path(link_file_path)
+    if link_file_path in visited_link_files:
+        return []
+
+    visited_link_files.add(link_file_path)
+
+    with link_file_path.open("r") as file:
+        link_file = LinkFile(
+            config=json.load(file),
+            path=link_file_path,
+        )
+
+    if file_condition := link_file.config.get("if", None):
         condition_met, reason = resolve_condition(file_condition)
         if not condition_met:
-            print(f"{color('skipped', 36)} {color(f"({reason})", 35)}")
-            return
-    
-    for link in config['links']:
+            return [LinkFileDiscovery(link_file, str(reason))]
+
+    discovered_link_files = [LinkFileDiscovery(link_file)]
+
+    for included_path in get_included_link_file_paths(link_file):
+        if not included_path.is_file():
+            discovered_link_files.append(
+                LinkFileDiscovery(LinkFile({}, included_path), "not found")
+            )
+            continue
+
+        discovered_link_files.extend(
+            discover_link_files(included_path, visited_link_files)
+        )
+
+    return discovered_link_files
+
+
+def discover_link_files_root(link_dirs: list[str]) -> list[LinkFileDiscovery]:
+    discoveries: list[LinkFileDiscovery] = []
+    visited_paths: set[Path] = set()
+
+    for link_dir in link_dirs:
+        link_dir_path = Path(link_dir)
+        if not link_dir_path.is_dir():
+            continue
+
+        link_file_path = Path(os.path.abspath(link_dir_path / LINK_FILE_NAME))
+        if not link_file_path.is_file():
+            continue
+
+        discoveries.extend(discover_link_files(link_file_path, visited_paths))
+
+    return discoveries
+
+
+def process_link_file(link_file: LinkFile) -> None:
+    for link in link_file.config['links']:
         source = link['from']
         target = link['to']
         method = link.get('method', 'symlink')
@@ -182,26 +260,37 @@ def process_link_file(link_file_path: str) -> None:
                 print(f"{color('skipped', 36)} {source} {color(f"({reason})", 35)}")
                 continue
 
-        source_path = os.path.abspath(os.path.join(base_dir, source))
-        target_path = os.path.expanduser(target)
+        source_path = (link_file.path.parent / source).resolve()
+        target_path = Path(target).expanduser()
 
         func, label = LINK_METHODS[method]
-        print(f"{color(label, 33)} {source} -> {target}")
+        print(f"{color(label, 33)} {source} {color('->', 32)} {target}")
         func(source_path, target_path)
 
 
 def start() -> int:
-    link_files = sys.argv[1:]
-    number_of_link_files = len(link_files)
+    link_dirs = sys.argv[1:]
+    number_of_link_dirs = len(link_dirs)
 
-    if number_of_link_files == 0:
-        print(f"usage: {sys.argv[0]} <path-to-link-files>...")
+    if number_of_link_dirs == 0:
+        print(f"usage: {sys.argv[0]} <directories>...")
         return 1
 
-    for link_file in link_files:
-        if number_of_link_files > 1:
-            print(color(f'# {link_file}', 32))
-        process_link_file(link_file)
+    link_file_discoveries = discover_link_files_root(link_dirs)
+    number_of_link_files = len(link_file_discoveries)
+
+    for discovery in link_file_discoveries:
+        if number_of_link_files > 1 or discovery.skip_reason is not None:
+            print(color(f"# {display_path(discovery.file.path)}", 32))
+
+        if discovery.skip_reason is not None:
+            for included_link_file_path in get_included_link_file_paths(discovery.file):
+                print(color(f"# ↳ {display_path(included_link_file_path)}", 32))
+
+            print(f"{color('skipped', 36)} {color(f'({discovery.skip_reason})', 35)}")
+            continue
+
+        process_link_file(discovery.file)
 
     return 0
 

@@ -18,10 +18,10 @@ if ! command-exists python3 && command-exists mise; then
     mise use --global python
 fi
 
-./link ./packages/.link.json
+./link ./packages
 
 if command-exists mise; then
     mise install
 fi
 
-./link ./*/.link.json
+./link ./*/
