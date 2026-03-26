@@ -12,12 +12,20 @@
       "to": "~/.config/zsh/profile.d/00-core.zsh"
     },
     {
+      "from": "../posix/profile.sh",
+      "to": "~/.config/zsh/profile.d/01-posix.zsh"
+    },
+    {
       "from": ".zshrc",
       "to": "~/.zshrc"
     },
     {
       "from": ".zshrc.core",
       "to": "~/.config/zsh/rc.d/00-core.zsh"
+    },
+    {
+      "from": "../posix/rc.sh",
+      "to": "~/.config/zsh/rc.d/01-posix.zsh"
     }
   ]
 }
