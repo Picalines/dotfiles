@@ -7,3 +7,6 @@ alias vi=nvim
 alias vim=nvim
 alias nv=nvim
 alias e=nvim
+
+alias oc=opencode
+alias occ="opencode -c"
