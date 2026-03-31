@@ -22,16 +22,19 @@ return {
 			local ensure_installed = {
 				'bash-language-server',
 				'gh-actions-language-server',
+				'html-lsp',
 				'jsonls',
 				'lua_ls',
 				'stylua',
 				'tree-sitter-cli',
+				'ts_query_ls',
 				'vim-language-server',
 			}
 
 			local ensure_installed_by_executable = {
 				[{ 'node' }] = {
 					'graphql-language-service-cli',
+					'stylelint-language-server',
 					'svelte-language-server',
 					'tailwindcss-language-server',
 					'vtsls',
