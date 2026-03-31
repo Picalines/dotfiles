@@ -20,40 +20,5 @@ return {
 			automatic_installation = false,
 			automatic_enable = true,
 		},
-
-		init = function()
-			vim.lsp.config('lua_ls', {
-				settings = {
-					Lua = { telemetry = { enable = false } },
-				},
-			})
-
-			vim.lsp.config('vtsls', {
-				settings = {
-					typescript = {
-						preferences = {
-							preferTypeOnlyAutoImports = true,
-						},
-					},
-				},
-			})
-
-			vim.lsp.config('tailwindcss', {
-				settings = {
-					tailwindCSS = {
-						classFunctions = { 'tw', 'clsx', 'cva', 'cn' },
-						classAttributes = { 'class', 'className', 'ngClass', 'class:list' },
-					},
-				},
-			})
-
-			vim.lsp.config('rust_analyzer', {
-				settings = {
-					['rust-analyzer'] = {
-						cargo = { features = 'all' },
-					},
-				},
-			})
-		end,
 	},
 }
