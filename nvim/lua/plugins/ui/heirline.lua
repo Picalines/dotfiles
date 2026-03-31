@@ -391,49 +391,16 @@ return {
 			end,
 		}
 
-		local LSPActive = {
+		local LspCount = {
 			condition = conditions.lsp_attached,
 			update = { 'LspAttach', 'LspDetach', 'BufEnter' },
 
-			static = {
-				client_icons = {
-					bashls = '',
-					biome = '',
-					csharp_ls = '󰌛',
-					cssls = '',
-					eslint = '󰱺',
-					gh_actions_ls = '',
-					graphql = '󰡷',
-					harper_ls = '',
-					jsonls = '',
-					kotlin_language_server = '󱈙',
-					lua_ls = '',
-					omnisharp = '󰈸',
-					pyright = '󰌠',
-					ruff = '󱐋',
-					rust_analyzer = '',
-					svelte = '',
-					tailwindcss = '󱏿',
-					ts_ls = '',
-					vectorcode_server = '󰕣',
-					vimls = '',
-					vtsls = '',
-				},
-
-				skip_clients = { 'stylua' },
-			},
+			init = function(self)
+				self.client_count = #vim.lsp.get_clients { bufnr = 0 }
+			end,
 
 			provider = function(self)
-				return vim
-					.iter(vim.lsp.get_clients { bufnr = 0 })
-					:filter(function(client)
-						return not vim.tbl_contains(self.skip_clients, client.name)
-					end)
-					:map(function(client)
-						local name = (self.client_icons[client.name] or client.name):gsub('_language_server$', ''):gsub('_ls$', '')
-						return name
-					end)
-					:join ' '
+				return string.format('%d 󱐋', self.client_count)
 			end,
 
 			hl = 'StatusLineLsp',
@@ -477,7 +444,7 @@ return {
 			WrapFlag,
 			SpellFlag,
 			FormatBeforeWriteFlag,
-			LSPActive,
+			LspCount,
 			Location,
 			ScrollProgress,
 		}

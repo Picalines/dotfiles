@@ -12,6 +12,7 @@ return {
 			map('gR', 'references') '<Cmd>lua Snacks.picker.lsp_references()<CR>',
 			map('gI', 'implementations') '<Cmd>lua Snacks.picker.lsp_implementations()<CR>',
 			map('gT', 'type definitions') '<Cmd>lua Snacks.picker.lsp_type_definitions()<CR>',
+			map('<Leader>l', 'attached servers') '<Cmd>lua Snacks.picker.lsp_config({ attached = 0 })<CR>',
 		}
 
 		keys 'Buffer: %s' {
