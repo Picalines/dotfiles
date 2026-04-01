@@ -1,5 +1,3 @@
-# vim: ft=bash
-
 # old custom prompt. Simpler times :)
 # PS1="\e[36m\w\$(__git_ps1 ' \e[32m(%s)') \e[33m→\e[39m "
 
@@ -32,4 +30,6 @@ function f() {
   rm -f -- "$tmp"
   [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd" || return 1
 }
+
+source ~/.config/posix/rc.sh
 

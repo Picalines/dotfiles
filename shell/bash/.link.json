@@ -8,24 +8,8 @@
       "to": "~/.bash_profile"
     },
     {
-      "from": ".bash_profile.core",
-      "to": "~/.config/bash/profile.d/00-core.bash"
-    },
-    {
-      "from": "../posix/profile.sh",
-      "to": "~/.config/bash/profile.d/01-posix.bash"
-    },
-    {
       "from": ".bashrc",
       "to": "~/.bashrc"
-    },
-    {
-      "from": ".bashrc.core",
-      "to": "~/.config/bash/rc.d/00-core.bash"
-    },
-    {
-      "from": "../posix/rc.sh",
-      "to": "~/.config/bash/rc.d/01-posix.bash"
     }
   ]
 }

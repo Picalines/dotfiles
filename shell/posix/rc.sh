@@ -1,3 +1,5 @@
+# shellcheck shell=sh
+
 export VISUAL="nvim -b"
 export EDITOR="nvim -b"
 
@@ -10,3 +12,6 @@ alias e=nvim
 
 alias oc=opencode
 alias occ="opencode -c"
+
+[ -f ~/.config/posix-work/rc.sh ] && . ~/.config/posix-work/rc.sh
+[ -f ~/.config/posix-local/rc.sh ] && . ~/.config/posix-local/rc.sh

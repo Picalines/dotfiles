@@ -1,5 +1,3 @@
-# vim: ft=zsh
-
 set -o emacs
 
 autoload -U add-zsh-hook
@@ -24,12 +22,10 @@ function f() {
   [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd" || return 1
 }
 
-# Edit command in the editor
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
-# terminal title
 update-term-title() {
   local title="$(basename $PWD)"
   echo -ne "\033]0;$title\007"
@@ -37,3 +33,6 @@ update-term-title() {
 
 add-zsh-hook chpwd update-term-title
 update-term-title
+
+source ~/.config/posix/rc.sh
+
