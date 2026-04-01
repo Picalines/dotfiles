@@ -4,14 +4,17 @@ local map = keymap.map
 local keys = keymap.group 'settings.lsp'
 
 keys 'LSP: %s' {
-	map('<LocalLeader>r', 'rename') '<Cmd>lua vim.lsp.buf.rename()<CR>',
-	map('<LocalLeader>a', 'action') '<Cmd>lua vim.lsp.buf.code_action()<CR>',
-}
+	map('<LocalLeader>r', 'rename') { vim.lsp.buf.rename },
+	map('<LocalLeader>a', 'action') { vim.lsp.buf.code_action },
 
-keys('UI: %s', { 'n' }) {
-	map('<Leader>oi', 'toggle inlay hints') {
+	map('<LocalLeader>lR', 'restart') '<Cmd>lsp restart<CR>',
+
+	map('<LocalLeader>lf', 'format') { vim.lsp.buf.format },
+	map('<LocalLeader>lc', 'convert color') { vim.lsp.document_color.color_presentation },
+	map('<LocalLeader>li', 'inlay hints') {
 		function()
-			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+			local filter = { bufnr = 0 }
+			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(filter), filter)
 		end,
 	},
 }
