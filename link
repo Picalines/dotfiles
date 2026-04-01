@@ -255,7 +255,13 @@ def discover_link_files_root(link_dirs: list[str]) -> list[LinkFileDiscovery]:
 
 
 def process_link_file(link_file: LinkFile) -> None:
-    for link in link_file.config["links"]:
+    links = link_file.config.get("links", None)
+
+    if links is None:
+        print(f'{cyan('skipped')} {magenta('(no links to process)')}')
+        return
+
+    for link in links:
         source = link["from"]
         target = link["to"]
         method = link.get("method", "symlink")
