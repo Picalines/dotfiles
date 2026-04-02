@@ -7,7 +7,6 @@ return {
 		local leap = require 'leap'
 
 		leap.opts.case_sensitive = false
-		leap.opts.highlight_unlabeled_phase_one_targets = true
 
 		leap.opts.special_keys.next_target = { '<Enter>' }
 		leap.opts.special_keys.prev_target = { '<S-Enter>' }
