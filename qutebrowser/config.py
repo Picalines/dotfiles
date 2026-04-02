@@ -9,6 +9,8 @@ c.input.insert_mode.auto_load = False
 c.tabs.mode_on_change = "persist"
 c.input.mode_override = ""
 
+c.keyhint.delay = 2000
+
 c.statusbar.position = "top"
 c.statusbar.widgets = ["search_match", "progress", "url", "history"]
 c.tabs.position = "top"
