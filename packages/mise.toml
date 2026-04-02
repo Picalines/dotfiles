@@ -18,5 +18,5 @@ ripgrep = "latest"
 starship = "latest"
 tree-sitter = "latest"
 yazi = "latest"
-zellij = "latest"
+zellij = { version = "latest", os = ["macos", "linux"] }
 zoxide = "latest"
