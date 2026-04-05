@@ -2,121 +2,73 @@
 	"apps": [
 		{
 			"Source": "main",
-			"Info": "",
-			"Name": "python",
-			"Updated": "2026-04-05T18:10:19.1981973+03:00",
-			"Version": "3.14.3"
+			"Name": "python"
 		},
 		{
-			"Version": "25.01",
 			"Name": "7zip",
-			"Info": "",
-			"Updated": "2025-09-27T00:33:28.4958169+03:00",
 			"Source": "main"
 		},
 		{
-			"Version": "8.17.0_6",
 			"Name": "curl",
-			"Info": "",
-			"Updated": "2026-01-04T00:37:49.9038253+03:00",
 			"Source": "main"
 		},
 		{
-			"Version": "15.2.0",
 			"Name": "gcc",
-			"Info": "",
-			"Updated": "2026-01-04T00:40:11.2731616+03:00",
 			"Source": "main"
 		},
 		{
-			"Version": "2.83.2",
 			"Name": "gh",
-			"Info": "",
-			"Updated": "2026-01-04T00:40:12.2044546+03:00",
 			"Source": "main"
 		},
 		{
-			"Version": "2.52.0",
 			"Name": "git",
-			"Info": "",
-			"Updated": "2026-01-04T00:41:37.2054839+03:00",
 			"Source": "main"
 		},
 		{
-			"Version": "3.9.1",
 			"Name": "glazewm",
-			"Info": "",
-			"Updated": "2026-01-09T22:40:09.1166352+03:00",
 			"Source": "extras"
 		},
 		{
-			"Version": "3.4.0",
 			"Name": "Iosevka-NF-Mono",
-			"Info": "",
-			"Updated": "2025-09-27T00:44:31.4008276+03:00",
 			"Source": "nerd-fonts"
 		},
 		{
-			"Version": "4.4.1",
 			"Name": "make",
-			"Info": "",
-			"Updated": "2025-10-19T01:02:00.8556453+03:00",
 			"Source": "main"
 		},
 		{
-			"Version": "2025.12.13",
 			"Name": "mise",
-			"Info": "",
-			"Updated": "2026-01-04T01:21:15.0787751+03:00",
 			"Source": "main"
 		},
 		{
-			"Version": "1.28.2",
 			"Name": "rustup",
-			"Info": "",
-			"Updated": "2025-09-27T00:55:48.8755828+03:00",
 			"Source": "main"
 		},
 		{
-			"Version": "14.50.35719.0",
 			"Name": "vcredist2022",
-			"Info": "",
-			"Updated": "2026-01-04T01:15:40.8911474+03:00",
 			"Source": "extras"
 		},
 		{
-			"Version": "0.15.2",
 			"Name": "zig",
-			"Info": "",
-			"Updated": "2025-11-04T19:00:42.940568+03:00",
 			"Source": "main"
 		},
 		{
-			"Version": "26.02.11",
 			"Name": "winutil",
-			"Info": "",
-			"Updated": "2025-11-04T19:00:42.940568+03:00",
 			"Source": "extras"
 		}
 	],
 	"buckets": [
 		{
 			"Name": "main",
-			"Source": "https://github.com/ScoopInstaller/Main",
-			"Updated": "2026-01-09T19:30:42+03:00",
-			"Manifests": 1414
+			"Source": "https://github.com/ScoopInstaller/Main"
 		},
 		{
 			"Name": "extras",
-			"Source": "https://github.com/ScoopInstaller/Extras",
-			"Updated": "2026-01-09T19:30:21+03:00",
-			"Manifests": 2242
+			"Source": "https://github.com/ScoopInstaller/Extras"
 		},
 		{
 			"Name": "nerd-fonts",
-			"Source": "https://github.com/matthewjberger/scoop-nerd-fonts",
-			"Updated": "2026-01-09T21:40:06+03:00",
-			"Manifests": 367
+			"Source": "https://github.com/matthewjberger/scoop-nerd-fonts"
 		}
 	]
 }
