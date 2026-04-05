@@ -1,6 +1,13 @@
 {
 	"apps": [
 		{
+			"Source": "main",
+			"Info": "",
+			"Name": "python",
+			"Updated": "2026-04-05T18:10:19.1981973+03:00",
+			"Version": "3.14.3"
+		},
+		{
 			"Version": "25.01",
 			"Name": "7zip",
 			"Info": "",
