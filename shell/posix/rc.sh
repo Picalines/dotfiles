@@ -3,8 +3,6 @@
 export VISUAL="nvim -b"
 export EDITOR="nvim -b"
 
-alias python=python3
-
 alias m=mise
 alias mr="mise run"
 alias me="mise exec"
