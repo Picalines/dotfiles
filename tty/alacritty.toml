@@ -2,7 +2,6 @@
 blur = true
 decorations = "Buttonless"
 dynamic_padding = true
-opacity = 0.75
 padding = { x = 10, y = 10 }
 
 [font]
@@ -11,4 +10,4 @@ bold = { family = "Iosevka Nerd Font Mono", style = "Bold" }
 italic = { family = "Iosevka Nerd Font Mono", style = "Italic" }
 bold_italic = { family = "Iosevka Nerd Font Mono", style = "Bold Italic" }
 
-size = 16
+size = 14
