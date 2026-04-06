@@ -6,18 +6,18 @@ return {
 	opts = {
 		mappings = {
 			close = 'q',
-			go_in = '',
 			go_in_plus = 'l',
 			go_out = 'h',
-			go_out_plus = '',
 			mark_goto = "'",
 			mark_set = 'm',
+			synchronize = '=',
+			go_in = '',
+			go_out_plus = '',
 			reset = '',
 			reveal_cwd = '',
-			show_help = 'g?',
-			synchronize = '=',
-			trim_left = '<',
-			trim_right = '>',
+			show_help = '',
+			trim_left = '',
+			trim_right = '',
 		},
 
 		options = {
@@ -61,15 +61,15 @@ return {
 			map('<Esc>', 'close') 'q',
 			map('<CR>', 'open') 'l',
 
-			map('w', 'synchronize') '=',
+			map('<LocalLeader>w', 'synchronize') '=',
+
 			map('<Leader>', 'leader passthrough') 'q<Cmd>silent! WhichKey<CR><Leader>',
 
-			map('cd', 'cd') ':MiniFilesCwd<C-b>tcd  | <S-Left><Left>',
-			map('cz', 'zoxide') 'q:<C-b>Tz ',
+			map('g.', 'go to cwd') '<Cmd>MiniFilesCwd<CR>',
+			map('gd', 'cd') ':MiniFilesCwd<C-b>tcd  | <S-Left><Left>',
+			map('gz', 'zoxide') 'q:<C-b>Tz ',
 
-			map('<BS>', 'go to cwd') '<Cmd>MiniFilesCwd<CR>',
-
-			map('.', 'set cwd') {
+			map('c.', 'set cwd') {
 				function()
 					local path = (MiniFiles.get_fs_entry() or {}).path
 					if path then
