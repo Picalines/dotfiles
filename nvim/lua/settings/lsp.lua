@@ -7,6 +7,13 @@ keys 'LSP: %s' {
 	map('<LocalLeader>r', 'rename') { vim.lsp.buf.rename },
 	map('<LocalLeader>a', 'action') { vim.lsp.buf.code_action },
 
+	map('<LocalLeader>ll', 'logs') {
+		expr = true,
+		function()
+			return string.format('<Cmd>e! %s<CR>', vim.lsp.log.get_filename())
+		end,
+	},
+
 	map('<LocalLeader>lR', 'restart') '<Cmd>lsp restart<CR>',
 
 	map('<LocalLeader>lf', 'format') { vim.lsp.buf.format },
