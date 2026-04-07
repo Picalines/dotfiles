@@ -55,6 +55,15 @@ vim.lsp.config('lua_ls', {
 	},
 })
 
+vim.lsp.config('jsonls', {
+	settings = {
+		json = {
+			validate = { enable = true },
+			keepLines = { enable = true },
+		},
+	},
+})
+
 vim.lsp.config('vtsls', {
 	settings = {
 		typescript = {
