@@ -15,6 +15,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable, Literal
 
+
+class ConfigError(Exception):
+    pass
+
+
 OS_NAMES = {"windows": "Windows", "macos": "Darwin", "linux": "Linux"}
 LINK_FILE_NAME = ".link.json"
 
@@ -31,6 +36,27 @@ yellow = partial(color, code=33)
 blue = partial(color, code=34)
 magenta = partial(color, code=35)
 cyan = partial(color, code=36)
+
+
+def print_skipped(*values: str, reason: str | None = None):
+    extra = (magenta(f"({reason})"),) if reason else ()
+    print(cyan("skipped"), *values, *extra)
+
+
+def print_failure(*values: str):
+    print(red("failure"), *values)
+
+
+def print_exception(error: Exception):
+    if isinstance(error, ConfigError):
+        print_failure(*error.args)
+    else:
+        print_failure(cyan(type(error).__name__))
+        print(error)
+
+
+def print_info(*values: str):
+    print(*map(green, ("#", *values)))
 
 
 def is_windows() -> bool:
@@ -140,7 +166,7 @@ def resolve_condition(condition: Condition) -> ConditionResult:
         combinator_condition_func = COMBINATOR_CONDITION_FUNCS.get(cond_type, None)
         if combinator_condition_func:
             if not isinstance(cond_value, list):
-                return False, f"list of subconditions expected for '{cond_type}'"
+                raise ConfigError(f"list of subconditions expected for {cond_type}")
 
             met, reason = combinator_condition_func(cond_value)
             if not met:
@@ -150,10 +176,10 @@ def resolve_condition(condition: Condition) -> ConditionResult:
 
         value_condition_func = VALUE_CONDITION_FUNCS.get(cond_type, None)
         if not value_condition_func:
-            return False, f"not implemented condition '{cond_type}'"
+            raise ConfigError(f"not implemented condition '{cond_type}'")
 
         if not isinstance(cond_value, str):
-            return False, f"string value expected for '{cond_type}'"
+            raise ConfigError(f"string value expected for '{cond_type}'")
 
         met, reason = value_condition_func(cond_value)
         if not met:
@@ -185,7 +211,7 @@ def display_path(path: Path) -> str:
 def normalize_link_file_path(path: Path) -> Path:
     normalized_path = Path(os.path.abspath(path))
     if normalized_path != normalized_path.resolve():
-        raise RuntimeError(
+        raise ConfigError(
             f"link file path must not go through a symlink: {normalized_path}"
         )
 
@@ -209,6 +235,9 @@ def discover_link_files(
 
     visited_link_files.add(link_file_path)
 
+    if not link_file_path.is_file():
+        raise ConfigError(f"not a file: {link_file_path}")
+
     with link_file_path.open("r") as file:
         link_file = LinkFile(
             config=json.load(file),
@@ -223,15 +252,13 @@ def discover_link_files(
     discovered_link_files = [LinkFileDiscovery(link_file)]
 
     for included_path in get_included_link_file_paths(link_file):
-        if not included_path.is_file():
-            discovered_link_files.append(
-                LinkFileDiscovery(LinkFile({}, included_path), "not found")
-            )
+        try:
+            sub_link_files = discover_link_files(included_path, visited_link_files)
+        except Exception as error:
+            print_exception(error)
             continue
 
-        discovered_link_files.extend(
-            discover_link_files(included_path, visited_link_files)
-        )
+        discovered_link_files.extend(sub_link_files)
 
     return discovered_link_files
 
@@ -243,22 +270,28 @@ def discover_link_files_root(link_dirs: list[str]) -> list[LinkFileDiscovery]:
     for link_dir in link_dirs:
         link_dir_path = Path(link_dir)
         if not link_dir_path.is_dir():
-            continue
+            continue  # intentional skip of CLI argument
 
-        link_file_path = Path(os.path.abspath(link_dir_path / LINK_FILE_NAME))
+        link_file_path = (link_dir_path / LINK_FILE_NAME).absolute()
         if not link_file_path.is_file():
+            continue  # intentional skip of CLI argument
+
+        try:
+            link_files = discover_link_files(link_file_path, visited_paths)
+        except Exception as error:
+            print_exception(error)
             continue
 
-        discoveries.extend(discover_link_files(link_file_path, visited_paths))
+        discoveries.extend(link_files)
 
     return discoveries
 
 
-def process_link_file(link_file: LinkFile) -> None:
+def process_link_file(link_file: LinkFile):
     links = link_file.config.get("links", None)
 
     if links is None:
-        print(f'{cyan('skipped')} {magenta('(no links to process)')}')
+        print_skipped(reason="no links to process")
         return
 
     for link in links:
@@ -269,7 +302,7 @@ def process_link_file(link_file: LinkFile) -> None:
         if link_condition := link.get("if", None):
             condition_met, reason = resolve_condition(link_condition)
             if not condition_met:
-                print(f"{cyan('skipped')} {source} {magenta(f'({reason})')}")
+                print_skipped(source, reason=reason)
                 continue
 
         source_path = (link_file.path.parent / source).resolve()
@@ -293,16 +326,19 @@ def start() -> int:
 
     for discovery in link_file_discoveries:
         if number_of_link_files > 1 or discovery.skip_reason is not None:
-            print(green(f"# {display_path(discovery.file.path)}"))
+            print_info(display_path(discovery.file.path))
 
         if discovery.skip_reason is not None:
             for included_link_file_path in get_included_link_file_paths(discovery.file):
-                print(green(f"# ↳ {display_path(included_link_file_path)}"))
+                print_info("↳", display_path(included_link_file_path))
 
-            print(f"{cyan('skipped')} {magenta(f'({discovery.skip_reason})')}")
+            print_skipped(reason=discovery.skip_reason)
             continue
 
-        process_link_file(discovery.file)
+        try:
+            process_link_file(discovery.file)
+        except Exception as error:
+            print_exception(error)
 
     return 0
 
@@ -311,8 +347,7 @@ def main() -> int:
     try:
         return start()
     except Exception as error:
-        print(f"\nerror: {type(error)} exception")
-        print(error)
+        print_exception(error)
         return 1
 
 
