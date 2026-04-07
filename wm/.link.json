@@ -1,20 +1,14 @@
 {
   "links": [
     {
+      "if": { "os": "macos", "executable-exists": "aerospace" },
       "from": "aerospace.toml",
-      "to": "~/.config/aerospace/aerospace.toml",
-      "if": {
-        "executable-exists": "aerospace",
-        "os": "macos"
-      }
+      "to": "~/.config/aerospace/aerospace.toml"
     },
     {
+      "if": { "os": "windows", "path-exists": "~/.glzr/glazewm" },
       "from": "glazewm.yaml",
-      "to": "~/.glzr/glazewm/config.yaml",
-      "if": {
-        "path-exists": "~/.glzr/glazewm",
-        "os": "windows"
-      }
+      "to": "~/.glzr/glazewm/config.yaml"
     }
   ]
 }

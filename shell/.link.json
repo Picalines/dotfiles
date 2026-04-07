@@ -1,20 +1,14 @@
 {
-  "include": [
-    "posix",
-    "bash",
-    "zsh"
-  ],
+  "include": [ "posix", "bash", "zsh" ],
   "links": [
     {
       "from": ".inputrc",
       "to": "~/.inputrc"
     },
     {
+      "if": { "executable-exists": "starship" },
       "from": "starship.toml",
-      "to": "~/.config/starship.toml",
-      "if": {
-        "executable-exists": "starship"
-      }
+      "to": "~/.config/starship.toml"
     }
   ]
 }

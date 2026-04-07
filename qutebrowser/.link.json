@@ -1,31 +1,21 @@
 {
   "if": {
     "any": [
-      {
-        "executable-exists": "qutebrowser"
-      },
-      {
-        "path-exists": "/Applications/qutebrowser.app"
-      },
-      {
-        "path-exists": "~/AppData/Roaming/qutebrowser"
-      }
+      { "executable-exists": "qutebrowser" },
+      { "path-exists": "/Applications/qutebrowser.app" },
+      { "path-exists": "~/AppData/Roaming/qutebrowser" }
     ]
   },
   "links": [
     {
+      "if": { "os": "windows" },
       "from": ".",
-      "to": "~/AppData/Roaming/qutebrowser/config",
-      "if": {
-        "os": "windows"
-      }
+      "to": "~/AppData/Roaming/qutebrowser/config"
     },
     {
+      "if": { "os": "!windows" },
       "from": ".",
-      "to": "~/.qutebrowser",
-      "if": {
-        "os": "!windows"
-      }
+      "to": "~/.qutebrowser"
     }
   ]
 }
