@@ -34,6 +34,7 @@
 	colorMoved = plain
 	mnemonicPrefix = true
 	renames = true
+	external = difft
 [commit]
 	verbose = true
 [rebase]

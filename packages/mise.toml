@@ -9,6 +9,7 @@ node = "latest"
 python = { version = "3.14", _.python.venv = { path = ".venv", create = true } }
 uv = "latest"
 
+difftastic = "latest"
 fzf = "latest"
 jq = "latest"
 just = "latest"
