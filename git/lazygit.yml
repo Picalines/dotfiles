@@ -1,0 +1,12 @@
+promptToReturnFromSubprocess: false
+
+gui:
+  sidePanelWidth: 0.4
+  showFileTree: false
+  showNumstatInFilesView: true
+  showRootItemInFileTree: false
+
+git:
+  pagers:
+    - externalDiffCommand: difft --color=always
+    - externalDiffCommand: difft --color=always --display=inline

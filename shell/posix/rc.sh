@@ -1,6 +1,7 @@
 # shellcheck shell=sh
 
 alias g=git
+alias gg=lazygit
 
 alias m=mise
 alias mr="mise run"
