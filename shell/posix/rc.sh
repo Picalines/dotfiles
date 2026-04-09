@@ -1,8 +1,5 @@
 # shellcheck shell=sh
 
-export VISUAL="nvim -b"
-export EDITOR="nvim -b"
-
 alias m=mise
 alias mr="mise run"
 alias me="mise exec"
