@@ -55,7 +55,7 @@ return {
 		local conform_util = require 'conform.util'
 
 		local function web_formatter(bufnr)
-			if conform.get_formatter_info('biome-check', bufnr) then
+			if conform.get_formatter_info('biome-check', bufnr).available then
 				return { 'biome-check' }
 			end
 			return { 'prettierd', 'prettier', stop_after_first = true }
