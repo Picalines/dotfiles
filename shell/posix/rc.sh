@@ -1,5 +1,7 @@
 # shellcheck shell=sh
 
+alias g=git
+
 alias m=mise
 alias mr="mise run"
 alias me="mise exec"
