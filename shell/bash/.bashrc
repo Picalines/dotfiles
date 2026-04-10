@@ -14,7 +14,7 @@ if command-exists mise; then
     # https://github.com/jdx/mise/discussions/3961
     eval "$(mise activate bash --shims | sed -e 's/="C:\\/="\/c\//')"
   else
-    eval "$(mise activate bash --shims)"
+    eval "$(mise activate bash)"
   fi
 fi
 
