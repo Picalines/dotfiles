@@ -1,61 +1,19 @@
 {
 	"apps": [
-		{
-			"Source": "main",
-			"Name": "python"
-		},
-		{
-			"Name": "7zip",
-			"Source": "main"
-		},
-		{
-			"Name": "curl",
-			"Source": "main"
-		},
-		{
-			"Name": "gcc",
-			"Source": "main"
-		},
-		{
-			"Name": "gh",
-			"Source": "main"
-		},
-		{
-			"Name": "git",
-			"Source": "main"
-		},
-		{
-			"Name": "glazewm",
-			"Source": "extras"
-		},
-		{
-			"Name": "Iosevka-NF-Mono",
-			"Source": "nerd-fonts"
-		},
-		{
-			"Name": "make",
-			"Source": "main"
-		},
-		{
-			"Name": "mise",
-			"Source": "main"
-		},
-		{
-			"Name": "rustup",
-			"Source": "main"
-		},
-		{
-			"Name": "vcredist2022",
-			"Source": "extras"
-		},
-		{
-			"Name": "zig",
-			"Source": "main"
-		},
-		{
-			"Name": "winutil",
-			"Source": "extras"
-		}
+		{ "Name": "7zip", "Source": "main" },
+		{ "Name": "Iosevka-NF-Mono", "Source": "nerd-fonts" },
+		{ "Name": "curl", "Source": "main" },
+		{ "Name": "gcc", "Source": "main" },
+		{ "Name": "gh", "Source": "main" },
+		{ "Name": "git", "Source": "main" },
+		{ "Name": "glazewm", "Source": "extras" },
+		{ "Name": "make", "Source": "main" },
+		{ "Name": "mise", "Source": "main" },
+		{ "Name": "python", "Source": "main" },
+		{ "Name": "rustup", "Source": "main" },
+		{ "Name": "vcredist2022", "Source": "extras" },
+		{ "Name": "winutil", "Source": "extras" },
+		{ "Name": "zig", "Source": "main" }
 	],
 	"buckets": [
 		{
