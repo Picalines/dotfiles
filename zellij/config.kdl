@@ -36,10 +36,28 @@ plugins {
 }
 
 keybinds clear-defaults=true {
+    locked {
+        bind "Ctrl Z" { SwitchToMode "normal"; }
+    }
     normal {
         bind "Ctrl z" { SwitchToMode "tmux"; }
+        bind "Ctrl Z" { SwitchToMode "locked"; }
+
+        bind "Alt n" { NewPane; }
+        bind "Alt t" { NewTab; }
+        bind "Alt x" { CloseFocus; }
+
+        bind "Alt h" { MoveFocus "left"; }
+        bind "Alt j" { MoveFocus "down"; }
+        bind "Alt k" { MoveFocus "up"; }
+        bind "Alt l" { MoveFocus "right"; }
+
+        bind "Alt H" { GoToPreviousTab; }
+        bind "Alt L" { GoToNextTab; }
+
+        bind "Alt f" { ToggleFloatingPanes; }
     }
-    shared_except "normal" {
+    shared_except "normal" "locked" {
         bind "Ctrl z" "Esc" { SwitchToMode "normal"; }
     }
     tmux {
@@ -63,7 +81,7 @@ keybinds clear-defaults=true {
         bind "-" "_" { Resize "Decrease"; }
 
         bind "n" { NewPane; SwitchToMode "normal"; }
-        bind "N" "Ctrl n" { NewTab; SwitchToMode "normal"; }
+        bind "x" { CloseFocus; SwitchToMode "normal"; }
 
         bind "Space" { NextSwapLayout; SwitchToMode "normal"; }
 
@@ -130,17 +148,6 @@ keybinds clear-defaults=true {
         bind "n" { NewTab; SwitchToMode "normal"; }
 
         bind "r" { SwitchToMode "renametab"; TabNameInput 0; }
-    }
-    shared_among "tmux" "tab" {
-        bind "1" { GoToTab 1; SwitchToMode "normal"; }
-        bind "2" { GoToTab 2; SwitchToMode "normal"; }
-        bind "3" { GoToTab 3; SwitchToMode "normal"; }
-        bind "4" { GoToTab 4; SwitchToMode "normal"; }
-        bind "5" { GoToTab 5; SwitchToMode "normal"; }
-        bind "6" { GoToTab 6; SwitchToMode "normal"; }
-        bind "7" { GoToTab 7; SwitchToMode "normal"; }
-        bind "8" { GoToTab 8; SwitchToMode "normal"; }
-        bind "9" { GoToTab 9; SwitchToMode "normal"; }
     }
     scroll {
         bind "j" "Down" { ScrollDown; }
