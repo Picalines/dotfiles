@@ -61,6 +61,7 @@ return {
 				'gitignore',
 				'json',
 				'json5',
+				'kdl',
 				'lua',
 				'luadoc',
 				'markdown',
