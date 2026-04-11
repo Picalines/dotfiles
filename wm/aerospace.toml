@@ -156,6 +156,10 @@ if.app-id = 'ru.keepcoder.Telegram'
 run = ['layout tiling', 'move-node-to-workspace Z']
 
 [[on-window-detected]]
+if.app-id = 'ru.yandex.yamb'
+run = ['layout tiling', 'move-node-to-workspace Z']
+
+[[on-window-detected]]
 if.app-id = 'ru.yandex.desktop.music'
 run = ['layout tiling', 'move-node-to-workspace Z']
 
