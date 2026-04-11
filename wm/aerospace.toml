@@ -41,7 +41,6 @@ ctrl-alt-cmd-shift-l = 'focus right'
 ctrl-alt-cmd-shift-backspace = 'workspace-back-and-forth'
 
 ctrl-alt-cmd-shift-w = 'mode win'
-ctrl-alt-cmd-shift-o = 'mode open'
 
 ctrl-alt-cmd-shift-z = 'workspace Z --auto-back-and-forth'
 ctrl-alt-cmd-shift-x = 'workspace X --auto-back-and-forth'
@@ -79,17 +78,6 @@ x = ['move-node-to-workspace X', 'workspace X', 'mode main']
 c = ['move-node-to-workspace C', 'workspace C', 'mode main']
 v = ['move-node-to-workspace V', 'workspace V', 'mode main']
 b = ['move-node-to-workspace B', 'workspace B', 'mode main']
-
-[mode.open.binding]
-
-esc = 'mode main'
-
-b = ['exec-and-forget open -a Arc', 'mode main']
-c = ['exec-and-forget open -a Neovide', 'mode main']
-m = ['exec-and-forget open -a Telegram', 'mode main']
-n = ['exec-and-forget open -a Obsidian', 'mode main']
-s = ['exec-and-forget open -a Settings', 'mode main']
-t = ['exec-and-forget open -a Ghostty || open -a Alacritty || open -a Terminal', 'mode main']
 
 [[on-window-detected]]
 if.app-id = 'company.thebrowser.Browser'
