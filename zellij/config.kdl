@@ -37,11 +37,11 @@ plugins {
 
 keybinds clear-defaults=true {
     locked {
-        bind "Ctrl Z" { SwitchToMode "normal"; }
+        bind "Alt Z" { SwitchToMode "normal"; }
     }
     normal {
-        bind "Ctrl z" { SwitchToMode "tmux"; }
-        bind "Ctrl Z" { SwitchToMode "locked"; }
+        bind "Alt z" { SwitchToMode "tmux"; }
+        bind "Alt Z" { SwitchToMode "locked"; }
 
         bind "Alt n" { NewPane; }
         bind "Alt t" { NewTab; }
@@ -58,7 +58,7 @@ keybinds clear-defaults=true {
         bind "Alt f" { ToggleFloatingPanes; }
     }
     shared_except "normal" "locked" {
-        bind "Ctrl z" "Esc" { SwitchToMode "normal"; }
+        bind "Alt z" "Esc" { SwitchToMode "normal"; }
     }
     tmux {
         bind "q" { Quit; }
