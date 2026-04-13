@@ -5,6 +5,7 @@ local map = keymap.map
 
 local keys = keymap.group 'settings.buffer'
 local qf_keys = keymap.template()
+local git_keys = keymap.template()
 
 -- highlight <>
 vim.o.matchpairs = vim.go.matchpairs .. ',<:>'
@@ -34,6 +35,10 @@ qf_keys('Quickfix: %s', { remap = true }) {
 	map('<Leader>q', 'close') '<Cmd>cclose<CR>',
 }
 
+git_keys('Git: %s', { 'n' }) {
+	map('<CR>', 'write and quit') '<Cmd>silent wq<CR>',
+}
+
 local augroup = autocmd.group 'buffer'
 
 local unlisted_buftypes = {
@@ -50,6 +55,10 @@ augroup:on({ 'BufNew', 'BufAdd', 'BufWinEnter', 'TermOpen' }, '*', function(even
 end)
 
 augroup:on('FileType', 'qf', function(event)
-	local buffer_keys = keymap.buffer('quickfix', event.buf)
+	local buffer_keys = keymap.buffer('settings.buffer.quickfix', event.buf)
 	qf_keys:apply(buffer_keys)
+end)
+
+augroup:on('FileType', { 'gitcommit', 'gitrebase' }, function(event)
+	git_keys:apply(keymap.buffer('settings.buffer.git', event.buf))
 end)
