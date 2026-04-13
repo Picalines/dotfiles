@@ -12,22 +12,13 @@ QUTEBROWSER_REPO_URL="git@github.com:qutebrowser/qutebrowser.git"
 DIST_DIR="dist"
 
 usage() {
-    echo "usage: $0 --python-bin <python-bin> --clone-dir <qutebrowser-clone-dir>"
+    echo "usage: $0 --clone-dir <qutebrowser-clone-dir>"
 }
 
-PYTHON_BIN=""
 TARGET_CLONE_DIR=""
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-    --python-bin)
-        [[ $# -ge 2 ]] || {
-            usage
-            exit 1
-        }
-        PYTHON_BIN="$2"
-        shift 2
-        ;;
     --clone-dir)
         [[ $# -ge 2 ]] || {
             usage
@@ -43,12 +34,33 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-if [[ -z "$PYTHON_BIN" || -z "$TARGET_CLONE_DIR" ]]; then
+
+if [[ -z "$TARGET_CLONE_DIR" ]]; then
     usage
     exit 1
 fi
 
-START_SECONDS=$SECONDS
+echo "${YELLOW}====== Detecting Homebrew python installation ======${RESET}"
+
+detect_brew_python() {
+    local prefix
+
+    prefix="$(brew --prefix python 2>/dev/null || true)"
+    if [[ -n "$prefix" && -x "$prefix/bin/python3" ]]; then
+        printf '%s\n' "$prefix/bin/python3"
+        return 0
+    fi
+
+    return 1
+}
+
+PYTHON_BIN="$(detect_brew_python)" || {
+    echo "Could not find a usable Homebrew python installation"
+    echo "install with: brew install python"
+    exit 1
+}
+
+echo "Using $PYTHON_BIN"
 
 echo "${YELLOW}====== PyQt GPL license acknowledgement ======${RESET}"
 echo "This build installs PyQt6 and PyQt6-WebEngine from source with --confirm-license."
@@ -58,6 +70,8 @@ if [[ ! "$confirm_gpl" =~ ^([yY]|yes|YES)$ ]]; then
     echo "aborted: GPL license not acknowledged"
     exit 1
 fi
+
+START_SECONDS=$SECONDS
 
 echo "${YELLOW}====== Preparing qutebrowser checkout ======${RESET}"
 echo "target: $TARGET_CLONE_DIR"
@@ -107,15 +121,24 @@ trap 'rm -f "$BUILD_SPEC"' EXIT
     --skip-docs \
     --skip-smoke-test
 
-echo "${YELLOW}====== Installing PyQt from source ======${RESET}"
+echo "${YELLOW}====== Installing PyQt6 from source ======${RESET}"
 
 "$VENV_PYTHON" -m pip install PyQt6_sip
 
-"$VENV_PYTHON" -m pip install PyQt6 PyQt6-WebEngine \
+"$VENV_PYTHON" -m pip install PyQt6 \
     --no-deps \
-    --no-binary PyQt6,PyQt6-WebEngine \
+    --no-binary PyQt6 \
     --config-settings="--confirm-license=" \
     --verbose
+
+echo "${YELLOW}====== Installing PyQt6-WebEngine from source ======${RESET}"
+
+"$VENV_PYTHON" -m pip install PyQt6-WebEngine \
+    --no-deps \
+    --no-binary PyQt6-WebEngine \
+    --verbose
+
+echo "${YELLOW}====== Installing pyinstaller from source ======${RESET}"
 
 "$VENV_PYTHON" -m pip install \
     -r misc/requirements/requirements-pyinstaller.txt
@@ -152,7 +175,7 @@ patch "$BUILD_SPEC" <<'PATCH'
 +        return []
 +
 +    binaries = []
-+    for root, _dirs, files in os.walk(plugins_dir):
++    for root, _dirs, files in os.walk(plugins_dir, followlinks=True):
 +        rel_dir = os.path.relpath(root, plugins_dir)
 +        for name in files:
 +            if not name.endswith('.dylib'):
