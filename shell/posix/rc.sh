@@ -15,5 +15,5 @@ alias e=nvim
 alias oc=opencode
 alias occ="opencode -c"
 
-[ -f ~/.config/posix-work/rc.sh ] && . ~/.config/posix-work/rc.sh
-[ -f ~/.config/posix-local/rc.sh ] && . ~/.config/posix-local/rc.sh
+[ -f ~/.config-work/posix/rc.sh ] && . ~/.config-work/posix/rc.sh
+[ -f ~/.config-local/posix/rc.sh ] && . ~/.config-local/posix/rc.sh

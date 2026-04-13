@@ -45,7 +45,6 @@ keybinds clear-defaults=true {
 
         bind "Alt n" { NewPane; }
         bind "Alt t" { NewTab; }
-        bind "Alt x" { CloseFocus; }
 
         bind "Alt h" { MoveFocus "left"; }
         bind "Alt j" { MoveFocus "down"; }
