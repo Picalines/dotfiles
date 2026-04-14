@@ -21,6 +21,11 @@ vim.o.equalalways = false
 vim.o.scrolloff = 8
 vim.o.sidescrolloff = 16
 
+augroup:on('TermOpen', '*', function()
+	vim.opt_local.scrolloff = 0
+	vim.opt_local.sidescrolloff = 0
+end)
+
 -- global status line
 vim.o.laststatus = 3
 vim.o.showtabline = 0
