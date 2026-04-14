@@ -7,7 +7,6 @@ c.input.insert_mode.auto_enter = True
 c.input.insert_mode.auto_leave = False
 c.input.insert_mode.auto_load = False
 c.tabs.mode_on_change = "persist"
-c.input.mode_override = ""
 
 c.keyhint.delay = 2000
 
@@ -49,6 +48,7 @@ c.hints.selectors["buttons"] = [
 ]
 
 c.input.mode_override = "insert"
+c.bindings.default["passthrough"].clear()
 c.bindings.default["normal"].clear()
 c.bindings.default["insert"].clear()
 c.bindings.default["hint"].clear()
@@ -77,27 +77,34 @@ switch_to_us_layout = (
 
 keymaps = {
     "[passthrough]": {
-        "<Shift+Escape>": to_default,
+        "<Alt-Shift-z>": to_default,
     },
     "[command+prompt+yesno+register+hint]": {
         "<Escape>": then_default("mode-leave"),
     },
     "[insert]": {
-        "<Ctrl-z>": f"mode-enter normal ;; {switch_to_us_layout}",
-        "<Ctrl-я>": f"mode-enter normal ;; {switch_to_us_layout}",
-        "<Ctrl-n>": "search-next",
-        "<Ctrl-Shift-n>": "search-prev",
-        "<Meta-f>": "cmd-set-text /",
-        "<Meta-r>": "reload",
+        "<Alt-z>": f"mode-enter normal ;; {switch_to_us_layout}",
+        "<Alt-я>": f"mode-enter normal ;; {switch_to_us_layout}",
+        "<Alt-o>": "cmd-set-text -s :open -t",
+        "<Alt-Shift-o>": "cmd-set-text -s :open",
+        "<Alt-s>": "cmd-set-text -s :tab-select",
+        "<Alt-h>": "tab-prev",
+        "<Alt-j>": "tab-next",
+        "<Alt-k>": "tab-prev",
+        "<Alt-l>": "tab-next",
+        "<Alt-q>": "tab-close",
+        "<Alt-r>": then_default("reload"),
+        "<Alt-Shift-r>": then_default("reload -f"),
+        "<Alt-f>": "cmd-set-text /",
+        "<Alt-n>": "search-next",
+        "<Alt-Shift-n>": "search-prev",
     },
     "[normal+insert]": {
+        "<Alt-Shift-z>": "mode-enter passthrough",
         "<Ctrl-d>": "scroll-page 0 0.5",
         "<Ctrl-u>": "scroll-page 0 -0.5",
         "<Ctrl-i>": "forward",
         "<Ctrl-o>": "back",
-        "<Meta-=>": "zoom-in",
-        "<Meta-Shift-=>": "zoom-in",
-        "<Meta-->": "zoom-out",
         "<back>": "back",
         "<forward>": "forward",
     },
@@ -108,7 +115,6 @@ keymaps = {
     },
     "[normal]": {
         "<Escape>": to_default,
-        "<Ctrl-v>": "mode-enter passthrough",
         (":", ";"): "cmd-set-text :",
         ("h", "<Ctrl-h>"): then_default("tab-prev"),
         ("j", "<Ctrl-j>"): then_default("tab-next"),
