@@ -42,11 +42,12 @@ ctrl-alt-cmd-shift-backspace = 'workspace-back-and-forth'
 
 ctrl-alt-cmd-shift-w = 'mode win'
 
-ctrl-alt-cmd-shift-z = 'workspace Z --auto-back-and-forth'
-ctrl-alt-cmd-shift-x = 'workspace X --auto-back-and-forth'
-ctrl-alt-cmd-shift-c = 'workspace C --auto-back-and-forth'
-ctrl-alt-cmd-shift-v = 'workspace V --auto-back-and-forth'
-ctrl-alt-cmd-shift-b = 'workspace B --auto-back-and-forth'
+ctrl-alt-cmd-shift-a = 'workspace A --auto-back-and-forth' # "Additional"
+ctrl-alt-cmd-shift-z = 'workspace Z --auto-back-and-forth' # "Messengers"
+ctrl-alt-cmd-shift-x = 'workspace X --auto-back-and-forth' # "Notes"
+ctrl-alt-cmd-shift-c = 'workspace C --auto-back-and-forth' # "Code"
+ctrl-alt-cmd-shift-v = 'workspace V --auto-back-and-forth' # "Visual"
+ctrl-alt-cmd-shift-b = 'workspace B --auto-back-and-forth' # "Browser"
 
 [mode.win.binding]
 
@@ -72,39 +73,54 @@ f = ['layout floating tiling', 'mode main']
 t = ['layout tiles accordion', 'mode main']
 o = ['layout horizontal vertical', 'mode main']
 
+a = ['move-node-to-workspace A', 'workspace A', 'mode main']
 z = ['move-node-to-workspace Z', 'workspace Z', 'mode main']
 x = ['move-node-to-workspace X', 'workspace X', 'mode main']
 c = ['move-node-to-workspace C', 'workspace C', 'mode main']
 v = ['move-node-to-workspace V', 'workspace V', 'mode main']
 b = ['move-node-to-workspace B', 'workspace B', 'mode main']
 
-[[on-window-detected]]
-if.app-id = 'company.thebrowser.Browser'
-run = ['layout tiling', 'move-node-to-workspace B']
+# App -> Workspace
 
 [[on-window-detected]]
-if.app-id = 'app.zen-browser.zen'
-run = ['layout tiling', 'move-node-to-workspace B']
+if.app-id = 'ru.yandex.desktop.music'
+run = ['layout tiling', 'move-node-to-workspace A']
 
 [[on-window-detected]]
-if.app-id = 'com.apple.Safari'
-run = ['layout tiling', 'move-node-to-workspace B']
+if.app-id = 'us.zoom.xos'
+run = ['layout tiling', 'move-node-to-workspace A']
 
 [[on-window-detected]]
-if.app-id = 'com.google.Chrome'
-run = ['layout tiling', 'move-node-to-workspace B']
+if.app-id = 'com.apple.FaceTime'
+run = ['layout tiling', 'move-node-to-workspace A']
 
 [[on-window-detected]]
-if.app-id = 'ru.yandex.desktop.yandex-browser'
-run = ['layout tiling', 'move-node-to-workspace B']
+if.app-id = 'ru.yandex.desktop.telemost'
+run = ['layout tiling', 'move-node-to-workspace A']
 
 [[on-window-detected]]
-if.app-id = 'org.qutebrowser.qutebrowser'
-run = ['layout tiling', 'move-node-to-workspace B']
+if.app-id = 'ru.keepcoder.Telegram'
+run = ['layout tiling', 'move-node-to-workspace Z']
 
 [[on-window-detected]]
-if.app-id = 'com.github.Jelmerro.vieb'
-run = ['layout tiling', 'move-node-to-workspace B']
+if.app-id = 'ru.yandex.yamb'
+run = ['layout tiling', 'move-node-to-workspace Z']
+
+[[on-window-detected ]]
+if.app-id = 'com.hnc.Discord'
+run = ['layout tiling', 'move-node-to-workspace Z']
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = ['layout tiling', 'move-node-to-workspace X']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Notes'
+run = ['layout tiling', 'move-node-to-workspace X']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.reminders'
+run = ['layout tiling', 'move-node-to-workspace X']
 
 [[on-window-detected]]
 if.app-id = 'com.neovide.neovide'
@@ -139,46 +155,6 @@ if.app-id = 'com.google.android.studio'
 run = ['layout tiling', 'move-node-to-workspace C']
 
 [[on-window-detected]]
-if.app-id = 'md.obsidian'
-run = ['layout tiling', 'move-node-to-workspace X']
-
-[[on-window-detected]]
-if.app-id = 'com.apple.Notes'
-run = ['layout tiling', 'move-node-to-workspace X']
-
-[[on-window-detected]]
-if.app-id = 'com.apple.reminders'
-run = ['layout tiling', 'move-node-to-workspace X']
-
-[[on-window-detected]]
-if.app-id = 'ru.keepcoder.Telegram'
-run = ['layout tiling', 'move-node-to-workspace Z']
-
-[[on-window-detected]]
-if.app-id = 'ru.yandex.yamb'
-run = ['layout tiling', 'move-node-to-workspace Z']
-
-[[on-window-detected]]
-if.app-id = 'ru.yandex.desktop.music'
-run = ['layout tiling', 'move-node-to-workspace Z']
-
-[[on-window-detected]]
-if.app-id = 'us.zoom.xos'
-run = ['layout tiling', 'move-node-to-workspace Z']
-
-[[on-window-detected]]
-if.app-id = 'ru.yandex.desktop.telemost'
-run = ['layout tiling', 'move-node-to-workspace Z']
-
-[[on-window-detected]]
-if.app-id = 'com.apple.FaceTime'
-run = ['layout tiling', 'move-node-to-workspace Z']
-
-[[on-window-detected ]]
-if.app-id = 'com.hnc.Discord'
-run = ['layout tiling', 'move-node-to-workspace Z']
-
-[[on-window-detected]]
 if.app-id = 'com.microsoft.Word'
 run = ['layout tiling', 'move-node-to-workspace V']
 
@@ -209,6 +185,36 @@ run = ['layout tiling', 'move-node-to-workspace V']
 [[on-window-detected]]
 if.app-id = 'com.figma.Desktop'
 run = ['layout tiling', 'move-node-to-workspace V']
+
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.Browser'
+run = ['layout tiling', 'move-node-to-workspace B']
+
+[[on-window-detected]]
+if.app-id = 'app.zen-browser.zen'
+run = ['layout tiling', 'move-node-to-workspace B']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari'
+run = ['layout tiling', 'move-node-to-workspace B']
+
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = ['layout tiling', 'move-node-to-workspace B']
+
+[[on-window-detected]]
+if.app-id = 'ru.yandex.desktop.yandex-browser'
+run = ['layout tiling', 'move-node-to-workspace B']
+
+[[on-window-detected]]
+if.app-id = 'org.qutebrowser.qutebrowser'
+run = ['layout tiling', 'move-node-to-workspace B']
+
+[[on-window-detected]]
+if.app-id = 'com.github.Jelmerro.vieb'
+run = ['layout tiling', 'move-node-to-workspace B']
+
+# Floating apps
 
 [[on-window-detected]]
 if.app-id = 'com.apple.ActivityMonitor'
