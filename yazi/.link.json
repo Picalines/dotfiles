@@ -1,0 +1,10 @@
+{
+	"if": { "executable-exists": "yazi" },
+	"links": [
+		{
+			"from": ".",
+			"to": "~/.config/yazi",
+			"if": { "os": "!windows" }
+		}
+	]
+}
