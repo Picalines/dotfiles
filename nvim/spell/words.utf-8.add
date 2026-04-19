@@ -227,3 +227,6 @@ Readonly
 colorscheme
 shellcheck
 репозиторий
+mise
+toml
+isort
