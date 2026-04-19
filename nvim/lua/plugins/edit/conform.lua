@@ -52,24 +52,24 @@ return {
 
 	opts = function()
 		local conform = require 'conform'
-		local conform_util = require 'conform.util'
 
-		local function web_formatter(bufnr)
-			if conform.get_formatter_info('biome-check', bufnr).available then
-				return { 'biome-check' }
-			end
-			return { 'prettierd', 'prettier', stop_after_first = true }
+		local function is_available(formatter, bufnr)
+			return conform.get_formatter_info(formatter, bufnr).available
 		end
+
+		-- Note:
+		-- 1. Legacy formatters should come first (because legacy projects are exceptions)
+		-- 2. All formatters are resolved from the PATH (use mise.local to override stuff)
+		-- 3. Add lua functions for special cases (for example, run black and isort in pair)
+
+		local web_formatter = { 'prettierd', 'prettier', 'biome-check', stop_after_first = true }
 
 		local function python_formatter(bufnr)
-			if conform.get_formatter_info('ruff_format', bufnr).available then
-				return { 'ruff_organize_imports', 'ruff_format' }
+			if is_available('black', bufnr) then
+				return { 'isort', 'black' }
 			end
-			return { 'isort', 'black' }
-		end
 
-		local function from_python_venv(cmd)
-			return conform_util.find_executable({ '.venv/bin/' .. cmd, 'venv/bin/' .. cmd }, cmd)
+			return { 'ruff_organize_imports', 'ruff_format' }
 		end
 
 		return {
@@ -101,11 +101,7 @@ return {
 			},
 
 			formatters = {
-				black = { command = from_python_venv 'black' },
-				ruff_format = { command = from_python_venv 'ruff' },
-				ruff_organize_imports = { command = from_python_venv 'ruff' },
 				isort = {
-					command = from_python_venv 'isort',
 					args = { '--profile', 'black', '--quiet', '-' },
 				},
 			},

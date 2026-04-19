@@ -4,10 +4,11 @@ return {
 
 		event = 'VeryLazy',
 
+		---@module 'mason'
+		---@type MasonSettings
 		opts = {
-			ui = {
-				border = 'rounded',
-			},
+			PATH = 'append',
+			ui = { border = 'rounded' },
 		},
 	},
 

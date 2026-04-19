@@ -6,6 +6,8 @@ alias gg=lazygit
 alias m=mise
 alias mr="mise run"
 alias me="mise exec"
+alias mu="mise use"
+alias mlu="mise use --env local"
 
 alias vi=nvim
 alias vim=nvim
