@@ -26,6 +26,7 @@ return {
 				'lua_ls',
 				'shellcheck',
 				'stylua',
+				'tombi',
 				'ts_query_ls',
 				'vim-language-server',
 			}

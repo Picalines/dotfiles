@@ -1,6 +1,6 @@
 [window]
 blur = true
-decorations = "Buttonless"
+decorations = "buttonless"
 dynamic_padding = true
 padding = { x = 10, y = 10 }
 

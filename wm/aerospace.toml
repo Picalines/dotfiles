@@ -1,5 +1,5 @@
 start-at-login = true
-key-mapping.preset = 'qwerty'
+key-mapping.preset = "qwerty"
 
 after-login-command = []
 after-startup-command = []
@@ -7,232 +7,232 @@ after-startup-command = []
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
-default-root-container-layout = 'tiles'
-default-root-container-orientation = 'horizontal'
+default-root-container-layout = "tiles"
+default-root-container-orientation = "horizontal"
 
-on-focused-monitor-changed = 'move-mouse monitor-lazy-center'
-on-focus-changed = 'move-mouse window-lazy-center'
+on-focused-monitor-changed = "move-mouse monitor-lazy-center"
+on-focus-changed = "move-mouse window-lazy-center"
 
 accordion-padding = 16
 
 [gaps]
-
 inner.horizontal = 8
-inner.vertical =   8
-outer.left =       8
-outer.bottom =     8
-outer.top =        8
-outer.right =      8
+inner.vertical = 8
+outer.left = 8
+outer.bottom = 8
+outer.top = 8
+outer.right = 8
 
 [mode.main.binding]
+ctrl-alt-cmd-shift-minus = "resize smart -50"
+ctrl-alt-cmd-shift-equal = "resize smart +50"
+ctrl-alt-cmd-shift-f = "fullscreen"
 
-ctrl-alt-cmd-shift-minus = 'resize smart -50'
-ctrl-alt-cmd-shift-equal = 'resize smart +50'
-ctrl-alt-cmd-shift-f = 'fullscreen'
+ctrl-alt-cmd-shift-s = "exec-and-forget screencapture -ic"
+ctrl-alt-cmd-shift-r = "exec-and-forget screencapture -icU"
 
-ctrl-alt-cmd-shift-s = 'exec-and-forget screencapture -ic'
-ctrl-alt-cmd-shift-r = 'exec-and-forget screencapture -icU'
+ctrl-alt-cmd-shift-h = "focus left"
+ctrl-alt-cmd-shift-j = "focus down"
+ctrl-alt-cmd-shift-k = "focus up"
+ctrl-alt-cmd-shift-l = "focus right"
 
-ctrl-alt-cmd-shift-h = 'focus left'
-ctrl-alt-cmd-shift-j = 'focus down'
-ctrl-alt-cmd-shift-k = 'focus up'
-ctrl-alt-cmd-shift-l = 'focus right'
+ctrl-alt-cmd-shift-backspace = "workspace-back-and-forth"
 
-ctrl-alt-cmd-shift-backspace = 'workspace-back-and-forth'
+ctrl-alt-cmd-shift-w = "mode win"
 
-ctrl-alt-cmd-shift-w = 'mode win'
-
-ctrl-alt-cmd-shift-a = 'workspace A --auto-back-and-forth' # "Additional"
-ctrl-alt-cmd-shift-z = 'workspace Z --auto-back-and-forth' # "Messengers"
-ctrl-alt-cmd-shift-x = 'workspace X --auto-back-and-forth' # "Notes"
-ctrl-alt-cmd-shift-c = 'workspace C --auto-back-and-forth' # "Code"
-ctrl-alt-cmd-shift-v = 'workspace V --auto-back-and-forth' # "Visual"
-ctrl-alt-cmd-shift-b = 'workspace B --auto-back-and-forth' # "Browser"
+ctrl-alt-cmd-shift-a = "workspace A --auto-back-and-forth"  # "Additional"
+ctrl-alt-cmd-shift-z = "workspace Z --auto-back-and-forth"  # "Messengers"
+ctrl-alt-cmd-shift-x = "workspace X --auto-back-and-forth"  # "Notes"
+ctrl-alt-cmd-shift-c = "workspace C --auto-back-and-forth"  # "Code"
+ctrl-alt-cmd-shift-v = "workspace V --auto-back-and-forth"  # "Visual"
+ctrl-alt-cmd-shift-b = "workspace B --auto-back-and-forth"  # "Browser"
 
 [mode.win.binding]
+esc = ["reload-config", "mode main"]
+enter = ["reload-config", "mode main"]
 
-esc = ['reload-config', 'mode main']
-enter = ['reload-config', 'mode main']
+h = ["move left", "mode main"]
+j = ["move down", "mode main"]
+k = ["move up", "mode main"]
+l = ["move right", "mode main"]
 
-h = ['move left', 'mode main']
-j = ['move down', 'mode main']
-k = ['move up', 'mode main']
-l = ['move right', 'mode main']
+shift-h = ["join-with left", "mode main"]
+shift-j = ["join-with down", "mode main"]
+shift-k = ["join-with up", "mode main"]
+shift-l = ["join-with right", "mode main"]
 
-shift-h = ['join-with left', 'mode main']
-shift-j = ['join-with down', 'mode main']
-shift-k = ['join-with up', 'mode main']
-shift-l = ['join-with right', 'mode main']
+ctrl-h = ["move-workspace-to-monitor left", "mode main"]
+ctrl-j = ["move-workspace-to-monitor down", "mode main"]
+ctrl-k = ["move-workspace-to-monitor up", "mode main"]
+ctrl-l = ["move-workspace-to-monitor right", "mode main"]
 
-ctrl-h = ['move-workspace-to-monitor left', 'mode main']
-ctrl-j = ['move-workspace-to-monitor down', 'mode main']
-ctrl-k = ['move-workspace-to-monitor up', 'mode main']
-ctrl-l = ['move-workspace-to-monitor right', 'mode main']
+f = ["layout floating tiling", "mode main"]
+t = ["layout tiles accordion", "mode main"]
+o = ["layout horizontal vertical", "mode main"]
 
-f = ['layout floating tiling', 'mode main']
-t = ['layout tiles accordion', 'mode main']
-o = ['layout horizontal vertical', 'mode main']
-
-a = ['move-node-to-workspace A', 'workspace A', 'mode main']
-z = ['move-node-to-workspace Z', 'workspace Z', 'mode main']
-x = ['move-node-to-workspace X', 'workspace X', 'mode main']
-c = ['move-node-to-workspace C', 'workspace C', 'mode main']
-v = ['move-node-to-workspace V', 'workspace V', 'mode main']
-b = ['move-node-to-workspace B', 'workspace B', 'mode main']
+a = ["move-node-to-workspace A", "workspace A", "mode main"]
+z = ["move-node-to-workspace Z", "workspace Z", "mode main"]
+x = ["move-node-to-workspace X", "workspace X", "mode main"]
+c = ["move-node-to-workspace C", "workspace C", "mode main"]
+v = ["move-node-to-workspace V", "workspace V", "mode main"]
+b = ["move-node-to-workspace B", "workspace B", "mode main"]
 
 # App -> Workspace
 
 [[on-window-detected]]
-if.app-id = 'ru.yandex.desktop.music'
-run = ['layout tiling', 'move-node-to-workspace A']
+if.app-id = "ru.yandex.desktop.music"
+run = ["layout tiling", "move-node-to-workspace A"]
 
 [[on-window-detected]]
-if.app-id = 'us.zoom.xos'
-run = ['layout tiling', 'move-node-to-workspace A']
+if.app-id = "us.zoom.xos"
+run = ["layout tiling", "move-node-to-workspace A"]
 
 [[on-window-detected]]
-if.app-id = 'com.apple.FaceTime'
-run = ['layout tiling', 'move-node-to-workspace A']
+if.app-id = "com.apple.FaceTime"
+run = ["layout tiling", "move-node-to-workspace A"]
 
 [[on-window-detected]]
-if.app-id = 'ru.yandex.desktop.telemost'
-run = ['layout tiling', 'move-node-to-workspace A']
+if.app-id = "ru.yandex.desktop.telemost"
+run = ["layout tiling", "move-node-to-workspace A"]
 
 [[on-window-detected]]
-if.app-id = 'ru.keepcoder.Telegram'
-run = ['layout tiling', 'move-node-to-workspace Z']
+if.app-id = "ru.keepcoder.Telegram"
+run = ["layout tiling", "move-node-to-workspace Z"]
 
 [[on-window-detected]]
-if.app-id = 'ru.yandex.yamb'
-run = ['layout tiling', 'move-node-to-workspace Z']
-
-[[on-window-detected ]]
-if.app-id = 'com.hnc.Discord'
-run = ['layout tiling', 'move-node-to-workspace Z']
+if.app-id = "ru.yandex.yamb"
+run = ["layout tiling", "move-node-to-workspace Z"]
 
 [[on-window-detected]]
-if.app-id = 'md.obsidian'
-run = ['layout tiling', 'move-node-to-workspace X']
+if.app-id = "com.hnc.Discord"
+run = ["layout tiling", "move-node-to-workspace Z"]
 
 [[on-window-detected]]
-if.app-id = 'com.apple.Notes'
-run = ['layout tiling', 'move-node-to-workspace X']
+if.app-id = "md.obsidian"
+run = ["layout tiling", "move-node-to-workspace X"]
 
 [[on-window-detected]]
-if.app-id = 'com.apple.reminders'
-run = ['layout tiling', 'move-node-to-workspace X']
+if.app-id = "com.apple.Notes"
+run = ["layout tiling", "move-node-to-workspace X"]
 
 [[on-window-detected]]
-if.app-id = 'com.neovide.neovide'
-run = ['layout tiling', 'move-node-to-workspace C']
+if.app-id = "com.apple.reminders"
+run = ["layout tiling", "move-node-to-workspace X"]
 
 [[on-window-detected]]
-if.app-id = 'com.mitchellh.ghostty'
-run = ['layout tiling', 'move-node-to-workspace C']
+if.app-id = "com.neovide.neovide"
+run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = 'org.alacritty'
-run = ['layout tiling', 'move-node-to-workspace C']
+if.app-id = "com.mitchellh.ghostty"
+run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = 'com.apple.Terminal'
-run = ['layout tiling', 'move-node-to-workspace C']
+if.app-id = "org.alacritty"
+run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = 'com.microsoft.VSCode'
-run = ['layout tiling', 'move-node-to-workspace C']
+if.app-id = "com.apple.Terminal"
+run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = 'com.jetbrains.intellij.ce'
-run = ['layout tiling', 'move-node-to-workspace C']
+if.app-id = "com.microsoft.VSCode"
+run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = 'com.jetbrains.intellij'
-run = ['layout tiling', 'move-node-to-workspace C']
+if.app-id = "com.jetbrains.intellij.ce"
+run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = 'com.google.android.studio'
-run = ['layout tiling', 'move-node-to-workspace C']
+if.app-id = "com.jetbrains.intellij"
+run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = 'com.microsoft.Word'
-run = ['layout tiling', 'move-node-to-workspace V']
+if.app-id = "com.google.android.studio"
+run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = 'com.microsoft.Excel'
-run = ['layout tiling', 'move-node-to-workspace V']
+if.app-id = "com.todesktop.230313mzl4w4u92"
+run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = 'com.microsoft.Powerpoint'
-run = ['layout tiling', 'move-node-to-workspace V']
+if.app-id = "com.microsoft.Word"
+run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = 'com.apple.iWork.Keynote'
-run = ['layout tiling', 'move-node-to-workspace V']
+if.app-id = "com.microsoft.Excel"
+run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = 'org.audacityteam.audacity'
-run = ['layout tiling', 'move-node-to-workspace V']
+if.app-id = "com.microsoft.Powerpoint"
+run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = 'org.blenderfoundation.blender'
-run = ['layout tiling', 'move-node-to-workspace V']
+if.app-id = "com.apple.iWork.Keynote"
+run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = 'nightradio.SunVox'
-run = ['layout tiling', 'move-node-to-workspace V']
+if.app-id = "org.audacityteam.audacity"
+run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = 'com.figma.Desktop'
-run = ['layout tiling', 'move-node-to-workspace V']
+if.app-id = "org.blenderfoundation.blender"
+run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = 'company.thebrowser.Browser'
-run = ['layout tiling', 'move-node-to-workspace B']
+if.app-id = "nightradio.SunVox"
+run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = 'app.zen-browser.zen'
-run = ['layout tiling', 'move-node-to-workspace B']
+if.app-id = "com.figma.Desktop"
+run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = 'com.apple.Safari'
-run = ['layout tiling', 'move-node-to-workspace B']
+if.app-id = "company.thebrowser.Browser"
+run = ["layout tiling", "move-node-to-workspace B"]
 
 [[on-window-detected]]
-if.app-id = 'com.google.Chrome'
-run = ['layout tiling', 'move-node-to-workspace B']
+if.app-id = "app.zen-browser.zen"
+run = ["layout tiling", "move-node-to-workspace B"]
 
 [[on-window-detected]]
-if.app-id = 'ru.yandex.desktop.yandex-browser'
-run = ['layout tiling', 'move-node-to-workspace B']
+if.app-id = "com.apple.Safari"
+run = ["layout tiling", "move-node-to-workspace B"]
 
 [[on-window-detected]]
-if.app-id = 'org.qutebrowser.qutebrowser'
-run = ['layout tiling', 'move-node-to-workspace B']
+if.app-id = "com.google.Chrome"
+run = ["layout tiling", "move-node-to-workspace B"]
 
 [[on-window-detected]]
-if.app-id = 'com.github.Jelmerro.vieb'
-run = ['layout tiling', 'move-node-to-workspace B']
+if.app-id = "ru.yandex.desktop.yandex-browser"
+run = ["layout tiling", "move-node-to-workspace B"]
+
+[[on-window-detected]]
+if.app-id = "org.qutebrowser.qutebrowser"
+run = ["layout tiling", "move-node-to-workspace B"]
+
+[[on-window-detected]]
+if.app-id = "com.github.Jelmerro.vieb"
+run = ["layout tiling", "move-node-to-workspace B"]
 
 # Floating apps
 
 [[on-window-detected]]
-if.app-id = 'com.apple.ActivityMonitor'
-run = ['layout floating']
+if.app-id = "com.apple.ActivityMonitor"
+run = ["layout floating"]
 
 [[on-window-detected]]
-if.app-id = 'e.AmneziaVPN'
-run = ['layout floating']
+if.app-id = "e.AmneziaVPN"
+run = ["layout floating"]
 
 [[on-window-detected]]
-if.app-id = 'com.apple.finder'
-run = ['layout floating']
+if.app-id = "com.apple.finder"
+run = ["layout floating"]
 
 [[on-window-detected]]
-if.app-id = 'com.apple.Preview'
-run = ['layout floating']
+if.app-id = "com.apple.Preview"
+run = ["layout floating"]
 
 [[on-window-detected]]
-if.app-id = 'ru.yandex.desktop.disk2'
-run = ['layout floating']
-
+if.app-id = "ru.yandex.desktop.disk2"
+run = ["layout floating"]

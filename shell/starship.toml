@@ -2,39 +2,39 @@ format = "[](fg:prompt) $directory$cmd_duration$python$status [❯](fg:end) "
 
 add_newline = false
 
-palette = 'custom'
+palette = "custom"
 
 [palettes.custom]
-prompt = 'yellow'
-directory = 'bright-blue'
-duration = 'yellow'
-status = 'purple'
-python = 'green'
-end = 'cyan'
+prompt = "yellow"
+directory = "bright-blue"
+duration = "yellow"
+status = "purple"
+python = "green"
+end = "cyan"
 
 [directory]
-format = '[$path]($style)'
-style = 'fg:directory'
+format = "[$path]($style)"
+style = "fg:directory"
 use_os_path_sep = false
 truncation_length = 3
 truncate_to_repo = false
-truncation_symbol = '/'
+truncation_symbol = "/"
+
+[directory.substitutions]
+"Repos" = ""
+"Documents" = ""
+"Downloads" = ""
 
 [cmd_duration]
-format = '[ $duration]($style)'
-style = 'fg:duration bold'
+format = "[ $duration]($style)"
+style = "fg:duration bold"
 
 [status]
-format = '[ $int]($style)'
-style = 'fg:status bold'
+format = "[ $int]($style)"
+style = "fg:status bold"
 disabled = false
 
 [python]
-format = '[ 󰌠( $virtualenv)]($style)'
-style = 'fg:python'
-detect_folders = ['venv']
-
-[directory.substitutions]
-"Repos" = ''
-"Documents" = ''
-"Downloads" = ''
+format = "[ 󰌠( $virtualenv)]($style)"
+style = "fg:python"
+detect_folders = ["venv"]
