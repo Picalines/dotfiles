@@ -78,4 +78,21 @@ return {
 			installer.run_on_start()
 		end,
 	},
+
+	{
+		'williamboman/mason-lspconfig.nvim',
+
+		event = 'VeryLazy',
+
+		dependencies = {
+			'neovim/nvim-lspconfig',
+			'mason-org/mason.nvim',
+		},
+
+		opts = {
+			ensure_installed = {},
+			automatic_installation = false,
+			automatic_enable = true,
+		},
+	},
 }
