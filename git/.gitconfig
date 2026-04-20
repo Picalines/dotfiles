@@ -12,8 +12,8 @@
 	cm = commit
 	cma = commit --amend
 	cmm = commit --amend --no-edit
-	d = diff
-	ds = diff --staged
+	d = difftool
+	ds = difftool --staged
 	lol = log --oneline --graph --all
 [init]
 	defaultBranch = main
@@ -29,12 +29,6 @@
 	sort = -committerdate
 [tag]
 	sort = version:refname
-[diff]
-	algorithm = histogram
-	colorMoved = plain
-	mnemonicPrefix = true
-	renames = true
-	external = difft
 [commit]
 	verbose = true
 [rebase]
@@ -44,6 +38,18 @@
 	rebase = true
 	autoSquash = true
 	autoStash = true
+[pager]
+	difftool = true
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+	tool = difft
+[difftool]
+	prompt = false
+[difftool "difft"]
+	cmd = difft "$MERGED" "$LOCAL" "abcdef1" "100644" "$REMOTE" "abcdef2" "100644"
 [merge]
 	autoStash = true
 	tool = nvim
