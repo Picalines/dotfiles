@@ -42,7 +42,7 @@ return {
 					'tailwindcss-language-server',
 					'vtsls',
 				},
-				[{ 'python', 'python3' }] = { 'pyright' },
+				[{ 'python', 'python3' }] = { 'basedpyright' },
 				[{ 'docker' }] = { 'docker-compose-language-service', 'dockerfile-language-server' },
 				[{ 'go' }] = { 'gopls' },
 				[{ 'rustc' }] = { 'rust-analyzer' },
