@@ -11,46 +11,50 @@ return {
 
 		nvim_treesitter.setup()
 
-		local disabled_highlight_filetypes = {}
-		local disabled_indent_filetypes = { 'cs' }
+		---@param buf integer
+		---@param language string
+		local function try_start_treesitter(buf, language)
+			if not vim.treesitter.language.add(language) then
+				return
+			end
 
-		-- TODO: probably should be called after the async install
-		local function setup_treesitter_start_autocmd()
-			local start_autocmd = autocmd.group 'treesitter-start'
+			vim.treesitter.start(buf, language)
 
-			local filetypes_with_installed_parser = vim
-				.iter(nvim_treesitter.get_installed())
-				:map(function(lang)
-					return vim.treesitter.language.get_filetypes(lang)
-				end)
-				:filter(function(ftype)
-					return not vim.list_contains(disabled_highlight_filetypes, ftype)
-				end)
-				:flatten()
-				:totable()
-
-			local indentexpr_filetypes = vim
-				.iter(filetypes_with_installed_parser)
-				:filter(function(ftype)
-					return not vim.list_contains(disabled_indent_filetypes, ftype)
-				end)
-				:totable()
-
-			start_autocmd:on('FileType', filetypes_with_installed_parser, function(event)
-				vim.treesitter.start(event.buf)
-			end)
-
-			start_autocmd:on('FileType', indentexpr_filetypes, function()
+			local supports_indentexpr = vim.treesitter.query.get(language, 'indents') ~= nil
+			if supports_indentexpr then
+				-- TODO: wait until https://github.com/neovim/neovim/issues/38818
 				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-			end)
+			end
 		end
 
-		setup_treesitter_start_autocmd()
+		local augroup = autocmd.group 'treesitter-start'
 
-		local install_augroup = autocmd.group 'nvim-treesitter'
+		local available_parsers = nvim_treesitter.get_available()
 
-		install_augroup:on('UIEnter', '*', function()
-			local parsers_to_install = {
+		augroup:on('FileType', '*', function(event)
+			local buf, filetype = event.buf, event.match
+
+			local language = vim.treesitter.language.get_lang(filetype)
+			if not language then
+				return
+			end
+
+			local installed_parsers = nvim_treesitter.get_installed 'parsers'
+
+			local parser_is_available = vim.tbl_contains(available_parsers, language)
+			local parser_is_installed = vim.tbl_contains(installed_parsers, language)
+
+			if not parser_is_installed and parser_is_available then
+				nvim_treesitter.install(language):await(function()
+					try_start_treesitter(buf, language)
+				end)
+			else
+				try_start_treesitter(buf, language)
+			end
+		end)
+
+		augroup:on('UIEnter', '*', function()
+			nvim_treesitter.install {
 				'bash',
 				'diff',
 				'editorconfig',
@@ -73,52 +77,6 @@ return {
 				'yaml',
 				'zsh',
 			}
-
-			local parsers_by_filetype = vim
-				.iter({
-					[{ 'c', 'cpp', 'cs' }] = { 'c', 'cpp', 'c_sharp' },
-					[{ 'css' }] = { 'css' },
-					[{ 'dockerfile' }] = { 'dockerfile' },
-					[{ 'go' }] = { 'go', 'templ' },
-					[{ 'graphql' }] = { 'graphql' },
-					[{ 'html' }] = { 'html' },
-					[{ 'http' }] = { 'http' },
-					[{ 'javascript', 'typescript' }] = { 'javascript', 'typescript', 'jsdoc', 'css' },
-					[{ 'javascriptreact', 'typescriptreact' }] = { 'jsx', 'tsx', 'graphql', 'css' },
-					[{ 'python' }] = { 'python' },
-					[{ 'rust' }] = { 'rust' },
-					[{ 'svelte' }] = { 'svelte' },
-					[{ 'vue' }] = { 'vue' },
-				})
-				:fold({}, function(acc, filetypes, parsers)
-					for _, filetype in ipairs(filetypes) do
-						acc[filetype] = parsers
-					end
-					return acc
-				end)
-
-			local recent_filetypes = vim.fn.uniq(vim
-				.iter(vim.v.oldfiles)
-				:take(8)
-				:map(function(oldfile)
-					local filetype = vim.filetype.match { filename = oldfile }
-					return filetype
-				end)
-				:totable())
-
-			local parsers_by_recent_filetypes = vim
-				.iter(recent_filetypes)
-				:map(function(filetype)
-					return parsers_by_filetype[filetype]
-				end)
-				:flatten()
-				:totable()
-
-			vim.list_extend(parsers_to_install, parsers_by_recent_filetypes)
-			---@diagnostic disable-next-line: cast-local-type
-			parsers_to_install = vim.fn.uniq(parsers_to_install)
-
-			nvim_treesitter.install(parsers_to_install)
 		end)
 	end,
 }
