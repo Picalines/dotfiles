@@ -56,6 +56,13 @@ keybinds clear-defaults=true {
         bind "Alt L" { GoToNextTab; }
 
         bind "Alt f" { ToggleFloatingPanes; }
+
+        bind "Alt o" {
+            LaunchOrFocusPlugin "session-manager" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
     }
     shared_except "normal" "locked" {
         bind "Alt z" "Esc" { SwitchToMode "normal"; }
