@@ -12,6 +12,7 @@ else
 	require 'settings.diff'
 	require 'settings.lsp'
 	require 'settings.spell'
+	require 'settings.treesitter'
 end
 
 if app.client() == 'neovide' then
