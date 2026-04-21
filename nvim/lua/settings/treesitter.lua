@@ -74,3 +74,40 @@ augroup:on_user('TreeSitterStart', function(event)
 		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 	end
 end)
+
+---@param buf integer
+---@param language string
+local function get_treesitter_trees(buf, language)
+	local parser = vim.treesitter.get_parser(buf, language)
+	return (parser and parser:parse()) or {}
+end
+
+augroup:on_user('TreeSitterStart', function(event)
+	local buf, language = event.data.buf, event.data.language
+
+	local folds_query = vim.treesitter.query.get(language, 'folds')
+	local autofolds_query = vim.treesitter.query.get(language, 'autofolds')
+	if not folds_query or not autofolds_query then
+		return
+	end
+
+	local win = vim.fn.bufwinid(buf)
+	local cursor = vim.api.nvim_win_get_cursor(win)
+
+	for _, tree in ipairs(get_treesitter_trees(buf, language)) do
+		for _, match in autofolds_query:iter_matches(tree:root(), buf) do
+			for id, nodes in ipairs(match) do
+				if autofolds_query.captures[id] == 'autofold' then
+					local start_line = nodes[1]:range()
+					local _, _, end_line = nodes[#nodes]:range()
+					if start_line ~= end_line then
+						-- TODO: https://github.com/neovim/neovim/issues/19226
+						vim.cmd(string.format('silent! %dnormal zc', start_line + 1))
+					end
+				end
+			end
+		end
+	end
+
+	vim.api.nvim_win_set_cursor(win, cursor)
+end)
