@@ -10,11 +10,10 @@ local function try_start_treesitter(buf, language)
 
 	vim.treesitter.start(buf, language)
 
-	local supports_indentexpr = vim.treesitter.query.get(language, 'indents') ~= nil
-	if supports_indentexpr then
-		-- TODO: wait until https://github.com/neovim/neovim/issues/38818
-		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-	end
+	vim.api.nvim_exec_autocmds('User', {
+		pattern = 'TreeSitterStart',
+		data = { buf = buf, language = language },
+	})
 end
 
 local augroup = autocmd.group 'settings.treesitter'
@@ -67,4 +66,11 @@ augroup:on('UIEnter', '*', function()
 		'yaml',
 		'zsh',
 	}
+end)
+
+augroup:on_user('TreeSitterStart', function(event)
+	if vim.treesitter.query.get(event.data.language, 'indents') ~= nil then
+		-- TODO: wait until https://github.com/neovim/neovim/issues/38818
+		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+	end
 end)
