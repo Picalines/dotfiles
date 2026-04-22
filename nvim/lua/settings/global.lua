@@ -15,6 +15,9 @@ vim.go.clipboard = 'unnamedplus'
 -- persist undo history
 vim.go.undofile = true
 
+-- disable editorconfig support
+vim.g.editorconfig = false
+
 -- unix line endings
 vim.opt_global.fileformats = { 'unix' }
 vim.go.fileformat = 'unix'
