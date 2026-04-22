@@ -58,18 +58,18 @@ return {
 		end
 
 		-- Note:
-		-- 1. Legacy formatters should come first (because legacy projects are exceptions)
+		-- 1. Legacy formatters should come last
 		-- 2. All formatters are resolved from the PATH (use mise.local to override stuff)
 		-- 3. Add lua functions for special cases (for example, run black and isort in pair)
 
-		local web_formatter = { 'prettierd', 'prettier', 'biome-check', stop_after_first = true }
+		local web_formatter = { 'biome-check', 'prettierd', 'prettier', stop_after_first = true }
 
 		local function python_formatter(bufnr)
-			if is_available('black', bufnr) then
-				return { 'isort', 'black' }
+			if is_available('ruff_format', bufnr) then
+				return { 'ruff_organize_imports', 'ruff_format' }
 			end
 
-			return { 'ruff_organize_imports', 'ruff_format' }
+			return { 'isort', 'black' }
 		end
 
 		return {
