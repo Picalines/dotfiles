@@ -1,5 +1,7 @@
 set -o emacs
 
+setopt share_history
+
 autoload -U add-zsh-hook
 autoload -Uz compinit && compinit
 
