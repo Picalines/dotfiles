@@ -37,52 +37,31 @@ plugins {
 
 keybinds clear-defaults=true {
     locked {
-        bind "Alt Z" { SwitchToMode "normal"; }
+        bind "Shift Esc" { SwitchToMode "normal"; }
     }
     normal {
-        bind "Alt z" { SwitchToMode "tmux"; }
-        bind "Alt Z" { SwitchToMode "locked"; }
-
-        bind "Alt n" { NewPane; }
-        bind "Alt t" { NewTab; }
-        bind "Alt q" { CloseFocus; }
-
-        bind "Alt h" { MoveFocus "left"; }
-        bind "Alt j" { MoveFocus "down"; }
-        bind "Alt k" { MoveFocus "up"; }
-        bind "Alt l" { MoveFocus "right"; }
-
-        bind "Alt H" { GoToPreviousTab; }
-        bind "Alt L" { GoToNextTab; }
-
-        bind "Alt f" { ToggleFloatingPanes; }
-
-        bind "Alt o" {
-            LaunchOrFocusPlugin "session-manager" {
-                floating true
-                move_to_focused_tab true
-            }
-        }
+        bind "Alt z" "Alt s" "Alt l" { SwitchToMode "tmux"; }
+        bind "Alt Z" "Alt S" "Alt L" { SwitchToMode "locked"; }
     }
     shared_except "normal" "locked" {
-        bind "Alt z" "Esc" { SwitchToMode "normal"; }
+        bind "Esc" { SwitchToMode "normal"; }
     }
     tmux {
         bind "q" { Quit; }
 
-        bind "p" "Ctrl p" { SwitchToMode "pane"; }
-        bind "s" "Ctrl s" { SwitchToMode "scroll"; }
-        bind "t" "Ctrl t" { SwitchToMode "tab"; }
+        bind "p" { SwitchToMode "pane"; }
+        bind "s" { SwitchToMode "scroll"; }
+        bind "t" { SwitchToMode "tab"; }
 
-        bind "f" "Ctrl f" { ToggleFloatingPanes; SwitchToMode "normal"; }
+        bind "f" { ToggleFloatingPanes; SwitchToMode "normal"; }
 
         bind "h" { MoveFocus "left"; SwitchToMode "normal"; }
         bind "j" { MoveFocus "down"; SwitchToMode "normal"; }
         bind "k" { MoveFocus "up"; SwitchToMode "normal"; }
         bind "l" { MoveFocus "right"; SwitchToMode "normal"; }
 
-        bind "H" "Ctrl h" { GoToPreviousTab; SwitchToMode "normal"; }
-        bind "L" "Ctrl l" { GoToNextTab; SwitchToMode "normal"; }
+        bind "H" { GoToPreviousTab; SwitchToMode "normal"; }
+        bind "L" { GoToNextTab; SwitchToMode "normal"; }
 
         bind "=" "+" { Resize "Increase"; }
         bind "-" "_" { Resize "Decrease"; }
