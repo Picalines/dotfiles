@@ -8,7 +8,7 @@ c.input.insert_mode.auto_leave = False
 c.input.insert_mode.auto_load = False
 c.tabs.mode_on_change = "persist"
 
-c.keyhint.delay = 2000
+c.keyhint.delay = 500
 
 c.statusbar.position = "top"
 c.statusbar.widgets = ["search_match", "progress", "url", "history"]
@@ -16,9 +16,9 @@ c.tabs.position = "top"
 c.tabs.show = "multiple"
 c.tabs.width = "12%"
 
-c.fonts.default_family = "IosevkaTerm Nerd Font Mono"
+c.fonts.default_family = "Iosevka Nerd Font"
 c.fonts.default_size = "18pt"
-c.fonts.hints = "16pt default_family"
+c.fonts.hints = "18pt default_family"
 c.fonts.tabs.selected = "bold"
 
 c.tabs.title.format = "{audio}{current_title}"
@@ -28,9 +28,11 @@ config.load_autoconfig()
 
 c.content.blocking.enabled = False
 
+c.hints.auto_follow = "always"
 c.hints.selectors["buttons"] = [
     "select",
     "button",
+    "details > summary",
     "[onclick]",
     "[onmousedown]",
     '[role="option"]',
@@ -47,11 +49,19 @@ c.hints.selectors["buttons"] = [
     "[data-ng-click]",
 ]
 
-c.input.mode_override = "insert"
+c.input.mode_override = "normal"
 c.bindings.default["passthrough"].clear()
 c.bindings.default["normal"].clear()
 c.bindings.default["insert"].clear()
 c.bindings.default["hint"].clear()
+
+c.aliases["js-unfocus"] = "jseval -q document.activeElement.blur()"
+c.aliases["keyboard-layout-us"] = (
+    f"spawn -d -- python3 {Path('~/bin/keyboard-layout').expanduser().as_posix()} us"
+)
+c.aliases["mode-leave-reset"] = (
+    f"mode-leave ;; {c.aliases["keyboard-layout-us"]} ;; {c.aliases["js-unfocus"]}"
+)
 
 
 def bind_keymaps(keymaps, prefix="", mode=None):
@@ -68,82 +78,98 @@ def bind_keymaps(keymaps, prefix="", mode=None):
                 config.bind(prefix + key, value, mode=mode)
 
 
-then_default = lambda cmd: cmd + " ;; cmd-later 5 mode-enter insert"
-to_default = then_default("nop")
-
-switch_to_us_layout = (
-    f"spawn -d -- python3 {Path('~/bin/keyboard-layout').expanduser().as_posix()} us"
-)
-
 keymaps = {
-    "[passthrough]": {
-        "<Shift-Escape>": to_default,
-    },
     "[command+prompt+yesno+register+hint]": {
-        "<Escape>": then_default("mode-leave"),
+        "<Escape>": "mode-leave",
+    },
+    "[passthrough]": {
+        "<Shift-Escape>": c.aliases["mode-leave-reset"],
     },
     "[insert]": {
-        **{
-            f"<Alt-{prefix}>": f"mode-enter normal ;; {switch_to_us_layout}"
-            for prefix in "zяsыlд"
-        },
-        **{f"<Alt-Shift-{prefix}>": f"mode-enter passthrough" for prefix in "zяsыlд"},
+        "<Escape>": c.aliases["mode-leave-reset"],
     },
     "[normal+insert]": {
+        "<Shift-Return>": "mode-enter passthrough",
         "<Ctrl-d>": "scroll-page 0 0.5",
         "<Ctrl-u>": "scroll-page 0 -0.5",
-        "<Ctrl-i>": "forward",
-        "<Ctrl-o>": "back",
-        "<back>": "back",
-        "<forward>": "forward",
+        "<Ctrl-i>": "tab-focus stack-next",
+        "<Ctrl-o>": "tab-focus stack-prev",
+        "<Ctrl-j>": "forward",
+        "<Ctrl-k>": "back",
         "<Ctrl-n>": "search-next",
         "<Ctrl-Shift-n>": "search-prev",
     },
     "[command]": {
         "<Ctrl-n>": "fake-key -g <Down>",
         "<Ctrl-Shift-n>": "fake-key -g <Up>",
-        "<Return>": then_default("command-accept"),
+        "<Return>": "command-accept",
     },
     "[normal]": {
-        "<Escape>": to_default,
+        "<Escape>": "search ;; fake-key <Escape>",
+        "<Return>": "mode-enter insert",
+        ("<Meta-c>", "<Ctrl-c>"): "yank -q selection",
         (":", ";"): "cmd-set-text :",
-        "s": "cmd-set-text -s :tab-select",
-        "h": then_default("tab-prev"),
-        "j": then_default("tab-next"),
-        "k": then_default("tab-prev"),
-        "l": then_default("tab-next"),
-        "r": then_default("reload"),
-        "R": then_default("reload -f"),
+        "f": "cmd-set-text -s :tab-select",
+        "H": "tab-prev",
+        "J": "tab-next",
+        "K": "tab-prev",
+        "L": "tab-next",
+        "h": "scroll left",
+        "j": "scroll down",
+        "k": "scroll up",
+        "l": "scroll right",
+        "r": "reload",
+        "R": "reload -f",
         "o": "cmd-set-text -s :open",
         "O": "cmd-set-text -s :open -t",
-        "x": then_default("tab-close"),
-        "X": then_default("tab-close -p"),
-        "u": then_default("undo"),
-        ("f", "/"): "cmd-set-text /",
-        ("F", "?"): "cmd-set-text ?",
+        "e": "cmd-set-text :open {url:pretty}",
+        "x": "tab-close",
+        "X": "tab-close -p",
+        "u": "undo",
+        "/": "cmd-set-text /",
+        "?": "cmd-set-text ?",
         "n": "search-next",
         "N": "search-prev",
-        "G": then_default("scroll bottom"),
+        "g": "scroll top",
+        "G": "scroll bottom",
         ("+", "="): "zoom-in",
         ("-", "_"): "zoom-out",
         "m": "quickmark-save",
         "t": {
-            "<Escape>": to_default,
-            "p": then_default("config-cycle tabs.position left top"),
-            "o": then_default("tab-only"),
-            "h": "tab-prev ;; mode-enter normal ;; fake-key -g t",
-            "j": "tab-next ;; mode-enter normal ;; fake-key -g t",
-            "k": "tab-prev ;; mode-enter normal ;; fake-key -g t",
-            "l": "tab-next ;; mode-enter normal ;; fake-key -g t",
-            "H": "tab-move - ;; mode-enter normal ;; fake-key -g t",
-            "J": "tab-move + ;; mode-enter normal ;; fake-key -g t",
-            "K": "tab-move - ;; mode-enter normal ;; fake-key -g t",
-            "L": "tab-move + ;; mode-enter normal ;; fake-key -g t",
-            "x": "tab-close ;; mode-enter normal ;; fake-key -g t",
-            "X": "tab-close -p ;; mode-enter normal ;; fake-key -g t",
-            "w": then_default("tab-give"),
-            "W": "cmd-set-text -s :tab-take",
-            "m": then_default("tab-mute"),
+            "<Escape>": "clear-keychain",
+            "o": "tab-only",
+            "h": "tab-move -",
+            "j": "tab-move +",
+            "k": "tab-move -",
+            "l": "tab-move +",
+        },
+        "y": {
+            "<Escape>": "clear-keychain",
+            "y": "yank",
+            "s": "yank selection",
+            "t": "yank title",
+            "d": "yank domain",
+            "p": "yank inline {url:port}",
+        },
+        "w": {
+            "<Escape>": "clear-keychain",
+            "o": "window-only",
+            "d": "devtools right",
+            "D": "devtools window",
+            "n": "tab-give",
+            "t": "cmd-set-text -s :tab-take",
+        },
+        "s": {
+            "<Escape>": "clear-keychain",
+            "o": "cmd-set-text -s :session-load -c",
+            "O": "cmd-set-text -s :session-load",
+            "s": "cmd-set-text -s :session-save",
+            "d": "cmd-set-text -s :session-delete",
+        },
+        "d": {
+            "<Escape>": "clear-keychain",
+            "o": "download-open",
+            "c": "download-clear",
         },
         **{
             f"{g}{a}": f"hint {group} {action}"
@@ -163,32 +189,6 @@ keymaps = {
                 ("y", "yank"),
             )
         },
-        "g": {
-            "<Escape>": to_default,
-            "o": "cmd-set-text :open {url:pretty}",
-            "g": then_default("scroll top"),
-            "h": "cmd-set-text -s :help -t",
-            "c": then_default("config-source"),
-        },
-        "y": {
-            "<Escape>": to_default,
-            "y": then_default("yank"),
-            "t": then_default("yank title"),
-            "d": then_default("yank domain"),
-            "p": then_default("yank inline {url:port}"),
-        },
-        "d": {
-            "o": then_default("download-open"),
-            "c": then_default("download-clear"),
-        },
-        "w": {
-            "<Escape>": to_default,
-            "d": then_default("devtools right"),
-            "D": then_default("devtools window"),
-        },
-    },
-    "[hint]": {
-        "<Return>": "hint-follow",
     },
 }
 
