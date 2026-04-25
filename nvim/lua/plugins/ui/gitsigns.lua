@@ -1,18 +1,12 @@
 return {
 	'lewis6991/gitsigns.nvim',
 
-	event = { 'BufReadPre', 'BufNewFile' },
-
-	cmd = { 'Gitsigns' },
-
 	init = function()
 		local keys = require 'mappet'
 
 		keys.group 'plugins.ui.gitsigns' 'Git: %s' {
-			keys.map('<LocalLeader>gb', 'blame line') '<Cmd>Gitsigns blame_line full=true<CR>',
-			keys.map('<LocalLeader>gB', 'blame buffer') '<Cmd>Gitsigns blame<CR>',
-			keys.map('<LocalLeader>gs', 'stage hunk') '<Cmd>Gitsigns stage_hunk<CR>',
-			keys.map('<LocalLeader>gr', 'reset hunk') '<Cmd>Gitsigns reset_hunk<CR>',
+			keys.map('<LocalLeader>hb', 'blame line') '<Cmd>Gitsigns blame_line full=true<CR>',
+			keys.map('<LocalLeader>hB', 'blame buffer') '<Cmd>Gitsigns blame<CR>',
 		}
 	end,
 

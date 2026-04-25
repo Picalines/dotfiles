@@ -1,14 +1,38 @@
 return {
 	'nvim-mini/mini.diff',
 
-	event = 'VeryLazy',
-
-	config = function()
+	init = function()
 		local diff = require 'mini.diff'
 		local keymap = require 'mappet'
-		local map = keymap.map
+		local map, sub = keymap.map, keymap.sub
 
-		diff.setup {
+		local keys = keymap.group 'plugins.ui.mini-diff'
+
+		local function operator_expr(mode, textobject)
+			return function()
+				return diff.operator(mode) .. (textobject or '')
+			end
+		end
+
+		keys 'Hunk: %s' {
+			map('<LocalLeader>d', 'diff') { diff.toggle_overlay },
+
+			sub { expr = true, remap = true } {
+				map('<LocalLeader>ha', 'apply') { operator_expr('apply', 'ih') },
+				map('<LocalLeader>hr', 'reset') { operator_expr('reset', 'ih') },
+
+				sub { 'x' } {
+					map('<LocalLeader>ha', 'apply') { operator_expr 'apply' },
+					map('<LocalLeader>hr', 'reset') { operator_expr 'reset' },
+				},
+			},
+		}
+	end,
+
+	opts = function()
+		local diff = require 'mini.diff'
+
+		return {
 			source = {
 				diff.gen_source.git(),
 				diff.gen_source.save(),
@@ -16,7 +40,8 @@ return {
 
 			view = {
 				style = 'sign',
-				signs = { add = '+', change = '~', delete = '-' },
+				-- different widths are intentional
+				signs = { delete = '▍', add = '▍', change = '▌' },
 			},
 
 			mappings = {
@@ -32,12 +57,6 @@ return {
 			options = {
 				wrap_goto = true,
 			},
-		}
-
-		local keys = keymap.group 'plugins.ui.mini-diff'
-
-		keys('Git: %s', { 'n' }) {
-			map('<LocalLeader>d', 'diff') { diff.toggle_overlay },
 		}
 	end,
 }
