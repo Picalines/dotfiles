@@ -27,8 +27,8 @@ return {
 
 		local keys = keymap.group 'plugins.edit.leap'
 
-		keys('Leap: %s', { 'n' }) {
-			sub { 'x', 'o' } {
+		keys 'Leap: %s' {
+			sub { 'n', 'x', 'o' } {
 				map('f', 'to') '<Plug>(leap-forward)',
 				map('F', 'backward to') '<Plug>(leap-backward)',
 				map('t', 'till') '<Plug>(leap-forward-till)',
@@ -40,15 +40,15 @@ return {
 					require('leap.remote').action()
 				end,
 			},
-		}
 
-		keys('Leap: %s', { 'x', 'o' }) {
-			map('an', 'treesitter node') {
-				function()
-					require('leap.treesitter').select {
-						opts = require('leap.user').with_traversal_keys('n', 'N'),
-					}
-				end,
+			sub { 'x', 'o' } {
+				map('an', 'treesitter node') {
+					function()
+						require('leap.treesitter').select {
+							opts = require('leap.user').with_traversal_keys('n', 'N'),
+						}
+					end,
+				},
 			},
 		}
 	end,
