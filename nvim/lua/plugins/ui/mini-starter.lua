@@ -28,7 +28,6 @@ return {
 					{ 'Explore ', 'e .' },
 					{ 'Find ', 'lua Snacks.picker.files()' },
 					{ 'New 󱇨', 'enew' },
-					{ 'Git ', 'Neogit' },
 				}),
 				section('Editor', {
 					{ 'Health ', 'checkhealth' },
