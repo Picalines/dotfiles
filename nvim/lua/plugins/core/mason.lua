@@ -22,7 +22,6 @@ return {
 		opts = function()
 			local ensure_installed = {
 				'bash-language-server',
-				'gh-actions-language-server',
 				'jsonls',
 				'lua_ls',
 				'shellcheck',
@@ -30,6 +29,7 @@ return {
 				'tombi',
 				'ts_query_ls',
 				'vim-language-server',
+				'yaml-language-server',
 			}
 
 			local ensure_installed_by_executable = {
