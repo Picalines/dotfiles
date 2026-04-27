@@ -89,7 +89,6 @@ keymaps = {
         "<Escape>": c.aliases["mode-leave-reset"],
     },
     "[normal+insert]": {
-        "<Shift-Return>": "mode-enter passthrough",
         "<Ctrl-d>": "scroll-page 0 0.5",
         "<Ctrl-u>": "scroll-page 0 -0.5",
         "<Ctrl-i>": "tab-focus stack-next",
@@ -105,6 +104,7 @@ keymaps = {
         "<Return>": "command-accept",
     },
     "[normal]": {
+        "<Shift-Return>": "mode-enter passthrough",
         "<Escape>": "search ;; fake-key <Escape>",
         "<Return>": "mode-enter insert",
         ("<Meta-c>", "<Ctrl-c>"): "yank -q selection",
