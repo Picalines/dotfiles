@@ -35,10 +35,8 @@ return {
 				map('T', 'backward till') '<Plug>(leap-backward-till)',
 			},
 
-			map('R', 'remote') {
-				function()
-					require('leap.remote').action()
-				end,
+			sub { 'n', 'o' } {
+				map('R', 'remote') '<Plug>(leap-remote)',
 			},
 
 			sub { 'x', 'o' } {
