@@ -1,9 +1,15 @@
 {
+  "if": { "executable-exists": "zellij" },
   "links": [
     {
-      "if": { "executable-exists": "zellij" },
+      "if": { "os": "!windows" },
       "from": ".",
       "to": "~/.config/zellij"
+    },
+    {
+      "if": { "os": "windows" },
+      "from": ".",
+      "to": "~/AppData/Roaming/Zellij/config"
     }
   ]
 }
