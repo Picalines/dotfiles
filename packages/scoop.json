@@ -1,6 +1,7 @@
 {
 	"apps": [
 		{ "Name": "7zip", "Source": "main" },
+		{ "Name": "Iosevka-NF", "Source": "nerd-fonts" },
 		{ "Name": "Iosevka-NF-Mono", "Source": "nerd-fonts" },
 		{ "Name": "curl", "Source": "main" },
 		{ "Name": "gcc", "Source": "main" },
