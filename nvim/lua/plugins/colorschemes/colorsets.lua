@@ -25,6 +25,7 @@ return {
 					{ light = 'dayfox', dark = 'nightfox' },
 					{ light = 'dawnfox', dark = 'duskfox' },
 					{ light = 'perpetua-light', dark = 'perpetua-dark' },
+					{ light = 'neobones-light', dark = 'neobones-dark' },
 					{ light = 'miniwinter-light', dark = 'miniwinter-dark' },
 					{ light = 'minispring-light', dark = 'minispring-dark' },
 					{ light = 'minisummer-light', dark = 'minisummer-dark' },
