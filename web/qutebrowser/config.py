@@ -107,6 +107,7 @@ keymaps = {
         "<Shift-Return>": "mode-enter passthrough",
         "<Escape>": "search ;; fake-key <Escape>",
         "<Return>": "mode-enter insert",
+        "<Space>": "fake-key <Space>",
         ("<Meta-c>", "<Ctrl-c>"): "yank -q selection",
         (":", ";"): "cmd-set-text :",
         "f": "cmd-set-text -s :tab-select",
