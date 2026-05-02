@@ -1,7 +1,7 @@
 local autocmd = require 'util.autocmd'
 
 local keymap = require 'mappet'
-local map = keymap.map
+local map, sub = keymap.map, keymap.sub
 
 local keys = keymap.group 'settings.buffer'
 local qf_keys = keymap.template()
@@ -21,13 +21,17 @@ keys 'Buffer: %s' {
 	map('<LocalLeader>w', 'write') '<Cmd>silent w<CR>',
 	map('<Leader>w', 'write all') '<Cmd>silent wa!<CR>',
 
-	map('<LocalLeader>s', 'substitute') ':%s///g<Left><Left><Left>',
-	map('<LocalLeader>gn', 'g norm') ':%g//norm <Left><Left><Left><Left><Left><Left>',
-}
+	sub { 'n' } {
+		map('<LocalLeader>s', 'substitute') { ':%s///g' .. string.rep('<Left>', 3) },
+		map('<LocalLeader>gn', 'g norm') { ':%g//norm ' .. string.rep('<Left>', 6) },
+		map('<LocalLeader>n', 'norm') ':%norm ',
+	},
 
-keys('Buffer: %s', { 'x' }) {
-	map('<LocalLeader>s', 'substitute') ':s///g<Left><Left><Left>',
-	map('<LocalLeader>gn', 'g norm') ':g//norm <Left><Left><Left><Left><Left><Left>',
+	sub { 'x' } {
+		map('<LocalLeader>s', 'substitute') { ':s///g' .. string.rep('<Left>', 3) },
+		map('<LocalLeader>gn', 'g norm') { ':g//norm ' .. string.rep('<Left>', 6) },
+		map('<LocalLeader>n', 'norm') ':norm ',
+	},
 }
 
 qf_keys('Quickfix: %s', { remap = true }) {
