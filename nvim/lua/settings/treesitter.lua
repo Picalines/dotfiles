@@ -91,9 +91,7 @@ augroup:on_user('TreeSitterStart', function(event)
 		return
 	end
 
-	local win = vim.fn.bufwinid(buf)
-	local cursor = vim.api.nvim_win_get_cursor(win)
-
+	local lines_to_fold = {}
 	for _, tree in ipairs(get_treesitter_trees(buf, language)) do
 		for _, match in autofolds_query:iter_matches(tree:root(), buf) do
 			for id, nodes in ipairs(match) do
@@ -101,13 +99,31 @@ augroup:on_user('TreeSitterStart', function(event)
 					local start_line = nodes[1]:range()
 					local _, _, end_line = nodes[#nodes]:range()
 					if start_line ~= end_line then
-						-- TODO: https://github.com/neovim/neovim/issues/19226
-						vim.cmd(string.format('silent! %dnormal zc', start_line + 1))
+						table.insert(lines_to_fold, start_line)
 					end
 				end
 			end
 		end
 	end
 
-	vim.api.nvim_win_set_cursor(win, cursor)
+	if #lines_to_fold == 0 then
+		return
+	end
+
+	vim.schedule(function()
+		local win = vim.fn.bufwinid(buf)
+		local cursor = vim.api.nvim_win_get_cursor(win)
+
+		vim.api.nvim_buf_call(buf, function()
+			vim.cmd 'normal! zx'
+
+			vim.iter(lines_to_fold):each(function(line)
+				-- TODO: use lua api for folds
+				-- https://github.com/neovim/neovim/issues/19226
+				vim.cmd(string.format('silent! %dnormal zc', line + 1))
+			end)
+		end)
+
+		vim.api.nvim_win_set_cursor(win, cursor)
+	end)
 end)
