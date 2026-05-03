@@ -24,6 +24,17 @@ function M.cmd(...)
 	end
 end
 
+---@param global_key string
+---@param func fun()
+function M.once(global_key, func)
+	if vim.g[global_key] then
+		return
+	end
+
+	func()
+	vim.g[global_key] = true
+end
+
 ---@generic Args
 ---@param timeout integer
 ---@param fn fun(...: Args)

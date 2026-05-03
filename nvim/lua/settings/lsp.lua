@@ -1,3 +1,4 @@
+local func = require 'util.func'
 local keymap = require 'mappet'
 local map = keymap.map
 
@@ -48,6 +49,23 @@ vim.diagnostic.config {
 		border = 'rounded',
 	},
 }
+
+-- TODO: https://github.com/microsoft/pyright/issues/11408
+func.once('lsp-progress-mute', function()
+	local clients_with_muted_progress = {
+		'basedpyright',
+		'pyright',
+	}
+
+	local builtin_handler = vim.lsp.handlers['$/progress']
+	vim.lsp.handlers['$/progress'] = function(err, result, ctx, config)
+		local client = vim.lsp.get_client_by_id(ctx.client_id)
+		if client and vim.tbl_contains(clients_with_muted_progress, client.name) then
+			return
+		end
+		builtin_handler(err, result, ctx, config)
+	end
+end)
 
 vim.lsp.config('lua_ls', {
 	settings = {
