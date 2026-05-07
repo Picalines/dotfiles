@@ -54,7 +54,13 @@ vim.o.foldmethod = 'expr'
 vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
-vim.o.foldtext = ''
+vim.o.foldtext = 'v:lua._custom_foldtext()'
+
+function _G._custom_foldtext()
+	local line = vim.fn.getline(vim.v.foldstart)
+	local line_count = vim.v.foldend - vim.v.foldstart + 1
+	return string.format('%s 󰄼 %d ', line, line_count)
+end
 
 -- fill chars
 vim.opt.fillchars = {
