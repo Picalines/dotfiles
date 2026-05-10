@@ -1,6 +1,7 @@
 promptToReturnFromSubprocess: false
 
 gui:
+  language: en
   sidePanelWidth: 0.4
   showFileTree: false
   showNumstatInFilesView: true
