@@ -89,8 +89,8 @@ keymaps = {
         "<Escape>": c.aliases["mode-leave-reset"],
     },
     "[normal+insert]": {
-        "<Ctrl-d>": "scroll-page 0 0.5",
-        "<Ctrl-u>": "scroll-page 0 -0.5",
+        "<Ctrl-d>": "scroll page-down",
+        "<Ctrl-u>": "scroll page-up",
         "<Ctrl-i>": "tab-focus stack-next",
         "<Ctrl-o>": "tab-focus stack-prev",
         "<Ctrl-j>": "forward",
