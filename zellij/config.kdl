@@ -11,7 +11,6 @@ default_layout "default"
 // advanced_mouse_actions false
 mouse_hover_effects false
 
-copy_command "pbcopy"
 copy_on_select true
 
 pane_frames false
