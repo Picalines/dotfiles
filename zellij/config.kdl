@@ -91,10 +91,10 @@ keybinds clear-defaults=true {
         }
 
         bind "Space" {
-            LaunchOrFocusPlugin "https://github.com/Picalines/zellij-leap/releases/download/v0.1.0/zellij-leap.wasm" {
+            LaunchOrFocusPlugin "https://github.com/Picalines/zellij-leap/releases/download/v0.3.0/zellij-leap.wasm" {
                 floating true
                 move_to_focused_tab true
-                leap_include_current_target false
+                leap_target "tab"
                 leap_on_pane_unfocus "close"
                 leap_on_escape "hide_floating_panes"
             }
