@@ -74,14 +74,6 @@ keybinds clear-defaults=true {
 
         bind "d" { Detach; }
 
-        bind "o" {
-            LaunchOrFocusPlugin "session-manager" {
-                floating true
-                move_to_focused_tab true
-            }
-            SwitchToMode "normal"
-        }
-
         bind "m" {
             LaunchOrFocusPlugin "plugin-manager" {
                 floating true
@@ -91,14 +83,33 @@ keybinds clear-defaults=true {
         }
 
         bind "Space" {
-            LaunchOrFocusPlugin "https://github.com/Picalines/zellij-leap/releases/download/v0.3.0/zellij-leap.wasm" {
+            LaunchOrFocusPlugin "https://github.com/Picalines/zellij-leap/releases/download/v0.4.0/zellij-leap.wasm" {
                 floating true
                 move_to_focused_tab true
-                leap_target "tab"
+                leap_target "tab_except_active"
                 leap_on_pane_unfocus "close"
                 leap_on_escape "hide_floating_panes"
             }
             SwitchToMode "normal";
+        }
+
+        bind "o" {
+            LaunchOrFocusPlugin "https://github.com/Picalines/zellij-leap/releases/download/v0.4.0/zellij-leap.wasm" {
+                floating true
+                move_to_focused_tab true
+                leap_target "session_except_current"
+                leap_on_pane_unfocus "close"
+                leap_on_escape "hide_floating_panes"
+            }
+            SwitchToMode "normal";
+        }
+
+        bind "O" {
+            LaunchOrFocusPlugin "session-manager" {
+                floating true
+                move_to_focused_tab true
+            }
+            SwitchToMode "normal"
         }
     }
     pane {
@@ -135,7 +146,7 @@ keybinds clear-defaults=true {
         bind "H" { MoveTab "left"; }
         bind "L" { MoveTab "right"; }
 
-        bind "n" { NewTab; SwitchToMode "normal"; }
+        bind "n" { NewTab; SwitchToMode "renametab"; TabNameInput 0; }
 
         bind "r" { SwitchToMode "renametab"; TabNameInput 0; }
     }
