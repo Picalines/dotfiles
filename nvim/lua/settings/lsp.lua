@@ -92,6 +92,17 @@ vim.lsp.config('vtsls', {
 	},
 })
 
+vim.lsp.config('tsgo', {
+	settings = {
+		typescript = {
+			preferences = {
+				preferTypeOnlyAutoImports = true,
+				importModuleSpecifier = 'non-relative',
+			},
+		},
+	},
+})
+
 vim.lsp.config('tailwindcss', {
 	settings = {
 		tailwindCSS = {
