@@ -1,13 +1,9 @@
 return {
-	'windwp/nvim-ts-autotag',
-
-	event = 'InsertEnter',
+	'tronikelis/ts-autotag.nvim',
 
 	opts = {
-		opts = {
-			enable_close = true,
-			enable_rename = true,
-			enable_close_on_slash = true,
+		auto_rename = {
+			enabled = true,
 		},
 	},
 }
