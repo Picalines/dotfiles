@@ -1,8 +1,15 @@
 return {
-	'nvim-treesitter/nvim-treesitter',
+	{
+		'nvim-treesitter/nvim-treesitter',
 
-	branch = 'main',
-	build = ':TSUpdate',
+		branch = 'main',
+		build = ':TSUpdate',
 
-	opts = {},
+		opts = {},
+	},
+	{
+		'nvim-treesitter/nvim-treesitter-textobjects',
+
+		branch = 'main',
+	},
 }
