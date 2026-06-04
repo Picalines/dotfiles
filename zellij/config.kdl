@@ -83,7 +83,7 @@ keybinds clear-defaults=true {
         }
 
         bind "Space" {
-            LaunchOrFocusPlugin "https://github.com/Picalines/zellij-leap/releases/download/v0.4.0/zellij-leap.wasm" {
+            LaunchOrFocusPlugin "https://github.com/Picalines/zellij-leap/releases/download/v0.4.2/zellij-leap.wasm" {
                 floating true
                 move_to_focused_tab true
                 leap_target "tab_except_active"
@@ -94,7 +94,7 @@ keybinds clear-defaults=true {
         }
 
         bind "o" {
-            LaunchOrFocusPlugin "https://github.com/Picalines/zellij-leap/releases/download/v0.4.0/zellij-leap.wasm" {
+            LaunchOrFocusPlugin "https://github.com/Picalines/zellij-leap/releases/download/v0.4.2/zellij-leap.wasm" {
                 floating true
                 move_to_focused_tab true
                 leap_target "session_except_current"
