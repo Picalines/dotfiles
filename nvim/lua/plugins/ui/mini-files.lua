@@ -97,6 +97,13 @@ return {
 			file_keys:apply(keymap.buffer('mini.files', event.data.buf_id))
 		end)
 
+		augroup:on_user('MiniFilesWindowOpen', function(event)
+			local win_id = event.data.win_id
+			local win_config = vim.api.nvim_win_get_config(win_id)
+			win_config.border = 'rounded'
+			vim.api.nvim_win_set_config(win_id, win_config)
+		end)
+
 		augroup:on_user('ZoxideDirChanged', 'MiniFilesCwd')
 	end,
 }
