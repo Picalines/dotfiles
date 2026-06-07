@@ -66,8 +66,6 @@ return {
 			map('<Leader>', 'leader passthrough') 'q<Cmd>silent! WhichKey<CR><Leader>',
 
 			map('g.', 'go to cwd') '<Cmd>MiniFilesCwd<CR>',
-			map('gd', 'cd') ':MiniFilesCwd<C-b>tcd  | <S-Left><Left>',
-			map('gz', 'zoxide') 'q:<C-b>Tz ',
 
 			map('c.', 'set cwd') {
 				function()
@@ -79,6 +77,8 @@ return {
 					end
 				end,
 			},
+
+			map('Z', 'zoxide') 'q:<C-b>Tz ',
 
 			map('gx', 'system open') {
 				function()
