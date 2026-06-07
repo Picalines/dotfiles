@@ -26,6 +26,12 @@ disable_session_metadata false
 scroll_buffer_size 1000
 on_force_close "detach"
 
+ui {
+    pane_frames {
+        rounded_corners true
+    }
+}
+
 plugins {
     about location="zellij:about"
     configuration location="zellij:configuration"
@@ -306,3 +312,4 @@ themes {
         }
     }
 }
+
