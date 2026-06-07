@@ -2,7 +2,8 @@ theme = "light:Neobones Light,dark:Neobones Dark"
 font-family = "IosevkaTerm Nerd Font Mono"
 font-size = 20
 
-custom-shader = shaders/cursor_smear.glsl
+custom-shader = shaders/cursor_sweep.glsl
+custom-shader = shaders/ripple_rectangle_cursor.glsl
 cursor-invert-fg-bg = true
 unfocused-split-opacity = 1
 
