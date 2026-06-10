@@ -1,6 +1,6 @@
-tap "homebrew/services"
-tap "laishulu/homebrew"
-tap "nikitabobko/tap"
+tap "homebrew/services", trusted: true
+tap "laishulu/homebrew", trusted: true
+tap "nikitabobko/tap", trusted: true
 brew "astroterm"
 brew "coreutils"
 brew "curl"
