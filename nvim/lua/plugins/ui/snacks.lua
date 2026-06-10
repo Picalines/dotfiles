@@ -15,6 +15,9 @@ return {
 			map('gR', 'references') { snacks.picker.lsp_references },
 			map('gI', 'implementations') { snacks.picker.lsp_implementations },
 			map('gT', 'type definitions') { snacks.picker.lsp_type_definitions },
+
+			map('<Leader>d', 'diagnostics') { snacks.picker.diagnostics },
+
 			map('<Leader>l', 'attached servers') {
 				function()
 					snacks.picker.lsp_config { attached = 0 }
