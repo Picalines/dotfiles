@@ -1,0 +1,11 @@
+#!/bin/bash
+
+command-exists() {
+  command -v "$1" &> /dev/null
+}
+
+command-exists brew && brew update && brew upgrade
+command-exists scoop && scoop update '*'
+command-exists mise && mise up
+
+unset -f command-exists
