@@ -23,6 +23,8 @@ command-exists pnpm && eval "$(pnpm completion bash)"
 command-exists fzf && eval "$(fzf --bash)"
 command-exists zoxide && eval "$(zoxide init bash)"
 
+unset -f command-exists
+
 function f() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   command yazi "$@" --cwd-file="$tmp"

@@ -16,6 +16,8 @@ command-exists fzf && source <(fzf --zsh)
 command-exists pnpm && eval "$(pnpm completion zsh)"
 command-exists zoxide && eval "$(zoxide init zsh)"
 
+unset -f command-exists
+
 function f() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   command yazi "$@" --cwd-file="$tmp"

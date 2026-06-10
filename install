@@ -25,3 +25,5 @@ if command-exists mise; then
 fi
 
 ./link ./*/
+
+unset -f command-exists
