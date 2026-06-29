@@ -33,9 +33,6 @@ return {
 					{ 'Health ', 'checkhealth' },
 					{ 'Theme 󰸌', 'lua Snacks.picker.colorschemes()' },
 					{ 'Quit ', 'wa | qa!' },
-				}),
-				section('Manage', {
-					{ 'Mason 󰏗', 'Mason' },
 					{ 'Lazy 󰒲', 'Lazy' },
 				}),
 			},

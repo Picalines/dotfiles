@@ -67,6 +67,28 @@ func.once('lsp-progress-mute', function()
 	end
 end)
 
+vim.lsp.enable {
+	'basedpyright',
+	'bashls',
+	'biome',
+	'cssls',
+	'docker_compose_language_service',
+	'dockerls',
+	'eslint',
+	'graphql',
+	'html',
+	'jsonls',
+	'lua_ls',
+	'rust-analyzer',
+	'stylelint_lsp',
+	'tailwindcss',
+	'tombi',
+	'ts_query_ls',
+	'vimls',
+	'vtsls',
+	'yamlls',
+}
+
 vim.lsp.config('lua_ls', {
 	settings = {
 		Lua = { telemetry = { enable = false } },
@@ -118,4 +140,29 @@ vim.lsp.config('rust_analyzer', {
 			cargo = { features = 'all' },
 		},
 	},
+})
+
+vim.lsp.config('lua_ls', {
+	on_init = function(client)
+		if client.workspace_folders then
+			local path = client.workspace_folders[1].name
+			if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then
+				return
+			end
+		end
+
+		client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+			runtime = {
+				version = 'LuaJIT',
+				path = { 'lua/?.lua', 'lua/?/init.lua' },
+			},
+			workspace = {
+				checkThirdParty = false,
+				library = {
+					vim.env.VIMRUNTIME,
+					vim.api.nvim_get_runtime_file('lua/lspconfig', false)[1],
+				},
+			},
+		})
+	end,
 })
