@@ -155,6 +155,8 @@ keybinds clear-defaults=true {
         bind "n" { NewTab; SwitchToMode "renametab"; TabNameInput 0; }
 
         bind "r" { SwitchToMode "renametab"; TabNameInput 0; }
+
+        bind "S" { ToggleActiveSyncTab; SwitchToMode "normal"; }
     }
     scroll {
         bind "j" "Down" { ScrollDown; }
