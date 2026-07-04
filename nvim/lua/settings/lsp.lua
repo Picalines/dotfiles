@@ -135,6 +135,15 @@ vim.lsp.config('tailwindcss', {
 	},
 })
 
+vim.lsp.config('stylelint_lsp', {
+	settings = {
+		stylelint = {
+			validate = { 'css', 'postcss', 'scss', 'less' },
+			snippet = { 'css', 'postcss', 'scss', 'less' },
+		},
+	},
+})
+
 vim.lsp.config('rust_analyzer', {
 	settings = {
 		['rust-analyzer'] = {
