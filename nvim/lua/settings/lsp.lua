@@ -84,10 +84,9 @@ vim.lsp.enable {
 	'tailwindcss',
 	'tombi',
 	'ts_query_ls',
-	'tsgo',
 	'vimls',
-	'vtsls',
 	'yamlls',
+	vim.fn.executable 'tsgo' == 1 and 'tsgo' or 'vtsls',
 }
 
 vim.lsp.config('lua_ls', {
