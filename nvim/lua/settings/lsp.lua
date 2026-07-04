@@ -84,6 +84,7 @@ vim.lsp.enable {
 	'tailwindcss',
 	'tombi',
 	'ts_query_ls',
+	'tsgo',
 	'vimls',
 	'vtsls',
 	'yamlls',
