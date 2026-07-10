@@ -33,14 +33,12 @@ return {
 		}
 
 		keys 'Find: %s' {
-			map('<Leader>ff', 'files') { snacks.picker.files },
-			map('<Leader>fo', 'recent') { snacks.picker.recent },
-			map('<Leader>fg', 'grep') { snacks.picker.grep },
-			map('<Leader>fh', 'help') { snacks.picker.help },
-			map('<Leader>fs', 'symbols') { snacks.picker.lsp_workspace_symbols },
-			map('<Leader>fr', 'resume') { snacks.picker.resume },
-			map('<LocalLeader>fs', 'symbols') { snacks.picker.lsp_symbols },
-			map('<LocalLeader>ft', 'filetype') ':set filetype=',
+			map('<Leader>f', 'files') { snacks.picker.files },
+			map('<Leader>F', 'recent') { snacks.picker.recent },
+			map('<Leader>g', 'grep') { snacks.picker.grep },
+			map('<Leader>h', 'help') { snacks.picker.help },
+			map('<Leader>s', 'symbols') { snacks.picker.lsp_workspace_symbols },
+			map('<LocalLeader>ot', 'filetype') ':set filetype=',
 		}
 
 		keys 'UI: %s' {
