@@ -27,13 +27,13 @@ return {
 				section('Files', {
 					{ 'Explore ', 'e .' },
 					{ 'Find ', 'lua Snacks.picker.files()' },
+					{ 'Grep ', 'lua Snacks.picker.grep()' },
 					{ 'New 󱇨', 'enew' },
 				}),
 				section('Editor', {
 					{ 'Health ', 'checkhealth' },
-					{ 'Theme 󰸌', 'lua Snacks.picker.colorschemes()' },
-					{ 'Quit ', 'wa | qa!' },
 					{ 'Lazy 󰒲', 'Lazy' },
+					{ 'Quit ', 'wa | qa!' },
 				}),
 			},
 
@@ -44,7 +44,7 @@ return {
 
 			header = (function()
 				local random_chars = { '☕', '✨', '🎒', '🎨', '🎯', '💤', '📚', '🧠' }
-				return string.format('Neovim %s v%s', random_chars[math.random(1, #random_chars)], vim.version())
+				return string.format('Neovim %s %s', vim.version().build, random_chars[math.random(1, #random_chars)])
 			end)(),
 
 			footer = '||',
