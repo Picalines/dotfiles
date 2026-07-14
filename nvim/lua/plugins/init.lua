@@ -36,6 +36,9 @@ lazy.setup(lazy_spec, {
 	},
 	performance = {
 		rtp = {
+			paths = {
+				vim.fn.expand '~/.config-work/nvim',
+			},
 			disabled_plugins = {
 				'gzip',
 				-- 'matchit',
