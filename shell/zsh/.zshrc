@@ -13,7 +13,6 @@ command-exists cargo && source "$HOME/.cargo/env"
 command-exists mise && eval "$(mise activate zsh)"
 command-exists starship && eval "$(starship init zsh)"
 command-exists fzf && source <(fzf --zsh)
-command-exists pnpm && eval "$(pnpm completion zsh)"
 command-exists zoxide && eval "$(zoxide init zsh)"
 
 unset -f command-exists

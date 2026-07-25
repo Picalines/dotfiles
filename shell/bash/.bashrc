@@ -19,7 +19,6 @@ if command-exists mise; then
 fi
 
 command-exists starship && eval "$(starship init bash)"
-command-exists pnpm && eval "$(pnpm completion bash)"
 command-exists fzf && eval "$(fzf --bash)"
 command-exists zoxide && eval "$(zoxide init bash)"
 
