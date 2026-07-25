@@ -106,6 +106,9 @@ vim.lsp.config('jsonls', {
 
 vim.lsp.config('vtsls', {
 	settings = {
+		vtsls = {
+			autoUseWorkspaceTsdk = true,
+		},
 		typescript = {
 			preferences = {
 				preferTypeOnlyAutoImports = true,
