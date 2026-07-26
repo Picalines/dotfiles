@@ -1,5 +1,10 @@
 {
-  "if": { "path-exists": "/Applications/Vieb.app" },
+  "if": {
+    "any": [
+      { "path-exists": "/Applications/Vieb.app" },
+      { "path-exists": "~/AppData/Roaming/Vieb" }
+    ]
+  },
   "links": [
     { "from": ".viebrc", "to": "~/.viebrc" },
     { "from": "colors", "to": "~/.vieb/colors" }
