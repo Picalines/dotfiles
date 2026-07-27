@@ -10,7 +10,7 @@ command-exists() {
 [ -f ~/.cargo/env ] && source ~/.cargo/env
 
 if command-exists mise; then
-  if [[ "$OSTYPE" == "msys" ]]; then
+  if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
     # https://github.com/jdx/mise/discussions/3961
     eval "$(mise activate bash --shims | sed -e 's/="C:\\/="\/c\//')"
   else
