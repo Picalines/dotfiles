@@ -112,6 +112,7 @@ keys { 'x' } {
 keys { 't' } {
 	map('<C-p>', 'paste') '<C-\\><C-n>pi',
 	map('<Esc>', 'exit terminal') '<C-\\><C-n>',
+	map('<C-v><Esc>', 'send escape') '<Esc>',
 }
 
 keys('Quickfix: %s', { silent = true }) {
