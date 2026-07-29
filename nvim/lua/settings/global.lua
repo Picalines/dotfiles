@@ -9,9 +9,6 @@ local keys = keymap.group 'settings.global'
 -- time before the swap file is written
 vim.go.updatetime = 250
 
--- sync with system clipboard
-vim.go.clipboard = 'unnamedplus'
-
 -- persist undo history
 vim.go.undofile = true
 
@@ -88,6 +85,9 @@ keys { 'n' } {
 			map 'k' "v:count == 0 ? 'gk' : 'k'",
 			map 'j' "v:count == 0 ? 'gj' : 'j'",
 		},
+
+		map('<Leader>y', 'clipboard yank') '"+y',
+		map('<Leader>p', 'clipboard put') '"+p',
 	},
 }
 
