@@ -83,7 +83,7 @@ keys('Window: %s', { 'n' }) {
 	map('<S-Right>', 'increase width') '5<C-w>>',
 
 	map('+', 'increase size') '<Cmd>WinGrow 6<CR>',
-	map('_', 'decrease size') '<Cmd>WinShrink 6<CR>',
+	map('-', 'decrease size') '<Cmd>WinShrink 6<CR>',
 }
 
 keys('UI: toggle %s', { 'n' }) {
