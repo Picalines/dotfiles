@@ -79,6 +79,7 @@ vim.lsp.enable {
 	'html',
 	'jsonls',
 	'lua_ls',
+	'roslyn_ls',
 	'rust_analyzer',
 	'stylelint_lsp',
 	'tailwindcss',
