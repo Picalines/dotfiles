@@ -1,0 +1,30 @@
+{
+	"if": { "executable-exists": "alacritty" },
+	"links": [
+		{
+			"if": { "os": "!windows" },
+			"from": "alacritty.toml",
+			"to": "~/.config/alacritty/alacritty.toml"
+		},
+		{
+			"if": { "os": "!windows" },
+			"from": "alacritty.common.toml",
+			"to": "~/.config/alacritty/alacritty.common.toml"
+		},
+		{
+			"if": { "os": "windows" },
+			"from": "alacritty.toml",
+			"to": "~/AppData/Roaming/alacritty/alacritty.toml"
+		},
+		{
+			"if": { "os": "windows" },
+			"from": "alacritty.common.toml",
+			"to": "~/AppData/Roaming/alacritty/alacritty.common.toml"
+		},
+		{
+			"if": { "os": "windows" },
+			"from": "alacritty.windows.toml",
+			"to": "~/AppData/Roaming/alacritty/alacritty.windows.toml"
+		}
+	]
+}

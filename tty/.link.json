@@ -1,15 +1,6 @@
 {
+  "include": [ "alacritty" ],
   "links": [
-    {
-      "if": { "os": "!windows", "executable-exists": "alacritty" },
-      "from": "alacritty.toml",
-      "to": "~/.config/alacritty/alacritty.toml"
-    },
-    {
-      "if": { "os": "windows", "executable-exists": "alacritty" },
-      "from": "alacritty.toml",
-      "to": "~/AppData/Roaming/alacritty/alacritty.toml"
-    },
     {
       "if": { "executable-exists": "ghostty" },
       "from": "ghostty",
