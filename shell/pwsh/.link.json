@@ -1,0 +1,10 @@
+{
+	"if": { "os": "windows" },
+	"links": [
+		{
+			"if": { "path-exists": "~/Documents/PowerShell" },
+			"from": "profile.ps1",
+			"to": "~/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
+		}
+	]
+}

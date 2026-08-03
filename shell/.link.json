@@ -1,5 +1,5 @@
 {
-  "include": [ "posix", "bash", "zsh" ],
+  "include": [ "posix", "bash", "zsh", "pwsh" ],
   "links": [
     {
       "from": ".inputrc",
