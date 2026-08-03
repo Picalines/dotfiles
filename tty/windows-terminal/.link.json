@@ -1,0 +1,10 @@
+{
+	"if": { "os": "windows" },
+	"links": [
+		{
+			"if": { "path-exists": "~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState" },
+			"from": "settings.json",
+			"to": "~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json"
+		}
+	]
+}

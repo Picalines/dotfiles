@@ -1,0 +1,10 @@
+{
+	"if": { "executable-exists": "ghostty" },
+	"links": [
+		{
+			"if": { "os": "!windows" },
+			"from": ".",
+			"to": "~/.config/ghostty"
+		}
+	]
+}

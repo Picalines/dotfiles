@@ -1,18 +1,3 @@
 {
-  "include": [ "alacritty" ],
-  "links": [
-    {
-      "if": { "executable-exists": "ghostty" },
-      "from": "ghostty",
-      "to": "~/.config/ghostty"
-    },
-    {
-      "from": "windows-terminal/settings.json",
-      "to": "~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json",
-      "if": {
-        "os": "windows",
-        "path-exists": "~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState"
-      }
-    }
-  ]
+  "include": [ "ghostty", "alacritty", "windows-terminal" ]
 }
