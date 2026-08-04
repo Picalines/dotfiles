@@ -1,3 +1,5 @@
+$env:SHELL = (Get-Command "pwsh.exe").Source
+
 function Command-Exists([string]$Command) {
 	Get-Command $Command *> $null
 	return $?
