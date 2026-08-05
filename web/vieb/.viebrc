@@ -113,31 +113,41 @@ emap <C-n> <nextSuggestion>
 emap <C-N> <prevSuggestion>
 
 nmap a <:set followelement=url><startFollowCurrentTab>
-nmap A <:set followelementpointer=url><pointer.start><startFollowCurrentTab>
 nmap b <:set followelement=onclick><startFollowCurrentTab>
-nmap B <:set followelementpointer=onclick><pointer.start><startFollowCurrentTab>
 nmap i <:set followelement=inputs-insert><startFollowCurrentTab>
-nmap I <:set followelementpointer=inputs-insert><pointer.start><startFollowCurrentTab>
 nmap p <:set followelement=image><startFollowCurrentTab>
-nmap P <:set followelementpointer=image><pointer.start><startFollowCurrentTab>
+
+nmap v <pointer.centerOfView><pointer.start>
 
 pmap h <pointer.moveLeft>
 pmap j <pointer.moveDown>
 pmap k <pointer.moveUp>
 pmap l <pointer.moveRight>
 
+pmap <C-h> <pointer.moveFastLeft>
+pmap <C-j> <pointer.moveFastDown>
+pmap <C-k> <pointer.moveFastUp>
+pmap <C-l> <pointer.moveFastRight>
+pmap <C-d> 2<scrollDown>
+pmap <C-u> 2<scrollUp>
+
+pmap a <:set followelementpointer=url><startFollowCurrentTab>
+pmap b <:set followelementpointer=onclick><startFollowCurrentTab>
+pmap i <:set followelementpointer=inputs-insert><startFollowCurrentTab>
+pmap p <:set followelementpointer=image><startFollowCurrentTab>
+
 pmap <CR> <pointer.insertAtPosition>
 pmap c <pointer.leftClick>
 pmap C <pointer.rightClick>
 pmap d <pointer.downloadLink>
 pmap t <pointer.newtabLink>
-pmap p <pointer.newtabImage>
-pmap I <pointer.inspectElement>
-pmap v <pointer.startVisualSelect>
+pmap P <pointer.newtabImage>
 pmap yy <pointer.copyText>
 pmap ya <pointer.copyLink>
 pmap yp <pointer.copyImageBuffer>
+pmap D <pointer.inspectElement>
 
+pmap v <pointer.startVisualSelect>
 vmap h <pointer.moveLeft>
 vmap j <pointer.moveDown>
 vmap k <pointer.moveUp>
