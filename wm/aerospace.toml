@@ -156,6 +156,10 @@ if.app-id = "com.todesktop.230313mzl4w4u92"
 run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
+if.app-id = "com.openai.codex"
+run = ["layout tiling", "move-node-to-workspace C"]
+
+[[on-window-detected]]
 if.app-id = "com.microsoft.Word"
 run = ["layout tiling", "move-node-to-workspace V"]
 
