@@ -3,6 +3,7 @@
 		{ "Name": "7zip", "Source": "main" },
 		{ "Name": "Iosevka-NF", "Source": "nerd-fonts" },
 		{ "Name": "Iosevka-NF-Mono", "Source": "nerd-fonts" },
+		{ "Name": "alacritty", "Source": "extras" },
 		{ "Name": "curl", "Source": "main" },
 		{ "Name": "gcc", "Source": "main" },
 		{ "Name": "git", "Source": "main" },
@@ -10,6 +11,7 @@
 		{ "Name": "mise", "Source": "main" },
 		{ "Name": "python", "Source": "main" },
 		{ "Name": "vcredist2022", "Source": "extras" },
+		{ "Name": "vieb", "Source": "extras" },
 		{ "Name": "winutil", "Source": "extras" },
 		{ "Name": "zig", "Source": "main" }
 	],
