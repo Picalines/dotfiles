@@ -101,7 +101,7 @@ keys { 'i' } {
 	sub { 'c' } {
 		map '<C-l>' '<Right>',
 		map '<C-h>' '<Left>',
-		map('<C-p>', 'paste') '<C-r><C-o>*',
+		map('<C-p>', 'paste') '<C-r><C-o>"',
 	},
 }
 
