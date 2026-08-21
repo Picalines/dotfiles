@@ -9,6 +9,7 @@ idiomatic_version_file_enable_tools = ["node", "python"]
 deno = "latest"
 node = "latest"
 python = { version = "3.14", _.python.venv = { path = ".venv", create = true } }
+rust = "latest"
 uv = "latest"
 
 difftastic = "latest"
