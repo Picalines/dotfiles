@@ -12,6 +12,7 @@ python = { version = "3.14", _.python.venv = { path = ".venv", create = true } }
 rust = "latest"
 uv = "latest"
 
+"cargo:pik" = "latest"
 difftastic = "latest"
 fd = "latest"
 fzf = "latest"
