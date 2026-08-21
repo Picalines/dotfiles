@@ -13,6 +13,8 @@ set mouse=all
 
 set containercolors={"me":"lightcoral","work":"lightblue","university":"lightgreen"}
 
+set searchwords={"mdn": "developer.mozilla.org/en-US/search?q=%s", "g": "google.com/search?q=%s"}
+
 command! tabonly <:rclose><:lclose>
 command! zoomin <zoomIn>
 command! zoomout <zoomOut>
