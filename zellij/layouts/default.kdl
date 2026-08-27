@@ -35,6 +35,12 @@ layout {
         }
     }
 
+    swap_tiled_layout name="stacked" {
+        tab {
+            pane stacked=true { children; }
+        }
+    }
+
     swap_floating_layout name="columns" {
         floating_panes exact_panes=1 {
             pane x="10%" y="10%" width="80%" height="80%"
