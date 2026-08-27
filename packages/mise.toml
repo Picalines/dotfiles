@@ -1,7 +1,6 @@
 [settings]
 trusted_config_paths = ["~/.config"]
 minimum_release_age = "7d"
-prefer_offline = true
 
 idiomatic_version_file_enable_tools = ["node", "python"]
 
