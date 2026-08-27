@@ -38,6 +38,7 @@ plugins {
     session-manager location="zellij:session-manager"
     plugin-manager location="zellij:plugin-manager"
     compact-bar location="zellij:compact-bar"
+    layout-manager location="zellij:layout-manager"
 }
 
 keybinds clear-defaults=true {
@@ -77,6 +78,13 @@ keybinds clear-defaults=true {
         bind "x" { CloseFocus; SwitchToMode "normal"; }
 
         bind "w" { NextSwapLayout; SwitchToMode "normal"; }
+        bind "W" {
+            LaunchOrFocusPlugin "layout-manager" {
+                floating true
+                move_to_focused_tab true
+            }
+            SwitchToMode "normal"
+        }
 
         bind "d" { Detach; }
 
