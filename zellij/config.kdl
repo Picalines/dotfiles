@@ -44,7 +44,7 @@ keybinds clear-defaults=true {
     locked {
         bind "Shift Esc" { SwitchToMode "normal"; }
     }
-    normal {
+    shared_among "normal" "scroll" {
         bind "`" { SwitchToMode "tmux"; }
     }
     shared_except "normal" "locked" {
