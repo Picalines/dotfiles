@@ -62,6 +62,19 @@ augroup:on_user(
 	end)
 )
 
+-- terminal title
+vim.go.title = true
+vim.go.titlestring = 'nvim | %{v:lua._custom_titlestring()}'
+
+function _G._custom_titlestring()
+	if vim.bo.buftype == '' then
+		return string.format('%s > %s', vim.fn.fnamemodify(vim.fn.getcwd(), ':t'), vim.fn.expand '%:.:t')
+	else
+		return string.format('%s : %s', vim.bo.buftype, vim.bo.filetype)
+	end
+end
+
+-- MAPPINGS
 keys { 'n' } {
 	map('<Leader><Leader>q', 'write all and quit') '<Cmd>wqa<CR>',
 	map('<Esc>', 'dismiss') '<Cmd>doautocmd User Dismiss<CR>',
