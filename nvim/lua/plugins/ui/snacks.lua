@@ -130,6 +130,8 @@ return {
 			image = {
 				enabled = true,
 				formats = { 'png' },
+				-- TODO: https://github.com/folke/snacks.nvim/issues/2937
+				force = vim.env.ZELLIJ ~= nil and vim.env.TERM_PROGRAM == 'ghostty',
 			},
 		}
 	end,
