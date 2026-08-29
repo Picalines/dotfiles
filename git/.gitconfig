@@ -6,6 +6,7 @@
 	eol = lf
 [alias]
 	af = !git add $(fzf)
+	s = status -sb
 	st = status -sb
 	co = checkout
 	cb = checkout -b
