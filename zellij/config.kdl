@@ -10,6 +10,7 @@ default_layout "default"
 // mouse_mode true
 // advanced_mouse_actions false
 mouse_hover_effects false
+scroll_mode_sync false
 
 copy_on_select true
 
