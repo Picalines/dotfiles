@@ -80,6 +80,7 @@ vim.lsp.enable {
 	'jsonls',
 	'lua_ls',
 	'roslyn_ls',
+	'ruff',
 	'rust_analyzer',
 	'stylelint_lsp',
 	'tailwindcss',
