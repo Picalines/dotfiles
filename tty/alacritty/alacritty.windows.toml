@@ -1,3 +1,6 @@
 [terminal.shell]
 program = "pwsh.exe"
 args = ["-NoLogo"]
+
+[keyboard]
+bindings = [{ key = "N", mods = "Control|Shift", chars = "\u001b[110;6u" }]
