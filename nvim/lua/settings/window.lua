@@ -35,6 +35,10 @@ vim.o.number = true
 vim.o.relativenumber = true
 vim.o.signcolumn = 'yes'
 
+-- cursor line
+vim.o.cursorline = true
+vim.opt.cursorlineopt = { 'number' }
+
 -- wrapping
 vim.o.list = true
 vim.o.wrap = true
