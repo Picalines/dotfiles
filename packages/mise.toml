@@ -11,10 +11,12 @@ python = { version = "3.14", _.python.venv = { path = ".venv", create = true } }
 rust = "latest"
 uv = "latest"
 
+"cargo:bacon" = "latest"
 "cargo:pik" = "latest"
 difftastic = "latest"
 fd = "latest"
 fzf = "latest"
+gh = "latest"
 imagemagick = "latest"
 jq = "latest"
 just = "latest"
