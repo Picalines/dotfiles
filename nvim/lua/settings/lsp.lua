@@ -106,6 +106,14 @@ vim.lsp.config('jsonls', {
 	},
 })
 
+vim.lsp.config('tombi', {
+	settings = {
+		tombi = {
+			['toml-version'] = 'v1.1.0',
+		},
+	},
+})
+
 vim.lsp.config('vtsls', {
 	settings = {
 		vtsls = {
