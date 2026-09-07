@@ -36,7 +36,7 @@ return {
 			},
 
 			sub { 'n', 'o' } {
-				map('R', 'remote') '<Plug>(leap-remote)',
+				map('R', 'remote') '<Plug>(leap-visit)',
 			},
 
 			sub { 'x', 'o' } {
