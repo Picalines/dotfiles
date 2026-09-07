@@ -1,3 +1,5 @@
+config-version = 2
+
 start-at-login = true
 key-mapping.preset = "qwerty"
 
@@ -14,6 +16,8 @@ on-focused-monitor-changed = "move-mouse monitor-lazy-center"
 on-focus-changed = "move-mouse window-lazy-center"
 
 accordion-padding = 24
+
+persistent-workspaces = ["A", "Z", "X", "C", "V", "B"]
 
 [gaps]
 inner.horizontal = 4
@@ -80,163 +84,163 @@ b = ["move-node-to-workspace B", "workspace B", "mode main"]
 # App -> Workspace
 
 [[on-window-detected]]
-if.app-id = "ru.yandex.desktop.music"
+if = "test %{app-bundle-id} = ru.yandex.desktop.music"
 run = ["layout tiling", "move-node-to-workspace A"]
 
 [[on-window-detected]]
-if.app-id = "us.zoom.xos"
+if = "test %{app-bundle-id} = us.zoom.xos"
 run = ["layout tiling", "move-node-to-workspace A"]
 
 [[on-window-detected]]
-if.app-id = "com.apple.FaceTime"
+if = "test %{app-bundle-id} = com.apple.FaceTime"
 run = ["layout tiling", "move-node-to-workspace A"]
 
 [[on-window-detected]]
-if.app-id = "ru.yandex.desktop.telemost"
+if = "test %{app-bundle-id} = ru.yandex.desktop.telemost"
 run = ["layout tiling", "move-node-to-workspace A"]
 
 [[on-window-detected]]
-if.app-id = "ru.keepcoder.Telegram"
+if = "test %{app-bundle-id} = ru.keepcoder.Telegram"
 run = ["layout tiling", "move-node-to-workspace Z"]
 
 [[on-window-detected]]
-if.app-id = "ru.yandex.yamb"
+if = "test %{app-bundle-id} = ru.yandex.yamb"
 run = ["layout tiling", "move-node-to-workspace Z"]
 
 [[on-window-detected]]
-if.app-id = "com.hnc.Discord"
+if = "test %{app-bundle-id} = com.hnc.Discord"
 run = ["layout tiling", "move-node-to-workspace Z"]
 
 [[on-window-detected]]
-if.app-id = "md.obsidian"
+if = "test %{app-bundle-id} = md.obsidian"
 run = ["layout tiling", "move-node-to-workspace X"]
 
 [[on-window-detected]]
-if.app-id = "com.apple.Notes"
+if = "test %{app-bundle-id} = com.apple.Notes"
 run = ["layout tiling", "move-node-to-workspace X"]
 
 [[on-window-detected]]
-if.app-id = "com.apple.reminders"
+if = "test %{app-bundle-id} = com.apple.reminders"
 run = ["layout tiling", "move-node-to-workspace X"]
 
 [[on-window-detected]]
-if.app-id = "com.neovide.neovide"
+if = "test %{app-bundle-id} = com.neovide.neovide"
 run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = "com.mitchellh.ghostty"
+if = "test %{app-bundle-id} = com.mitchellh.ghostty"
 run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = "org.alacritty"
+if = "test %{app-bundle-id} = org.alacritty"
 run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = "com.apple.Terminal"
+if = "test %{app-bundle-id} = com.apple.Terminal"
 run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = "com.microsoft.VSCode"
+if = "test %{app-bundle-id} = com.microsoft.VSCode"
 run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = "com.jetbrains.intellij.ce"
+if = "test %{app-bundle-id} = com.jetbrains.intellij.ce"
 run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = "com.jetbrains.intellij"
+if = "test %{app-bundle-id} = com.jetbrains.intellij"
 run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = "com.google.android.studio"
+if = "test %{app-bundle-id} = com.google.android.studio"
 run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = "com.todesktop.230313mzl4w4u92"
+if = "test %{app-bundle-id} = com.todesktop.230313mzl4w4u92"
 run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = "com.openai.codex"
+if = "test %{app-bundle-id} = com.openai.codex"
 run = ["layout tiling", "move-node-to-workspace C"]
 
 [[on-window-detected]]
-if.app-id = "com.microsoft.Word"
+if = "test %{app-bundle-id} = com.microsoft.Word"
 run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = "com.microsoft.Excel"
+if = "test %{app-bundle-id} = com.microsoft.Excel"
 run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = "com.microsoft.Powerpoint"
+if = "test %{app-bundle-id} = com.microsoft.Powerpoint"
 run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = "com.apple.iWork.Keynote"
+if = "test %{app-bundle-id} = com.apple.iWork.Keynote"
 run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = "org.audacityteam.audacity"
+if = "test %{app-bundle-id} = org.audacityteam.audacity"
 run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = "org.blenderfoundation.blender"
+if = "test %{app-bundle-id} = org.blenderfoundation.blender"
 run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = "nightradio.SunVox"
+if = "test %{app-bundle-id} = nightradio.SunVox"
 run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = "com.figma.Desktop"
+if = "test %{app-bundle-id} = com.figma.Desktop"
 run = ["layout tiling", "move-node-to-workspace V"]
 
 [[on-window-detected]]
-if.app-id = "company.thebrowser.Browser"
+if = "test %{app-bundle-id} = company.thebrowser.Browser"
 run = ["layout tiling", "move-node-to-workspace B"]
 
 [[on-window-detected]]
-if.app-id = "app.zen-browser.zen"
+if = "test %{app-bundle-id} = app.zen-browser.zen"
 run = ["layout tiling", "move-node-to-workspace B"]
 
 [[on-window-detected]]
-if.app-id = "com.apple.Safari"
+if = "test %{app-bundle-id} = com.apple.Safari"
 run = ["layout tiling", "move-node-to-workspace B"]
 
 [[on-window-detected]]
-if.app-id = "com.google.Chrome"
+if = "test %{app-bundle-id} = com.google.Chrome"
 run = ["layout tiling", "move-node-to-workspace B"]
 
 [[on-window-detected]]
-if.app-id = "ru.yandex.desktop.yandex-browser"
+if = "test %{app-bundle-id} = ru.yandex.desktop.yandex-browser"
 run = ["layout tiling", "move-node-to-workspace B"]
 
 [[on-window-detected]]
-if.app-id = "org.qutebrowser.qutebrowser"
+if = "test %{app-bundle-id} = org.qutebrowser.qutebrowser"
 run = ["layout tiling", "move-node-to-workspace B"]
 
 [[on-window-detected]]
-if.app-id = "com.github.Jelmerro.vieb"
+if = "test %{app-bundle-id} = com.github.Jelmerro.vieb"
 run = ["layout tiling", "move-node-to-workspace B"]
 
 # Floating apps
 
 [[on-window-detected]]
-if.app-id = "com.apple.ActivityMonitor"
+if = "test %{app-bundle-id} = com.apple.ActivityMonitor"
 run = ["layout floating"]
 
 [[on-window-detected]]
-if.app-id = "e.AmneziaVPN"
+if = "test %{app-bundle-id} = e.AmneziaVPN"
 run = ["layout floating"]
 
 [[on-window-detected]]
-if.app-id = "com.apple.finder"
+if = "test %{app-bundle-id} = com.apple.finder"
 run = ["layout floating"]
 
 [[on-window-detected]]
-if.app-id = "com.apple.Preview"
+if = "test %{app-bundle-id} = com.apple.Preview"
 run = ["layout floating"]
 
 [[on-window-detected]]
-if.app-id = "ru.yandex.desktop.disk2"
+if = "test %{app-bundle-id} = ru.yandex.desktop.disk2"
 run = ["layout floating"]
