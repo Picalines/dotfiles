@@ -20,12 +20,12 @@ accordion-padding = 24
 persistent-workspaces = ["A", "Z", "X", "C", "V", "B"]
 
 [gaps]
-inner.horizontal = 4
-inner.vertical = 4
-outer.left = 4
-outer.bottom = 4
-outer.top = 4
-outer.right = 4
+inner.horizontal = 5
+inner.vertical = 5
+outer.left = 5
+outer.bottom = 5
+outer.top = 5
+outer.right = 5
 
 [mode.main.binding]
 ctrl-alt-cmd-shift-minus = "resize smart -50"
