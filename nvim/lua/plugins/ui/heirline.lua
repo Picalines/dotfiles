@@ -6,7 +6,7 @@ return {
 		{ 'tiagovla/scope.nvim', opts = {} },
 	},
 
-	event = 'VeryLazy',
+	event = 'VimEnter',
 
 	config = function()
 		local autocmd = require 'util.autocmd'
