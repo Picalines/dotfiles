@@ -22,10 +22,10 @@ persistent-workspaces = ["A", "Z", "X", "C", "V", "B"]
 [gaps]
 inner.horizontal = 5
 inner.vertical = 5
-outer.left = 5
+outer.left = [{ monitor."built-in" = 5 }, 150]
 outer.bottom = 5
 outer.top = 5
-outer.right = 5
+outer.right = [{ monitor."built-in" = 5 }, 150]
 
 [mode.main.binding]
 ctrl-alt-cmd-shift-minus = "resize smart -50"
