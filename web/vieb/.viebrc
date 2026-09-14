@@ -16,6 +16,8 @@ set containercolors={"me":"lightcoral","work":"lightblue","university":"lightgre
 set searchwords+={"mdn": "developer.mozilla.org/en-US/search?q=%s"}
 set searchwords+={"gh": "github.com/search?q=%s"}
 set searchwords+={"g": "google.com/search?q=%s"}
+set searchwords+={"npm": "npmjs.com/search?q=%s"}
+set searchwords+={"npmx": "npmx.dev/search?q=%s"}
 
 command! tabonly <:rclose><:lclose>
 command! zoomin <zoomIn>
