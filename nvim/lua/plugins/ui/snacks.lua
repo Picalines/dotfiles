@@ -105,7 +105,10 @@ return {
 				},
 				sources = {
 					files = { hidden = true },
-					grep = { hidden = true },
+					grep = {
+						hidden = true,
+						layout = { preset = 'fullscreen' },
+					},
 					lsp_workspace_symbols = {
 						filter = {
 							typescript = ts_workspace_symbol_kinds,
