@@ -97,7 +97,7 @@ return {
 							border = true,
 							title = '{title}',
 							title_pos = 'center',
-							{ win = 'preview', height = 0.75 },
+							{ win = 'preview', height = 2 / 3 },
 							{ win = 'input', height = 1, border = 'top' },
 							{ win = 'list', border = 'top' },
 						},
