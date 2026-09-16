@@ -99,8 +99,11 @@ keys { 'n' } {
 			map 'j' "v:count == 0 ? 'gj' : 'j'",
 		},
 
-		map('<Leader>y', 'clipboard yank') '"+y',
-		map('<Leader>p', 'clipboard put') '"+p',
+		map('<Leader>c', 'clipboard register') '"+',
+	},
+
+	map('<D-c>', 'copy to clipboard') {
+		'<Cmd>let @+ = @@ | echo printf("copied %d chars to +", len(@@))<CR>',
 	},
 }
 
