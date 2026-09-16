@@ -230,7 +230,7 @@ return {
 					rm = '-- more --',
 					['r?'] = 'confirm',
 					['!'] = '!',
-					t = 't',
+					t = 'terminal',
 				},
 				mode_hls = {
 					i = 'StatusLineModified',
