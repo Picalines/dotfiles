@@ -63,6 +63,7 @@ return {
 		return {
 			picker = {
 				ui_select = true,
+				main = { file = false },
 				layout = {
 					preset = 'select',
 					layout = { row = 2 },
