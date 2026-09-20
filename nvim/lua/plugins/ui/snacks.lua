@@ -118,6 +118,16 @@ return {
 						},
 					},
 				},
+				preview = function(ctx)
+					require('snacks.picker.preview').file(ctx)
+					if vim.bo[ctx.buf].filetype == 'snacks_picker_preview' then
+						vim.api.nvim_exec_autocmds('User', {
+							pattern = 'SnacksPickerPreview',
+							data = { buf = ctx.buf },
+							modeline = false,
+						})
+					end
+				end,
 			},
 
 			input = {

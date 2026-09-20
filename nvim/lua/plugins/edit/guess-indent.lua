@@ -2,6 +2,7 @@ return {
 	'nmac427/guess-indent.nvim',
 
 	init = function()
+		local autocmd = require 'util.autocmd'
 		local keymap = require 'mappet'
 		local map = keymap.map
 
@@ -10,6 +11,12 @@ return {
 		keys { 'n' } {
 			map('<LocalLeader>i', 'detect indent') '<Cmd>GuessIndent<CR>',
 		}
+
+		local augroup = autocmd.group 'guess-indent'
+
+		augroup:on_user('SnacksPickerPreview', function(event)
+			vim.cmd.GuessIndent { tostring(event.data.buf), 'auto_cmd', 'silent' }
+		end)
 	end,
 
 	opts = {
