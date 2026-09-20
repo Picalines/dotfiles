@@ -16,10 +16,11 @@ keys 'Buffer: %s' {
 
 	map('<LocalLeader>bn', 'new') '<Cmd>enew<CR>',
 	map('<LocalLeader>br', 'reload') '<Cmd>e<CR>',
-	map('<LocalLeader>bt', 'terminal') '<Cmd>term<CR>',
 
 	map('<LocalLeader>w', 'write') '<Cmd>silent w<CR>',
 	map('<Leader>w', 'write all') '<Cmd>silent wa!<CR>',
+
+	map('<LocalLeader>t', 'terminal') '<Cmd>term<CR>',
 
 	sub { 'n' } {
 		map('<LocalLeader>s', 'substitute') { ':%s///g' .. string.rep('<Left>', 3) },
