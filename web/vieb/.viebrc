@@ -118,6 +118,11 @@ cmap <C-N> <prevSuggestion>
 emap <C-n> <nextSuggestion>
 emap <C-N> <prevSuggestion>
 
+command! inputEraseLeft <S-Home><BS>
+cmap <C-u> <:inputEraseLeft>
+emap <C-u> <:inputEraseLeft>
+smap <C-u> <:inputEraseLeft>
+
 nmap a <:set followelement=url><startFollowCurrentTab>
 nmap b <:set followelement=onclick><startFollowCurrentTab>
 nmap i <:set followelement=inputs-insert><startFollowCurrentTab>
