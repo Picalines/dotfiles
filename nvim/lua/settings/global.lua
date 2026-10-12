@@ -98,12 +98,20 @@ keys { 'n' } {
 			map 'k' "v:count == 0 ? 'gk' : 'k'",
 			map 'j' "v:count == 0 ? 'gj' : 'j'",
 		},
-
-		map('<Leader>c', 'clipboard register') '"+',
 	},
+}
 
-	map('<D-c>', 'copy to clipboard') {
-		'<Cmd>let @+ = @@ | echo printf("copied %d chars to +", len(@@))<CR>',
+keys { 'n', 'x', 'o' } {
+	map('<Leader>c', 'clipboard register') '"+',
+	map('<Leader>x', 'void register') '"_',
+}
+
+keys 'Clipboard: %s' {
+	sub { 'n' } {
+		map('<D-c>', 'put last yanked') '<Cmd>let @+ = @@ | echo printf("%d chars yanked into \\"+", len(@@))<CR>',
+	},
+	sub { 'x' } {
+		map('<D-c>', 'yank selection') '"+y',
 	},
 }
 
