@@ -97,7 +97,7 @@ run = ["layout tiling", "move-node-to-workspace A"]
 
 [[on-window-detected]]
 if = "test %{app-bundle-id} = ru.yandex.desktop.telemost"
-run = ["layout tiling", "move-node-to-workspace A"]
+run = ["layout tiling", "move-node-to-workspace Z"]
 
 [[on-window-detected]]
 if = "test %{app-bundle-id} = ru.keepcoder.Telegram"
