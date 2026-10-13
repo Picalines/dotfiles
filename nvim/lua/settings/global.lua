@@ -38,15 +38,6 @@ augroup:on({ 'FocusGained', 'TermLeave' }, '*', 'checktime')
 vim.o.guifont = 'Iosevka Nerd Font Mono'
 vim.opt_global.guicursor = { 'n-v-c:block', 'i-ci-ve:ver25', 'r-cr:hor20', 'o:hor25', 'a:blinkwait500-blinkoff500-blinkon500-Cursor/lCursor' }
 
--- stop terminals before exiting editor
-augroup:on('ExitPre', '*', function()
-	for _, chan in ipairs(vim.api.nvim_list_chans()) do
-		if chan.mode == 'terminal' and chan.stream == 'job' then
-			vim.fn.jobstop(chan.id)
-		end
-	end
-end)
-
 -- search settings
 vim.go.hlsearch = true
 vim.go.incsearch = true
@@ -76,7 +67,6 @@ end
 
 -- MAPPINGS
 keys { 'n' } {
-	map('<Leader><Leader>q', 'write all and quit') '<Cmd>wqa<CR>',
 	map('<Esc>', 'dismiss') '<Cmd>doautocmd User Dismiss<CR>',
 
 	map('u', 'undo') '<Cmd>undo<CR>',

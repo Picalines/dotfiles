@@ -1,9 +1,10 @@
 local app = require 'util.app'
 
+require 'settings.buffer'
 require 'settings.global'
+require 'settings.quit'
 require 'settings.tab'
 require 'settings.window'
-require 'settings.buffer'
 
 if app.client() == 'vscode' then
 	require 'settings.vscode'

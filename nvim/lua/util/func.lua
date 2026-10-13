@@ -36,17 +36,17 @@ function M.once(global_key, func)
 end
 
 ---@generic Args
----@param timeout integer
+---@param timeout_ms integer
 ---@param fn fun(...: Args)
 ---@return fun(...: Args)
-function M.debounce(timeout, fn)
+function M.debounce(timeout_ms, fn)
 	local timer = vim.uv.new_timer() or error 'new_timer failed'
 
 	return function(...)
 		local fn_args = { ... }
 		timer:stop()
 		timer:start(
-			timeout,
+			timeout_ms,
 			0,
 			vim.schedule_wrap(function()
 				fn(unpack(fn_args))
