@@ -3,13 +3,23 @@
   "links": [
     {
       "if": { "os": "!windows" },
-      "from": ".",
-      "to": "~/.config/zellij"
+      "from": "config.kdl",
+      "to": "~/.config/zellij/config.kdl"
+    },
+    {
+      "if": { "os": "!windows" },
+      "from": "layouts/default.kdl",
+      "to": "~/.config/zellij/layouts/default.kdl"
     },
     {
       "if": { "os": "windows" },
-      "from": ".",
-      "to": "~/AppData/Roaming/Zellij/config"
+      "from": "config.kdl",
+      "to": "~/AppData/Roaming/Zellij/config/config.kdl"
+    },
+    {
+      "if": { "os": "windows" },
+      "from": "layouts/default.kdl",
+      "to": "~/AppData/Roaming/Zellij/config/layouts/default.kdl"
     }
   ]
 }
