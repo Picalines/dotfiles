@@ -12,6 +12,7 @@ rust = "latest"
 uv = "latest"
 
 "cargo:bacon" = "latest"
+"cargo:dotune" = "latest"
 "cargo:pik" = "latest"
 difftastic = "latest"
 fd = "latest"

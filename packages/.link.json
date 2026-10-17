@@ -1,9 +1,0 @@
-{
-  "links": [
-    {
-      "if": { "executable-exists": "mise" },
-      "from": "mise.toml",
-      "to": "~/.config/mise/config.toml"
-    }
-  ]
-}

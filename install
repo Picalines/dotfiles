@@ -14,16 +14,12 @@ if command-exists scoop; then
     scoop import ./packages/scoop.json
 fi
 
-if ! command-exists python3 && command-exists mise; then
-    mise use --global python
-fi
-
-./link ./packages
-
 if command-exists mise; then
-    mise install
+    MISE_GLOBAL_CONFIG_FILE="$PWD/packages/mise.toml" mise install
 fi
 
-./link ./*/
+if command-exists dotune; then
+    dotune
+fi
 
 unset -f command-exists
