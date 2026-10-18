@@ -465,10 +465,12 @@ return {
 			},
 			opts = {
 				disable_winbar_cb = function(args)
+					-- Earlier autocmds may wipe the event buffer before Heirline handles it.
+					local bufnr = vim.api.nvim_buf_is_valid(args.buf) and args.buf or 0
 					return conditions.buffer_matches({
 						buftype = { 'nofile', 'prompt', 'help' },
 						filetype = { '^git.*' },
-					}, args.buf)
+					}, bufnr)
 				end,
 			},
 		}
