@@ -10,7 +10,12 @@ command-exists() {
 }
 
 command-exists cargo && source "$HOME/.cargo/env"
-command-exists mise && eval "$(mise activate zsh)"
+
+if command-exists mise; then
+  eval "$(mise activate zsh)"
+  eval "$(mise completion zsh)"
+fi
+
 command-exists starship && eval "$(starship init zsh)"
 command-exists fzf && source <(fzf --zsh)
 command-exists zoxide && eval "$(zoxide init zsh)"

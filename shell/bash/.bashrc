@@ -15,6 +15,7 @@ if command-exists mise; then
     eval "$(mise activate bash --shims | sed -e 's/="C:\\/="\/c\//')"
   else
     eval "$(mise activate bash)"
+    eval "$(mise completion bash)"
   fi
 fi
 
