@@ -7,7 +7,7 @@ command-exists() {
   command -v "$1" &> /dev/null
 }
 
-[ -f ~/.cargo/env ] && source ~/.cargo/env
+command-exists cargo && source ~/.cargo/env
 
 if command-exists mise; then
   if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
