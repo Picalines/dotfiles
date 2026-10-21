@@ -62,7 +62,7 @@ return {
 		-- 2. All formatters are resolved from the PATH (use mise.local to override stuff)
 		-- 3. Add lua functions for special cases (for example, run black and isort in pair)
 
-		local web_formatter = { 'biome-check', 'prettierd', 'prettier', stop_after_first = true }
+		local web_formatter = { 'oxfmt', 'biome-check', 'prettierd', 'prettier', stop_after_first = true }
 
 		local function python_formatter(bufnr)
 			if is_available('ruff_format', bufnr) then
