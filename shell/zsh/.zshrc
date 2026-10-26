@@ -9,7 +9,7 @@ command-exists() {
   command -v "$1" &> /dev/null
 }
 
-command-exists cargo && source "$HOME/.cargo/env"
+command-exists cargo && [ -f ~/.cargo/env ] && source ~/.cargo/env
 
 if command-exists mise; then
   eval "$(mise activate zsh)"

@@ -7,7 +7,7 @@ command-exists() {
   command -v "$1" &> /dev/null
 }
 
-command-exists cargo && source ~/.cargo/env
+command-exists cargo && [ -f ~/.cargo/env ] && source ~/.cargo/env
 
 if command-exists mise; then
   if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
@@ -15,8 +15,9 @@ if command-exists mise; then
     eval "$(mise activate bash --shims | sed -e 's/="C:\\/="\/c\//')"
   else
     eval "$(mise activate bash)"
-    eval "$(mise completion bash)"
   fi
+
+  eval "$(mise completion bash)"
 fi
 
 command-exists starship && eval "$(starship init bash)"
