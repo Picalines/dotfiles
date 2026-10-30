@@ -1,3 +1,4 @@
-include 'ghostty'
-include 'alacritty'
 include 'windows-terminal'
+include 'alacritty'
+include 'ghostty'
+include 'wezterm'
