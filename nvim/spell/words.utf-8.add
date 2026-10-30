@@ -292,3 +292,7 @@ zsh
 чекер
 челлендж
 эмодзи
+stdout
+stderr
+NUL
+unescaped
