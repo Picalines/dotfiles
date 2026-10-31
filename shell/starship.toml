@@ -1,4 +1,4 @@
-format = "[](fg:prompt) $directory$cmd_duration$python$status [❯](fg:end) "
+format = "$shell$directory$cmd_duration$python$status [❯](fg:end) "
 
 add_newline = false
 
@@ -11,6 +11,14 @@ duration = "yellow"
 status = "purple"
 python = "green"
 end = "cyan"
+
+[shell]
+bash_indicator = ""
+zsh_indicator = ""
+cmd_indicator = ""
+powershell_indicator = ""
+disabled = false
+style = "fg:prompt"
 
 [directory]
 format = "[$path]($style)"
