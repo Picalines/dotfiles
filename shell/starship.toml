@@ -13,8 +13,8 @@ python = "green"
 end = "cyan"
 
 [shell]
-bash_indicator = ""
-zsh_indicator = ""
+bash_indicator = "\\$"
+zsh_indicator = "%"
 cmd_indicator = ""
 powershell_indicator = ""
 disabled = false
