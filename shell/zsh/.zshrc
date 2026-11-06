@@ -17,6 +17,7 @@ if command-exists mise; then
 fi
 
 command-exists starship && eval "$(starship init zsh)"
+command-exists zsh-patina && eval "$(zsh-patina activate)"
 command-exists fzf && source <(fzf --zsh)
 command-exists zoxide && eval "$(zoxide init zsh)"
 
