@@ -296,3 +296,5 @@ stdout
 stderr
 NUL
 unescaped
+БД
+sql
