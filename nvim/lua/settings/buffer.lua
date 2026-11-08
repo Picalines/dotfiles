@@ -14,13 +14,14 @@ keys 'Buffer: %s' {
 	map(']b', 'next') '<Cmd>bn<CR>',
 	map('[b', 'previous') '<Cmd>bp<CR>',
 
-	map('mn', 'new') '<Cmd>enew<CR>',
-	map('mr', 'reload') '<Cmd>e<CR>',
-	map('md', 'delete') '<Cmd>BufDelete<CR>',
-	map('mo', 'only') '<Cmd>BufDelete other<CR>',
-	map('mD', 'delete all') '<Cmd>BufDelete all<CR>',
-	map('mt', 'vsplit terminal') '<Cmd>vsplit +terminal<CR><Cmd>startinsert<CR>',
-	map('mT', 'split terminal') '<Cmd>split +terminal<CR><Cmd>startinsert<CR>',
+	map('<C-b>n', 'new') '<Cmd>enew<CR>',
+	map('<C-b>r', 'reload') '<Cmd>e<CR>',
+	map('<C-b>c', 'delete') '<Cmd>BufDelete<CR>',
+	map('<C-b>C', 'delete all') '<Cmd>BufDelete all<CR>',
+	map('<C-b>o', 'only') '<Cmd>BufDelete other<CR>',
+
+	map('<C-w>t', 'vsplit terminal') '<Cmd>vsplit +terminal<CR><Cmd>startinsert<CR>',
+	map('<C-w>T', 'split terminal') '<Cmd>split +terminal<CR><Cmd>startinsert<CR>',
 
 	map('<LocalLeader>w', 'write') '<Cmd>silent w<CR>',
 	map('<Leader>w', 'write all') '<Cmd>silent wa!<CR>',
