@@ -14,23 +14,28 @@ keys 'Buffer: %s' {
 	map(']b', 'next') '<Cmd>bn<CR>',
 	map('[b', 'previous') '<Cmd>bp<CR>',
 
-	map('<LocalLeader>bn', 'new') '<Cmd>enew<CR>',
-	map('<LocalLeader>br', 'reload') '<Cmd>e<CR>',
+	map('mn', 'new') '<Cmd>enew<CR>',
+	map('mr', 'reload') '<Cmd>e<CR>',
+	map('md', 'delete') '<Cmd>BufDelete<CR>',
+	map('mo', 'only') '<Cmd>BufDelete other<CR>',
+	map('mD', 'delete all') '<Cmd>BufDelete all<CR>',
+	map('mt', 'vsplit terminal') '<Cmd>vsplit +terminal<CR><Cmd>startinsert<CR>',
+	map('mT', 'split terminal') '<Cmd>split +terminal<CR><Cmd>startinsert<CR>',
 
 	map('<LocalLeader>w', 'write') '<Cmd>silent w<CR>',
 	map('<Leader>w', 'write all') '<Cmd>silent wa!<CR>',
 
-	map('<LocalLeader>t', 'terminal') '<Cmd>term<CR>',
+	map('<LocalLeader>t', 'terminal here') '<Cmd>terminal<CR><Cmd>startinsert<CR>',
 
 	sub { 'n' } {
 		map('<LocalLeader>s', 'substitute') { ':%s///g' .. string.rep('<Left>', 3) },
-		map('<LocalLeader>gn', 'g norm') { ':%g//norm ' .. string.rep('<Left>', 6) },
+		map('<LocalLeader>g', 'g norm') { ':%g//norm ' .. string.rep('<Left>', 6) },
 		map('<LocalLeader>n', 'norm') ':%norm ',
 	},
 
 	sub { 'x' } {
 		map('<LocalLeader>s', 'substitute') { ':s///g' .. string.rep('<Left>', 3) },
-		map('<LocalLeader>gn', 'g norm') { ':g//norm ' .. string.rep('<Left>', 6) },
+		map('<LocalLeader>g', 'g norm') { ':g//norm ' .. string.rep('<Left>', 6) },
 		map('<LocalLeader>n', 'norm') ':norm ',
 	},
 }

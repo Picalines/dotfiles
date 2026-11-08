@@ -25,14 +25,8 @@ return {
 			},
 		}
 
-		keys 'Buffer: %s' {
-			map('<Leader>b', 'find') { snacks.picker.buffers },
-			map('<LocalLeader>bd', 'delete') { snacks.bufdelete.delete },
-			map('<LocalLeader>bD', 'delete all') { snacks.bufdelete.all },
-			map('<LocalLeader>bo', 'delete other') { snacks.bufdelete.other },
-		}
-
 		keys 'Find: %s' {
+			map('<Leader>b', 'buffer') { snacks.picker.buffers },
 			map('<Leader>f', 'files') { snacks.picker.files },
 			map('<Leader>F', 'recent') { snacks.picker.recent },
 			map('<Leader>g', 'grep') { snacks.picker.grep },
@@ -44,6 +38,24 @@ return {
 		keys 'UI: %s' {
 			map('<Leader>oC', 'colorscheme') { snacks.picker.colorschemes },
 		}
+
+		local bufdelete_actions = {
+			this = snacks.bufdelete.delete,
+			other = snacks.bufdelete.other,
+			all = snacks.bufdelete.all,
+		}
+
+		vim.api.nvim_create_user_command('BufDelete', function(args)
+			local action = bufdelete_actions[args.fargs[1] or 'this']
+			if action then
+				action()
+			end
+		end, {
+			nargs = '?',
+			complete = function()
+				return vim.tbl_keys(bufdelete_actions)
+			end,
+		})
 	end,
 
 	---@module 'snacks'

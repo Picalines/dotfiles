@@ -18,5 +18,10 @@ return {
 	opts = {
 		preset = 'helix',
 		delay = 500,
+
+		triggers = {
+			{ '<auto>', mode = 'nxso' },
+			{ 'm', mode = 'nxso' },
+		},
 	},
 }
