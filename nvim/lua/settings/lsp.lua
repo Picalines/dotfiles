@@ -92,12 +92,6 @@ vim.lsp.enable {
 	vim.fn.executable 'tsgo' == 1 and 'tsgo' or 'vtsls',
 }
 
-vim.lsp.config('lua_ls', {
-	settings = {
-		Lua = { telemetry = { enable = false } },
-	},
-})
-
 vim.lsp.config('jsonls', {
 	settings = {
 		json = {
@@ -166,6 +160,11 @@ vim.lsp.config('rust_analyzer', {
 })
 
 vim.lsp.config('lua_ls', {
+	settings = {
+		Lua = {
+			telemetry = { enable = false },
+		},
+	},
 	on_init = function(client)
 		if client.workspace_folders then
 			local path = client.workspace_folders[1].name
