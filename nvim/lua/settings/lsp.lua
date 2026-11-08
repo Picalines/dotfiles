@@ -92,6 +92,17 @@ vim.lsp.enable {
 	vim.fn.executable 'tsgo' == 1 and 'tsgo' or 'vtsls',
 }
 
+vim.lsp.config('basedpyright', {
+	settings = {
+		basedpyright = {
+			disableTaggedHints = true,
+			analysis = {
+				ignore = { '**' },
+			},
+		},
+	},
+})
+
 vim.lsp.config('jsonls', {
 	settings = {
 		json = {
