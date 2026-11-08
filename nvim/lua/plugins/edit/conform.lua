@@ -72,6 +72,15 @@ return {
 			return { 'isort', 'black' }
 		end
 
+		local function toml_formatter(bufnr)
+			local name = vim.fs.basename(vim.api.nvim_buf_get_name(bufnr))
+			if name:match '^%.?mise%.toml$' or name:match '^%.?mise%..+%.toml$' then
+				return { 'mise' }
+			end
+
+			return { 'tombi' }
+		end
+
 		return {
 			notify_on_error = true,
 			notify_no_formatters = true,
@@ -95,6 +104,7 @@ return {
 				lua = { 'stylua' },
 				python = python_formatter,
 				svelte = web_formatter,
+				toml = toml_formatter,
 				typescript = web_formatter,
 				typescriptreact = web_formatter,
 				vue = web_formatter,
@@ -103,6 +113,11 @@ return {
 			formatters = {
 				isort = {
 					args = { '--profile', 'black', '--quiet', '-' },
+				},
+				mise = {
+					command = 'mise',
+					args = { 'fmt', '--stdin' },
+					stdin = true,
 				},
 			},
 		}
