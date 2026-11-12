@@ -13,9 +13,10 @@ set mouse=all
 
 set containercolors={"me":"lightcoral","work":"lightblue","university":"lightgreen"}
 
-set searchwords+={"mdn": "developer.mozilla.org/en-US/search?q=%s"}
-set searchwords+={"gh": "github.com/search?q=%s"}
+set searchwords+={"caniuse": "caniuse.com/?search=%s"}
 set searchwords+={"g": "google.com/search?q=%s"}
+set searchwords+={"gh": "github.com/search?q=%s"}
+set searchwords+={"mdn": "developer.mozilla.org/en-US/search?q=%s"}
 set searchwords+={"npm": "npmjs.com/search?q=%s"}
 set searchwords+={"npmx": "npmx.dev/search?q=%s"}
 
