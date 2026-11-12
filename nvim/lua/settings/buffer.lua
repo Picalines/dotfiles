@@ -16,8 +16,8 @@ keys 'Buffer: %s' {
 
 	map('<C-b>n', 'new') '<Cmd>enew<CR>',
 	map('<C-b>r', 'reload') '<Cmd>e<CR>',
-	map('<C-b>c', 'delete') '<Cmd>BufDelete<CR>',
-	map('<C-b>C', 'delete all') '<Cmd>BufDelete all<CR>',
+	map('<C-b>d', 'delete') '<Cmd>BufDelete<CR>',
+	map('<C-b>D', 'delete all') '<Cmd>BufDelete all<CR>',
 	map('<C-b>o', 'only') '<Cmd>BufDelete other<CR>',
 
 	map('<C-w>t', 'vsplit terminal') '<Cmd>vsplit +terminal<CR><Cmd>startinsert<CR>',
