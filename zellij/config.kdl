@@ -33,6 +33,22 @@ ui {
     }
 }
 
+terminal {
+    font "IosevkaTerm Nerd Font Mono"
+    font_size 20
+
+    padding_color "extend"
+    padding_left 10
+    padding_right 10
+
+    cursor_blink false
+
+    smooth_scrolling false
+    theme {
+        background "#0f191f"
+    }
+}
+
 plugins {
     about location="zellij:about"
     configuration location="zellij:configuration"
@@ -132,6 +148,14 @@ keybinds clear-defaults=true {
 
         bind "O" {
             LaunchOrFocusPlugin "session-manager" {
+                floating true
+                move_to_focused_tab true
+            }
+            SwitchToMode "normal"
+        }
+
+        bind "c" {
+            LaunchOrFocusPlugin "configuration" {
                 floating true
                 move_to_focused_tab true
             }
