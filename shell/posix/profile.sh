@@ -8,5 +8,9 @@ export XDG_CONFIG_DIRS="$HOME/.config.local:$HOME/.config.work:$XDG_CONFIG_DIRS"
 export VISUAL="nvim -b"
 export EDITOR="nvim -b"
 
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate --shims)"
+fi
+
 [ -f ~/.config.work/posix/profile.sh ] && . ~/.config.work/posix/profile.sh
 [ -f ~/.config.local/posix/profile.sh ] && . ~/.config.local/posix/profile.sh
