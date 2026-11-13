@@ -12,5 +12,7 @@ if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate --shims)"
 fi
 
+export PATH="$HOME/bin.work:$PATH"
+
 [ -f ~/.config.work/posix/profile.sh ] && . ~/.config.work/posix/profile.sh
 [ -f ~/.config.local/posix/profile.sh ] && . ~/.config.local/posix/profile.sh
