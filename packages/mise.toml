@@ -15,6 +15,7 @@ uv = "latest"
 "cargo:dotune" = "latest"
 "cargo:pik" = "latest"
 "cargo:zsh-patina" = { version = "latest", os = "macos" }
+"github:sxyazi/yazi" = { version = "latest", filter_bins = "yazi" }
 difftastic = "latest"
 fd = "latest"
 fzf = "latest"
@@ -28,7 +29,6 @@ ripgrep = "latest"
 starship = "latest"
 tree-sitter = "latest"
 watchexec = "latest"
-yazi = "latest"
 zellij = "latest"
 zoxide = "latest"
 
